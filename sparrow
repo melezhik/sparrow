@@ -9,8 +9,10 @@ if test "${object}" = "plg"; then
     if test "${action}" = "list"; then
         cat plg.list
     elif test "${action}" = "install"; then
-        git_url=$3
+        export plg_id=$3
         mkdir -p plugins
+        git_url=`perl -n -e 'chomp; next unless /\S/; @foo = split; print $foo[1] if $foo[0]=~/$ENV{plg_id}/' plg.list`
+        echo "install plugin $plg_id from $git_url ... "
         git clone $git_url plugins/
     fi
 else

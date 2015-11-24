@@ -48,7 +48,7 @@ cpanm Sparrow
 
 ## run swat tests remotely
 
-    # runs sparrow resta API daemon
+    # runs sparrow rest API daemon
 
     sparrowd
 

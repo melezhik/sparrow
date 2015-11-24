@@ -72,16 +72,20 @@ curl, git, bash, swat
 
 ## run swat tests remotely
 
+*GET /$project_name/check_site/$site_name/$plugin_name* - sparrow rest API allow to run swat test suites remotely over http:
+
     # runs sparrow rest API daemon
     sparrowd
 
-    # runs swat tests over http call
+    # runs swat tests via http call
     curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
 
 
-## misc
+## misc commands 
+
+Various commands not listed in main section:
+
 
     # list installed plugins
     sparrow plg list --local
-
 

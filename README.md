@@ -1,10 +1,21 @@
 # SYNOPSIS
+
 Sparrow - is a tiny monitoring tool based on swat tests.
+
+# FEATURES
+
+* easy install and setup
+* console client to setup and run swat test suites 
+* ability to run tests remotely over rest API 
+* custom plugin repositories support by design 
 
 # INSTALL
 
 cpanm Sparrow
 
+# DEPENDENCIES 
+
+curl, git, bash, swat
 
 # USAGE
 

@@ -34,7 +34,9 @@ cpanm Sparrow
 
 ## attach sites to project
 
-    sparrow project foo add_site nginx_proxy 127.0.0.1
+*sparrow project $project_name add_site $site_name $base_url* - swat site is testable application, having basic url to run swat tests against:
+
+    sparrow project foo add_site nginx_proxy http://127.0.0.1 
     sparrow project foo add_site tomcat_app 127.0.0.1:8080
 
 ## run swat tests

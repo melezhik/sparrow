@@ -57,3 +57,11 @@ cpanm Sparrow
 
 
 
+## misc
+
+    # list installed plugins
+    sparrow plg list --local
+
+
+
+

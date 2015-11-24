@@ -7,19 +7,29 @@ object=$1
 if test "${object}" = "plg"; then
     action=$2
     if test "${action}" = "list"; then
-        cat plg.list
+        options=$3||''
+
+        if test "${options}" = "--local"; then
+            mkdir -p plugins
+            ls -d1 plugins/*
+        else
+            cat plg.list
+        fi
+
+
     elif test "${action}" = "install"; then
         export plg_id=$3
         mkdir -p plugins
         git_url=`perl -n -e 'chomp; next unless /\S/; @foo = split; print $foo[1] if $foo[0]=~/$ENV{plg_id}/' plg.list`
         echo "install plugin $plg_id from $git_url ... "
-        git clone $git_url plugins/
+        git clone $git_url plugins/$plg_id
     fi
 else
     echo "usage: sparrow project|plg action args"
     echo "where action: list|install|create|add_site|check_site|swat_setup. and args depend on action"
     echo "examples:"
     echo -e "\tsparrow plg list"
+    echo -e "\tsparrow plg list --local"
     echo -e "\tsparrow plg install nginx"
     echo -e "\tsparrow project foo create"
     echo -e "\tsparrow project foo add_plg nginx"

@@ -34,7 +34,7 @@ cpanm Sparrow
 
 ## attach sites to project
 
-*sparrow project $project_name add_site $site_name $base_url* - swat site is testable application, having basic url to run swat tests against. Base url parameter should be curl compliant:
+*sparrow project $project_name add_site $site_name $base_url* - swat site - is a web application to run swat tests against. Base url parameter should be curl compliant:
 
     sparrow project foo add_site nginx_proxy http://127.0.0.1 
     sparrow project foo add_site tomcat_app 127.0.0.1:8080
@@ -42,12 +42,14 @@ cpanm Sparrow
 
 ## run swat tests
 
-*sparrow project $project_name $site_name $plugin_name* - runs swat test suite against project's site:
+*sparrow project $project_name check_site $site_name $plugin_name* - runs swat test suite against project's site:
 
     sparrow project foo check_site nginx_proxy nginx
     sparrow project foo check_site tomcat_app nginx
 
 ## customize swat settings for site
+
+*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* - setup swat ini file for given site:
 
     cat /path/to/swat.ini
 
@@ -70,6 +72,5 @@ cpanm Sparrow
 
     # list installed plugins
     sparrow plg list --local
-
 
 

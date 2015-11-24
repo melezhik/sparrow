@@ -11,12 +11,14 @@ cpanm Sparrow
 
 ## create a project
 
-sparrow project $name create - create a sparrow project, basically is a container to runs swat rests against different applications:
+*sparrow project $name create* - create a sparrow project, basically is a container to runs swat rests against different applications:
 
     sparrow project foo create
 
 
-## download necessary swat plugins
+## download and install swat plugins
+
+*sparrow plg install $plugin_name* - swat plugin is distributable swat test suite:
 
     sparrow plg list
     sparrow plg install nginx

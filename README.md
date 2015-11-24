@@ -49,12 +49,10 @@ cpanm Sparrow
 ## run swat tests remotely
 
     # runs sparrow rest API daemon
-
     sparrowd
 
-
-    curl 127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
-
+    # runs swat tests over http call
+    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
 
 
 ## misc

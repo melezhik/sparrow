@@ -89,3 +89,11 @@ Various commands not listed in main section:
     # list installed plugins
     sparrow plg list --local
 
+# SWAT PLUGINS
+
+Swat plugins are distributable swat test suites installed from github git repositories. By default sparrow does not install any plugins, but one could easily install them using sparrow plugin list file. 
+
+Sparrow plugin list file is text file with lines of following format:
+
+    $plugin_name $github_repo_url
+

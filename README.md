@@ -11,7 +11,7 @@ cpanm Sparrow
 
 ## create a project
 
-*sparrow project $name create* - create a sparrow project, basically is a container to runs swat rests against different applications:
+*sparrow project $project_name create* - create a sparrow project, basically is a container to runs swat rests against different applications:
 
     sparrow project foo create
 
@@ -26,6 +26,8 @@ cpanm Sparrow
 
 
 ## attach plugins to project
+
+*sparrow project $project_name add_plg $plugin_name* - swat project could contain one or more swat plugins:
 
     sparrow project foo add_plg nginx 
     sparrow project foo add_plg tomcat

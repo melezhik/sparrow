@@ -11,6 +11,8 @@ cpanm Sparrow
 
 ## create a project
 
+sparrow project $name create - create a sparrow project, basically is a container to runs swat rests against different applications:
+
     sparrow project foo create
 
 

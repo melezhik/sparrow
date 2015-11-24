@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+object=$1
+
+
+if test "${object}" = "plg"; then
+    action=$2
+    if test "${action}" = "list"; then
+        cat plg.list
+    elif test "${action}" = "install"; then
+        git_url=$3
+        mkdir -p plugins
+        git clone $git_url plugins/
+    fi
+else
+    echo "usage: sparrow project|plg action args"
+    echo "where action: list|install|create|add_site|check_site|swat_setup. and args depend on action"
+    echo "examples:"
+    echo -e "\tsparrow plg list"
+    echo -e "\tsparrow plg install nginx"
+    echo -e "\tsparrow project foo create"
+    echo -e "\tsparrow project foo add_plg nginx"
+    echo -e "\tsparrow project foo add_plg tomcat"
+    echo -e "\tsparrow project foo add_plg tomcat"
+    echo -e "\tsparrow project foo add_site nginx_proxy 127.0.0.1"
+    echo -e "\tsparrow project foo add_site tomcat_app 127.0.0.1:8080"
+    echo -e "\tsparrow project foo check_site nginx_proxy nginx"
+    echo -e "\tsparrow project foo check_site tomcat_app nginx"
+    echo -e "\tsparrow project foo swat_setup nginx_proxy /path/to/swat.ini"
+    echo;
+    echo "follow doc site - https://github.com/melezhik/sparrow to get more"
+fi
+

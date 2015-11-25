@@ -72,7 +72,15 @@ if ($object eq  'project'){
     }elsif( $action  eq 'info'){
 
         project_info($name);
+
+    }elsif( $action  eq 'check_site'){
+
+        my $sid = shift @ARGV;
+        my $pid = shift @ARGV;
+
+        check_site($name,$sid,$pid);
     }
+
 }
 
 if ( $object eq 'projects' ){
@@ -212,7 +220,7 @@ sub project_info {
     print "\n\n\sites:\n\n";
 
     for my $s (<projects/$project/sites/*>){
-        my $base_url = site_base_url($project,$s);
+        my $base_url = site_base_url($project,basename($s));
         print "\t", basename($s)," [$base_url] \n";
     }
 
@@ -266,10 +274,13 @@ sub add_site_to_project {
 
 sub check_site {
 
-    my $project = shift or croak "usage: check_site(project,site)";
-    my $sid = shift or croak "usage: check_site(project,site)";
+    my $project = shift or croak "usage: check_site(project,site,plugin)";
+    my $sid = shift or croak "usage: check_site(project,site,plugin)";
+    my $pid = shift or croak "usage: check_site(project,site,plugin)";
 
-    execute_shell_command("cd projects/$project/sites/$sid && swat ");
+    my $site_base_url = site_base_url($project,$sid);
+
+    exec "cd projects/$project/plugins/$pid && swat ./ $site_base_url";
 
 }
 
@@ -316,7 +327,10 @@ sub execute_shell_command {
 
     my $cmd = shift;
 
+    warn $cmd;
+
     croak "failed execute: $cmd" unless system($cmd) == 0;
 
+    
 }
 

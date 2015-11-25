@@ -34,14 +34,14 @@ curl, git, bash, swat
     sparrow plg install nginx
     sparrow plg install tomcat
 
-## attach plugins to project
+## link plugins to project
 
 *sparrow project $project_name add_plg $plugin_name* - swat project could contain one or more swat plugins:
 
     sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
 
-## attach sites to project
+## link sites to project
 
 *sparrow project $project_name add_site $site_name $base_url* - swat site - is a web application to run swat tests against. Base url parameter should be curl compliant:
 

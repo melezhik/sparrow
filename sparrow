@@ -211,12 +211,9 @@ sub project_info {
 
     print "\n\n\sites:\n\n";
 
-    for my $p (<projects/$project/sites/*>){
-        open F, "$p/base_url" or croak "can't open file $p/base_url to read";
-        my $base_url = <F>;
-        chomp $base_url;
-        close F;
-        print "\t", basename($p)," [$base_url] \n";
+    for my $s (<projects/$project/sites/*>){
+        my $base_url = site_base_url($project,$s);
+        print "\t", basename($s)," [$base_url] \n";
     }
 
 }
@@ -267,6 +264,15 @@ sub add_site_to_project {
 }
 
 
+sub check_site {
+
+    my $project = shift or croak "usage: check_site(project,site)";
+    my $sid = shift or croak "usage: check_site(project,site)";
+
+    execute_shell_command("cd projects/$project/sites/$sid && swat ");
+
+}
+
 
 sub usage {
 
@@ -292,6 +298,19 @@ sub usage {
 
 }
 
+
+sub site_base_url {
+
+    my $project = shift or croak "usage: site_base_url(project,site)";
+    my $sid = shift or croak "usage: site_base_url(project,site)";
+
+    open F, "projects/$project/sites/$sid/base_url" or croak "can't open file projects/$project/sites/$sid/base_url to read";
+    my $base_url = <F>;
+    chomp $base_url;
+    close F;
+    $base_url;
+    
+}
 
 sub execute_shell_command {
 

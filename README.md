@@ -5,15 +5,15 @@ Sparrow - is a tiny monitoring tool based on swat tests.
 # FEATURES
 
 * easy install and setup
-* console client to setup and run swat test suites 
-* ability to run tests remotely over rest API 
-* custom plugin repositories support by design 
+* console client to setup and run swat test suites
+* ability to run tests remotely over rest API
+* custom plugin repositories support by design
 
 # INSTALL
 
 cpanm Sparrow
 
-# DEPENDENCIES 
+# DEPENDENCIES
 
 curl, git, bash, swat
 
@@ -28,7 +28,7 @@ curl, git, bash, swat
 
 ## download and install swat plugins
 
-*sparrow plg install $plugin_name* - swat plugin is distributable swat test suite:
+*sparrow plg install $plugin_name* - swat plugin is distributed swat test suite:
 
     sparrow plg list
     sparrow plg install nginx
@@ -38,14 +38,14 @@ curl, git, bash, swat
 
 *sparrow project $project_name add_plg $plugin_name* - swat project could contain one or more swat plugins:
 
-    sparrow project foo add_plg nginx 
+    sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
 
 ## attach sites to project
 
 *sparrow project $project_name add_site $site_name $base_url* - swat site - is a web application to run swat tests against. Base url parameter should be curl compliant:
 
-    sparrow project foo add_site nginx_proxy http://127.0.0.1 
+    sparrow project foo add_site nginx_proxy http://127.0.0.1
     sparrow project foo add_site tomcat_app 127.0.0.1:8080
     sparrow project foo add_site tomcat_app my.host/foo/bar
 
@@ -63,7 +63,7 @@ curl, git, bash, swat
     cat /path/to/swat.ini
 
         port=88
-        prove_options='-sq'        
+        prove_options='-sq'      
 
     sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
 
@@ -80,7 +80,7 @@ More information in swat ini files syntax could be found here - (https://github.
     curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
 
 
-## misc commands 
+## misc commands
 
 Various commands not listed in main section:
 
@@ -90,7 +90,7 @@ Various commands not listed in main section:
 
 # SWAT PLUGINS
 
-Swat plugins are distributable swat test suites installed from github git repositories. 
+Swat plugins are distributed swat test suites installed from remote git repositories.
 
 By default sparrow does not install any plugins, but one could easily install ones using sparrow plugin list.
 
@@ -110,7 +110,7 @@ Where git_repo_url is git repository URL, and plugin_name is name of swat plugin
 * create your swat test suite:
 
     * create local git repository
-    * create swat tests 
+    * create swat tests
     * run swat test to ensure that they works fine
     * create README.md ( optional, but will be useful for  plugin users )
     * create cpanfile to declare perl dependencies
@@ -134,13 +134,26 @@ This is simple example of creating plugin with a  single swat story:
 That's it. To use your freshly baked plugin just say this:
 
 
-    echo my-plugin $your-remote-git-repository >> swarrow.list
-    swarrow plg install my-plugin
+    echo my-plugin $your-remote-git-repository >> sparrow.list
+    sparrow plg install my-plugin
 
 
+# Author
+
+[Aleksei Melezhik](mailto:melezhik@gmail.com)
+
+# Home page
+
+https://github.com/melezhik/sparrow
+
+# COPYRIGHT
+
+Copyright 2015 Alexey Melezhik.
+
+This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
+# Thanks
 
-
-    
+* to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
 

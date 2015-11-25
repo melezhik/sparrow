@@ -92,7 +92,6 @@ sub show_local_plugins {
     print "locally installed swat plugins:\n\n";
 
     for my $p (<plugins/*>){
-        next if $p eq 'plugins/*';
         print basename($p),"\n";
     }
 }

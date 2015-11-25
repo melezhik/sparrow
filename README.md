@@ -22,13 +22,17 @@ curl, git, bash, swat
 
 ## create a project
 
-*sparrow project $project_name create* - create a sparrow project, basically is a container to runs swat rests against different applications:
+*sparrow project $project_name create* 
+
+Create a sparrow project. sparrow project is a container to runs swat rests against different applications.
 
     sparrow project foo create
 
 ## download and install swat plugins
 
-*sparrow plg install $plugin_name* - swat plugin is distributed swat test suite:
+*sparrow plg install $plugin_name* 
+
+Swat plugin is distributed swat test suite. one could install it and then run ( see check_site action ).
 
     sparrow plg list
     sparrow plg install nginx
@@ -36,14 +40,18 @@ curl, git, bash, swat
 
 ## link plugins to project
 
-*sparrow project $project_name add_plg $plugin_name* - swat project could contain one or more swat plugins:
+*sparrow project $project_name add_plg $plugin_name* 
+
+Swat project links to one or more swat plugins. Linked swat plugins couuld be run against sites in swat project
 
     sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
 
 ## link sites to project
 
-*sparrow project $project_name add_site $site_name $base_url* - swat site - is a web application to run swat tests against. Base url parameter should be curl compliant:
+*sparrow project $project_name add_site $site_name $base_url* 
+
+Swat site is a web application to run swat tests against. $Base_url parameter should be curl compliant and is a root application url to send http requests to.
 
     sparrow project foo add_site nginx_proxy http://127.0.0.1
     sparrow project foo add_site tomcat_app 127.0.0.1:8080
@@ -51,14 +59,20 @@ curl, git, bash, swat
 
 ## run swat tests
 
-*sparrow project $project_name check_site $site_name $plugin_name* - runs swat test suite against project's site:
+*sparrow project $project_name check_site $site_name $plugin_name* 
+
+Once one configure project, sites and plugins it's possible to run swat test suites against different applications:
 
     sparrow project foo check_site nginx_proxy nginx
     sparrow project foo check_site tomcat_app nginx
 
 ## customize swat settings for site
 
-*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* - setup [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site:
+*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* 
+
+Swat_setup action allow to customize swat settings, using swat.ini file format.
+
+This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site:
 
     cat /path/to/swat.ini
 
@@ -115,7 +129,7 @@ Where git_repo_url is git repository URL, and plugin_name is name of swat plugin
 
 ## Creating swat plugins
 
-* get know what [swat](https://github.com/melezhik/swat) is and how to create swat tests for various web applications
+* get know what [swat](https://github.com/melezhik/swat) is and how to create swat tests for various web applications.
 
 * create your swat test suite:
 

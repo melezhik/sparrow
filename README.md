@@ -24,7 +24,9 @@ curl, git, bash, swat
 
 *sparrow project $project_name create* 
 
-Create a sparrow project. sparrow project is a container to runs swat rests against different applications.
+Create a sparrow project. Sparrow project is a container for swat test suites and applications. 
+
+Sparrow project allow to run swat tests against different applications.
 
     sparrow project foo create
 
@@ -42,7 +44,7 @@ Swat plugin is distributed swat test suite. one could install it and then run ( 
 
 *sparrow project $project_name add_plg $plugin_name* 
 
-Swat project links to one or more swat plugins. Linked swat plugins couuld be run against sites in swat project
+Swat project links to one or more swat plugins. Linked swat plugins couuld be run against sites in swat project.
 
     sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
@@ -61,7 +63,7 @@ Swat site is a web application to run swat tests against. $Base_url parameter sh
 
 *sparrow project $project_name check_site $site_name $plugin_name* 
 
-Once one configure project, sites and plugins it's possible to run swat test suites against different applications:
+Once one configure project, sites and plugins it's possible to run swat test suites against different applications.
 
     sparrow project foo check_site nginx_proxy nginx
     sparrow project foo check_site tomcat_app nginx
@@ -72,7 +74,7 @@ Once one configure project, sites and plugins it's possible to run swat test sui
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
-This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site:
+This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site.
 
     cat /path/to/swat.ini
 
@@ -85,7 +87,9 @@ More information in swat ini files syntax could be found here - (https://github.
 
 ## run swat tests remotely
 
-*GET /$project_name/check_site/$site_name/$plugin_name* - sparrow rest API allow to run swat test suites remotely over http:
+*GET /$project_name/check_site/$site_name/$plugin_name* 
+
+Sparrow rest API allow to run swat test suites remotely over http.
 
     # runs sparrow rest API daemon
     sparrowd
@@ -96,7 +100,7 @@ More information in swat ini files syntax could be found here - (https://github.
 
 # MISC COMMANDS
 
-Various commands not listed in main section:
+Various commands not listed in main section.
 
 ## show projects list
 
@@ -131,7 +135,7 @@ Where git_repo_url is git repository URL, and plugin_name is name of swat plugin
 
 * get know what [swat](https://github.com/melezhik/swat) is and how to create swat tests for various web applications.
 
-* create your swat test suite:
+* create your swat test suite
 
     * create local git repository
     * create swat tests
@@ -143,7 +147,7 @@ Where git_repo_url is git repository URL, and plugin_name is name of swat plugin
     * push your changes
 
 
-This is simple example of creating plugin with a  single swat story:
+This is simple example of creating plugin with a  single swat story.
 
     git init .
     echo "local" > .gitignore

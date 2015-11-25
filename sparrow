@@ -102,7 +102,15 @@ sub install_plugin {
     my $pid = shift;
 
     my $list = read_plugin_list('as_hash');
+
+
     if ($list->{$pid}){
+        if (-d "plugins/$pid"){
+            print "plugin $pid already exist!\n";
+            print "you should remove plugins/$pid manualy and run `sparrow install $pid` to reinstall it\n";
+            exit(1) 
+        }
+        print "installing plugin $pid ...\n";
         execute_shell_command("git clone $list->{$pid}->{url} plugins/$pid");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
@@ -117,6 +125,7 @@ sub update_plugin {
     my $list = read_plugin_list('as_hash');
 
     if ($list->{$pid}){
+        print "updating plugin $pid ...\n";
         execute_shell_command("cd plugins/$pid && git pull");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
@@ -154,7 +163,7 @@ sub execute_shell_command {
 
     my $cmd = shift;
 
-    croak "failed execute: $cmd" unless system($cmd);
+    croak "failed execute: $cmd" unless system($cmd) == 0;
 
 }
 

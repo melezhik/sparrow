@@ -14,14 +14,35 @@ unless (@ARGV) {
 }
 
 
-sub show_plugins {
 
-    my $list = read_plugin_list();
+my $object = shift @ARGV;
 
-    for my $p (@{$list}){
-        print "$p->{name} | $p->{url}\n";
+
+if ($object eq  'plg'){
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'list') {
+
+        my $options = join ' ', @ARGV;
+
+        if ($options =~ /--local/){
+            show_local_plugins();
+        } else {
+            show_plugins();
+        }
+
+    } elsif ( $action eq 'install'){
+
+        install_plugin( shift @ARGV );        
+
+    }elsif( $action  eq 'update'){
+
+        update_plugin( shift @ARGV );        
     }
 }
+
+## functions ###
 
 sub read_plugin_list {
 
@@ -51,6 +72,15 @@ sub read_plugin_list {
 
     return $retval;
 
+}
+
+sub show_plugins {
+
+    my $list = read_plugin_list();
+
+    for my $p (@{$list}){
+        print "$p->{name} | $p->{url}\n";
+    }
 }
 
 sub show_local_plugins {

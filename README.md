@@ -34,7 +34,9 @@ Sparrow project allow to run swat tests against different applications.
 
 *sparrow plg install $plugin_name* 
 
-Swat plugin is distributed swat test suite. one could install it and then run ( see check_site action ).
+Swat plugin is distributed swat test suite. 
+
+One could install it and then run ( see check_site action ).
 
     sparrow plg list
     sparrow plg install nginx
@@ -53,7 +55,9 @@ Swat project links to one or more swat plugins. Linked swat plugins couuld be ru
 
 *sparrow project $project_name add_site $site_name $base_url* 
 
-Swat site is a web application to run swat tests against. $Base_url parameter should be curl compliant and is a root application url to send http requests to.
+Swat site is a web application to run swat tests against. 
+
+$Base_url parameter should be curl compliant and is a root application url to send http requests to.
 
     sparrow project foo add_site nginx_proxy http://127.0.0.1
     sparrow project foo add_site tomcat_app 127.0.0.1:8080

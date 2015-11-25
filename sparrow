@@ -1,53 +1,78 @@
-#!/bin/bash
+#!/usr/bin/env perl
+
+use strict;
+use File::Find;
+use File::Path;
+
+use constant sparrow_list => 'sparrow.list';
+
+unless (@ARGV) {
+
+    usage();
+    exit;
+}
 
 
-object=$1
+sub show_plugins {
 
-if test "${object}" = "plg"; then
-    action=$2
-    if test "${action}" = "list"; then
-        options=$3||''
+    my $list = read_plugin_list();
 
-        if test "${options}" = "--local"; then
-            mkdir -p plugins
-            ls -d1 plugins/*
-        else
-            cat plg.list
-        fi
-    elif test "${action}" = "install"; then
-        export plg_id=$3
-        mkdir -p plugins
-        git_url=`perl -n -e 'chomp; next unless /\S/; @foo = split; print $foo[1] if $foo[0]=~/$ENV{plg_id}/' plg.list`
-        echo "install plugin $plg_id from $git_url ... "
-        git clone $git_url plugins/$plg_id
-    elif test "${action}" = "update"; then
-        export plg_id=$3
-        if test -d plugins/$plg_id; then
-            echo "updating plugin $plg_id ... "
-            cd plugins/$plg_id && git pull
-        else
-            echo "can't find plugin plugins/$plg_id"
-            exit 1
-        fi
-    fi
-else
-    echo "usage: sparrow project|plg action args"
-    echo "where action: create|list|install|update|add_site|check_site|swat_setup. and args depend on action"
-    echo "examples:"
-    echo -e "\tsparrow plg list"
-    echo -e "\tsparrow plg list --local"
-    echo -e "\tsparrow plg install nginx"
-    echo -e "\tsparrow plg update tomcat"
-    echo -e "\tsparrow project foo create"
-    echo -e "\tsparrow project foo add_plg nginx"
-    echo -e "\tsparrow project foo add_plg tomcat"
-    echo -e "\tsparrow project foo add_plg tomcat"
-    echo -e "\tsparrow project foo add_site nginx_proxy 127.0.0.1"
-    echo -e "\tsparrow project foo add_site tomcat_app 127.0.0.1:8080"
-    echo -e "\tsparrow project foo check_site nginx_proxy nginx"
-    echo -e "\tsparrow project foo check_site tomcat_app nginx"
-    echo -e "\tsparrow project foo swat_setup nginx_proxy /path/to/swat.ini"
-    echo;
-    echo "follow doc site - https://github.com/melezhik/sparrow to get more"
-fi
+    for my $p (@{$list}){
+        print "$p->{name} | $p->{url}\n";
+    }
+}
 
+sub read_plugin_list {
+
+    my @list;
+    open F, sparrow_list or die $!;
+    while ( my $i = <F> ){
+        chomp $i;
+        next unless $i=~/\S+/;
+        my @foo = split /\s+/, $i;
+        push @list, { name => $foo[0], url => $foo[1] } ;
+    }
+    close F;
+
+    [@list];
+
+}
+
+sub show_local_plugins {
+
+    mkpath('plugins/');
+    for my $p (<plugins/*>){
+        print "$p\n";
+    }
+}
+
+sub install_plugin {
+
+    my $pid = shift;
+    
+}
+
+
+
+sub usage {
+
+    print "usage: sparrow project|plg action args\n";
+    print "where action: create|list|install|update|add_site|check_site|swat_setup. and args depend on action\n";
+    print "examples:\n";
+    print "\tsparrow plg list\n";
+    print "\tsparrow plg list --local\n";
+    print "\tsparrow plg install nginx\n";
+    print "\tsparrow plg update tomcat\n";
+    print "\tsparrow project foo create\n";
+    print "\tsparrow project foo add_plg nginx\n";
+    print "\tsparrow project foo add_plg tomcat\n";
+    print "\tsparrow project foo add_plg tomcat\n";
+    print "\tsparrow project foo add_site nginx_proxy 127.0.0.1\n";
+    print "\tsparrow project foo add_site tomcat_app 127.0.0.1:8080\n";
+    print "\tsparrow project foo check_site nginx_proxy nginx\n";
+    print "\tsparrow project foo check_site tomcat_app nginx\n";
+    print "\tsparrow project foo swat_setup nginx_proxy /path/to/swat.ini";
+    print "\n";
+    print "follow doc site - https://github.com/melezhik/sparrow to get more\n";
+
+}

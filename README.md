@@ -58,14 +58,16 @@ curl, git, bash, swat
 
 ## customize swat settings for site
 
-*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* - setup swat ini file for given site:
+*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* - setup [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site:
 
     cat /path/to/swat.ini
 
         port=88
-        debug=1
+        prove_options='-sq'        
 
     sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
+
+More information in swat ini files syntax could be found here - (https://github.com/melezhik/swat#swat-ini-files)[https://github.com/melezhik/swat#swat-ini-files]
 
 ## run swat tests remotely
 
@@ -129,7 +131,13 @@ This is simple example of creating plugin with a  single swat story:
     git push origin master
 
 
-That's it.
+That's it. To use your freshly baked plugin just say this:
+
+
+    echo my-plugin $your-remote-git-repository >> swarrow.list
+    swarrow plg install my-plugin
+
+
 
 
 

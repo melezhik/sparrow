@@ -88,9 +88,51 @@ Various commands not listed in main section:
 
 # SWAT PLUGINS
 
-Swat plugins are distributable swat test suites installed from github git repositories. By default sparrow does not install any plugins, but one could easily install them using sparrow plugin list file. 
+Swat plugins are distributable swat test suites installed from github git repositories. 
 
-Sparrow plugin list file is text file with lines of following format:
+By default sparrow does not install any plugins, but one could easily install ones using sparrow plugin list.
 
-    $plugin_name $github_repo_url
+Sparrow plugin list is a text file, named *sparrow.list* with lines of following format:
+
+*$plugin_name $git_repo_url*
+
+Where git_repo_url is git repository URL, and plugin_name is name of swat plugin. For example:
+
+    swat-yars https://github.com/melezhik/swat-yars.git
+    metacpan https://github.com/CPAN-API/metacpan-monitoring.git
+
+## Creating swat plugins
+
+* get know what [swat](https://github.com/melezhik/swat) is and how to create swat tests for various web applications
+
+* create your swat test suite:
+
+    * create local git repository
+    * create swat tests 
+    * run swat test to ensure that they works fine
+    * create README.md ( optional, but will be useful for  plugin users )
+    * create cpanfile to declare perl dependencies
+    * commit your changes
+    * add remote git repository
+    * push your changes
+
+
+This is simple example of creating plugin with a  single swat story:
+
+    git init .
+    echo "local" > .gitignore
+    echo "require 'swat'" > cpanfile
+    echo 200 OK > get.txt
+    git add .
+    git commit -m 'my first swat plugin' -a
+    git remote add origin $your-remote-git-repository
+    git push origin master
+
+
+That's it.
+
+
+
+
+    
 

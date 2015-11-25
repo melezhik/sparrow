@@ -17,6 +17,11 @@ unless (@ARGV) {
 
 my $object = shift @ARGV;
 
+# initialization part 
+
+mkpath 'plugins';
+mkpath 'projects';
+
 
 if ($object eq  'plg'){
 
@@ -31,6 +36,26 @@ if ($object eq  'plg'){
         } else {
             show_plugins();
         }
+
+    } elsif ( $action eq 'install'){
+
+        install_plugin( shift @ARGV );        
+
+    }elsif( $action  eq 'update'){
+
+        update_plugin( shift @ARGV );        
+    }
+}
+
+if ($object eq  'project'){
+
+    my $name = shift @ARGV;
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'create') {
+
+        create_project($name);
 
     } elsif ( $action eq 'install'){
 
@@ -87,8 +112,6 @@ sub show_plugins {
 
 sub show_local_plugins {
 
-    mkpath('plugins/');
-
     print "locally installed swat plugins:\n\n";
 
     for my $p (<plugins/*>){
@@ -130,6 +153,46 @@ sub update_plugin {
         confess "can't find plugin $pid at sparrow list file\n";
     }
         
+}
+
+sub create_project {
+
+    my $project = shift;
+
+    if ( -d "projects/$project" ){
+        print "project $project already exists - nothing to do here ... \n\n"
+    } else {
+        mkpath "projects/$project";
+        mkpath "projects/$project/plugins";
+        mkpath "projects/$project/sites";
+        print "project $project successfuly created\n\n"
+    }
+
+
+}
+
+sub add_plugin_to_project {
+
+    my $project = shift;
+    my $pid = shift;
+
+    symlink "projects/$project/plugins/$pid", "plugins/$pid";
+
+
+}
+
+sub add_site_to_project {
+
+    my $project = shift;
+    my $sid = shift;
+    my $base_url;
+
+    mkpath "projects/$project/sites/$sid";
+    open F, "projects/$project/sites/$sid/base_url" or croak $!;
+    print F $base_url;
+    close F;
+    
+
 }
 
 

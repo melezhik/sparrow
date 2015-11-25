@@ -3,6 +3,7 @@
 use strict;
 use File::Path;
 use File::Basename;
+use File::Spec;
 use Carp;
 
 use constant sparrow_list => 'sparrow.list';
@@ -57,13 +58,16 @@ if ($object eq  'project'){
 
         create_project($name);
 
-    } elsif ( $action eq 'install'){
+    } elsif ( $action eq 'add_site' ){
 
-        install_plugin( shift @ARGV );        
+        my $sid = shift @ARGV;
+        my $base_url = shift @ARGV;
 
-    }elsif( $action  eq 'update'){
+        add_site_to_project($name, $sid, $base_url);
 
-        update_plugin( shift @ARGV );        
+    }elsif( $action  eq 'add_plg'){
+
+        add_plugin_to_project($name,shift @ARGV);
     }
 }
 
@@ -183,7 +187,7 @@ sub create_project {
         mkpath "projects/$project";
         mkpath "projects/$project/plugins";
         mkpath "projects/$project/sites";
-        print "project $project successfuly created\n\n"
+        print "project $project successfully created\n\n"
     }
 
 
@@ -191,25 +195,46 @@ sub create_project {
 
 sub add_plugin_to_project {
 
-    my $project = shift;
-    my $pid = shift;
+    my $project = shift or croak "usage: add_plugin_to_project(project,plugin)";
+    my $pid = shift or croak "usage: add_plugin_to_project(project,plugin)";
 
-    symlink "projects/$project/plugins/$pid", "plugins/$pid";
 
+    unless ( -d "plugins/$pid" ){
+        print "plugin $pid is not installed yet. run `sparrow plg install $pid` to install it\n";
+        exit(1);
+    }
+
+    unless ( -d "projects/$project" ){
+        print "project $project does not exist. run `sparrow project $project create` to create it it\n";
+        exit(1);
+    }
+
+    if ( -l "projects/$project/plugins/$pid" ){
+
+        print "projects/$project/plugins/$pid already exist - nothing to do here ... \n\n";
+
+    }else{
+
+        symlink File::Spec->rel2abs("plugins/$pid"), File::Spec->rel2abs("projects/$project/plugins/$pid") or 
+        croak "can't create symlink projects/$project/plugins/$pid ==> plugins/$pid";
+
+        print "plugin $pid successfully added to project $project\n\n";
+    }
 
 }
 
 sub add_site_to_project {
 
-    my $project = shift;
-    my $sid = shift;
-    my $base_url;
+    my $project = shift or croak "usage: add_site_to_project(project,site,base_url)";
+    my $sid = shift or croak "usage: add_site_to_project(project,site,base_url)";
+    my $base_url = shift or croak "usage: add_site_to_project(project,site,base_url)";
 
     mkpath "projects/$project/sites/$sid";
-    open F, "projects/$project/sites/$sid/base_url" or croak $!;
+    open F, ">", "projects/$project/sites/$sid/base_url" or croak "can't open file to write: projects/$project/sites/$sid/base_url";
     print F $base_url;
     close F;
     
+    print "site $sid successfully added to project $project\n\n";
 
 }
 

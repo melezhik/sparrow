@@ -13,13 +13,11 @@ cpanm Sparrow
 
     sparrow project foo create
 
-
 ## download necessary swat plugins
 
     sparrow plg list
     sparrow plg install nginx
     sparrow plg install tomcat
-
 
 ## attach plugins to project
 
@@ -44,7 +42,6 @@ cpanm Sparrow
         debug=1
 
     sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
-
 
 ## run swat tests remotely
 

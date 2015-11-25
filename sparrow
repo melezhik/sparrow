@@ -78,6 +78,8 @@ sub show_plugins {
 
     my $list = read_plugin_list();
 
+    print "available swat plugins:\n\n";
+
     for my $p (@{$list}){
         print "$p->{name} | $p->{url}\n";
     }
@@ -86,9 +88,12 @@ sub show_plugins {
 sub show_local_plugins {
 
     mkpath('plugins/');
+
+    print "locally installed swat plugins:\n\n";
+
     for my $p (<plugins/*>){
         next if $p eq 'plugins/*';
-        print $p, ' ', basename($p),"\n";
+        print basename($p),"\n";
     }
 }
 

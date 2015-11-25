@@ -74,6 +74,19 @@ sub install_plugin {
         
 }
 
+sub update_plugin {
+
+    my $pid = shift;
+
+    my $list = read_plugin_list('as_hash');
+    if ($list->{$pid}){
+        execute_shell_command("cd plugins/$pid && git pull");
+    }else{
+        confess "can't find plugin $pid at sparrow list file\n";
+    }
+        
+}
+
 
 
 sub usage {

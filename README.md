@@ -80,18 +80,23 @@ More information in swat ini files syntax could be found here - (https://github.
     curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
 
 
-## misc commands
+# MISC COMMANDS
 
 Various commands not listed in main section:
 
-* list projects
+## show projects list
 
-    sparrow projects
+*sparrow projects*
 
-* list installed plugins
+## show installed plugins
 
-    sparrow plg list --local
+*sparrow plg list --local*
 
+## show project data ( sites, plugins )
+
+*sparrow project $project_name info*
+
+    sparrow project foo info
 
 # SWAT PLUGINS
 

@@ -3,6 +3,7 @@
 use strict;
 use File::Find;
 use File::Path;
+use Carp;
 
 use constant sparrow_list => 'sparrow.list';
 
@@ -25,16 +26,30 @@ sub show_plugins {
 sub read_plugin_list {
 
     my @list;
-    open F, sparrow_list or die $!;
+    my %list;
+
+    my $mode = shift || 'as_array';
+
+    open F, sparrow_list or confess $!;
+
     while ( my $i = <F> ){
         chomp $i;
         next unless $i=~/\S+/;
         my @foo = split /\s+/, $i;
         push @list, { name => $foo[0], url => $foo[1] } ;
+        $list{$foo[0]} = { name => $foo[0], url => $foo[1] };
     }
     close F;
 
-    [@list];
+    my $retval;
+
+    if ($mode eq 'as_hash'){
+        $retval = \%list;
+    }else{
+        $retval = \@list;
+    }
+
+    return $retval;
 
 }
 
@@ -49,7 +64,14 @@ sub show_local_plugins {
 sub install_plugin {
 
     my $pid = shift;
-    
+
+    my $list = read_plugin_list('as_hash');
+    if ($list->{$pid}){
+        execute_shell_command("git clone $list->{$pid}->{url} plugins/$pid");
+    }else{
+        confess "can't find plugin $pid at sparrow list file\n";
+    }
+        
 }
 
 
@@ -76,3 +98,13 @@ sub usage {
     print "follow doc site - https://github.com/melezhik/sparrow to get more\n";
 
 }
+
+
+sub execute_shell_command {
+
+    my $cmd = shift;
+
+    croak "failed execute: $cmd" unless system($cmd);
+
+}
+

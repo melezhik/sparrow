@@ -138,7 +138,7 @@ That's it. To use your freshly baked plugin just say this:
     sparrow plg install my-plugin
 
 
-# Author
+# AUTHOR
 
 [Aleksei Melezhik](mailto:melezhik@gmail.com)
 
@@ -153,7 +153,7 @@ Copyright 2015 Alexey Melezhik.
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
-# Thanks
+# THANKS
 
 * to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
 

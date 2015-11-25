@@ -84,9 +84,14 @@ More information in swat ini files syntax could be found here - (https://github.
 
 Various commands not listed in main section:
 
+* list projects
 
-    # list installed plugins
+    sparrow projects
+
+* list installed plugins
+
     sparrow plg list --local
+
 
 # SWAT PLUGINS
 

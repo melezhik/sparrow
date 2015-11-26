@@ -79,6 +79,10 @@ if ($object eq  'project'){
         my $pid = shift @ARGV;
 
         check_site($name,$sid,$pid);
+    }else{ # default action
+
+        project_info($name);
+
     }
 
 }
@@ -199,7 +203,7 @@ sub create_project {
         mkpath "projects/$project";
         mkpath "projects/$project/plugins";
         mkpath "projects/$project/sites";
-        print "project $project successfully created\n\n"
+        print "project $project is successfully created\n\n"
     }
 
 
@@ -251,7 +255,7 @@ sub add_plugin_to_project {
         symlink File::Spec->rel2abs("plugins/$pid"), File::Spec->rel2abs("projects/$project/plugins/$pid") or 
         croak "can't create symlink projects/$project/plugins/$pid ==> plugins/$pid";
 
-        print "plugin $pid successfully added to project $project\n\n";
+        print "plugin $pid is successfully added to project $project\n\n";
     }
 
 }
@@ -262,12 +266,19 @@ sub add_site_to_project {
     my $sid = shift or croak "usage: add_site_to_project(project,site,base_url)";
     my $base_url = shift or croak "usage: add_site_to_project(project,site,base_url)";
 
-    mkpath "projects/$project/sites/$sid";
-    open F, ">", "projects/$project/sites/$sid/base_url" or croak "can't open file to write: projects/$project/sites/$sid/base_url";
-    print F $base_url;
-    close F;
-    
-    print "site $sid successfully added to project $project\n\n";
+    if (-d "projects/$project/sites/$sid" ){
+
+        set_site_base_url($project,$sid,$base_url);
+
+        print "site $sid is successfully updated at project $project\n\n";
+
+    }else{
+
+        mkpath "projects/$project/sites/$sid";
+        set_site_base_url($project,$sid,$base_url);
+        print "site $sid is successfully added to project $project\n\n";
+        
+    }
 
 }
 
@@ -323,11 +334,23 @@ sub site_base_url {
     
 }
 
+sub set_site_base_url {
+
+    my $project = shift or croak "usage: set_site_base_url(project,site,base_url)";
+    my $sid = shift or croak "usage: set_site_base_url(project,site,base_url)";
+    my $base_url = shift or croak "usage: set_site_base_url(project,site,base_url)";
+
+    open F, ">", "projects/$project/sites/$sid/base_url" or croak "can't open file to write: projects/$project/sites/$sid/base_url";
+    print F $base_url;
+    close F;
+    
+}
+
 sub execute_shell_command {
 
     my $cmd = shift;
 
-    warn $cmd;
+    # warn $cmd;
 
     croak "failed execute: $cmd" unless system($cmd) == 0;
 

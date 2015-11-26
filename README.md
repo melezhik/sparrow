@@ -139,7 +139,7 @@ No sparrow plugins installed by default. There is two alternative for you:
 
 # COMMUNITY SPARROW PLUGINS
 
-Community sparrow plugins are public plugins listed at  http://swat.pm/sparrow.list
+Community sparrow plugins are public plugins listed at [https://github.com/melezhik/sparrow-hub](https://github.com/melezhik/sparrow-hub)
 
 Sparrow community members are encouraged to create a useful plugins and have them listed here.
 

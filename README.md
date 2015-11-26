@@ -22,7 +22,7 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 ## setup sparrow plugin list
 
 
-In case you want to play with community plugins - nothing to do - sparrow plugins list already here.
+In case you want to play with community plugins - nothing to do - sparrow plugins list is already here.
 
 In case you want add some private plugins:
 

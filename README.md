@@ -9,18 +9,26 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 * ability to run tests remotely over rest API
 * custom plugin repositories support by design
 
+# DEPENDENCIES
+
+git, bash, carton
+
 # INSTALL
 
+    # yes, you need a git
+    sudo yum install git
+
+    # minimal perl depencies, Carton only
     cpanm Carton
+
+    # checkout sparrow code
     git clone https://github.com/melezhik/sparrow.git
     cd sparrow
 
 
 # CONFIGURATION
 
-
 ## setup sparrow plugin list
-
 
 In case you want to play with community plugins - nothing to do - sparrow plugins list is already here.
 
@@ -29,12 +37,8 @@ In case you want add some private plugins:
     echo 'sparrow.list' >> .gitignore
     echo 'my-cool-plugin git-remote-repo-url' >> sparrow.list
 
-More about sparrow plugins is written below, [sparrow plugins section](#sparrow-plugins)
+More about sparrow plugins is written below in [sparrow plugins section](#sparrow-plugins)
 
-
-# DEPENDENCIES
-
-git, bash, carton
 
 # USAGE
 

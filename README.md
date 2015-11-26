@@ -1,6 +1,6 @@
 # SYNOPSIS
 
-Sparrow - [swat]() based monitoring tool.
+Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
 # FEATURES
 
@@ -11,21 +11,21 @@ Sparrow - [swat]() based monitoring tool.
 
 # INSTALL
 
-cpanm Sparrow
+    cpanm Sparrow
 
 # DEPENDENCIES
 
-curl, git, bash
+git, bash, carton
 
 # USAGE
 
 ## create a project
 
-*sparrow project $project_name create* 
+*sparrow project $project_name create*
 
-Create a sparrow project. 
+Create a sparrow project.
 
-Sparrow project is a container for swat test suites and applications. 
+Sparrow project is a container for swat test suites and applications.
 
 Sparrow project allow to run swat tests against different applications.
 
@@ -39,12 +39,11 @@ For example:
 
     sparrow project foo info
 
-
 ## download and install swat plugins
 
-*sparrow plg install $plugin_name* 
+*sparrow plg install $plugin_name*
 
-Sparrow plugin is a shareable swat test suite. 
+Sparrow plugin is a shareable swat test suite.
 
 One could install sparrow plugin and then run related swat tests, see [check_site](#run-swat-tests) action.
 
@@ -65,9 +64,9 @@ For example:
 
 ## link plugins to project
 
-*sparrow project $project_name add_plg $plugin_name* 
+*sparrow project $project_name add_plg $plugin_name*
 
-Swat project could link to one or more plugins. 
+Swat project could link to one or more plugins.
 
 Linked plugins could be run against sites in swat project.
 
@@ -77,9 +76,9 @@ Linked plugins could be run against sites in swat project.
 
 ## link sites to project
 
-*sparrow project $project_name add_site $site_name $base_url* 
+*sparrow project $project_name add_site $site_name $base_url*
 
-Sparrow site is a abstraction of web application to run swat tests against. 
+Sparrow site is a abstraction of web application to run swat tests against.
 
 Site's $base_url parameter is root http URL to send http requests to.
 
@@ -91,7 +90,7 @@ $Base_url should be curl compliant. Examples:
 
 ## run swat tests
 
-*sparrow project $project_name check_site $site_name $plugin_name* 
+*sparrow project $project_name check_site $site_name $plugin_name*
 
 Once sparrow project is configured and has some  sites and plugins one could start running swat test suites:
 
@@ -103,7 +102,7 @@ Once sparrow project is configured and has some  sites and plugins one could sta
 
 ## customize swat settings for site
 
-*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file* 
+*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file*
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
@@ -112,7 +111,7 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
     cat /path/to/swat.ini
 
         port=88
-        prove_options='-sq'      
+        prove_options='-sq'    
 
     sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
 
@@ -120,7 +119,7 @@ More information in swat ini files syntax could be found here - (https://github.
 
 ## run swat tests remotely
 
-*GET /$project_name/check_site/$site_name/$plugin_name* 
+*GET /$project_name/check_site/$site_name/$plugin_name*
 
 Sparrow rest API allow to run swat test suites remotely over http.
 
@@ -147,7 +146,7 @@ Sparrow community members are encouraged to create a useful plugins and have the
 # PRIVATE SPARROW PLUGINS
 
 Private sparrow plugins are plugins you create for yourself and don't want to share with others.
-As with community plugins privite plugins have to be listed.
+As with community plugins private plugins have to be listed.
 
 
 # SPARROW PLUGINS LIST
@@ -159,7 +158,7 @@ Sparrow plugins list (SPL) is a text file, named *sparrow.list* with lines of fo
 Where:
 
 * git_repo_url is git repository URL
-* plugin_name is name of swat plugin. 
+* plugin_name is name of swat plugin.
 
 For example:
 
@@ -174,24 +173,24 @@ To start using sparrow plugins just create SPL file and place it at ~/sparrow/sp
 
 # AUTHORIZATION ISSUE
 
-As technically speaking sparrow plugins are just listing in text files, there is no explicit difference between 
+As technically speaking sparrow plugins are just listing in text files, there is no explicit difference between
 public and private plugins. From other hand sparrow relies on git to download install plugins, so this sort
-of authentication/authorization issues is addressed to remote git repositoty owner to setup a proper access policies. 
+of authentication/authorization issues is addressed to remote git repository owner to setup a proper access policies.
 
 
 # CREATING SPARROW PLUGINS
 
-To accomplish this task one should be able to 
+To accomplish this task one should be able to
 
 * init local git repository and map it to remote one
 
-* create swat test suite 
+* create swat test suite
 
 * add sparrow related configuration
 
 * commit changes and then push into remote
 
-## Init git repository 
+## Init git repository
 
 Sparrow expects your swat test suite will be under git and will be accessed as remote git repository:
 
@@ -206,7 +205,7 @@ Sparrow expects your swat test suite will be under git and will be accessed as r
 ## Create swat test suite
 
 To get know what swat is and how to create swat tests for various web applications please follow swat project documentation -
-[https://github.com/melezhik/swat](https://github.com/melezhik/swat). 
+[https://github.com/melezhik/swat](https://github.com/melezhik/swat).
 
 A simplest swat test suite to check if GET / returns 200 OK would be like this:
 
@@ -216,14 +215,14 @@ A simplest swat test suite to check if GET / returns 200 OK would be like this:
 
 ## Add sparrow related info
 
-As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies and execute script 
-the only minimal requirement is having valid cpanfile on the root directory of your swat test suite project. 
+As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies and execute script
+the only minimal requirement is having valid cpanfile on the root directory of your swat test suite project.
 
 For example:
 
 
     # cat cpanfile
-    
+   
     # yes, we need a swat to run our tests
     require 'swat';
 
@@ -237,7 +236,7 @@ To create sparrow plugin:
 
     * create local git repository
     * create swat tests
-    * run swat test to ensure that they works fine ( this one is optional but realy useful )
+    * run swat test to ensure that they works fine ( this one is optional but really useful )
     * create cpanfile to declare perl dependencies
     * commit your changes
     * add remote git repository

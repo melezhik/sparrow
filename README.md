@@ -11,7 +11,26 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
 # INSTALL
 
-    cpanm Sparrow
+    cpanm Carton
+    git clone https://github.com/melezhik/sparrow.git
+    cd sparrow
+
+
+# CONFIGURATION
+
+
+## setup sparrow plugin list
+
+
+In case you want to play with community plugins - nothing to do - sparrow plugins list already here.
+
+In case you want add some private plugins:
+
+    echo 'sparrow.list' >> .gitignore
+    echo 'my-cool-plugin git-remote-repo-url' >> sparrow.list
+
+More about sparrow plugins is written below, [sparrow plugins section](#sparrow-plugins)
+
 
 # DEPENDENCIES
 

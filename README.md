@@ -4,10 +4,10 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
 # FEATURES
 
-* easy install and setup
 * console client to setup and run swat test suites
-* ability to run tests remotely over rest API
-* custom plugin repositories support by design
+* runs swat tests suites against web applications
+* ability to run tests remotely over rest API (TODO)
+* community and private plugins support
 
 # DEPENDENCIES
 
@@ -126,6 +126,8 @@ Once sparrow project is configured and has some  sites and plugins one could sta
 
 ## customize swat settings for site
 
+NOT IMPLIMENTED YET.
+
 *sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file*
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
@@ -142,6 +144,8 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
 More information in swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
 ## run swat tests remotely
+
+NOT IMPLIMENTED YET.
 
 *GET /$project_name/check_site/$site_name/$plugin_name*
 

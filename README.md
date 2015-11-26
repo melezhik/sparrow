@@ -11,7 +11,7 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
 # DEPENDENCIES
 
-git, bash, carton
+git, bash
 
 # INSTALL
 
@@ -19,26 +19,27 @@ git, bash, carton
     sudo yum install git
 
     # minimal perl depencies, Carton only
-    cpanm Carton
-
-    # checkout sparrow code
-    git clone https://github.com/melezhik/sparrow.git
-    cd sparrow
+    cpanm Sparrow
 
 
 # CONFIGURATION
 
+    # this is root directory for sparrow stuff
+
+    mkdir ~/sparrow
+
 ## setup sparrow plugin list
 
-In case you want to play with community plugins - nothing to do - sparrow plugins list is already here.
+In case you want to play with community plugins:
+
+
+    curl https://raw.githubusercontent.com/melezhik/sparrow-hub/master/sparrow.list > ~/sparrow/sparrow.list
 
 In case you want add some private plugins:
 
-    echo 'sparrow.list' >> .gitignore
-    echo 'my-cool-plugin git-remote-repo-url' >> sparrow.list
+    echo 'my-cool-plugin git-remote-repo-url' >> ~/sparrow/sparrow.list
 
 More about sparrow plugins is written below in [sparrow plugins section](#sparrow-plugins)
-
 
 # USAGE
 

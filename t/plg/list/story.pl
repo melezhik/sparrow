@@ -1,2 +1,2 @@
-print `./sparrow plg list`;
+print `sparrow plg list`;
 

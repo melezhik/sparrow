@@ -16,16 +16,13 @@ git, bash
 
 # INSTALL
 
-    # yes, you need a git
     sudo yum install git
-
-    # minimal perl depencies, Carton only
     cpanm Sparrow
 
 
 # CONFIGURATION
 
-    # this is root directory for sparrow stuff
+    # this is a root directory for sparrow stuff
 
     mkdir ~/sparrow
 
@@ -156,14 +153,14 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
 
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
+    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/swat-nginx
 
 
 # SPARROW PLUGINS
 
 Sparrow plugins are shareable swat test suites installed from remote git repositories.
 
-No sparrow plugins installed by default. There is two alternative for you:
+No sparrow plugins installed by default. There are two posibilities for you:
 
 
 # COMMUNITY SPARROW PLUGINS

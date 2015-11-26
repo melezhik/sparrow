@@ -115,7 +115,7 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
 
     sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
 
-More information in swat ini files syntax could be found here - (https://github.com/melezhik/swat#swat-ini-files)[https://github.com/melezhik/swat#swat-ini-files]
+More information in swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
 ## run swat tests remotely
 

@@ -6,7 +6,8 @@ use File::Basename;
 use File::Spec;
 use Carp;
 
-use constant sparrow_list => 'sparrow.list';
+use constant spl_file       => "$ENV{HOME}/sparrow/sparrow.list";
+use constant sparrow_root   => "$ENV{HOME}/sparrow";
 
 unless (@ARGV) {
 
@@ -20,9 +21,7 @@ my $object = shift @ARGV;
 
 # initialization part 
 
-mkpath 'plugins';
-mkpath 'projects';
-
+init_sparrow_env();
 
 if ($object eq  'plg'){
 
@@ -103,7 +102,7 @@ sub read_plugin_list {
 
     my $mode = shift || 'as_array';
 
-    open F, sparrow_list or confess $!;
+    open F, spl_file or confess $!;
 
     while ( my $i = <F> ){
         chomp $i;
@@ -141,10 +140,15 @@ sub show_projects {
 
     print "sparrow project list:\n\n";
 
-    for my $p (<projects/*>){
+    my $root_dir = sparrow_root.'/projects/';
+
+    opendir(my $dh, $root_dir) || croak "can't opendir $root_dir: $!";
+
+    for my $p (sort { -M $root_dir.$a <=> -M $root_dir.$b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         print basename($p),"\n";
     }
 
+    closedir $dh;
 }
 
 
@@ -152,9 +156,16 @@ sub show_local_plugins {
 
     print "locally installed swat plugins:\n\n";
 
-    for my $p (<plugins/*>){
+    my $root_dir = sparrow_root.'/plugins';
+
+    opendir(my $dh, $root_dir) || croak "can't opendir $root_dir: $!";
+
+    for my $p (grep { ! /^\.{1,2}$/ } readdir($dh)){
         print basename($p),"\n";
     }
+
+    closedir $dh;
+
 }
 
 sub install_plugin {
@@ -165,13 +176,13 @@ sub install_plugin {
 
 
     if ($list->{$pid}){
-        if (-d "plugins/$pid"){
+        if (-d sparrow_root."/plugins/$pid"){
             print "plugin $pid already exist!\n";
             print "you should remove plugins/$pid manualy and run `sparrow install $pid` to reinstall it\n";
             exit(1) 
         }
         print "installing plugin $pid ...\n";
-        execute_shell_command("git clone $list->{$pid}->{url} plugins/$pid");
+        execute_shell_command("git clone $list->{$pid}->{url} ".sparrow_root."/plugins/$pid");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
     }
@@ -186,7 +197,7 @@ sub update_plugin {
 
     if ($list->{$pid}){
         print "updating plugin $pid ...\n";
-        execute_shell_command("cd plugins/$pid && git pull");
+        execute_shell_command("cd ".(sparrow_root)."/plugins/$pid && git pull");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
     }
@@ -197,12 +208,12 @@ sub create_project {
 
     my $project = shift;
 
-    if ( -d "projects/$project" ){
+    if ( -d sparrow_root."/projects/$project" ){
         print "project $project already exists - nothing to do here ... \n\n"
     } else {
-        mkpath "projects/$project";
-        mkpath "projects/$project/plugins";
-        mkpath "projects/$project/sites";
+        mkpath sparrow_root."/projects/$project";
+        mkpath sparrow_root."/projects/$project/plugins";
+        mkpath sparrow_root."/projects/$project/sites";
         print "project $project is successfully created\n\n"
     }
 
@@ -217,16 +228,30 @@ sub project_info {
 
     print "plugins:\n\n";
 
-    for my $p (<projects/$project/plugins/*>){
+    my $root_dir = sparrow_root."/projects/$project/plugins";
+
+    opendir(my $dh, $root_dir) || croak "can't opendir $root_dir: $!";
+
+    for my $p (grep { ! /^\.{1,2}$/ } readdir($dh)){
         print "\t", basename($p),"\n";
     }
 
+    closedir $dh;
+
+
     print "\n\n\sites:\n\n";
 
-    for my $s (<projects/$project/sites/*>){
+    my $root_dir = sparrow_root."/projects/$project/sites";
+
+    opendir(my $dh, $root_dir) || croak "can't opendir $root_dir: $!";
+
+    for my $s (grep { ! /^\.{1,2}$/ } readdir($dh)){
         my $base_url = site_base_url($project,basename($s));
         print "\t", basename($s)," [$base_url] \n";
     }
+
+    closedir $dh;
+
 
 }
 
@@ -236,23 +261,23 @@ sub add_plugin_to_project {
     my $pid = shift or croak "usage: add_plugin_to_project(project,plugin)";
 
 
-    unless ( -d "plugins/$pid" ){
+    unless ( -d sparrow_root."/plugins/$pid" ){
         print "plugin $pid is not installed yet. run `sparrow plg install $pid` to install it\n";
         exit(1);
     }
 
-    unless ( -d "projects/$project" ){
+    unless ( -d sparrow_root."/projects/$project" ){
         print "project $project does not exist. run `sparrow project $project create` to create it it\n";
         exit(1);
     }
 
-    if ( -l "projects/$project/plugins/$pid" ){
+    if ( -l sparrow_root."/projects/$project/plugins/$pid" ){
 
         print "projects/$project/plugins/$pid already exist - nothing to do here ... \n\n";
 
     }else{
 
-        symlink File::Spec->rel2abs("plugins/$pid"), File::Spec->rel2abs("projects/$project/plugins/$pid") or 
+        symlink File::Spec->rel2abs(sparrow_root."/plugins/$pid"), File::Spec->rel2abs(sparrow_root."/projects/$project/plugins/$pid") or 
         croak "can't create symlink projects/$project/plugins/$pid ==> plugins/$pid";
 
         print "plugin $pid is successfully added to project $project\n\n";
@@ -266,7 +291,7 @@ sub add_site_to_project {
     my $sid = shift or croak "usage: add_site_to_project(project,site,base_url)";
     my $base_url = shift or croak "usage: add_site_to_project(project,site,base_url)";
 
-    if (-d "projects/$project/sites/$sid" ){
+    if (-d sparrow_root."/projects/$project/sites/$sid" ){
 
         set_site_base_url($project,$sid,$base_url);
 
@@ -274,7 +299,7 @@ sub add_site_to_project {
 
     }else{
 
-        mkpath "projects/$project/sites/$sid";
+        mkpath sparrow_root."/projects/$project/sites/$sid";
         set_site_base_url($project,$sid,$base_url);
         print "site $sid is successfully added to project $project\n\n";
         
@@ -291,7 +316,7 @@ sub check_site {
 
     my $site_base_url = site_base_url($project,$sid);
 
-    exec "cd projects/$project/plugins/$pid && swat ./ $site_base_url";
+    exec "cd ".sparrow_root."/projects/$project/plugins/$pid && swat ./ $site_base_url";
 
 }
 
@@ -326,7 +351,7 @@ sub site_base_url {
     my $project = shift or croak "usage: site_base_url(project,site)";
     my $sid = shift or croak "usage: site_base_url(project,site)";
 
-    open F, "projects/$project/sites/$sid/base_url" or croak "can't open file projects/$project/sites/$sid/base_url to read";
+    open F, sparrow_root."/projects/$project/sites/$sid/base_url" or croak "can't open file projects/$project/sites/$sid/base_url to read";
     my $base_url = <F>;
     chomp $base_url;
     close F;
@@ -340,7 +365,7 @@ sub set_site_base_url {
     my $sid = shift or croak "usage: set_site_base_url(project,site,base_url)";
     my $base_url = shift or croak "usage: set_site_base_url(project,site,base_url)";
 
-    open F, ">", "projects/$project/sites/$sid/base_url" or croak "can't open file to write: projects/$project/sites/$sid/base_url";
+    open F, ">", sparrow_root."/projects/$project/sites/$sid/base_url" or croak "can't open file to write: projects/$project/sites/$sid/base_url";
     print F $base_url;
     close F;
     
@@ -357,3 +382,12 @@ sub execute_shell_command {
     
 }
 
+sub init_sparrow_env {
+
+
+    mkpath sparrow_root;
+    mkpath sparrow_root.'/plugins';
+    mkpath sparrow_root.'/projects';
+
+    print "sparrow environment initialzed at ".sparrow_root, "\n";
+}

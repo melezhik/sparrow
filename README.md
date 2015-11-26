@@ -4,6 +4,7 @@ Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
 # FEATURES
 
+* easy setup
 * console client to setup and run swat test suites
 * runs swat tests suites against web applications
 * ability to run tests remotely over rest API (TODO)

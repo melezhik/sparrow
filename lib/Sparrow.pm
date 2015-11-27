@@ -290,7 +290,7 @@ Sparrow expects your swat test suite will be under git and will be accessed as r
 
 =head2 Create swat test suite
 
-To get know what swat is and how to create swat tests for various web applications please follow swat project documentation -
+To get know what swat is and how to create swat tests please follow swat project documentation -
 L<https://github.com/melezhik/swat|https://github.com/melezhik/swat>.
 
 A simplest swat test suite to check if GET / returns 200 OK would be like this:
@@ -319,7 +319,8 @@ For example:
 To create sparrow plugin:
 
     * create local git repository
-    * create swat tests
+    * create swat tests 
+    * swat project root should be current working directory
     * run swat test to ensure that they works fine ( this one is optional but really useful )
     * create cpanfile to declare perl dependencies
     * commit your changes

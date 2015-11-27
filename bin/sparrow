@@ -5,6 +5,7 @@ use File::Path;
 use File::Basename;
 use File::Spec;
 use Carp;
+use File::Copy;
 
 use constant spl_file       => "$ENV{HOME}/sparrow/sparrow.list";
 use constant sparrow_root   => "$ENV{HOME}/sparrow";
@@ -336,13 +337,12 @@ sub check_site {
 
     my $site_base_url = site_base_url($project,$sid);
 
-    my $apply_swat_settings = "";
 
     if ( -f sparrow_root."/projects/$project/sites/$sid/swat.my" ){
-        $apply_swat_settings = "bash  ".sparrow_root."/projects/$project/sites/$sid/swat.my; "; 
+        copy( sparrow_root."/projects/$project/sites/$sid/swat.my", sparrow_root."/projects/$project/plugins/$pid"); 
     }
 
-    exec "$apply_swat_settings cd ".sparrow_root."/projects/$project/plugins/$pid && carton exec swat ./ $site_base_url";
+    exec "cd ".sparrow_root."/projects/$project/plugins/$pid && carton exec swat ./ $site_base_url";
 
 }
 
@@ -415,5 +415,5 @@ sub init_sparrow_env {
     mkpath sparrow_root.'/plugins';
     mkpath sparrow_root.'/projects';
 
-    print "sparrow environment initialzed at ".sparrow_root, "\n";
+    print "# sparrow environment initialzed at ".sparrow_root, "\n";
 }

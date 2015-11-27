@@ -14,10 +14,8 @@ git, bash
 
 # INSTALL
 
-    # yes, you need a git
     sudo yum install git
 
-    # install Sparrow
     cpanm Sparrow
 
 # USAGE
@@ -136,7 +134,7 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
 
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
+    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/swat-nginx
 
 
 # SPARROW PLUGINS
@@ -249,7 +247,6 @@ To create sparrow plugin:
 ## Hello world example
 
 To repeat all told before in a code way:
-
 
     git init .
     echo "local" > .gitignore

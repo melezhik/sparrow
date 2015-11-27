@@ -9,6 +9,7 @@ use File::Copy;
 
 use constant spl_file       => "$ENV{HOME}/sparrow/sparrow.list";
 use constant sparrow_root   => "$ENV{HOME}/sparrow";
+our $EDITOR = $ENV{'EDITOR'};
 
 unless (@ARGV) {
 
@@ -321,7 +322,9 @@ sub swat_setup {
     my $sid = shift or croak "usage: swat_setup(project,site)";
 
     if (-d sparrow_root."/projects/$project/sites/$sid" ){
-        exec "nano ".sparrow_root."/projects/$project/sites/$sid/swat.my";
+
+        croak "please setup your preferable editor via EDITOR environment variable\n" unless $EDITOR;
+        exec "$EDITOR ".sparrow_root."/projects/$project/sites/$sid/swat.my";
     }else{
         croak "site $sid does not exist at project $project. use `sparrow project $project add_side $sid \$base_url' to create a site \n\n";
     }

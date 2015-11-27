@@ -20,27 +20,17 @@ Sparrow - L<swat|https://github.com/melezhik/swat> based monitoring tool.
 
 =item *
 
-easy setup
-
-
-=item *
-
 console client to setup and run swat test suites
 
 
 =item *
 
-runs swat tests suites against web applications
+installs and runs sparrow plugins - shareable swat test suites
 
 
 =item *
 
 ability to run tests remotely over rest API (TODO)
-
-
-=item *
-
-community and private plugins support
 
 
 =back
@@ -53,34 +43,14 @@ git, bash
 
 =head1 INSTALL
 
-    # yes, you need a git
     sudo yum install git
     
-    # minimal perl depencies, Carton only
     cpanm Sparrow
 
 
-=head1 CONFIGURATION
-
-    # this is root directory for sparrow stuff
-    
-    mkdir ~/sparrow
-
-
-=head2 setup sparrow plugin list
-
-In case you want to play with community plugins:
-
-    curl https://raw.githubusercontent.com/melezhik/sparrow-hub/master/sparrow.list > ~/sparrow/sparrow.list
-
-In case you want add some private plugins:
-
-    echo 'my-cool-plugin git-remote-repo-url' >> ~/sparrow/sparrow.list
-
-More about sparrow plugins is written below in L<sparrow plugins section|#sparrow-plugins>
-
-
 =head1 USAGE
+
+These are actions provided by sparrow console client: 
 
 
 =head2 create a project
@@ -172,18 +142,16 @@ Once sparrow project is configured and has some  sites and plugins one could sta
 
 NOT IMPLIMENTED YET.
 
-I<sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file>
+*sparrow project $project_name swat_setup $site_name 
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
 This command setups L<swat ini file|https://github.com/melezhik/swat#swat-ini-files> for given site.
 
-    cat /path/to/swat.ini
+    sparrow project foo swat_setup nginx_proxy
     
         port=88
         prove_options='-sq'    
-    
-    sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
 
 More information in swat ini files syntax could be found here - L<https://github.com/melezhik/swat#swat-ini-files|https://github.com/melezhik/swat#swat-ini-files>
 
@@ -200,32 +168,21 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
     
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/nginx
+    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/swat-nginx
 
 
 =head1 SPARROW PLUGINS
 
 Sparrow plugins are shareable swat test suites installed from remote git repositories.
 
-No sparrow plugins installed by default. There is two alternative for you:
+To install sparrow plugins one should configure sparrow plugin list (SPL).
 
 
-=head1 COMMUNITY SPARROW PLUGINS
+=head1 SPARROW PLUGINS LIST 
 
-Community sparrow plugins are public plugins listed at L<https://github.com/melezhik/sparrow-hub|https://github.com/melezhik/sparrow-hub>
+Sparrow plugins list is represented by text file ~/sparrow/sparrow.list
 
-Sparrow community members are encouraged to create a useful plugins and have them listed here.
-
-
-=head1 PRIVATE SPARROW PLUGINS
-
-Private sparrow plugins are plugins you create for yourself and don't want to share with others.
-As with community plugins private plugins have to be listed.
-
-
-=head1 SPARROW PLUGINS LIST
-
-Sparrow plugins list (SPL) is a text file, named I<sparrow.list> with lines of following format:
+SPL file contains lines of the following format:
 
 I<$plugin_name $git_repo_url>
 
@@ -235,12 +192,12 @@ Where:
 
 =item *
 
-gitI<repo>url is git repository URL
+gitI<repo>url - is git repository URL
 
 
 =item *
 
-plugin_name is name of swat plugin.
+plugin_name - is name of sparrow plugin.
 
 
 =back
@@ -250,17 +207,24 @@ For example:
     swat-yars https://github.com/melezhik/swat-yars.git
     metacpan https://github.com/CPAN-API/metacpan-monitoring.git
 
-To start using sparrow plugins just create SPL file and place it at ~/sparrow/sparrow.list:
+To install swat-yars plugin one should do following
 
-    touch ~/sparrow/sparrow.list
+    # add plugin to SPL 
     echo swat-yars https://github.com/melezhik/swat-yars.git >> ~/sparrow/sparrow.list
+    
+    # install plugin
+    sparrow plg install swat-yars
 
 
-=head1 AUTHORIZATION ISSUE
+=head1 COMMUNITY SPARROW PLUGINS
 
-As technically speaking sparrow plugins are just listing in text files, there is no explicit difference between
-public and private plugins. From other hand sparrow relies on git to download install plugins, so this sort
-of authentication/authorization issues is addressed to remote git repository owner to setup a proper access policies.
+Community sparrow plugins are public plugins listed at L<https://github.com/melezhik/sparrow-hub|https://github.com/melezhik/sparrow-hub>
+
+Sparrow community members are encouraged to create a useful plugins and have them listed here.
+
+To add sparrow public plugins to your SPL do this:
+
+    curl https://raw.githubusercontent.com/melezhik/sparrow-hub/master/sparrow.list >> ~/sparrow/sparrow.list
 
 
 =head1 CREATING SPARROW PLUGINS

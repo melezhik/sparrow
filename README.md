@@ -107,18 +107,16 @@ Once sparrow project is configured and has some  sites and plugins one could sta
 
 NOT IMPLIMENTED YET.
 
-*sparrow project $project_name swat_setup $site_name $path_to_swat_ini_file*
+*sparrow project $project_name swat_setup $site_name 
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
 This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site.
 
-    cat /path/to/swat.ini
+    sparrow project foo swat_setup nginx_proxy
 
         port=88
         prove_options='-sq'    
-
-    sparrow project foo swat_setup nginx_proxy /path/to/swat.ini
 
 More information in swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 

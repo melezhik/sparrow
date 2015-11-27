@@ -78,6 +78,13 @@ if ($object eq  'project'){
         my $pid = shift @ARGV;
 
         check_site($name,$sid,$pid);
+
+    }elsif( $action  eq 'swat_setup'){
+
+        my $sid = shift @ARGV;
+
+        swat_setup($name,$sid);
+
     }else{ # default action
 
         project_info($name);
@@ -182,7 +189,7 @@ sub install_plugin {
             exit(1) 
         }
         print "installing plugin $pid ...\n";
-        execute_shell_command("git clone $list->{$pid}->{url} ".sparrow_root."/plugins/$pid");
+        execute_shell_command("git clone $list->{$pid}->{url} ".sparrow_root."/plugins/$pid && carton");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
     }
@@ -197,7 +204,7 @@ sub update_plugin {
 
     if ($list->{$pid}){
         print "updating plugin $pid ...\n";
-        execute_shell_command("cd ".(sparrow_root)."/plugins/$pid && git pull");
+        execute_shell_command("cd ".(sparrow_root)."/plugins/$pid && git pull && carton");
     }else{
         confess "can't find plugin $pid at sparrow list file\n";
     }
@@ -307,6 +314,19 @@ sub add_site_to_project {
 
 }
 
+sub swat_setup {
+
+    my $project = shift or croak "usage: swat_setup(project,site)";
+    my $sid = shift or croak "usage: swat_setup(project,site)";
+
+    if (-d sparrow_root."/projects/$project/sites/$sid" ){
+        exec "nano ".sparrow_root."/projects/$project/sites/$sid/swat.my";
+    }else{
+        croak "site $sid does not exist at project $project. use `sparrow project $project add_side $sid \$base_url' to create a site \n\n";
+    }
+
+}
+
 
 sub check_site {
 
@@ -316,7 +336,13 @@ sub check_site {
 
     my $site_base_url = site_base_url($project,$sid);
 
-    exec "cd ".sparrow_root."/projects/$project/plugins/$pid && swat ./ $site_base_url";
+    my $apply_swat_settings = "";
+
+    if ( -f sparrow_root."/projects/$project/sites/$sid/swat.my" ){
+        $apply_swat_settings = "bash  ".sparrow_root."/projects/$project/sites/$sid/swat.my; "; 
+    }
+
+    exec "$apply_swat_settings cd ".sparrow_root."/projects/$project/plugins/$pid && carton exec swat ./ $site_base_url";
 
 }
 

@@ -2,6 +2,11 @@
 
 Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
 
+# CAVEAT
+
+The project is still in very alpha stage. Things might change. But you can start play with it :-)
+
+
 # FEATURES
 
 * console client to setup and run swat test suites

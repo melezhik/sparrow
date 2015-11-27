@@ -14,6 +14,11 @@ __END__
 Sparrow - L<swat|https://github.com/melezhik/swat> based monitoring tool.
 
 
+=head1 CAVEAT
+
+The project is still in very alpha stage. Things might change. But you can start play with it :-)
+
+
 =head1 FEATURES
 
 =over

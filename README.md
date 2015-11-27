@@ -30,7 +30,7 @@ Create a sparrow project.
 
 Sparrow project is a container for swat test suites and applications.
 
-Sparrow project allow to run swat tests against different applications.
+Sparrow project is where one run swat tests against different applications.
 
     sparrow project foo create
 
@@ -55,37 +55,50 @@ One could install sparrow plugin and then run related swat tests, see [check_sit
 
 To see available plugin list say this:
 
-*sparrow plg list --local*
+*sparrow plg list*
 
 To see installed plugin list say this:
 
 *sparrow plg list --local*
 
+To see installed plugin info say this:
+
+*sparrow plg info $plugin_name*
+
+NOT IMPLIMENTED 
+
 For example:
 
     sparrow plg swat-nginx info
 
-## link plugins to project
+## link plugins to a project
 
 *sparrow project $project_name add_plg $plugin_name*
 
-Swat project could link to one or more plugins.
+Swat project could _link_ to one or more plugins. 
 
-Linked plugins could be run against sites in swat project.
+That means one may run different swat test sutes represented by plugins against project's sites.
+
+So linked plugins could be run against sites in sparrow project.
 
     sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
 
+    # and then add some sites 
 
-## link sites to project
+## link sites to a project
 
 *sparrow project $project_name add_site $site_name $base_url*
 
 Sparrow site is a abstraction of web application to run swat tests against.
 
-Site's $base_url parameter is root http URL to send http requests to.
+Sparrow site have a name and base URL.
 
-$Base_url should be curl compliant. Examples:
+Site's base URL is root http URL to send http requests to when running swat test suites against a site.
+
+Base URL should be curl compliant. 
+
+Add_site command examples:
 
     sparrow project foo add_site nginx_proxy http://127.0.0.1
     sparrow project foo add_site tomcat_app 127.0.0.1:8080
@@ -95,7 +108,9 @@ $Base_url should be curl compliant. Examples:
 
 *sparrow project $project_name check_site $site_name $plugin_name*
 
-Once sparrow project is configured and has some  sites and plugins one could start running swat test suites:
+Once sparrow project is configured and has some  sites and plugins one could run swat test suites against projects sites.
+
+Check_site command examples:
 
     # run swat-nginx test suite for application nginx_proxy
     sparrow project foo check_site nginx_proxy swat-nginx
@@ -111,7 +126,7 @@ NOT IMPLIMENTED YET.
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
-This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site.
+This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site .
 
     sparrow project foo swat_setup nginx_proxy
 

@@ -91,7 +91,7 @@ So linked plugins could be run against sites in sparrow project.
 
     # and then add some sites 
 
-## link sites to a project
+## create sites
 
 *sparrow project $project_name add_site $site_name $base_url*
 
@@ -124,8 +124,6 @@ Check_site command examples:
     sparrow project foo check_site tomcat_app swat-tomcat
 
 ## customize swat settings for site
-
-NOT IMPLIMENTED YET.
 
 *sparrow project $project_name swat_setup $site_name 
 

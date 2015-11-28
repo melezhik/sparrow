@@ -46,6 +46,9 @@ if ($object eq  'plg'){
     }elsif( $action  eq 'update'){
 
         update_plugin( shift @ARGV );        
+    }elsif( $action  eq 'remove'){
+
+        remove_plugin( shift @ARGV );        
     }
 }
 
@@ -253,7 +256,12 @@ sub project_info {
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
     for my $p (grep { ! /^\.{1,2}$/ } readdir($dh)){
-        print "\t", basename($p),"\n";
+        
+        if ( link_is_dangling(sparrow_root."/projects/$project/plugins/$p") ){
+            unlink sparrow_root."/projects/$project/plugins/$p";
+        }else{    
+            print "\t", basename($p),"\n";
+        }
     }
 
     closedir $dh;
@@ -333,7 +341,6 @@ sub swat_setup {
     my $sid = shift or confess "usage: swat_setup(project,site)";
 
     if (-d sparrow_root."/projects/$project/sites/$sid" ){
-
         confess "please setup your preferable editor via EDITOR environment variable\n" unless $EDITOR;
         exec "$EDITOR ".sparrow_root."/projects/$project/sites/$sid/swat.my";
     }else{
@@ -448,3 +455,10 @@ sub init_sparrow_env {
 
     print "# sparrow environment initialzed at ".sparrow_root, "\n";
 }
+
+sub link_is_dangling {
+
+    my $l = shift;
+    return stat($l) ? 0 : 1;
+}
+

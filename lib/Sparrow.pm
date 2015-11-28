@@ -100,9 +100,7 @@ I<sparrow plg list --local>
 
 To see installed plugin info say this:
 
-I<sparrow plg info $plugin_name>
-
-NOT IMPLIMENTED 
+I<sparrow plg info $plugin_name> - NOT IMPLIMENTED YET
 
 To update installed plugin:
 

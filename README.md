@@ -68,9 +68,7 @@ To see installed plugin list say this:
 
 To see installed plugin info say this:
 
-*sparrow plg info $plugin_name*
-
-NOT IMPLIMENTED 
+*sparrow plg info $plugin_name* - NOT IMPLIMENTED YET
 
 To update installed plugin:
 

@@ -1,1 +1,1 @@
-print `sparrow`
+print `bin/sparrow`

@@ -1,2 +1,2 @@
-print `sparrow plg list --local`
+print `bin/sparrow plg list --local`
 

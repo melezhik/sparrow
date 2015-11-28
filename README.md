@@ -72,9 +72,23 @@ To see installed plugin info say this:
 
 NOT IMPLIMENTED 
 
+To update installed plugin:
+
+*sparrow plg update $plugin_name
+
+This command simple execute \`git pull' for clonned git repository 
+
 For example:
 
-    sparrow plg swat-nginx info
+    sparrow plg update swat-tomcat
+
+To remove installed plugin:
+
+*sparrow plg remove $plugin_name*
+
+For example:
+
+    sparrow plg remove swat-tomcat
 
 ## link plugins to a project
 

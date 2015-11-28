@@ -104,9 +104,23 @@ I<sparrow plg info $plugin_name>
 
 NOT IMPLIMENTED 
 
+To update installed plugin:
+
+*sparrow plg update $plugin_name
+
+This command simple execute `git pull' for clonned git repository 
+
 For example:
 
-    sparrow plg swat-nginx info
+    sparrow plg update swat-tomcat
+
+To remove installed plugin:
+
+I<sparrow plg remove $plugin_name>
+
+For example:
+
+    sparrow plg remove swat-tomcat
 
 
 =head2 link plugins to a project
@@ -125,7 +139,7 @@ So linked plugins could be run against sites in sparrow project.
     # and then add some sites 
 
 
-=head2 link sites to a project
+=head2 create sites
 
 I<sparrow project $project_name add_site $site_name $base_url>
 
@@ -160,8 +174,6 @@ Check_site command examples:
 
 
 =head2 customize swat settings for site
-
-NOT IMPLIMENTED YET.
 
 *sparrow project $project_name swat_setup $site_name 
 

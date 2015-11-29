@@ -1,5 +1,7 @@
 package Sparrow::Commands::Plugin;
 
+use strict;
+
 use base 'Exporter';
 
 use Sparrow::Constants;

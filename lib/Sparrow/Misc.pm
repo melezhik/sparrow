@@ -1,9 +1,12 @@
 package Sparrow::Misc;
 
+use strict;
+
 use base 'Exporter';
 use Carp;
 
 use File::Path;
+use Sparrow::Constants;
 
 our @EXPORT = qw {
     execute_shell_command 
@@ -63,10 +66,11 @@ sub usage {
 
 sub init_sparrow_env {
 
-    mkpath sparrow_root;
-    mkpath sparrow_root.'/plugins';
-    mkpath sparrow_root.'/projects';
+    mkpath(sparrow_root);
+    mkpath(sparrow_root.'/plugins');
+    mkpath(sparrow_root.'/projects');
 
+    execute_shell_command('touch '.sparrow_root.'/sparrow.list') unless -f sparrow_root.'/sparrow.list';    
     print "# sparrow environment initialzed at ".sparrow_root, "\n";
 }
 

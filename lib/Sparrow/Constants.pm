@@ -1,5 +1,7 @@
 package Sparrow::Constants;
 
+use strict;
+
 use base 'Exporter';
 
 our @EXPORT = qw {

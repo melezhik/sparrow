@@ -1,5 +1,7 @@
 package Sparrow::Commands::Swat;
 
+use strict;
+
 use base 'Exporter';
 
 use Sparrow::Constants;

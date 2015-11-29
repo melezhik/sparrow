@@ -11,6 +11,7 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Sparrow.pm
 lib/Sparrow/Commands/Plugin.pm
+lib/Sparrow/Commands/Project.pm
 lib/Sparrow/Constants.pm
 lib/Sparrow/Misc.pm
 Makefile.PL

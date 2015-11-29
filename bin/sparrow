@@ -45,7 +45,7 @@ if ($object eq  'plg'){
 
         remove_plugin( shift @ARGV );        
 
-    }elsif( $action  eq 'show'){
+    }elsif( $action  eq 'info'){
 
         show_plugin( shift @ARGV );        
     }

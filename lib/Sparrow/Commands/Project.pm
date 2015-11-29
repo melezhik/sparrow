@@ -113,7 +113,8 @@ sub add_plugin_to_project {
 
     }else{
 
-        symlink File::Spec->rel2abs(sparrow_root."/plugins/$pid"), File::Spec->rel2abs(sparrow_root."/projects/$project/plugins/$pid") or
+        symlink File::Spec->rel2abs(sparrow_root."/plugins/$pid"), 
+                File::Spec->rel2abs(sparrow_root."/projects/$project/plugins/$pid") or
         confess "can't create symlink projects/$project/plugins/$pid ==> plugins/$pid";
 
         print "plugin $pid is successfully added to project $project\n\n";
@@ -128,16 +129,14 @@ sub add_site_to_project {
     my $base_url = shift or confess "usage: add_site_to_project(project,site,base_url)";
 
     if (-d sparrow_root."/projects/$project/sites/$sid" ){
-
         set_site_base_url($project,$sid,$base_url);
-
         print "site $sid is successfully updated at project $project\n\n";
-
-    }else{
-
+    } elsif (-d sparrow_root."/projects/$project" ){
         mkpath sparrow_root."/projects/$project/sites/$sid";
         set_site_base_url($project,$sid,$base_url);
         print "site $sid is successfully added to project $project\n\n";
+    }else{
+        confess "unknown project $project";
 
     }
 
@@ -149,7 +148,9 @@ sub site_base_url {
     my $project = shift or confess "usage: site_base_url(project,site)";
     my $sid = shift or confess "usage: site_base_url(project,site)";
 
-    open F, sparrow_root."/projects/$project/sites/$sid/base_url" or confess "can't open file projects/$project/sites/$sid/base_url to read";
+    open F, sparrow_root."/projects/$project/sites/$sid/base_url" or 
+    confess "can't open file projects/$project/sites/$sid/base_url to read";
+
     my $base_url = <F>;
     chomp $base_url;
     close F;

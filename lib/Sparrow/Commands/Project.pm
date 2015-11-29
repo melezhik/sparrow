@@ -177,3 +177,5 @@ sub link_is_dangling {
     return stat($l) ? 0 : 1;
 }
 
+1;
+

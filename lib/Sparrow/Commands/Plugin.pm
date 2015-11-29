@@ -8,16 +8,16 @@ use Sparrow::Misc;
 use Carp;
 use File::Basename;
 
-our @EXPORT = (
+our @EXPORT = qw{
 
-    'show_local_plugins',
-    'show_plugins',
+    show_local_plugins    
+    show_plugins
 
-    'install_plugin',
-    'show_plugin',
-    'update_plugin',
-    'remove_plugin'
-);
+    install_plugin
+    show_plugin
+    update_plugin
+    remove_plugin
+};
 
 
 sub show_local_plugins {
@@ -73,7 +73,7 @@ sub show_plugin {
 
         if (-d sparrow_root."/plugins/$pid"){
             print "plugin [$pid] install OK.\n";
-            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git info");
+            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git remote -v");
         }else{
             my $list = read_plugin_list('as_hash');
             if ($list->{$pid}){

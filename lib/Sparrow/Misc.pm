@@ -3,9 +3,12 @@ package Sparrow::Misc;
 use base 'Exporter';
 use Carp;
 
+use File::Path;
+
 our @EXPORT = qw {
     execute_shell_command 
     usage
+    init_sparrow_env
 };
 
 
@@ -57,4 +60,15 @@ sub usage {
 
 
 
+
+sub init_sparrow_env {
+
+    mkpath sparrow_root;
+    mkpath sparrow_root.'/plugins';
+    mkpath sparrow_root.'/projects';
+
+    print "# sparrow environment initialzed at ".sparrow_root, "\n";
+}
+
+1;
 

@@ -1,22 +1,16 @@
 #!/usr/bin/env perl
 
 use strict;
-use File::Path;
-use File::Spec;
-use Carp;
-use File::Copy;
-
-unless (@ARGV) {
-
-    usage();
-    exit;
-}
-
 
 use Sparrow::Constants;
 use Sparrow::Commands::Plugin;
 use Sparrow::Commands::Project;
 use Sparrow::Misc;
+
+unless (@ARGV) {
+    usage();
+    exit;
+}
 
 
 my $object = shift @ARGV;
@@ -46,9 +40,14 @@ if ($object eq  'plg'){
     }elsif( $action  eq 'update'){
 
         update_plugin( shift @ARGV );        
+
     }elsif( $action  eq 'remove'){
 
         remove_plugin( shift @ARGV );        
+
+    }elsif( $action  eq 'show'){
+
+        show_plugin( shift @ARGV );        
     }
 }
 
@@ -103,62 +102,4 @@ if ( $object eq 'projects' ){
     show_projects();
 
 }
-
-
-## functions ###
-
-sub swat_setup {
-
-    my $project = shift or confess "usage: swat_setup(project,site)";
-    my $sid = shift or confess "usage: swat_setup(project,site)";
-
-    if (-d sparrow_root."/projects/$project/sites/$sid" ){
-        confess "please setup your preferable editor via EDITOR environment variable\n" unless editor;
-        exec editor.' '.sparrow_root."/projects/$project/sites/$sid/swat.my";
-    }else{
-        confess "site $sid does not exist at project $project. use `sparrow project $project add_side $sid \$base_url' to create a site \n\n";
-    }
-
-}
-
-
-sub check_site {
-
-    my $project = shift or confess "usage: check_site(project,site,plugin)";
-    my $sid = shift or confess "usage: check_site(project,site,plugin)";
-    my $pid = shift or confess "usage: check_site(project,site,plugin)";
-
-    my $site_base_url = site_base_url($project,$sid);
-
-
-    if ( -f sparrow_root."/projects/$project/sites/$sid/swat.my" ){
-        copy( sparrow_root."/projects/$project/sites/$sid/swat.my", sparrow_root."/projects/$project/plugins/$pid"); 
-    }
-
-    exec "cd ".sparrow_root."/projects/$project/plugins/$pid && carton exec swat ./ $site_base_url";
-
-}
-
-
-sub execute_shell_command {
-
-    my $cmd = shift;
-
-    # warn $cmd;
-
-    confess "failed execute: $cmd" unless system($cmd) == 0;
-
-    
-}
-
-sub init_sparrow_env {
-
-
-    mkpath sparrow_root;
-    mkpath sparrow_root.'/plugins';
-    mkpath sparrow_root.'/projects';
-
-    print "# sparrow environment initialzed at ".sparrow_root, "\n";
-}
-
 

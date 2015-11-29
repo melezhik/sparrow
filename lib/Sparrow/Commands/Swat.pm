@@ -4,10 +4,12 @@ use base 'Exporter';
 
 use Sparrow::Constants;
 use Sparrow::Misc;
+use Sparrow::Commands::Project;
 
 use Carp;
 use File::Basename;
 use File::Copy;
+
 
 our @EXPORT = qw{
 
@@ -37,7 +39,13 @@ sub check_site {
     my $sid = shift or confess "usage: check_site(project,site,plugin)";
     my $pid = shift or confess "usage: check_site(project,site,plugin)";
 
+    confess "unknown project $project" unless -d sparrow_root."/projects/$project";
+    confess "plugin $pid is not installed" unless -d sparrow_root."/plugins/$pid";
+    confess "project $project: unknown site $sid" unless -d sparrow_root."/projects/$project/sites/$sid";
+
+
     my $site_base_url = site_base_url($project,$sid);
+
 
 
     if ( -f sparrow_root."/projects/$project/sites/$sid/swat.my" ){

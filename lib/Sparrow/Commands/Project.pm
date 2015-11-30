@@ -74,6 +74,8 @@ sub project_info {
 
     my $project = shift;
 
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+
     print "project $project info:\n\n";
 
     print "plugins:\n\n";

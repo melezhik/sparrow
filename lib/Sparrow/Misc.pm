@@ -30,6 +30,7 @@ sub usage {
 
     print "\n[projects]:\n\n";
     print "\tsparrow project foo create # create a project\n";
+    print "\tsparrow project foo remove # remove a project\n";
     print "\tsparrow projects # list projects\n";
 
     print "\n[plugins]:\n\n";

@@ -150,7 +150,7 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
         port=88
         prove_options='-sq'    
 
-More information in swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
+More information on swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
 ## run swat tests remotely
 

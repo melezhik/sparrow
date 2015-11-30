@@ -26,7 +26,7 @@ git, curl, bash
 
 # USAGE
 
-These are actions provided by sparrow console client: 
+These are actions provided by sparrow console client:
 
 ## create a project
 
@@ -56,8 +56,11 @@ Sparrow plugin is a shareable swat test suite.
 
 One could install sparrow plugin and then run related swat tests, see [check_site](#run-swat-tests) action.
 
+    echo swat-nginx | https://github.com/melezhik/swat-nginx.git >> ~/sparrow/sparrow.list
     sparrow plg install swat-nginx
     sparrow plg install swat-tomcat
+
+Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugin configuration.
 
 To see available plugin list say this:
 
@@ -75,7 +78,7 @@ To update installed plugin:
 
 *sparrow plg update $plugin_name*
 
-This command simple execute \`git pull' for clonned git repository 
+This command simple execute \`git pull' for cloned git repository
 
 For example:
 
@@ -93,16 +96,16 @@ For example:
 
 *sparrow project $project_name add_plg $plugin_name*
 
-Swat project could _link_ to one or more plugins. 
+Swat project could _link_ to one or more plugins.
 
-That means one may run different swat test sutes represented by plugins against project's sites.
+That means one may run different swat test suites represented by plugins against project's sites.
 
 So linked plugins could be run against sites in sparrow project.
 
     sparrow project foo add_plg nginx
     sparrow project foo add_plg tomcat
 
-    # and then add some sites 
+    # and then add some sites
 
 ## create sites
 
@@ -114,7 +117,7 @@ Sparrow site have a name and base URL.
 
 Site's base URL is root http URL to send http requests to when running swat test suites against a site.
 
-Base URL should be curl compliant. 
+Base URL should be curl compliant.
 
 Add_site command examples:
 
@@ -148,13 +151,13 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
     sparrow project foo swat_setup nginx_proxy
 
         port=88
-        prove_options='-sq'    
+        prove_options='-sq'
 
 More information on swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
 ## run swat tests remotely
 
-NOT IMPLIMENTED YET.
+NOT IMPLEMENTED YET.
 
 *GET /$project_name/check_site/$site_name/$plugin_name*
 
@@ -173,7 +176,7 @@ Sparrow plugins are shareable swat test suites installed from remote git reposit
 
 To install sparrow plugins one should configure sparrow plugin list (SPL).
 
-# SPARROW PLUGINS LIST 
+# SPARROW PLUGINS LIST
 
 Sparrow plugins list is represented by text file ~/sparrow/sparrow.list
 
@@ -193,7 +196,7 @@ For example:
 
 To install swat-yars plugin one should do following
 
-    # add plugin to SPL 
+    # add plugin to SPL
     echo swat-yars https://github.com/melezhik/swat-yars.git >> ~/sparrow/sparrow.list
 
     # install plugin
@@ -251,7 +254,7 @@ For example:
 
 
     # cat cpanfile
-   
+
     # yes, we need a swat to run our tests
     require 'swat';
 
@@ -264,7 +267,7 @@ For example:
 To create sparrow plugin:
 
     * create local git repository
-    * create swat tests 
+    * create swat tests
     * swat project root should be current working directory
     * run swat test to ensure that they works fine ( this one is optional but really useful )
     * create cpanfile to declare perl dependencies

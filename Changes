@@ -1,3 +1,8 @@
+0.0.3 2015-11-30
+
+* propogate some errors in more meaningful maner
+* cleanup documentaion
+
 0.0.2 2015-11-29
 
 * various bug fixes

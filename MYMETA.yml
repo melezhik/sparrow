@@ -20,4 +20,4 @@ no_index:
 requires:
   Carton: '0'
   Log::Log4perl: '0'
-version: v0.0.2
+version: v0.0.3

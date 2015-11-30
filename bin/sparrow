@@ -7,12 +7,12 @@ use Sparrow::Commands::Plugin;
 use Sparrow::Commands::Project;
 use Sparrow::Commands::Swat;
 use Sparrow::Misc;
+use Carp;
 
 unless (@ARGV) {
     usage();
     exit;
 }
-
 
 my $object = shift @ARGV;
 
@@ -38,21 +38,24 @@ if ($object eq  'plg'){
 
         install_plugin( shift @ARGV );        
 
-    }elsif( $action  eq 'update'){
+    } elsif( $action  eq 'update'){
 
         update_plugin( shift @ARGV );        
 
-    }elsif( $action  eq 'remove'){
+    } elsif( $action  eq 'remove'){
 
         remove_plugin( shift @ARGV );        
 
-    }elsif( $action  eq 'info'){
+    } elsif ( $action  eq 'info'){
 
         show_plugin( shift @ARGV );        
-    }
-}
 
-if ($object eq  'project'){
+    } else { # default plugin action
+
+        show_plugin( shift @ARGV );        
+
+    }
+} elsif ($object eq  'project'){
 
     my $name = shift @ARGV;
 
@@ -69,38 +72,38 @@ if ($object eq  'project'){
 
         add_site_to_project($name, $sid, $base_url);
 
-    }elsif( $action  eq 'add_plg'){
+    } elsif( $action  eq 'add_plg'){
 
         add_plugin_to_project($name,shift @ARGV);
 
-    }elsif( $action  eq 'info'){
+    } elsif( $action  eq 'info'){
 
         project_info($name);
 
-    }elsif( $action  eq 'check_site'){
+    } elsif( $action  eq 'check_site'){
 
         my $sid = shift @ARGV;
         my $pid = shift @ARGV;
 
         check_site($name,$sid,$pid);
 
-    }elsif( $action  eq 'swat_setup'){
+    } elsif( $action  eq 'swat_setup'){
 
         my $sid = shift @ARGV;
 
         swat_setup($name,$sid);
 
-    }else{ # default action
+    } else { # default project action
 
         project_info($name);
 
-    }
+    };
 
-}
-
-if ( $object eq 'projects' ){
+} elsif ( $object eq 'projects' ){
 
     show_projects();
 
+} else {
+    confess "unknown command";
 }
 

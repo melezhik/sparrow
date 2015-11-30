@@ -13,8 +13,10 @@ use File::Path;
 
 our @EXPORT = qw{
 
-    show_projects
     create_project
+    remove_project
+
+    show_projects
     project_info
     add_plugin_to_project
     add_site_to_project
@@ -53,6 +55,20 @@ sub create_project {
 
 
 }
+
+sub remove_project {
+
+    my $project = shift;
+
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+
+    rmtree( sparrow_root."/projects/$project" );
+
+    print "project $project is successfully removed\n\n"
+
+
+}
+
 
 sub project_info {
 

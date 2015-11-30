@@ -1,2 +1,2 @@
-print `bin/sparrow plg list`;
+print `sparrow plg list`;
 

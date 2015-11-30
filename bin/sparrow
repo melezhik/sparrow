@@ -65,6 +65,10 @@ if ($object eq  'plg'){
 
         create_project($name);
 
+    } elsif ( $action eq 'remove') {
+
+        remove_project($name);
+
     } elsif ( $action eq 'add_site' ){
 
         my $sid = shift @ARGV;

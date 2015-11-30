@@ -62,11 +62,11 @@ sub project_info {
 
     print "plugins:\n\n";
 
-    my $root_dir = sparrow_root."/projects/$project/plugins";
+    my $root_dir = sparrow_root."/projects/$project/plugins/";
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
-    for my $p (grep { ! /^\.{1,2}$/ } readdir($dh)){
+    for my $p ( sort { -M $root_dir.$a <=> -M $root_dir.$b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
 
         if ( link_is_dangling(sparrow_root."/projects/$project/plugins/$p") ){
             unlink sparrow_root."/projects/$project/plugins/$p";
@@ -80,11 +80,11 @@ sub project_info {
 
     print "\n\n\sites:\n\n";
 
-    my $root_dir = sparrow_root."/projects/$project/sites";
+    my $root_dir = sparrow_root."/projects/$project/sites/";
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
-    for my $s (grep { ! /^\.{1,2}$/ } readdir($dh)){
+    for my $s ( sort { -M $root_dir.$a <=> -M $root_dir.$b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
         my $base_url = site_base_url($project,basename($s));
         print "\t", basename($s)," [$base_url] \n";
     }

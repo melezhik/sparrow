@@ -1,5 +1,6 @@
 0.0.3 2015-11-30
 
+* minor improvements in output ( sorting, etc )
 * propogate some errors in more meaningful maner
 * cleanup documentaion
 

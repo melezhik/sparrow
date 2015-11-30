@@ -15,11 +15,12 @@ The project is still in very alpha stage. Things might change. But you can start
 
 # DEPENDENCIES
 
-git, bash
+git, curl, bash
 
 # INSTALL
 
     sudo yum install git
+    sudo yum install curl
 
     cpanm Sparrow
 
@@ -68,11 +69,11 @@ To see installed plugin list say this:
 
 To see installed plugin info say this:
 
-*sparrow plg info $plugin_name* - NOT IMPLIMENTED YET
+*sparrow plg info $plugin_name*
 
 To update installed plugin:
 
-*sparrow plg update $plugin_name
+*sparrow plg update $plugin_name*
 
 This command simple execute \`git pull' for clonned git repository 
 
@@ -137,12 +138,13 @@ Check_site command examples:
 
 ## customize swat settings for site
 
-*sparrow project $project_name swat_setup $site_name 
+*sparrow project $project_name swat_setup $site_name*
 
 Swat_setup action allow to customize swat settings, using swat.ini file format.
 
 This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site .
 
+    export EDITOR=nano
     sparrow project foo swat_setup nginx_proxy
 
         port=88

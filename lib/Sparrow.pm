@@ -79,6 +79,14 @@ For example:
 
     sparrow project foo info
 
+To remove project data say this:
+
+I<sparrow project $project_name remove>
+
+For example:
+
+    sparrow project foo remove
+
 
 =head2 download and install swat plugins
 

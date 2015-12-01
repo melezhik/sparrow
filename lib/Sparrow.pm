@@ -90,7 +90,6 @@ One could install sparrow plugin and then run related swat tests, see L<check_si
 
     echo swat-nginx | https://github.com/melezhik/swat-nginx.git >> ~/sparrow/sparrow.list
     sparrow plg install swat-nginx
-    sparrow plg install swat-tomcat
 
 Check L<sparrow-plugins|#sparrow-plugins> section to know more about sparrow plugin configuration.
 
@@ -114,7 +113,7 @@ This command simple execute `git pull' for cloned git repository
 
 For example:
 
-    sparrow plg update swat-tomcat
+    sparrow plg update swat-nginx
 
 To remove installed plugin:
 
@@ -135,8 +134,8 @@ That means one may run different swat test suites represented by plugins against
 
 So linked plugins could be run against sites in sparrow project.
 
-    sparrow project foo add_plg nginx
-    sparrow project foo add_plg tomcat
+    sparrow project foo add_plg swat-nginx
+    sparrow project foo add_plg swat-mongodb-http
     
     # and then add some sites
 
@@ -156,8 +155,8 @@ Base URL should be curl compliant.
 Add_site command examples:
 
     sparrow project foo add_site nginx_proxy http://127.0.0.1
-    sparrow project foo add_site tomcat_app 127.0.0.1:8080
-    sparrow project foo add_site tomcat_app my.host/foo/bar
+    sparrow project foo add_site tomcat_app  127.0.0.1:8080/app/
+    sparrow project foo add_site mongodb_http mongo.host:28017
 
 
 =head2 run swat tests
@@ -171,8 +170,8 @@ Check_site command examples:
     # run swat-nginx test suite for application nginx_proxy
     sparrow project foo check_site nginx_proxy swat-nginx
     
-    # run swat-tomcat test suite for application tomcat_app
-    sparrow project foo check_site tomcat_app swat-tomcat
+    # run swat-tomcat test suite for application 
+    sparrow project foo check_site mongodb_http swat-mongodb-http
 
 
 =head2 customize swat settings for site

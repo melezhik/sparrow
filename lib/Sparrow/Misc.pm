@@ -31,27 +31,29 @@ sub usage {
     print "\n[projects]:\n\n";
     print "\tsparrow project foo create # create a project\n";
     print "\tsparrow project foo remove # remove a project\n";
+    print "\tsparrow project foo info   # get project info\n";
     print "\tsparrow projects # list projects\n";
 
     print "\n[plugins]:\n\n";
 
-    print "\tsparrow plg list # show plugin index \n";
-    print "\tsparrow plg list --local # show installed plugins \n";
+    print "\tsparrow plg list           # show plugin index \n";
+    print "\tsparrow plg list --local   # show installed plugins \n";
     print "\tsparrow plg install swat-nginx # install plugin \n";
-    print "\tsparrow plg update swat-nginx # update plugin\n";
-    print "\tsparrow plg remove swat-nginx # remove plugin\n";
+    print "\tsparrow plg update swat-nginx  # update plugin\n";
+    print "\tsparrow plg remove swat-nginx  # remove plugin\n";
+    print "\tsparrow plg info   swat-nginx  # get plugin info\n";
 
     print "\n[projects and plugins]:\n\n";
     print "\tsparrow project foo add_plg swat-nginx # link plugin to project\n";
 
 
     print "\n[projects and sites]:\n\n";
-    print "\tsparrow project foo add_site nginx_proxy 127.0.0.1 # create site and link it to project\n";
-    print "\tsparrow project foo add_site tomcat_app 127.0.0.1:8080 # another site get linked to project\n";
+    print "\tsparrow project foo add_site nginx_proxy    127.0.0.1       # create site and link it to project\n";
+    print "\tsparrow project foo add_site pinto_rest_api 127.0.0.1:3111  # another site get linked to project\n";
 
     print "\n[swat test suites]:\n\n";
-    print "\tsparrow project foo check_site tomcat_app swat-tomcat # run swat test suite from plugin swat-tomcat, site tomcat_app\n";
-    print "\tsparrow project foo check_site nginx_proxy swat-nginx # yet another swat test suite run \n";
+    print "\tsparrow project foo check_site nginx_proxy swat-nginx      # yet another swat test suite run \n";
+    print "\tsparrow project foo check_site pinto_rest_api swat-pintod  # run swat test suite from plugin swat-tomcat, site tomcat_app\n";
 
 
     print "\tsparrow project foo swat_setup nginx_proxy # configure swat setting for site nginx_proxy\n";

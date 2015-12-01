@@ -25,5 +25,9 @@ t/plg/list-local/story.check
 t/plg/list-local/story.pl
 t/plg/list/story.check
 t/plg/list/story.pl
+t/project/create/story.check
+t/project/create/story.pl
+t/project/remove/story.check
+t/project/remove/story.pl
 t/story.check
 t/story.pl

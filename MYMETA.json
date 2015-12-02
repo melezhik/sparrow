@@ -4,7 +4,7 @@
       "L<Aleksei Melezhik|mailto:melezhik@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142690",
+   "generated_by" : "Module::Install version 1.16, CPAN::Meta::Converter version 2.142690",
    "license" : [
       "perl_5"
    ],
@@ -15,8 +15,8 @@
    "name" : "Sparrow",
    "no_index" : {
       "directory" : [
-         "t",
-         "inc"
+         "inc",
+         "t"
       ]
    },
    "prereqs" : {
@@ -33,10 +33,19 @@
       "runtime" : {
          "requires" : {
             "Carton" : "0",
-            "Log::Log4perl" : "0"
+            "HTTP::Tiny" : "0",
+            "JSON" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "v0.0.4"
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "url" : "https://github.com/melezhik/sparrow"
+      }
+   },
+   "version" : "0.0.4"
 }

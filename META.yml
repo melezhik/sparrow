@@ -20,8 +20,9 @@ no_index:
     - t
 requires:
   Carton: 0
-  Log::Log4perl: 0
+  HTTP::Tiny: 0
+  JSON: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.0.4
+version: 0.0.5

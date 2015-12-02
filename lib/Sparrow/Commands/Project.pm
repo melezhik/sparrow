@@ -10,6 +10,7 @@ use Sparrow::Misc;
 use Carp;
 use File::Basename;
 use File::Path;
+use File::Spec;
 
 our @EXPORT = qw{
 

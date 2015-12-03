@@ -92,14 +92,14 @@ sub install_plugin {
         }
     
         # update symlink to latest version
-        if ( stat sparrow_root."/plugins/$author/$repo_id/current" ) {
-            unlink(sparrow_root."/plugins/$author/$repo_id/current");
-            print "regenerating symlink to current version ... \n";
+        if ( stat sparrow_root."/plugins/$author/$repo_id/latest" ) {
+            unlink(sparrow_root."/plugins/$author/$repo_id/latest");
+            print "regenerating symlink to latest version ... \n";
         }    
 
         symlink File::Spec->rel2abs(sparrow_root."/plugins/$author/$repo_id/versions/$latest_version"),
-                File::Spec->rel2abs(sparrow_root."/plugins/$author/$repo_id/current") or
-        confess "can't create symlink /plugins/$author/$repo_id/current ==> /plugins/$author/$repo_id/versions/$latest_version";
+                File::Spec->rel2abs(sparrow_root."/plugins/$author/$repo_id/latest") or
+        confess "can't create symlink /plugins/$author/$repo_id/latest ==> /plugins/$author/$repo_id/versions/$latest_version";
 
 
     }else{
@@ -113,21 +113,18 @@ sub show_plugin {
 
     my ($author,$repo_id) = split '@', $pid;
 
-        if (stat sparrow_root."/plugins/$author/$repo_id/current"){
+        if (stat sparrow_root."/plugins/$author/$repo_id/latest"){
 
             print "fetching latest release info from github, it might takes for awhile ...\n\n\n";
-
-            my $pdata = get_plugin_github_info($author,$repo_id);
-            my $latest_version = $pdata->{latest}->{tag_name};
 
             print "plugin [$pid]\n";
             print "installed - YES\n";
 
-            my $current_version = basename(readlink(sparrow_root."/plugins/$author/$repo_id/current"));
+            my $pdata = get_plugin_github_info($author,$repo_id);
+            my $latest_version = $pdata->{latest}->{tag_name};
 
-            print "installed version: $current_version\n";
-
-            if ( $latest_version eq $current_version ){
+            if ( $latest_version && -d sparrow_root."/plugins/$author/$repo_id/versions/$latest_version"){
+                print "version: $latest_version\n";
                 print "uptodate - YES\n";
             }else{
                 print "latest available version: $latest_version\n";
@@ -135,12 +132,8 @@ sub show_plugin {
             }
 
         }else{
-
             my $list = read_plugin_list('as_hash');
-
             if ($list->{$pid}){
-
-                print "fetching latest release info from github, it might takes for awhile ...\n\n\n";
 
                 my $pdata = get_plugin_github_info($author,$repo_id);
 

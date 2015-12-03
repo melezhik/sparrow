@@ -77,8 +77,8 @@ sub show_plugin {
             my $list = read_plugin_list('as_hash');
             print "[plugin $pid] info\n";
             print "\tinstalled: YES\n";
-            print "\tgit url:",( $list->{$pid} ? $list->{$pid}->{url} : 'unknown' ) ,"\n";
-            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git log -n 1 --pretty=oneline");
+            print "\tgit url: ",( $list->{$pid} ? $list->{$pid}->{url} : 'unknown' ) ,"\n";
+            # execute_shell_command("cd ".sparrow_root."/plugins/$pid && git log -n 1 --pretty=oneline");
         }else{
             my $list = read_plugin_list('as_hash');
             if ($list->{$pid}){

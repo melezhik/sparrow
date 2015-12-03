@@ -132,6 +132,14 @@ Add_site command examples:
     sparrow project foo add_site tomcat_app  127.0.0.1:8080/app/
     sparrow project foo add_site mongodb_http mongo.host:28017
 
+To get linked site information say this:
+
+*sparrow project $project_name site_info $site_name*
+
+For example:
+
+    sparrow project foo site_info nginx_proxy
+
 ## run swat tests
 
 *sparrow project $project_name check_site $site_name $plugin_name*

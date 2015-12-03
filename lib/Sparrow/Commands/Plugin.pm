@@ -9,9 +9,6 @@ use Sparrow::Misc;
 
 use Carp;
 use File::Basename;
-use File::Path;
-use File::Spec;
-
 use HTTP::Tiny;
 use JSON;
 
@@ -59,49 +56,18 @@ sub show_plugins {
 
 sub install_plugin {
 
-    my $pid = shift or confess 'usage: install_plugin(plugin_id)';
-
-    my ($author,$repo_id) = split '@', $pid;
+    my $pid = shift;
 
     my $list = read_plugin_list('as_hash');
 
 
     if ($list->{$pid}){
-
-
-        print "installing plugin $pid ...\n";
-        print "fetching latest release info from github, it might takes for awhile ...\n";
-
-        my $pdata = get_plugin_github_info($author,$repo_id);
-        my $latest_version = $pdata->{latest}->{tag_name};
-
-        confess "could not find latest version of plugin" unless $latest_version;
-
-        print "latest version found is: $latest_version\n";
-
-        if ( -d sparrow_root."/plugins/$author/$repo_id/versions/$latest_version"){
-            print "skip git clone part, as it's already done ...\n";
-            execute_shell_command('cd '.sparrow_root."/plugins/$author/$repo_id/versions/$latest_version && carton");
-        }else{
-            mkpath(sparrow_root."/plugins/$author/$repo_id/versions/");
-            execute_shell_command(
-                'cd '.sparrow_root."/plugins/$author/$repo_id/versions/ && 
-                 git clone https://github.com/$author/$repo_id.git $latest_version && 
-                 cd $latest_version && carton"
-            );
+        if (-d sparrow_root."/plugins/$pid"){
+            confess("plugin $pid already installed!\n".
+            "you should remove plugin first by `sparrow plg remove $pid` to reinstall it \n");
         }
-    
-        # update symlink to latest version
-        if ( stat sparrow_root."/plugins/$author/$repo_id/latest" ) {
-            unlink(sparrow_root."/plugins/$author/$repo_id/latest");
-            print "regenerating symlink to latest version ... \n";
-        }    
-
-        symlink File::Spec->rel2abs(sparrow_root."/plugins/$author/$repo_id/versions/$latest_version"),
-                File::Spec->rel2abs(sparrow_root."/plugins/$author/$repo_id/latest") or
-        confess "can't create symlink /plugins/$author/$repo_id/latest ==> /plugins/$author/$repo_id/versions/$latest_version";
-
-
+        print "installing plugin $pid ...\n";
+        execute_shell_command('cd '.sparrow_root."/plugins && git clone $list->{$pid}->{url} $pid && cd $pid && carton");
     }else{
         confess "unknown plugin $pid";
     }

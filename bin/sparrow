@@ -95,7 +95,7 @@ if ($object eq  'plg'){
 
         my $sid = shift @ARGV;
 
-        site_info($name,$sid);
+        site_info($name,$sid,@ARGV);
 
     } elsif ( $action )  { 
 

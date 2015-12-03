@@ -170,6 +170,14 @@ This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-fi
 
 More information on swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
+To get site's swat settings say this:
+
+*sparrow project $project_name site_info $site_name --swat*
+
+For example:
+
+    sparrow project foo site_info nginx_proxy --swat
+
 ## run swat tests remotely
 
 NOT IMPLEMENTED YET.

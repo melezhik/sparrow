@@ -172,12 +172,30 @@ sub site_info {
 
     my $project = shift or confess 'usage: site_info(*project,site)';
     my $sid     = shift or confess 'usage: site_info(project,*site)';
+    my @opts    = @_;
+
+    my $opts = join ' ', @opts;
 
     if (-d sparrow_root."/projects/$project/sites/$sid" ){
         my $base_url = site_base_url($project,$sid);
         print "[site info] \n";
         print "\tname: $sid\n";
         print "\tbase url: $base_url\n";
+        if ($opts=~/--swat/){
+
+            print "\n\nswat settings:\n\n";
+            my $swat_ini_file =  sparrow_root."/projects/$project/sites/$sid/swat.my";
+            if ( -f $swat_ini_file ){
+                open F, $swat_ini_file or confess  "can't open $swat_ini_file to read: $!";
+                while(my $l = <F>){
+                    print $l;
+                };
+                close;
+            } else {
+                print "\n\nswat settings: not found\n";
+            }
+        }
+
     }else{
         confess "unknown site $sid in project $project";
 

@@ -9,8 +9,6 @@ use Sparrow::Misc;
 
 use Carp;
 use File::Basename;
-use HTTP::Tiny;
-use JSON;
 
 our @EXPORT = qw{
 
@@ -23,8 +21,6 @@ our @EXPORT = qw{
     remove_plugin
 };
 
-
-use constant 'github_api_base_url' => 'https://api.github.com/repos'; 
 
 sub show_local_plugins {
 
@@ -50,7 +46,7 @@ sub show_plugins {
     print "sparrow plugins list:\n\n";
 
     for my $p (@{$list}){
-        print "$p->{author}\@$p->{repo_id}\n";
+        print "$p->{name} | $p->{url}\n";
     }
 }
 
@@ -75,30 +71,15 @@ sub install_plugin {
 }
 sub show_plugin {
 
-    my $pid = shift or confess 'usage: show_plugin(plugin_id)';
+    my $pid = shift or confess 'usage: show_plugin(plugin_name)';
 
-    my ($author,$repo_id) = split '@', $pid;
-
-        if (stat sparrow_root."/plugins/$author/$repo_id/"){
-            print "plugin [$pid]\n";
-            print "installed - YES\n";
-            execute_shell_command("ls ".sparrow_root."/plugins/$author/$repo_id");
+        if (-d sparrow_root."/plugins/$pid"){
+            print "plugin [$pid] install OK.\n";
+            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git remote -v");
         }else{
             my $list = read_plugin_list('as_hash');
             if ($list->{$pid}){
-
-                my $pdata = get_plugin_github_info($author,$repo_id);
-
-                print "plugin [$pid]\n";
-                print "installed - NO\n";
-                print "latest version: ", ( $pdata->{latest}->{tag_name} || 'not found' )  , "\n";
-                print "available versions: ";
-                if ( @{$pdata->{releases}} ){
-                    print join ", ", map {$_->{tag_name}} @{$pdata->{releases}};
-                }else {
-                    print "not found\n";
-                }
-                print "\n"; 
+                print "plugin [$pid] NOT installed. git url:",$list->{$pid}->{url},"\n";
             }else{
                 confess "unkown plugin $pid";
             }
@@ -144,8 +125,8 @@ sub read_plugin_list {
         chomp $i;
         next unless $i=~/\S+/;
         my @foo = split /\s+/, $i;
-        push @list, { author => $foo[0], repo_id => $foo[1] } ;
-        $list{$foo[0].'@'.$foo[1]} = { author => $foo[0], repo_id => $foo[1] };
+        push @list, { name => $foo[0], url => $foo[1] } ;
+        $list{$foo[0]} = { name => $foo[0], url => $foo[1] };
     }
     close F;
 
@@ -161,39 +142,6 @@ sub read_plugin_list {
 
 }
 
-sub get_plugin_github_info {
-
-    my $author = shift or confess('usage: get_plugin_github_info(*author,repo_id)');
-    my $repo_id = shift or confess('usage: get_plugin_github_info(author,*repo_id)');
-
-
-    # get all releases
-
-    my $url = github_api_base_url."/$author/$repo_id/releases";
-    my $response = HTTP::Tiny->new->get($url);
-    confess "Failed to GET $url" unless $response->{success};
-
-    my $all_r = decode_json($response->{content});
-
-    # get latest releas info
-    # only if none zero releases counted
-    # for repository
-
-    my $lr = {};
-
-    if (@{$all_r}) {
-        my $url = github_api_base_url."/$author/$repo_id/releases/latest";
-        my $response = HTTP::Tiny->new->get($url);
-        confess "Failed to GET $url" unless $response->{success};
-
-        $lr = decode_json($response->{content});
-    }
-    
-    return {
-        latest => $lr,
-        releases => $all_r
-    };
-}
 
 1;
 

@@ -1,3 +1,7 @@
+0.0.6 2015-12-03
+
+* regenerated cpan meta files ( suddenly got lost in version 0.0.5 )
+
 0.0.5 2015-12-03
 
 * new commands: site_info

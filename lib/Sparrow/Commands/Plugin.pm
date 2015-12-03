@@ -24,7 +24,7 @@ our @EXPORT = qw{
 
 sub show_local_plugins {
 
-    print "locally installed swat plugins:\n\n";
+    print "[locally installed swat plugins]\n\n";
 
     my $root_dir = sparrow_root.'/plugins';
 
@@ -43,7 +43,7 @@ sub show_plugins {
 
     my $list = read_plugin_list();
 
-    print "sparrow plugins list:\n\n";
+    print "[sparrow plugins list]\n\n";
 
     for my $p (@{$list}){
         print "$p->{name} | $p->{url}\n";
@@ -74,12 +74,17 @@ sub show_plugin {
     my $pid = shift or confess 'usage: show_plugin(plugin_name)';
 
         if (-d sparrow_root."/plugins/$pid"){
-            print "plugin [$pid] install OK.\n";
-            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git remote -v");
+            my $list = read_plugin_list('as_hash');
+            print "[plugin $pid] info\n";
+            print "\tinstalled: YES\n";
+            print "\tgit url:",( $list->{$pid} ? $list->{$pid}->{url} : 'unknown' ) ,"\n";
+            execute_shell_command("cd ".sparrow_root."/plugins/$pid && git log -n 1 --pretty=oneline");
         }else{
             my $list = read_plugin_list('as_hash');
             if ($list->{$pid}){
-                print "plugin [$pid] NOT installed. git url:",$list->{$pid}->{url},"\n";
+                print "[plugin $pid] info\n";
+                print "\tinstalled: NO\n";
+                print "\tgit url:",$list->{$pid}->{url},"\n";
             }else{
                 confess "unkown plugin $pid";
             }

@@ -50,6 +50,7 @@ sub usage {
     print "\n[projects and sites]:\n\n";
     print "\tsparrow project foo add_site nginx_proxy    127.0.0.1       # create site and link it to project\n";
     print "\tsparrow project foo add_site pinto_rest_api 127.0.0.1:3111  # another site get linked to project\n";
+    print "\tsparrow project foo site_info nginx_proxy                   # get site info\n";
 
     print "\n[swat test suites]:\n\n";
     print "\tsparrow project foo check_site nginx_proxy swat-nginx      # yet another swat test suite run \n";

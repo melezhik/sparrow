@@ -52,7 +52,7 @@ if ($object eq  'plg'){
 
     } else { # default plugin action
 
-        show_plugin( shift @ARGV );        
+        confess "unknown command: $action @ARGV";
 
     }
 } elsif ($object eq  'project'){
@@ -91,17 +91,20 @@ if ($object eq  'plg'){
 
         check_site($name,$sid,$pid);
 
-    } elsif( $action  eq 'swat_setup'){
+    } elsif( $action  eq 'site_info'){
 
         my $sid = shift @ARGV;
 
-        swat_setup($name,$sid);
+        site_info($name,$sid);
+
+    } elsif ( $action )  { 
+
+        confess "unknown command: $action @ARGV";
 
     } else { # default project action
 
         project_info($name);
-
-    };
+    }
 
 } elsif ( $object eq 'projects' ){
 

@@ -18,16 +18,21 @@ our @EXPORT = qw{
 
     show_projects
     project_info
+
     add_plugin_to_project
     add_site_to_project
 
+    site_info
+
     site_base_url
+
+
 };
 
 
 sub show_projects {
 
-    print "sparrow project list:\n\n";
+    print "[sparrow project list]\n\n";
 
     my $root_dir = sparrow_root.'/projects/';
 
@@ -42,7 +47,7 @@ sub show_projects {
 
 sub create_project {
 
-    my $project = shift;
+    my $project = shift or confess('usage: create_project(project)');;
 
     if ( -d sparrow_root."/projects/$project" ){
         print "project $project already exists - nothing to do here ... \n\n"
@@ -58,7 +63,7 @@ sub create_project {
 
 sub remove_project {
 
-    my $project = shift;
+    my $project = shift or confess('usage: remove_project(project)');
 
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
@@ -72,13 +77,13 @@ sub remove_project {
 
 sub project_info {
 
-    my $project = shift;
+    my $project = shift or confess('usage: project_info(project)');;
 
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
-    print "project $project info:\n\n";
+    print "[project $project info]\n\n";
 
-    print "plugins:\n\n";
+    print "[plugins]\n\n";
 
     my $root_dir = sparrow_root."/projects/$project/plugins/";
 
@@ -96,7 +101,7 @@ sub project_info {
     closedir $dh;
 
 
-    print "\n\n\sites:\n\n";
+    print "\n\n\[sites]\n\n";
 
     my $root_dir = sparrow_root."/projects/$project/sites/";
 
@@ -163,6 +168,22 @@ sub add_site_to_project {
 
 }
 
+sub site_info {
+
+    my $project = shift or confess 'usage: site_info(*project,site)';
+    my $sid     = shift or confess 'usage: site_info(project,*site)';
+
+    if (-d sparrow_root."/projects/$project/sites/$sid" ){
+        my $base_url = site_base_url($project,$sid);
+        print "[site info] \n";
+        print "\tname: $sid\n";
+        print "\tbase url: $base_url\n";
+    }else{
+        confess "unknown site $sid in project $project";
+
+    }
+    
+}
 
 sub site_base_url {
 

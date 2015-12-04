@@ -218,6 +218,15 @@ Public plugins will be denoted with public type:
     
 ## PIRIVATE PLUIGINS
 
+Private plugins are ones created by you and not supposed to be accessed publicly.
+
+The private plugins features:
+
+* they are not versioned, a simple git pull is exectued to ship the plugin, this straightforward approach result in fast integratiion
+which is in focus when doing internal developing
+
+* they are kept in a arbitrary remote git repositories ( public or prvivate ones ) 
+
 To install private plugin one should configure sparrow plugin list (SPL).
 
 # SPARROW PLUGINS LIST

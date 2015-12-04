@@ -19,6 +19,9 @@ our @EXPORT = qw{
     show_plugin
     update_plugin
     remove_plugin
+
+    upload_plugin
+
 };
 
 
@@ -144,6 +147,13 @@ sub read_plugin_list {
     }
 
     return $retval;
+
+}
+
+sub upload_plugin {
+
+    execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    execute_shell_command('curl --noproxy 127.0.0.1  -f -X POST 127.0.0.1:3000/plugin -F archive=@/tmp/archive.tar.gz');
 
 }
 

@@ -46,6 +46,10 @@ if ($object eq  'plg'){
 
         remove_plugin( shift @ARGV );        
 
+    } elsif( $action  eq 'upload'){
+
+        upload_plugin();        
+
     } elsif ( $action  eq 'info'){
 
         show_plugin( shift @ARGV );        

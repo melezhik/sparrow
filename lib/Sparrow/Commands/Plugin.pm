@@ -136,8 +136,8 @@ sub read_plugin_list {
         chomp $i;
         next unless $i=~/\S+/;
         my @foo = split /\s+/, $i;
-        push @list, { name => $foo[0], url => $foo[1], type => 'local' } ;
-        $list{$foo[0]} = { name => $foo[0], url => $foo[1], type => 'local' };
+        push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
+        $list{$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
     }
     close F;
 
@@ -149,8 +149,8 @@ sub read_plugin_list {
         for my $i (split "\n", $response->{content}){
             next unless $i=~/\S+/;
             my @foo = split /\s+/, $i;
-            push @list, { name => $foo[0], version => $foo[1], type => 'remote' } ;
-            $list{$foo[0]} = { name => $foo[0], version => $foo[1], type => 'remote'  };
+            push @list, { name => $foo[0], version => $foo[1], type => 'public' } ;
+            $list{$foo[0]} = { name => $foo[0], version => $foo[1], type => 'public'  };
         } 
     }else{
         confess "bad response from $index_url\n$response->{status}\n$response->{reason}\n";

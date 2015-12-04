@@ -64,10 +64,10 @@ Sparrow plugin is a shareable swat test suite.
 
 One could install sparrow plugin and then run related swat tests, see [check_site](#run-swat-tests) action.
 
-    echo swat-nginx | https://github.com/melezhik/swat-nginx.git >> ~/sparrow/sparrow.list
-    sparrow plg install swat-nginx
+    sparrow plg list # to get available plugin list
+    sparrow plg install swat-nginx # to download and install a choosen plugin 
 
-Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugin configuration.
+Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
 
 To see available plugin list say this:
 
@@ -195,9 +195,30 @@ Sparrow rest API allow to run swat test suites remotely over http.
 
 # SPARROW PLUGINS
 
-Sparrow plugins are shareable swat test suites installed from remote git repositories.
+Sparrow plugins are shareable swat test suites installed from remote sources.
 
-To install sparrow plugins one should configure sparrow plugin list (SPL).
+There are two type of sparrow plugins:
+
+* public plugins - provided by community and so considered as public access
+* private plugins - provided by internal or external git repositories and _not necessary_ considered as public access
+
+## PUBLIC PLUGINS
+
+The public plugins features:
+
+* they are versioned, so you may upgrade and downgrade them as you commonly do with any package manage tools ( cpan, apt-get, yum )
+* they are kept in a central place called sparrow box - remote community plugins repository
+
+To install public sparrow plugin a minimal efforts are required. You find one in a plugin listing and then install it.
+
+Public plugins will be denoted with public type:
+
+    sparrow  plg list  | grep public
+    sparrow plg install public_plugin_name
+    
+## PIRIVATE PLUIGINS
+
+To install private plugin one should configure sparrow plugin list (SPL).
 
 # SPARROW PLUGINS LIST
 
@@ -224,16 +245,6 @@ To install swat-yars plugin one should do following
 
     # install plugin
     sparrow plg install swat-yars
-
-# COMMUNITY SPARROW PLUGINS
-
-Community sparrow plugins are public plugins listed at [https://github.com/melezhik/sparrow-hub](https://github.com/melezhik/sparrow-hub)
-
-Sparrow community members are encouraged to create a useful plugins and have them listed here.
-
-To add sparrow public plugins to your SPL do this:
-
-    curl https://raw.githubusercontent.com/melezhik/sparrow-hub/master/sparrow.list >> ~/sparrow/sparrow.list
 
 # CREATING SPARROW PLUGINS
 

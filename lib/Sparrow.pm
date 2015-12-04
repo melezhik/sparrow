@@ -107,7 +107,7 @@ I<sparrow plg list>
 
 To see installed plugin list say this:
 
-I<sparrow plg list --local>
+I<sparrow plg list --installed>
 
 To see installed plugin info say this:
 

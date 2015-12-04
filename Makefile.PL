@@ -9,7 +9,7 @@ all_from       'lib/Sparrow.pm';
 # Specific dependencies
 
 requires    'Carton';
-requires    'Log::Log4perl';
+requires    'HTTP::Tiny';
 
 license     'perl';
 

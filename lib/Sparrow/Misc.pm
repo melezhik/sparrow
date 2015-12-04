@@ -36,8 +36,8 @@ sub usage {
 
     print "\n[plugins]:\n\n";
 
-    print "\tsparrow plg list           # show plugin index \n";
-    print "\tsparrow plg list --local   # show installed plugins \n";
+    print "\tsparrow plg list               # show plugin index \n";
+    print "\tsparrow plg list --installed   # show installed plugins \n";
     print "\tsparrow plg install swat-nginx # install plugin \n";
     print "\tsparrow plg update swat-nginx  # update plugin\n";
     print "\tsparrow plg remove swat-nginx  # remove plugin\n";

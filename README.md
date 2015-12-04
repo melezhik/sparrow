@@ -75,7 +75,7 @@ To see available plugin list say this:
 
 To see installed plugin list say this:
 
-*sparrow plg list --local*
+*sparrow plg list --installed*
 
 To see installed plugin info say this:
 

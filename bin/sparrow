@@ -28,8 +28,8 @@ if ($object eq  'plg'){
 
         my $options = join ' ', @ARGV;
 
-        if ($options =~ /--local/){
-            show_local_plugins();
+        if ($options =~ /--installed/){
+            show_installed_plugins();
         } else {
             show_plugins();
         }

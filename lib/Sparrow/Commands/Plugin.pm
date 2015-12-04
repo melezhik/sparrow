@@ -9,10 +9,11 @@ use Sparrow::Misc;
 
 use Carp;
 use File::Basename;
+use HTTP::Tiny;
 
 our @EXPORT = qw{
 
-    show_local_plugins    
+    show_installed_plugins    
     show_plugins
 
     install_plugin
@@ -24,10 +25,11 @@ our @EXPORT = qw{
 
 };
 
+use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
 
-sub show_local_plugins {
+sub show_installed_plugins {
 
-    print "[locally installed swat plugins]\n\n";
+    print "[installed sparrow plugins]\n\n";
 
     my $root_dir = sparrow_root.'/plugins';
 
@@ -46,10 +48,11 @@ sub show_plugins {
 
     my $list = read_plugin_list();
 
-    print "[sparrow plugins list]\n\n";
+    print "[available sparrow plugins]\n\n";
+    print "name | type | version | git url \n";
 
     for my $p (@{$list}){
-        print "$p->{name} | $p->{url}\n";
+        print "$p->{name} | $p->{type} | $p->{url} | $p->{version}  \n";
     }
 }
 
@@ -133,10 +136,26 @@ sub read_plugin_list {
         chomp $i;
         next unless $i=~/\S+/;
         my @foo = split /\s+/, $i;
-        push @list, { name => $foo[0], url => $foo[1] } ;
-        $list{$foo[0]} = { name => $foo[0], url => $foo[1] };
+        push @list, { name => $foo[0], url => $foo[1], type => 'local' } ;
+        $list{$foo[0]} = { name => $foo[0], url => $foo[1], type => 'local' };
     }
     close F;
+
+    my $index_url = sparrow_box_api_url.'/index';
+
+    my $response = HTTP::Tiny->new->get($index_url);
+ 
+    if ($response->{success}){
+        for my $i (split "\n", $response->{content}){
+            next unless $i=~/\S+/;
+            my @foo = split /\s+/, $i;
+            push @list, { name => $foo[0], version => $foo[1], type => 'remote' } ;
+            $list{$foo[0]} = { name => $foo[0], version => $foo[1], type => 'remote'  };
+        } 
+    }else{
+        confess "bad response from $index_url\n$response->{status}\n$response->{reason}\n";
+    }
+
 
     my $retval;
 
@@ -153,7 +172,7 @@ sub read_plugin_list {
 sub upload_plugin {
 
     execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
-    execute_shell_command('curl --noproxy 127.0.0.1  -f -X POST 127.0.0.1:3000/plugin -F archive=@/tmp/archive.tar.gz');
+    execute_shell_command('curl -f -X POST '.sparrow_box_api_url.'/plugin -F archive=@/tmp/archive.tar.gz');
 
 }
 

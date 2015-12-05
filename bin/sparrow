@@ -92,7 +92,7 @@ if ($object eq  'plg'){
 
         project_info($name);
 
-    } elsif( $action  eq 'check_site'){
+    } elsif( $action  eq 'check'){
 
         my $sid = shift @ARGV;
         my $pid = shift @ARGV;

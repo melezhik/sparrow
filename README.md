@@ -62,7 +62,7 @@ For example:
 
 Sparrow plugin is a shareable swat test suite.
 
-One could install sparrow plugin and then run related swat tests, see [check_site](#run-swat-tests) action.
+One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action.
 
     sparrow plg list # to get available plugin list
     sparrow plg install swat-nginx # to download and install a choosen plugin 
@@ -142,17 +142,17 @@ For example:
 
 ## run swat tests
 
-*sparrow project $project_name check_site $site_name $plugin_name*
+*sparrow project $project_name check $site_name $plugin_name*
 
 Once sparrow project is configured and has some  sites and plugins one could run swat test suites against projects sites.
 
-Check_site command examples:
+Check command examples:
 
     # run swat-nginx test suite for application nginx_proxy
-    sparrow project foo check_site nginx_proxy swat-nginx
+    sparrow project foo check nginx_proxy swat-nginx
 
     # run swat-tomcat test suite for application 
-    sparrow project foo check_site mongodb_http swat-mongodb-http
+    sparrow project foo check mongodb_http swat-mongodb-http
 
 ## customize swat settings for site
 
@@ -182,7 +182,7 @@ For example:
 
 NOT IMPLEMENTED YET.
 
-*GET /$project_name/check_site/$site_name/$plugin_name*
+*GET /$project_name/check/$site_name/$plugin_name*
 
 Sparrow rest API allow to run swat test suites remotely over http.
 
@@ -190,7 +190,7 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
 
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/swat-nginx
+    curl http://127.0.0.1:5090/foo/check/nginx_proxy/swat-nginx
 
 
 # SPARROW PLUGINS

@@ -94,7 +94,7 @@ I<sparrow plg install $plugin_name>
 
 Sparrow plugin is a shareable swat test suite.
 
-One could install sparrow plugin and then run related swat tests, see L<check_site|#run-swat-tests> action.
+One could install sparrow plugin and then run related swat tests, see L<check|#run-swat-tests> action.
 
     sparrow plg list # to get available plugin list
     sparrow plg install swat-nginx # to download and install a choosen plugin 
@@ -177,17 +177,17 @@ For example:
 
 =head2 run swat tests
 
-I<sparrow project $project_name check_site $site_name $plugin_name>
+I<sparrow project $project_name check $site_name $plugin_name>
 
 Once sparrow project is configured and has some  sites and plugins one could run swat test suites against projects sites.
 
-Check_site command examples:
+Check command examples:
 
     # run swat-nginx test suite for application nginx_proxy
-    sparrow project foo check_site nginx_proxy swat-nginx
+    sparrow project foo check nginx_proxy swat-nginx
     
     # run swat-tomcat test suite for application 
-    sparrow project foo check_site mongodb_http swat-mongodb-http
+    sparrow project foo check mongodb_http swat-mongodb-http
 
 
 =head2 customize swat settings for site
@@ -219,7 +219,7 @@ For example:
 
 NOT IMPLEMENTED YET.
 
-I<GET /$project_name/check_site/$site_name/$plugin_name>
+I<GET /$project_name/check/$site_name/$plugin_name>
 
 Sparrow rest API allow to run swat test suites remotely over http.
 
@@ -227,7 +227,7 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
     
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check_site/nginx_proxy/swat-nginx
+    curl http://127.0.0.1:5090/foo/check/nginx_proxy/swat-nginx
 
 
 =head1 SPARROW PLUGINS
@@ -278,6 +278,27 @@ Public plugins will be denoted with public type:
 
 
 =head2 PIRIVATE PLUIGINS
+
+Private plugins are ones created by you and not supposed to be accessed publicly.
+
+The private plugins features:
+
+=over
+
+=item *
+
+they are not versioned, a simple git pull is exectued to ship the plugin, this straightforward approach result in fast integratiion
+which is in focus when doing internal developing
+
+
+
+=item *
+
+they are kept in a arbitrary remote git repositories ( public or prvivate ones ) 
+
+
+
+=back
 
 To install private plugin one should configure sparrow plugin list (SPL).
 

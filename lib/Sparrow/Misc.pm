@@ -54,8 +54,8 @@ sub usage {
     print "\tsparrow project foo site_info nginx_proxy --swat            # the same as above but with swat settings\n";
 
     print "\n[swat test suites]:\n\n";
-    print "\tsparrow project foo check_site nginx_proxy swat-nginx      # yet another swat test suite run \n";
-    print "\tsparrow project foo check_site pinto_rest_api swat-pintod  # run swat test suite from plugin swat-tomcat, site tomcat_app\n";
+    print "\tsparrow project foo check nginx_proxy swat-nginx      # yet another swat test suite run \n";
+    print "\tsparrow project foo check pinto_rest_api swat-pintod  # run swat test suite from plugin swat-tomcat, site tomcat_app\n";
 
 
     print "\tsparrow project foo swat_setup nginx_proxy # configure swat setting for site nginx_proxy\n";

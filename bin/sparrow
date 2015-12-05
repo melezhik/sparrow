@@ -73,6 +73,10 @@ if ($object eq  'plg'){
 
         remove_project($name);
 
+    } elsif ( $action eq 'swat_setup') {
+
+        swat_setup($name, shift @ARGV);
+
     } elsif ( $action eq 'add_site' ){
 
         my $sid = shift @ARGV;
@@ -82,7 +86,7 @@ if ($object eq  'plg'){
 
     } elsif( $action  eq 'add_plg'){
 
-        add_plugin_to_project($name,shift @ARGV);
+        add_plugin_to_project($name, shift @ARGV);
 
     } elsif( $action  eq 'info'){
 
@@ -93,7 +97,7 @@ if ($object eq  'plg'){
         my $sid = shift @ARGV;
         my $pid = shift @ARGV;
 
-        check_site($name,$sid,$pid);
+        check_site($name, $sid, $pid);
 
     } elsif( $action  eq 'site_info'){
 

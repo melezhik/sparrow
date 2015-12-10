@@ -120,7 +120,7 @@ Examples:
 ## setup checkpoints
 
 
-Once create checkpoint need to be setup with proper sparrow plugin and  base_url
+Once created checkpoint needs to get setup with proper sparrow plugin and web service base_url
 
 *sparrow project check_set $project_name $checkpoint_name $args*
 
@@ -129,11 +129,11 @@ Examples:
     sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1
     sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080
 
-Setting checkpoint means you tie together a tested web services and sparrow plugin providing a tested logic.
+Setting checkpoint means you tie together a tested web service ( represnted by base_url ) and test scenarios ( represented by sparrow plugin ).
 
 Base URL is a root http URL to send http requests when executing swat tests against a web service.
 
-Base URL should be [curl compliant](http://curl.haxx.se/docs/manpage.html)
+Base URL should be [curl compliant](http://curl.haxx.se/docs/manpage.html).
 
 To show checkpoint info say this:
 

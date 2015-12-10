@@ -131,11 +131,16 @@ Examples:
 
 Setting checkpoint means you tie together a tested web service ( represnted by base_url ) and test scenarios ( represented by sparrow plugin ).
 
-Base URL is a root http URL to send http requests when executing swat tests against a web service.
+Args:
 
-Base URL should be [curl compliant](http://curl.haxx.se/docs/manpage.html).
+* -u - base_url
 
-To show checkpoint info say this:
+* -p sparrow plugin name
+
+Base_url paramter is a root http URL to send http requests when executing swat tests against a web service. 
+It should be [curl compliant](http://curl.haxx.se/docs/manpage.html).
+
+To get checkpoint info say this:
 
 *sparrow project check_show $project_name $checkpoint_name*
 

@@ -30,7 +30,7 @@ These are actions provided by sparrow console client:
 
 ## create a project
 
-*sparrow project $project_name create*
+*sparrow project create $project_name*
 
 Create a sparrow project.
 
@@ -38,19 +38,23 @@ Sparrow project is a container for swat test suites and applications.
 
 Sparrow project is where one run swat tests against different applications.
 
-    sparrow project foo create
+    sparrow project create foo
 
 To get project info say this:
 
-*sparrow project $project_name info*
+*sparrow project show $project_name*
 
 For example:
 
-    sparrow project foo info
+    sparrow project show foo
+
+To see project list say this:
+
+*sparrow project list*
 
 To remove project data say this:
 
-*sparrow project $project_name remove*
+*sparrow project remove $project_name*
 
 For example:
 
@@ -79,7 +83,7 @@ To see installed plugin list say this:
 
 To see installed plugin info say this:
 
-*sparrow plg info $plugin_name*
+*sparrow plg show $plugin_name*
 
 To update installed plugin:
 
@@ -99,90 +103,87 @@ For example:
 
     sparrow plg remove swat-tomcat
 
-## link plugins to a project
+## create checkpoints
 
-*sparrow project $project_name add_plg $plugin_name*
+Checkpoints tie together tested web service and sparrow plugin. 
 
-Swat project could _link_ to one or more plugins.
+Checkpoints belong to projects, so to create a checkpoint you need to point a project.
 
-That means one may run different swat test suites represented by plugins against project's sites.
+*sparrow project check_set $project_name $checkpoint_name*
 
-So linked plugins could be run against sites in sparrow project.
 
-    sparrow project foo add_plg swat-nginx
-    sparrow project foo add_plg swat-mongodb-http
+Examples:
 
-    # and then add some sites
+    sparrow project check_add foo nginx-check 
+    sparrow project check_add foo tomcat-app-check 
 
-## create sites
+## setup checkpoints
 
-*sparrow project $project_name add_site $site_name $base_url*
 
-Sparrow site is a abstraction of web application to run swat tests against.
+Once create checkpoint need to be setup with proper sparrow plguin and  base_url
 
-Sparrow site have a name and base URL.
+*sparrow project check_set $project_name $checkpoint_name $args*
 
-Site's base URL is root http URL to send http requests to when running swat test suites against a site.
+Examples:
 
-Base URL should be curl compliant.
+    sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1 
+    sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080
 
-Add_site command examples:
+Setting checkpoint means you tie togethet a tested web services and sparrow plugin providing a tested logic.
 
-    sparrow project foo add_site nginx_proxy http://127.0.0.1
-    sparrow project foo add_site tomcat_app  127.0.0.1:8080/app/
-    sparrow project foo add_site mongodb_http mongo.host:28017
+Base URL is a root http URL to send http requests when executing swat tests against a web service.
 
-To get linked site information say this:
+Base URL should be [curl compliant](http://curl.haxx.se/docs/manpage.html)
 
-*sparrow project $project_name site_info $site_name*
+To show checkpoint info say this:
+
+*sparrow project check_show $project_name $checkpoint_name*
 
 For example:
 
-    sparrow project foo site_info nginx_proxy
+    sparrow project check_show foo nginx-check
 
 ## run swat tests
 
-*sparrow project $project_name check $site_name $plugin_name*
+*sparrow project check_run $project_name $checkpoint_name*
 
-Once sparrow project is configured and has some  sites and plugins one could run swat test suites against projects sites.
+Once sparrow project is configured and has some checkpoints you may run swat tests:
 
-Check command examples:
+Examples:
 
-    # run swat-nginx test suite for application nginx_proxy
-    sparrow project foo check nginx_proxy swat-nginx
+    sparrow project check_run foo nginx-check
 
-    # run swat-tomcat test suite for application 
-    sparrow project foo check mongodb_http swat-mongodb-http
+    sparrow project check_run foo tomcat-app-check
 
-## customize swat settings for site
+## customize swat settings for checkpoint
 
-*sparrow project $project_name swat_setup $site_name*
+*sparrow project check_set $project_name $checkpoint_name --swat*
 
-Swat_setup action allow to customize swat settings, using swat.ini file format.
+Executing check_set action with \`--swat' flag allow to customize swat settings for given checkpoint.
 
-This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for given site .
+This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for swat test suite provided by plugin.
 
     export EDITOR=nano
-    sparrow project foo swat_setup nginx_proxy
+    sparrow project check_set foo nginx-app --swat
 
         port=88
         prove_options='-sq'
 
 More information on swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
 
-To get site's swat settings say this:
+To get checkpoint swat settings say this:
 
-*sparrow project $project_name site_info $site_name --swat*
+*sparrow project check_show $project_name $checkpoint_name --swat*
 
 For example:
 
-    sparrow project foo site_info nginx_proxy --swat
+    sparrow project check_show foo nginx-app --swat
 
 ## run swat tests remotely
 
 NOT IMPLEMENTED YET.
 
-*GET /$project_name/check/$site_name/$plugin_name*
+*GET /$project_name/check_run/$project_name/$checkpoint_name*
 
 Sparrow rest API allow to run swat test suites remotely over http.
 
@@ -190,7 +191,7 @@ Sparrow rest API allow to run swat test suites remotely over http.
     sparrowd
 
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/foo/check/nginx_proxy/swat-nginx
+    curl http://127.0.0.1:5090/check_run/foo/nginx-app
 
 
 # SPARROW PLUGINS
@@ -200,6 +201,7 @@ Sparrow plugins are shareable swat test suites installed from remote sources.
 There are two type of sparrow plugins:
 
 * public plugins - provided by community and so considered as public access
+
 * private plugins - provided by internal or external git repositories and _not necessary_ considered as public access
 
 ## PUBLIC PLUGINS
@@ -207,6 +209,7 @@ There are two type of sparrow plugins:
 The public plugins features:
 
 * they are versioned, so you may upgrade and downgrade them as you commonly do with any package manage tools ( cpan, apt-get, yum )
+
 * they are kept in a central place called sparrow box - remote community plugins repository
 
 To install public sparrow plugin a minimal efforts are required. You find one in a plugin listing and then install it.
@@ -231,7 +234,7 @@ To install private plugin one should configure sparrow plugin list (SPL).
 
 # SPARROW PLUGINS LIST
 
-Sparrow plugins list is represented by text file ~/sparrow/sparrow.list
+Private sparrow plugins list is represented by text file ~/sparrow/sparrow.list
 
 SPL file contains lines of the following format:
 
@@ -259,13 +262,16 @@ To install swat-yars plugin one should do following
 
 To accomplish this task one should be able to
 
-* init local git repository and map it to remote one
+* init local git repository and map it to remote one ( not required for public plugins )
 
 * create swat test suite
 
-* add sparrow related configuration
+* create a cpanfile to describe additional cpan dependencies ( mininimal requirement is a swat module dependency )
 
-* commit changes and then push into remote
+* create sparrow.json file to describe plugin meta information ( not required for pivate plugin )
+
+* commit changes and then push into remote ( not required for public plugins )
+
 
 ## Init git repository
 
@@ -288,7 +294,7 @@ A simplest swat test suite to check if GET / returns 200 OK would be like this:
 
     echo 200 OK > get.txt
 
-## Add sparrow related info
+## Create cpanfile
 
 As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies and execute script
 the only minimal requirement is having valid cpanfile on the root directory of your swat test suite project.
@@ -305,40 +311,53 @@ For example:
     require 'HTML::Entities'
 
 
-## Step by step list
+# PUPLISHING SPARROW PLUGINS
 
-To create sparrow plugin:
-
-    * create local git repository
-    * create swat tests
-    * swat project root should be current working directory
-    * run swat test to ensure that they works fine ( this one is optional but really useful )
-    * create cpanfile to declare perl dependencies
-    * commit your changes
-    * add remote git repository
-    * push your changes
+## Private plugin
 
 
-## Hello world example
+All you need to keep a plugin source code in the remote git repository. Swat project root directory should be at repository root.
 
-To repeat all told before in a code way:
-
-    git init .
-    echo "local" > .gitignore
-    echo "require 'swat';" > cpanfile
-    echo 200 OK > get.txt
-    git add .
-    git commit -m 'my first swat plugin' -a
-    git remote add origin $your-remote-git-repository
-    git push origin master
-
-
-That's it. To use your freshly baked plugin just say this:
-
+To get plugin listed at sparrow plugin list:
 
     echo my-plugin $your-remote-git-repository >> sparrow.list
+
+Now install it:
+
     sparrow plg install my-plugin
 
+## Public plugin
+
+* Create your plugin
+
+* Setup sparrow.json file
+
+Go to plugin directory ( should be swat project root directory ) and create sparrow.json file
+to describe plugin meta information. This should be json file with 2 obligatory parameter:
+
+    {
+        "version" => "0.2.3",
+        "name" => "my-cool-plugin"
+    }
+
+
+Version should be CPAN compatibale version string. Name should be plugin name. 
+
+* Upload plugin
+
+Before uploading to central sparrow repository  you need to get access to SparrowBox API.
+
+Register at http://sparrowbox-pm.org and generate API token.
+
+Once you have one setup ~/.sparrow-box.ini file:
+
+    echo 'user=melezhik'                                > ~/.sparrow-box.ini
+    echo 'token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83'   >> ~/.sparrow-box.ini
+
+Now you are ready to upload a plugin with sparrow client
+
+    $ cd plugin_root_directory
+    $ sparrow plg upload
 
 # AUTHOR
 

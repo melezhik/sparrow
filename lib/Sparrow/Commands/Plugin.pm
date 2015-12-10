@@ -11,6 +11,8 @@ use Carp;
 use File::Basename;
 use HTTP::Tiny;
 
+use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
+
 our @EXPORT = qw{
 
     show_installed_plugins    
@@ -25,7 +27,6 @@ our @EXPORT = qw{
 
 };
 
-use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
 
 sub show_installed_plugins {
 
@@ -172,7 +173,7 @@ sub read_plugin_list {
 sub upload_plugin {
 
     execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
-    execute_shell_command('curl -f -X POST '.sparrow_box_api_url.'/plugin -F archive=@/tmp/archive.tar.gz');
+    execute_shell_command('curl -f -X POST '.sparrow_box_api_url.'/upload -F archive=@/tmp/archive.tar.gz');
 
 }
 

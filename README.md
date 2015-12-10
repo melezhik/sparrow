@@ -69,7 +69,7 @@ Sparrow plugin is a shareable swat test suite.
 One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action.
 
     sparrow plg list # to get available plugin list
-    sparrow plg install swat-nginx # to download and install a choosen plugin 
+    sparrow plg install swat-nginx # to download and install a chosen plugin
 
 Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
 
@@ -105,7 +105,7 @@ For example:
 
 ## create checkpoints
 
-Checkpoints tie together tested web service and sparrow plugin. 
+Checkpoints tie together tested web service and sparrow plugin.
 
 Checkpoints belong to projects, so to create a checkpoint you need to point a project.
 
@@ -114,22 +114,22 @@ Checkpoints belong to projects, so to create a checkpoint you need to point a pr
 
 Examples:
 
-    sparrow project check_add foo nginx-check 
-    sparrow project check_add foo tomcat-app-check 
+    sparrow project check_add foo nginx-check
+    sparrow project check_add foo tomcat-app-check
 
 ## setup checkpoints
 
 
-Once create checkpoint need to be setup with proper sparrow plguin and  base_url
+Once create checkpoint need to be setup with proper sparrow plugin and  base_url
 
 *sparrow project check_set $project_name $checkpoint_name $args*
 
 Examples:
 
-    sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1 
+    sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1
     sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080
 
-Setting checkpoint means you tie togethet a tested web services and sparrow plugin providing a tested logic.
+Setting checkpoint means you tie together a tested web services and sparrow plugin providing a tested logic.
 
 Base URL is a root http URL to send http requests when executing swat tests against a web service.
 
@@ -218,17 +218,17 @@ Public plugins will be denoted with public type:
 
     sparrow  plg list  | grep public
     sparrow plg install public_plugin_name
-    
-## PIRIVATE PLUIGINS
+   
+## PRIVATE PLUGINS
 
 Private plugins are ones created by you and not supposed to be accessed publicly.
 
 The private plugins features:
 
-* they are not versioned, a simple git pull is exectued to ship the plugin, this straightforward approach result in fast integratiion
-which is in focus when doing internal developing
+* they are not versioned, a simple git pull is executed to ship the plugin, this straightforward approach result in fast integration
+which is in focus when doing internal development
 
-* they are kept in a arbitrary remote git repositories ( public or prvivate ones ) 
+* they are kept in a arbitrary remote git repositories ( public or private ones )
 
 To install private plugin one should configure sparrow plugin list (SPL).
 
@@ -266,9 +266,9 @@ To accomplish this task one should be able to
 
 * create swat test suite
 
-* create a cpanfile to describe additional cpan dependencies ( mininimal requirement is a swat module dependency )
+* create a cpanfile to describe additional cpan dependencies ( minimal requirement is a swat module dependency )
 
-* create sparrow.json file to describe plugin meta information ( not required for pivate plugin )
+* create sparrow.json file to describe plugin meta information ( not required for private plugin )
 
 * commit changes and then push into remote ( not required for public plugins )
 
@@ -302,7 +302,7 @@ the only minimal requirement is having valid cpanfile on the root directory of y
 For example:
 
 
-    # cat cpanfile
+    # $ cat cpanfile
 
     # yes, we need a swat to run our tests
     require 'swat';
@@ -311,7 +311,7 @@ For example:
     require 'HTML::Entities'
 
 
-# PUPLISHING SPARROW PLUGINS
+# PUBLISHING SPARROW PLUGINS
 
 ## Private plugin
 
@@ -322,7 +322,7 @@ To get plugin listed at sparrow plugin list:
 
     echo my-plugin $your-remote-git-repository >> sparrow.list
 
-Now install it:
+Now you may install it:
 
     sparrow plg install my-plugin
 
@@ -341,7 +341,7 @@ to describe plugin meta information. This should be json file with 2 obligatory 
     }
 
 
-Version should be CPAN compatibale version string. Name should be plugin name. 
+Version should be CPAN compatible version string. Name should be plugin name.
 
 * Upload plugin
 
@@ -377,4 +377,5 @@ This program is free software; you can redistribute it and/or modify it under th
 # THANKS
 
 * to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
+
 

@@ -1,9 +1,9 @@
 0.0.7
 
-* introducing sparrow box - remote sparrow plugins repository
-* new action - plg upload - to upload plugin to sparrow box 
-* plg list now shows remote and local plugins 
-* some actions, objects renamed - reflected at documentation 
+* checkpoints as replacements for sites and linked plugins
+* introducing public and private plugins
+* implimenting `plg upload` and `plg list` for SparrowBox API
+
 
 0.0.6 2015-12-03
 

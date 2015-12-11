@@ -197,11 +197,11 @@ Sparrow plugins are shareable swat test suites installed from remote sources.
 
 There are two type of sparrow plugins:
 
-* public plugins - provided by [community repository](https://sparrowhub.org/) and so considered as public access
+* public plugins are provided by [SparrowHub](https://sparrowhub.org/) community plugin repository and considered as public access
 
-* private plugins - provided by internal or external git repositories and _not necessary_ considered as public access
+* private plugins are provided by internal or external git repositories and _not necessary_ considered as public access
 
-Both public and private plugins are installed with help sparrow client:
+Both public and private plugins are installed with help of sparrow client:
 
     sparrow  plg list
     sparrow plg install plugin_name
@@ -212,7 +212,7 @@ The public plugins features:
 
 * they are kept in a central place called [SparrowHub](https://sparrowhub.org/) - community plugins repository
 
-* they are versioned, so you may install various version of a one plugin
+* they are versioned so you may install various version of a one plugin
 
    
 ## PRIVATE PLUGINS
@@ -221,31 +221,36 @@ Private plugins are ones created by you and not supposed to be accessed publicly
 
 The private plugins features:
 
-* they are kept in a arbitrary remote git repositories ( public or private ones )
+* they are kept in arbitrary remote git repositories ( public or private ones )
 
-* they are not versioned, a simple git clone/pull is executed to install/update a plugin
+* they are not versioned, a simple \`git clone/pull' command is executed to install/update a plugin
 
-* private plugins should be listed at sparrow plugin list (SPL) - ~/sparrow/sparrow.list
+* private plugins should be listed at sparrow plugin list file (SPL file) 
 
-### SPARROW PLUGINS LIST
+### SPL FILE
 
-Sparrow plugin list is represented by text file ~/sparrow/sparrow.list
+Sparrow plugin list is represented by text file placed at `\~/sparrow/sparrow.list'
 
-File should contains lines in the following format:
+SPL file should contains lines in the following format:
 
 *$plugin\_name $git\_repo\_url*
 
 Where:
 
-* git\_repo\_url - is a remote git repository URL
-* plugin\_name - is name of sparrow plugin.
+* git\_repo\_url 
+
+Is a remote git repository URL
+
+* plugin\_name 
+
+A name of your sparrow plugin, could be arbitrary name but see restriction notice concering public plugin names.
 
 Example entries:
 
-    swat-yars https://github.com/melezhik/swat-yars.git
-    metacpan https://github.com/CPAN-API/metacpan-monitoring.git
+    swat-yars   https://github.com/melezhik/swat-yars.git
+    metacpan    https://github.com/CPAN-API/metacpan-monitoring.git
 
-Once you add some entries into SPL file you may list and install a private plugin:
+Once you add a proper entries into SPL file you may list and install a private plugins:
 
     sparrow plg info    swat-yars
     sparrow plg install swat-yars
@@ -259,7 +264,7 @@ Here is a brief description of the process:
 To get know to create swat tests please follow swat project documentation -
 [https://github.com/melezhik/swat](https://github.com/melezhik/swat).
 
-A simplest swat test to check that web service returns \`200 OK' when recievin \`GET /' request will be:
+A simplest swat test to check that web service returns \`200 OK' when recieve \`GET /' request will be:
 
     echo 200 OK > get.txt
 
@@ -267,45 +272,52 @@ A simplest swat test to check that web service returns \`200 OK' when recievin \
 ## create a cpanfile 
 
 As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies you need to create a valid
-[cpafile](https://metacpan.org/pod/cpanfile)
+[cpafile](https://metacpan.org/pod/cpanfile) in the plugin root directory.
 
-The minimal requirement is to declare a dependency on swat:
+The minimal dependency you have to decclare is swat perl module:
 
-    # $ cat cpanfile
+    $ cat cpanfile
 
-    # yes, we need a swat to run our tests
     require 'swat';
 
 
-Of course you may also add other dependencie your plugin needs:
+Of course you may also add other dependencies your plugin might need:
 
-    # $ cat cpanfile
+    $ cat cpanfile
 
     require 'HTML::Entities'
 
 ## create sparrow.json file 
 
-Sparrow.json file describes plugin meta information required for plugin gets uploaded to SparrowHub. 
+Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub. 
 
 In case of private plugin you may skip this step.
 
 Create sparrow.json file and place it in plugin root directory:
 
     {
-        "version" => "0.2.3",
-        "name" => "my-cool-plugin"
+        "version" => "0.1.1",
+        "name" => "my-cool-plugin",
+        "description" => "this is a great plugin!",
+        "url" => "http://...."
     }
 
 This is the list of obligatory parameter you have to set:
 
-* Version - perl version string.
+* version - perl version string.
 
 A detailed information conserning version syntax could be find here - 
 [https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
 
-* Name - plugin name.
+* name - plugin name.
 
 Only symbols \`a-zA-Z1-9_-' are allowable in plgin name
+
+* description - a short desciption of your plugin
+
+This the list of optional parameters you may set as well:
+
+* url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
 
 
 # PUBLISHING SPARROW PLUGINS
@@ -314,9 +326,9 @@ Only symbols \`a-zA-Z1-9_-' are allowable in plgin name
 
 All you need is to keep a plugin source code in the remote git repository. 
 
-Plugin root directory should be at repository root.
+Plugin root directory should be repository root directory.
 
-See also [sparrow plugins list](#) section
+Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see [SPL FILE](#) section how to do this.
 
 ## Public plugin
 
@@ -341,7 +353,6 @@ Once you get you token, setup a sparrowhub credentials on the machine where your
 
 
 * Upload plugin
-
 
     * Check if you have sparrowhub credentials setup correcltly ( previous step ) on your machine
     * Install sparrow client on your machine

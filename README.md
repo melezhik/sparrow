@@ -342,12 +342,12 @@ Go to [http://sparrowhub.org/](http://sparrowhub.org/)
 
 Login into your account. Go on profile settings page and then hit "generate token" button.
 
-Once you get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
+Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
 
     cat ~/sparrowhub.json
 
     {
-        "username": "melezhik"
+        "username": "melezhik",
         "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
 

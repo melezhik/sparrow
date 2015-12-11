@@ -1,7 +1,7 @@
 # NAME
 
 Sparrow
-    
+   
 # SYNOPSIS
 
 Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
@@ -214,7 +214,7 @@ The public plugins features:
 
 * they are versioned so you may install various version of a one plugin
 
-   
+ 
 ## PRIVATE PLUGINS
 
 Private plugins are ones created by you and not supposed to be accessed publicly.
@@ -225,7 +225,7 @@ The private plugins features:
 
 * they are not versioned, a simple \`git clone/pull' command is executed to install/update a plugin
 
-* private plugins should be listed at sparrow plugin list file (SPL file) 
+* private plugins should be listed at sparrow plugin list file (SPL file)
 
 ### SPL FILE
 
@@ -237,13 +237,13 @@ SPL file should contains lines in the following format:
 
 Where:
 
-* git\_repo\_url 
+* git\_repo\_url
 
 Is a remote git repository URL
 
-* plugin\_name 
+* plugin\_name
 
-A name of your sparrow plugin, could be arbitrary name but see restriction notice concering public plugin names.
+A name of your sparrow plugin, could be arbitrary name but see restriction notice concerning public plugin names.
 
 Example entries:
 
@@ -264,17 +264,17 @@ Here is a brief description of the process:
 To get know to create swat tests please follow swat project documentation -
 [https://github.com/melezhik/swat](https://github.com/melezhik/swat).
 
-A simplest swat test to check that web service returns \`200 OK' when recieve \`GET /' request will be:
+A simplest swat test to check that web service returns \`200 OK' when receive \`GET /' request will be:
 
     echo 200 OK > get.txt
 
 
-## create a cpanfile 
+## create a cpanfile
 
 As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies you need to create a valid
 [cpafile](https://metacpan.org/pod/cpanfile) in the plugin root directory.
 
-The minimal dependency you have to decclare is swat perl module:
+The minimal dependency you have to declare is swat perl module:
 
     $ cat cpanfile
 
@@ -287,9 +287,9 @@ Of course you may also add other dependencies your plugin might need:
 
     require 'HTML::Entities'
 
-## create sparrow.json file 
+## create sparrow.json file
 
-Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub. 
+Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub.
 
 In case of private plugin you may skip this step.
 
@@ -306,14 +306,14 @@ This is the list of obligatory parameter you have to set:
 
 * version - perl version string.
 
-A detailed information conserning version syntax could be find here - 
+A detailed information concerning version syntax could be find here -
 [https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
 
 * name - plugin name.
 
-Only symbols \`a-zA-Z1-9_-' are allowable in plgin name
+Only symbols \`a-zA-Z1-9_-' are allowable in plugin name
 
-* description - a short desciption of your plugin
+* description - a short description of your plugin
 
 This the list of optional parameters you may set as well:
 
@@ -324,7 +324,7 @@ This the list of optional parameters you may set as well:
 
 ## Private plugin
 
-All you need is to keep a plugin source code in the remote git repository. 
+All you need is to keep a plugin source code in the remote git repository.
 
 Plugin root directory should be repository root directory.
 
@@ -332,7 +332,7 @@ Once a plugin is placed at git remote repository you need to add a proper entry 
 
 ## Public plugin
 
-To publish you plugin into SpwarrowHub you need:
+To publish you plugin into SparrowHub you need:
 
 * Get registered at SparrowHub
 
@@ -354,7 +354,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
 
 * Upload plugin
 
-    * Check if you have sparrowhub credentials setup correcltly ( previous step ) on your machine
+    * Check if you have sparrowhub credentials setup correctly ( previous step ) on your machine
     * Install sparrow client on your machine
     * Then go to directory where your plugin source code at and say sparrow plg upload. That's it
 
@@ -381,5 +381,6 @@ This program is free software; you can redistribute it and/or modify it under th
 # THANKS
 
 * to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
+
 
 

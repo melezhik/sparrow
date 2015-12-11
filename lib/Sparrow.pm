@@ -9,6 +9,11 @@ __END__
 =encoding utf8
 
 
+=head1 NAME
+
+Sparrow
+
+
 =head1 SYNOPSIS
 
 Sparrow - L<swat|https://github.com/melezhik/swat> based monitoring tool.
@@ -256,17 +261,22 @@ There are two type of sparrow plugins:
 
 =item *
 
-public plugins - provided by community and so considered as public access
+public plugins are provided by L<SparrowHub|https://sparrowhub.org/> community plugin repository and considered as public access
 
 
 
 =item *
 
-private plugins - provided by internal or external git repositories and I<not necessary> considered as public access
+private plugins are provided by internal or external git repositories and I<not necessary> considered as public access
 
 
 
 =back
+
+Both public and private plugins are installed with help of sparrow client:
+
+    sparrow  plg list
+    sparrow plg install plugin_name
 
 
 =head2 PUBLIC PLUGINS
@@ -277,24 +287,17 @@ The public plugins features:
 
 =item *
 
-they are versioned, so you may upgrade and downgrade them as you commonly do with any package manage tools ( cpan, apt-get, yum )
+they are kept in a central place called L<SparrowHub|https://sparrowhub.org/> - community plugins repository
 
 
 
 =item *
 
-they are kept in a central place called sparrow box - remote community plugins repository
+they are versioned so you may install various version of a one plugin
 
 
 
 =back
-
-To install public sparrow plugin a minimal efforts are required. You find one in a plugin listing and then install it.
-
-Public plugins will be denoted with public type:
-
-    sparrow  plg list  | grep public
-    sparrow plg install public_plugin_name
 
 
 =head2 PRIVATE PLUGINS
@@ -307,27 +310,30 @@ The private plugins features:
 
 =item *
 
-they are not versioned, a simple git pull is executed to ship the plugin, this straightforward approach result in fast integration
-which is in focus when doing internal development
+they are kept in arbitrary remote git repositories ( public or private ones )
 
 
 
 =item *
 
-they are kept in a arbitrary remote git repositories ( public or private ones )
+they are not versioned, a simple `git clone/pull' command is executed to install/update a plugin
+
+
+
+=item *
+
+private plugins should be listed at sparrow plugin list file (SPL file)
 
 
 
 =back
 
-To install private plugin one should configure sparrow plugin list (SPL).
 
+=head3 SPL FILE
 
-=head1 SPARROW PLUGINS LIST
+Sparrow plugin list is represented by text file placed at `\~/sparrow/sparrow.list'
 
-Private sparrow plugins list is represented by text file ~/sparrow/sparrow.list
-
-SPL file contains lines of the following format:
+SPL file should contains lines in the following format:
 
 I<$plugin_name $git_repo_url>
 
@@ -337,105 +343,127 @@ Where:
 
 =item *
 
-git_repo_url - is git repository URL
-
-
-=item *
-
-plugin_name - is name of sparrow plugin.
+git_repo_url
 
 
 =back
 
-For example:
-
-    swat-yars https://github.com/melezhik/swat-yars.git
-    metacpan https://github.com/CPAN-API/metacpan-monitoring.git
-
-To install swat-yars plugin one should do following
-
-    # add plugin to SPL
-    echo swat-yars https://github.com/melezhik/swat-yars.git >> ~/sparrow/sparrow.list
-    
-    # install plugin
-    sparrow plg install swat-yars
-
-
-=head1 CREATING SPARROW PLUGINS
-
-To accomplish this task one should be able to
+Is a remote git repository URL
 
 =over
 
 =item *
 
-init local git repository and map it to remote one ( not required for public plugins )
-
-
-
-=item *
-
-create swat test suite
-
-
-
-=item *
-
-create a cpanfile to describe additional cpan dependencies ( minimal requirement is a swat module dependency )
-
-
-
-=item *
-
-create sparrow.json file to describe plugin meta information ( not required for private plugin )
-
-
-
-=item *
-
-commit changes and then push into remote ( not required for public plugins )
-
+plugin_name
 
 
 =back
 
+A name of your sparrow plugin, could be arbitrary name but see restriction notice concerning public plugin names.
 
-=head2 Init git repository
+Example entries:
 
-Sparrow expects your swat test suite will be under git and will be accessed as remote git repository:
+    swat-yars   https://github.com/melezhik/swat-yars.git
+    metacpan    https://github.com/CPAN-API/metacpan-monitoring.git
 
-    git init .
-    echo 'my first sparrow plugin' > README.md
-    git add README.md
-    git commit -m 'my first sparrow plugin' -a
-    git remote add origin $your-remote-git-repository
-    git push origin master
+Once you add a proper entries into SPL file you may list and install a private plugins:
+
+    sparrow plg info    swat-yars
+    sparrow plg install swat-yars
 
 
-=head2 Create swat test suite
+=head1 CREATING SPARROW PLUGINS
 
-To get know what swat is and how to create swat tests please follow swat project documentation -
+Here is a brief description of the process:
+
+
+=head2 create swat test suite
+
+To get know to create swat tests please follow swat project documentation -
 L<https://github.com/melezhik/swat|https://github.com/melezhik/swat>.
 
-A simplest swat test suite to check if GET / returns 200 OK would be like this:
+A simplest swat test to check that web service returns `200 OK' when receive `GET /' request will be:
 
     echo 200 OK > get.txt
 
 
-=head2 Create cpanfile
+=head2 create a cpanfile
 
-As sparrow relies on L<carton|https://metacpan.org/pod/Carton> to handle perl dependencies and execute script
-the only minimal requirement is having valid cpanfile on the root directory of your swat test suite project.
+As sparrow relies on L<carton|https://metacpan.org/pod/Carton> to handle perl dependencies you need to create a valid
+L<cpafile|https://metacpan.org/pod/cpanfile> in the plugin root directory.
 
-For example:
+The minimal dependency you have to declare is swat perl module:
 
-    # $ cat cpanfile
+    $ cat cpanfile
     
-    # yes, we need a swat to run our tests
     require 'swat';
+
+Of course you may also add other dependencies your plugin might need:
+
+    $ cat cpanfile
     
-    # and some other modules
     require 'HTML::Entities'
+
+
+=head2 create sparrow.json file
+
+Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub.
+
+In case of private plugin you may skip this step.
+
+Create sparrow.json file and place it in plugin root directory:
+
+    {
+        "version" => "0.1.1",
+        "name" => "my-cool-plugin",
+        "description" => "this is a great plugin!",
+        "url" => "http://...."
+    }
+
+This is the list of obligatory parameter you have to set:
+
+=over
+
+=item *
+
+version - perl version string.
+
+
+=back
+
+A detailed information concerning version syntax could be find here -
+L<https://metacpan.org/pod/distribution/version/lib/version.pm|https://metacpan.org/pod/distribution/version/lib/version.pm>
+
+=over
+
+=item *
+
+name - plugin name.
+
+
+=back
+
+Only symbols `a-zA-Z1-9_-' are allowable in plugin name
+
+=over
+
+=item *
+
+description - a short description of your plugin
+
+
+=back
+
+This the list of optional parameters you may set as well:
+
+=over
+
+=item *
+
+url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
+
+
+=back
 
 
 =head1 PUBLISHING SPARROW PLUGINS
@@ -443,44 +471,47 @@ For example:
 
 =head2 Private plugin
 
-All you need to keep a plugin source code in the remote git repository. Swat project root directory should be at repository root.
+All you need is to keep a plugin source code in the remote git repository.
 
-To get plugin listed at sparrow plugin list:
+Plugin root directory should be repository root directory.
 
-    echo my-plugin $your-remote-git-repository >> sparrow.list
-
-Now you may install it:
-
-    sparrow plg install my-plugin
+Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see L<SPL FILE|#> section how to do this.
 
 
 =head2 Public plugin
+
+To publish you plugin into SparrowHub you need:
 
 =over
 
 =item *
 
-Create your plugin
-
-
-
-=item *
-
-Setup sparrow.json file
-
+Get registered at SparrowHub
 
 
 =back
 
-Go to plugin directory ( should be swat project root directory ) and create sparrow.json file
-to describe plugin meta information. This should be json file with 2 obligatory parameter:
+Go to L<http://sparrowhub.org|http://sparrowhub.org>
 
+=over
+
+=item *
+
+Get rest api token
+
+
+=back
+
+Login into your account. Go on profile settings page and then hit "generate token" button.
+
+Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
+
+    cat ~/sparrowhub.json
+    
     {
-        "version" => "0.2.3",
-        "name" => "my-cool-plugin"
+        "username": "melezhik",
+        "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
-
-Version should be CPAN compatible version string. Name should be plugin name.
 
 =over
 
@@ -488,19 +519,30 @@ Version should be CPAN compatible version string. Name should be plugin name.
 
 Upload plugin
 
+=over
+
+=item *
+
+Check if you have sparrowhub credentials setup correctly ( previous step ) on your machine
+
+
+=item *
+
+Install sparrow client on your machine
+
+
+=item *
+
+Then go to directory where your plugin source code at and say sparrow plg upload. That's it
+
 
 =back
 
-Before uploading to central sparrow repository  you need to get access to SparrowBox API.
 
-Register at http://sparrowbox-pm.org and generate API token.
 
-Once you have one setup ~/.sparrow-box.ini file:
+=back
 
-    echo 'user=melezhik'                                > ~/.sparrow-box.ini
-    echo 'token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83'   >> ~/.sparrow-box.ini
-
-Now you are ready to upload a plugin with sparrow client
+For example:
 
     $ cd plugin_root_directory
     $ sparrow plg upload

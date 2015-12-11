@@ -65,9 +65,11 @@ I<sparrow project create $project_name>
 
 Create a sparrow project.
 
-Sparrow project is a container for swat test suites and applications.
+Sparrow project is a container for swat test suites and tested web services.
 
-Sparrow project is where one run swat tests against different applications.
+Sparrow project is entry point where one run swat tests against different applications.
+
+Example command:
 
     sparrow project create foo
 
@@ -79,7 +81,7 @@ For example:
 
     sparrow project show foo
 
-To see project list say this:
+To see projects list say this:
 
 I<sparrow project list>
 
@@ -98,7 +100,7 @@ I<sparrow plg install $plugin_name>
 
 Sparrow plugin is a shareable swat test suite.
 
-One could install sparrow plugin and then run related swat tests, see L<check|#run-swat-tests> action.
+One could install sparrow plugin and then run related swat tests, see L<check|#run-swat-tests> action for details.
 
     sparrow plg list # to get available plugin list
     sparrow plg install swat-nginx # to download and install a chosen plugin
@@ -113,19 +115,9 @@ To see installed plugin list say this:
 
 I<sparrow plg list --installed>
 
-To see installed plugin info say this:
+To get installed plugin info say this:
 
 I<sparrow plg show $plugin_name>
-
-To update installed plugin:
-
-I<sparrow plg update $plugin_name>
-
-This command simple execute `git pull' for cloned git repository
-
-For example:
-
-    sparrow plg update swat-nginx
 
 To remove installed plugin:
 
@@ -138,13 +130,25 @@ For example:
 
 =head2 create checkpoints
 
+I<sparrow project check_add $project_name $checkpoint_name>
+
+=over
+
+=item *
+
 Checkpoints tie together tested web service and sparrow plugin.
+
+
+
+=item *
 
 Checkpoints belong to projects, so to create a checkpoint you need to point a project.
 
-I<sparrow project check_set $project_name $checkpoint_name>
 
-Examples:
+
+=back
+
+Command examples:
 
     sparrow project check_add foo nginx-check
     sparrow project check_add foo tomcat-app-check
@@ -152,22 +156,35 @@ Examples:
 
 =head2 setup checkpoints
 
-Once create checkpoint need to be setup with proper sparrow plugin and  base_url
-
 I<sparrow project check_set $project_name $checkpoint_name $args>
 
-Examples:
+Once checkpoint is created you need to setup it. Setting checkpoint means providing 2 obligatory parameters:
 
-    sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1
-    sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080
+=over
 
-Setting checkpoint means you tie together a tested web services and sparrow plugin providing a tested logic.
+=item *
 
-Base URL is a root http URL to send http requests when executing swat tests against a web service.
+-p plugin_name
 
-Base URL should be L<curl compliant|http://curl.haxx.se/docs/manpage.html>
 
-To show checkpoint info say this:
+=item *
+
+-u base_url
+
+
+=back
+
+A plugin name sets a sparrow plugin to run swat test suite from.
+
+A base url sets a web service root URL. Base url be set in L<curl compliant|http://curl.haxx.se/docs/manpage.html>.
+
+Command examples:
+
+    sparrow check\_set foo nginx-check -p swat-apache -u 127.0.0.1
+    sparrow check\_set foo nginx-check -p swat-nginx -u http://127.0.0.1
+    sparrow check\_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
+
+To get checkpoint info say this:
 
 I<sparrow project check_show $project_name $checkpoint_name>
 
@@ -320,7 +337,7 @@ Where:
 
 =item *
 
-gitI<repo>url - is git repository URL
+git_repo_url - is git repository URL
 
 
 =item *

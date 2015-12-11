@@ -30,31 +30,33 @@ These are actions provided by sparrow console client:
 
 ## create a project
 
-*sparrow project create $project_name*
+*sparrow project create $project\_name*
 
 Create a sparrow project.
 
-Sparrow project is a container for swat test suites and applications.
+Sparrow project is a container for swat test suites and tested web services.
 
-Sparrow project is where one run swat tests against different applications.
+Sparrow project is entry point where one run swat tests against different applications.
+
+Example command:
 
     sparrow project create foo
 
 To get project info say this:
 
-*sparrow project show $project_name*
+*sparrow project show $project\_name*
 
 For example:
 
     sparrow project show foo
 
-To see project list say this:
+To see projects list say this:
 
 *sparrow project list*
 
 To remove project data say this:
 
-*sparrow project remove $project_name*
+*sparrow project remove $project\_name*
 
 For example:
 
@@ -62,11 +64,11 @@ For example:
 
 ## download and install swat plugins
 
-*sparrow plg install $plugin_name*
+*sparrow plg install $plugin\_name*
 
 Sparrow plugin is a shareable swat test suite.
 
-One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action.
+One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action for details.
 
     sparrow plg list # to get available plugin list
     sparrow plg install swat-nginx # to download and install a chosen plugin
@@ -81,23 +83,13 @@ To see installed plugin list say this:
 
 *sparrow plg list --installed*
 
-To see installed plugin info say this:
+To get installed plugin info say this:
 
-*sparrow plg show $plugin_name*
-
-To update installed plugin:
-
-*sparrow plg update $plugin_name*
-
-This command simple execute \`git pull' for cloned git repository
-
-For example:
-
-    sparrow plg update swat-nginx
+*sparrow plg show $plugin\_name*
 
 To remove installed plugin:
 
-*sparrow plg remove $plugin_name*
+*sparrow plg remove $plugin\_name*
 
 For example:
 
@@ -105,44 +97,40 @@ For example:
 
 ## create checkpoints
 
-Checkpoints tie together tested web service and sparrow plugin.
+*sparrow project check\_add $project\_name $checkpoint\_name*
 
-Checkpoints belong to projects, so to create a checkpoint you need to point a project.
+* Checkpoints tie together tested web service and sparrow plugin.
 
-*sparrow project check_set $project_name $checkpoint_name*
+* Checkpoints belong to projects, so to create a checkpoint you need to point a project.
 
 
-Examples:
+Command examples:
 
     sparrow project check_add foo nginx-check
     sparrow project check_add foo tomcat-app-check
 
 ## setup checkpoints
 
+*sparrow project check\_set $project\_name $checkpoint\_name $args*
 
-Once created checkpoint needs to get setup with proper sparrow plugin and web service base_url
+Once checkpoint is created you need to setup it. Setting checkpoint means providing 2 obligatory parameters:
 
-*sparrow project check_set $project_name $checkpoint_name $args*
+* -p plugin\_name
+* -u base\_url
 
-Examples:
+A plugin name sets a sparrow plugin to run swat test suite from.
 
-    sparrow check_set foo nginx-check -p swat-nginx -u 127.0.0.1
-    sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080
+A base url sets a web service root URL. Base url be set in [curl compliant](http://curl.haxx.se/docs/manpage.html).
 
-Setting checkpoint means you tie together a tested web service ( represnted by base_url ) and test scenarios ( represented by sparrow plugin ).
+Command examples:
 
-Args:
-
-* -u - base_url
-
-* -p sparrow plugin name
-
-Base_url paramter is a root http URL to send http requests when executing swat tests against a web service. 
-It should be [curl compliant](http://curl.haxx.se/docs/manpage.html).
+    sparrow check\_set foo nginx-check -p swat-apache -u 127.0.0.1
+    sparrow check\_set foo nginx-check -p swat-nginx -u http://127.0.0.1
+    sparrow check\_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
 
 To get checkpoint info say this:
 
-*sparrow project check_show $project_name $checkpoint_name*
+*sparrow project check\_show $project\_name $checkpoint\_name*
 
 For example:
 
@@ -150,7 +138,7 @@ For example:
 
 ## run swat tests
 
-*sparrow project check_run $project_name $checkpoint_name*
+*sparrow project check\_run $project\_name $checkpoint\_name*
 
 Once sparrow project is configured and has some checkpoints you may run swat tests:
 
@@ -162,9 +150,9 @@ Examples:
 
 ## customize swat settings for checkpoint
 
-*sparrow project check_set $project_name $checkpoint_name --swat*
+*sparrow project check\_set $project\_name $checkpoint\_name --swat*
 
-Executing check_set action with \`--swat' flag allow to customize swat settings for given checkpoint.
+Executing check\_set action with \`--swat' flag allow to customize swat settings for given checkpoint.
 
 This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for swat test suite provided by plugin.
 
@@ -178,7 +166,7 @@ More information on swat ini files syntax could be found here - [https://github.
 
 To get checkpoint swat settings say this:
 
-*sparrow project check_show $project_name $checkpoint_name --swat*
+*sparrow project check\_show $project\_name $checkpoint\_name --swat*
 
 For example:
 
@@ -188,7 +176,7 @@ For example:
 
 NOT IMPLEMENTED YET.
 
-*GET /$project_name/check_run/$project_name/$checkpoint_name*
+*GET /$project\_name/check\_run/$project\_name/$checkpoint\_name*
 
 Sparrow rest API allow to run swat test suites remotely over http.
 
@@ -243,12 +231,12 @@ Private sparrow plugins list is represented by text file ~/sparrow/sparrow.list
 
 SPL file contains lines of the following format:
 
-*$plugin_name $git_repo_url*
+*$plugin\_name $git\_repo\_url*
 
 Where:
 
-* git_repo_url - is git repository URL
-* plugin_name - is name of sparrow plugin.
+* git\_repo\_url - is git repository URL
+* plugin\_name - is name of sparrow plugin.
 
 For example:
 

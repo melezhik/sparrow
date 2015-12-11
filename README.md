@@ -336,7 +336,7 @@ To publish you plugin into SpwarrowHub you need:
 
 * Get registered at SparrowHub
 
-Go to [http://sparrowhub.org/](http://sparrowhub.org/)
+Go to [http://sparrowhub.org](http://sparrowhub.org)
 
 * Get rest api token
 

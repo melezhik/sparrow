@@ -38,10 +38,6 @@ if ($object eq  'plg'){
 
         install_plugin( shift @ARGV );        
 
-    } elsif( $action  eq 'update'){
-
-        update_plugin( shift @ARGV );        
-
     } elsif( $action  eq 'remove'){
 
         remove_plugin( shift @ARGV );        
@@ -50,60 +46,69 @@ if ($object eq  'plg'){
 
         upload_plugin();        
 
-    } elsif ( $action  eq 'info'){
+    } elsif ( $action  eq 'show'){
 
         show_plugin( shift @ARGV );        
 
-    } else { # default plugin action
+    } elsif ( $action )  { 
 
         confess "unknown command: $action @ARGV";
 
-    }
-} elsif ($object eq  'project'){
+    } else { # default plugin action
 
-    my $name = shift @ARGV;
+        show_plugin( shift @ARGV );        
+    }
+
+} elsif ($object eq  'project'){
 
     my $action = shift @ARGV;
 
-    if ( $action eq 'create') {
+    if ( $action eq 'list') {
+
+        show_projects();
+
+    } elsif ( $action eq 'create') {
+
+        my $name = shift @ARGV;
 
         create_project($name);
 
-    } elsif ( $action eq 'remove') {
+    } elsif ( $action eq 'show') {
 
-        remove_project($name);
-
-    } elsif ( $action eq 'swat_setup') {
-
-        swat_setup($name, shift @ARGV);
-
-    } elsif ( $action eq 'add_site' ){
-
-        my $sid = shift @ARGV;
-        my $base_url = shift @ARGV;
-
-        add_site_to_project($name, $sid, $base_url);
-
-    } elsif( $action  eq 'add_plg'){
-
-        add_plugin_to_project($name, shift @ARGV);
-
-    } elsif( $action  eq 'info'){
+        my $name = shift @ARGV;
 
         project_info($name);
 
-    } elsif( $action  eq 'check'){
+    } elsif ( $action eq 'remove') {
 
-        my $sid = shift @ARGV;
-        my $pid = shift @ARGV;
+        my $name = shift @ARGV;
 
-        check_site($name, $sid, $pid);
+        remove_project($name);
 
-    } elsif( $action  eq 'site_info'){
+    } elsif ( $action eq 'check_add') {
 
-        my $sid = shift @ARGV;
+        my $name = shift @ARGV;
 
-        site_info($name,$sid,@ARGV);
+        check_add($name, @ARGV);
+
+    } elsif ( $action eq 'check_show' ){
+
+        my $name = shift @ARGV;
+
+        check_show($name, @ARGV);
+
+    } elsif( $action  eq 'check_run'){
+
+        my $name = shift @ARGV;
+
+        check_run($name, @ARGV);
+
+    } elsif( $action  eq 'check_remove'){
+
+        my $name = shift @ARGV;
+
+        check_remove($name, @ARGV);
+
 
     } elsif ( $action )  { 
 
@@ -111,14 +116,14 @@ if ($object eq  'plg'){
 
     } else { # default project action
 
+        my $name = shift @ARGV;
+
         project_info($name);
     }
 
-} elsif ( $object eq 'projects' ){
-
-    show_projects();
-
 } else {
+
     confess "unknown command: $object @ARGV";
+
 }
 

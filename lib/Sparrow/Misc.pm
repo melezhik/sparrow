@@ -23,42 +23,33 @@ sub execute_shell_command {
 sub usage {
 
     print "usage: sparrow project|plg action args\n";
-    print "where action: create|list|install|update|add_site|check_site|swat_setup. and args depend on action\n";
+    print "where action: list|create|remove|show|install|check_add|check_run|check_set|check_remove and args depend on action\n";
 
 
     print "action examples:\n";
 
     print "\n[projects]:\n\n";
-    print "\tsparrow project foo create # create a project\n";
-    print "\tsparrow project foo remove # remove a project\n";
-    print "\tsparrow project foo info   # get project info\n";
-    print "\tsparrow projects # list projects\n";
+    print "\tsparrow project create foo # create a project\n";
+    print "\tsparrow project remove foo # remove a project\n";
+    print "\tsparrow project show foo   # get project info\n";
+    print "\tsparrow project list       # list projects\n";
 
     print "\n[plugins]:\n\n";
 
-    print "\tsparrow plg list               # show plugin index \n";
-    print "\tsparrow plg list --installed   # show installed plugins \n";
-    print "\tsparrow plg install swat-nginx # install plugin \n";
-    print "\tsparrow plg update swat-nginx  # update plugin\n";
-    print "\tsparrow plg remove swat-nginx  # remove plugin\n";
-    print "\tsparrow plg info   swat-nginx  # get plugin info\n";
-
-    print "\n[projects and plugins]:\n\n";
-    print "\tsparrow project foo add_plg swat-nginx # link plugin to project\n";
+    print "\tsparrow plg list                # show available plugin list \n";
+    print "\tsparrow plg list --installed    # show installed plugins \n";
+    print "\tsparrow plg install swat-nginx  # install plugin \n";
+    print "\tsparrow plg remove  swat-nginx  # remove plugin\n";
+    print "\tsparrow plg show    swat-nginx  # get plugin info\n";
 
 
-    print "\n[projects and sites]:\n\n";
-    print "\tsparrow project foo add_site nginx_proxy    127.0.0.1       # create site and link it to project\n";
-    print "\tsparrow project foo add_site pinto_rest_api 127.0.0.1:3111  # another site get linked to project\n";
-    print "\tsparrow project foo site_info nginx_proxy                   # get site info\n";
-    print "\tsparrow project foo site_info nginx_proxy --swat            # the same as above but with swat settings\n";
-
-    print "\n[swat test suites]:\n\n";
-    print "\tsparrow project foo check nginx_proxy swat-nginx      # yet another swat test suite run \n";
-    print "\tsparrow project foo check pinto_rest_api swat-pintod  # run swat test suite from plugin swat-tomcat, site tomcat_app\n";
-
-
-    print "\tsparrow project foo swat_setup nginx_proxy # configure swat setting for site nginx_proxy\n";
+    print "\n[checkpoints]:\n\n";
+    print "\tsparrow project check_add foo nginx            # create checkpoint named `nginx' in project foo\n";
+    print "\tsparrow project check_remove foo nginx         # remove checkpoint named `nginx' in project foo\n";
+    print "\tsparrow project check_show   foo nginx         # get checkpoint info \n";
+    print "\tsparrow project check_show   foo nginx --swat  # get checkpoint info, with swat settings \n";
+    print "\tsparrow project check_run    foo nginx         # run checkpoint tests info \n";
+    print "\tsparrow project check_set    foo nginx -u 127.0.0.1 -p swat-nginx  # set checkpoint parameters \n";
 
     print "\n\n";
 
@@ -75,8 +66,7 @@ sub init_sparrow_env {
     mkpath(sparrow_root.'/plugins');
     mkpath(sparrow_root.'/projects');
 
-    execute_shell_command('touch '.sparrow_root.'/sparrow.list') unless -f sparrow_root.'/sparrow.list';    
-    print "# sparrow environment initialzed at ".sparrow_root, "\n";
+    print "# sparrow environment initialized at ".sparrow_root, "\n";
 }
 
 1;

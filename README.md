@@ -356,7 +356,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
 
     * Check if you have sparrowhub credentials setup correctly ( previous step ) on your machine
     * Install sparrow client on your machine
-    * Then go to directory where your plugin source code at and say sparrow plg upload. That's it
+    * Then go to directory where your plugin source code at and say \`sparrow plg upload'. That's it
 
 For example:
 

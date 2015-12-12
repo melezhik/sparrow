@@ -44,7 +44,7 @@ sub usage {
 
 
     print "\n[checkpoints]:\n\n";
-    print "\tsparrow project check_add foo nginx            # create checkpoint named `nginx' in project foo\n";
+    print "\tsparrow project check_add    foo nginx         # create checkpoint named `nginx' in project foo\n";
     print "\tsparrow project check_remove foo nginx         # remove checkpoint named `nginx' in project foo\n";
     print "\tsparrow project check_show   foo nginx         # get checkpoint info \n";
     print "\tsparrow project check_show   foo nginx --swat  # get checkpoint info, with swat settings \n";

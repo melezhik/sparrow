@@ -50,13 +50,10 @@ if ($object eq  'plg'){
 
         show_plugin( shift @ARGV );        
 
-    } elsif ( $action )  { 
+    } else  { 
 
         confess "unknown command: $action @ARGV";
 
-    } else { # default plugin action
-
-        show_plugin( shift @ARGV );        
     }
 
 } elsif ($object eq  'project'){
@@ -65,25 +62,25 @@ if ($object eq  'plg'){
 
     if ( $action eq 'list') {
 
-        show_projects();
+        projects_list();
 
     } elsif ( $action eq 'create') {
 
         my $name = shift @ARGV;
 
-        create_project($name);
+        project_create($name);
 
     } elsif ( $action eq 'show') {
 
         my $name = shift @ARGV;
 
-        project_info($name);
+        project_show($name);
 
     } elsif ( $action eq 'remove') {
 
         my $name = shift @ARGV;
 
-        remove_project($name);
+        project_remove($name);
 
     } elsif ( $action eq 'check_add') {
 
@@ -118,7 +115,7 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        project_info($name);
+        project_show($name);
     }
 
 } else {

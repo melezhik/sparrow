@@ -1,5 +1,5 @@
-print `sparrow project foo100 remove`;
-print `sparrow project foo100 create`;
+print `sparrow project remove foo100`;
+print `sparrow project create foo100`;
 
 use Sparrow::Constants;
 

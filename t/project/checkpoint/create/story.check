@@ -1,0 +1,5 @@
+project foo100 is successfully created
+directory projects/foo100 exists
+directory projects/foo100/checkpoints exists
+directory projects/foo100/checkpoints/bar exists
+

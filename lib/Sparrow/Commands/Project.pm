@@ -13,26 +13,24 @@ use File::Path;
 
 our @EXPORT = qw{
 
-    create_project
-    remove_project
+    projects_list
+    project_create
+    project_show
+    project_remove
 
-    show_projects
-    project_info
 
-    add_plugin_to_project
-    add_site_to_project
-
-    site_info
-
-    site_base_url
-
+    check_add
+    check_run
+    check_set
+    check_show
+    check_remove
 
 };
 
 
-sub show_projects {
+sub projects_list {
 
-    print "[sparrow project list]\n\n";
+    print "[sparrow projects list]\n\n";
 
     my $root_dir = sparrow_root.'/projects/';
 
@@ -45,25 +43,24 @@ sub show_projects {
     closedir $dh;
 }
 
-sub create_project {
+sub project_create {
 
-    my $project = shift or confess('usage: create_project(project)');;
+    my $project = shift or confess('usage: project_create(project)');;
 
     if ( -d sparrow_root."/projects/$project" ){
         print "project $project already exists - nothing to do here ... \n\n"
     } else {
         mkpath sparrow_root."/projects/$project";
-        mkpath sparrow_root."/projects/$project/plugins";
-        mkpath sparrow_root."/projects/$project/sites";
+        mkpath sparrow_root."/projects/$project/checkpoints";
         print "project $project is successfully created\n\n"
     }
 
 
 }
 
-sub remove_project {
+sub project_remove {
 
-    my $project = shift or confess('usage: remove_project(project)');
+    my $project = shift or confess('usage: project_remove(project)');
 
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
@@ -75,76 +72,53 @@ sub remove_project {
 }
 
 
-sub project_info {
+sub project_show {
 
-    my $project = shift or confess('usage: project_info(project)');;
+    my $project = shift or confess('usage: project_show(project)');;
 
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
     print "[project $project info]\n\n";
 
-    print "[plugins]\n\n";
+    print "[checkpoints]\n\n";
 
-    my $root_dir = sparrow_root."/projects/$project/plugins/";
+    my $root_dir = sparrow_root."/projects/$project/checkpoints/";
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
     for my $p ( sort { -M $root_dir.$a <=> -M $root_dir.$b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
-
-        if ( link_is_dangling(sparrow_root."/projects/$project/plugins/$p") ){
-            unlink sparrow_root."/projects/$project/plugins/$p";
-        }else{
-            print "\t", basename($p),"\n";
-        }
+        print "\t", basename($p),"\n";
     }
 
     closedir $dh;
-
-
-    print "\n\n\[sites]\n\n";
-
-    my $root_dir = sparrow_root."/projects/$project/sites/";
-
-    opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
-
-    for my $s ( sort { -M $root_dir.$a <=> -M $root_dir.$b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
-        my $base_url = site_base_url($project,basename($s));
-        print "\t", basename($s)," [$base_url] \n";
-    }
-
-    closedir $dh;
-
 
 }
 
-sub add_plugin_to_project {
+sub check_add {
 
-    my $project = shift or confess "usage: add_plugin_to_project(project,plugin)";
-    my $pid = shift or confess "usage: add_plugin_to_project(project,plugin)";
+    my $project = shift or confess "usage: check_add(*project,checkpoint)";
+    my $cid     = shift or confess "usage: check_add(project,*checkpoint)";
 
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
-    unless ( -d sparrow_root."/plugins/$pid" ){
-        print "plugin $pid is not installed yet. run `sparrow plg install $pid` to install it\n";
-        exit(1);
-    }
+    confess "checkpoint $cid already exists" if  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
-    unless ( -d sparrow_root."/projects/$project" ){
-        print "project $project does not exist. run `sparrow project $project create` to create it it\n";
-        exit(1);
-    }
+    mkdir sparrow_root."/projects/$project/checkpoints/$cid" or confess "can't create checkpoint directory: $!";
 
-    if ( -l sparrow_root."/projects/$project/plugins/$pid" ){
+    print "checkpoint $cid is successfully added to project $project\n\n";
 
-        print "projects/$project/plugins/$pid already exist - nothing to do here ... \n\n";
+}
 
-    }else{
+sub check_remove {
 
-        symlink File::Spec->rel2abs(sparrow_root."/plugins/$pid"), 
-                File::Spec->rel2abs(sparrow_root."/projects/$project/plugins/$pid") or
-        confess "can't create symlink projects/$project/plugins/$pid ==> plugins/$pid";
+    my $project = shift or confess "usage: check_remove(*project,checkpoint)";
+    my $cid     = shift or confess "usage: check_remove(project,*checkpoint)";
 
-        print "plugin $pid is successfully added to project $project\n\n";
-    }
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+
+    execute_shell_command("rm -rf ".sparrow_root."/projects/$project/checkpoints/$cid");
+
+    print "checkpoint $cid is successfully removed from project $project\n\n";
 
 }
 

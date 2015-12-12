@@ -2,10 +2,10 @@
 use Sparrow::Constants;
 
 my $url = story_var('url');
+my $plugin = story_var('plugin');
 
-my $s = `sparrow project check_set foo100 bar -u $url`;
 
--f sparrow_root."/projects/foo100/checkpoints/bar/base_url" 
-    and $s.= "\ndirectory projects/foo100/checkpoints/bar/base_url exists\n";
+`sparrow project check_set foo100 bar -u $url` if $url;
+`sparrow project check_set foo100 bar -p $plugin` if $plugin;
 
-set_stdout($s);
+set_stdout('OK');

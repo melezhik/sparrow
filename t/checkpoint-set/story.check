@@ -1,1 +1,4 @@
+
+validator: [ -f sparrow_root."/projects/foo100/checkpoints/bar/base_url" , "base_url exists" ]
 OK
+

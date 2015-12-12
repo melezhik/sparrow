@@ -122,23 +122,31 @@ sub check_remove {
 
 }
 
-sub add_site_to_project {
+sub check_set {
 
-    my $project = shift or confess "usage: add_site_to_project(project,site,base_url)";
-    my $sid = shift or confess "usage: add_site_to_project(project,site,base_url)";
-    my $base_url = shift or confess "usage: add_site_to_project(project,site,base_url)";
+    my $project  = shift or confess "usage: check_set(*project,checkpoint,args)";
+    my $cid      = shift or confess "usage: check_set(project,*checkpoint,args)";
+    my %args     = @_;
 
-    if (-d sparrow_root."/projects/$project/sites/$sid" ){
-        set_site_base_url($project,$sid,$base_url);
-        print "site $sid is successfully updated at project $project\n\n";
-    } elsif (-d sparrow_root."/projects/$project" ){
-        mkpath sparrow_root."/projects/$project/sites/$sid";
-        set_site_base_url($project,$sid,$base_url);
-        print "site $sid is successfully added to project $project\n\n";
-    }else{
-        confess "unknown project $project";
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
+    # set base url
+    if ($args{u}){
+
+        my $url = $args{u};
+
+        if (-d sparrow_root."/projects/$project/checkpoints/$cid/base_url" ){
+            set_base_url($project,$cid,$url);
+            print "base url successfully updated \n\n";
+        } elsif (-d sparrow_root."/projects/$project" ){
+            set_base_url($project,$cid,$url);
+            print "base url successfully created \n\n";
+    
+        }
     }
+    
+
 
 }
 
@@ -192,14 +200,14 @@ sub site_base_url {
 
 }
 
-sub set_site_base_url {
+sub set_base_url {
 
-    my $project = shift or confess "usage: set_site_base_url(project,site,base_url)";
-    my $sid = shift or confess "usage: set_site_base_url(project,site,base_url)";
-    my $base_url = shift or confess "usage: set_site_base_url(project,site,base_url)";
+    my $project  = shift or confess "usage: set_base_url(*project,checkpoint,base_url)";
+    my $cid      = shift or confess "usage: set_base_url(project,*checkpoint,base_url)";
+    my $base_url = shift or confess "usage: set_base_url(project,checkpoint,*base_url)";
 
-    open F, ">", sparrow_root."/projects/$project/sites/$sid/base_url" or 
-        confess "can't open file to write: projects/$project/sites/$sid/base_url";
+    open F, ">", sparrow_root."/projects/$project/checkpoints/$cid/base_url" or 
+        confess "can't open file to write: projects/$project/checkpoints/$cid/base_url";
     print F $base_url;
     close F;
 

@@ -88,6 +88,12 @@ if ($object eq  'plg'){
 
         check_add($name, @ARGV);
 
+    } elsif ( $action eq 'check_set') {
+
+        my $name = shift @ARGV;
+
+        check_set($name, @ARGV);
+
     } elsif ( $action eq 'check_show' ){
 
         my $name = shift @ARGV;

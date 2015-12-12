@@ -132,9 +132,9 @@ sub check_set {
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
     # set base url
-    if ($args{u}){
+    if ($args{'-u'}){
 
-        my $url = $args{u};
+        my $url = $args{'-u'};
 
         if (-d sparrow_root."/projects/$project/checkpoints/$cid/base_url" ){
             set_base_url($project,$cid,$url);

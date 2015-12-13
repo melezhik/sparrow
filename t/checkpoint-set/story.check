@@ -1,4 +1,14 @@
 
-validator: [ -f sparrow_root."/projects/foo100/checkpoints/bar/base_url" , "base_url exists" ]
+validator: [ \
+    -f sparrow_root."/projects/foo100/checkpoints/bar/settings.json" ,      \
+     sparrow_root."/projects/foo100/checkpoints/bar/settings.json exists"   \
+]
+
 OK
 
+begin:
+{
+    'plugin' => 'test777',
+    'base_url' => '127.0.0.1'
+};
+end:

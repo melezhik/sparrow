@@ -11,6 +11,8 @@ use Carp;
 use File::Basename;
 use File::Path;
 
+use JSON;
+
 our @EXPORT = qw{
 
     projects_list
@@ -24,6 +26,9 @@ our @EXPORT = qw{
     check_set
     check_show
     check_remove
+
+    cp_get
+    cp_set
 
 };
 
@@ -131,84 +136,53 @@ sub check_set {
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
-    # set base url
     if ($args{'-u'}){
+        cp_set($project,$cid,'base_url',$args{'-u'});
+        print "set base_url\n\n";
+    }    
+    if ($args{'-p'}){
+        cp_set($project,$cid,'plugin',$args{'-p'});
+        print "set plugin\n\n";
+    }    
 
-        my $url = $args{'-u'};
 
-        if (-d sparrow_root."/projects/$project/checkpoints/$cid/base_url" ){
-            set_base_url($project,$cid,$url);
-            print "base url successfully updated \n\n";
-        } elsif (-d sparrow_root."/projects/$project" ){
-            set_base_url($project,$cid,$url);
-            print "base url successfully created \n\n";
+}
+
+
+sub cp_get {
+
+    my $project = shift or confess "usage: cp_get(*project,checkpoint)";
+    my $cid     = shift or confess "usage: cp_get(project,*checkpoint)";
+
+    my $data;
     
-        }
+    if (open F, sparrow_root."/projects/$project/checkpoints/$cid/settings.json") { 
+        my $str = join "", <F>;
+        close F;
+        $data = decode_json($str);
+    } else {
+        $data = {};
     }
-    
-
+    return $data;
 
 }
 
-sub site_info {
+sub cp_set {
 
-    my $project = shift or confess 'usage: site_info(*project,site)';
-    my $sid     = shift or confess 'usage: site_info(project,*site)';
-    my @opts    = @_;
+    my $project  = shift or confess "usage: cp_set(*project,checkpoint,args)";
+    my $cid      = shift or confess "usage: cp_set(project,*checkpoint,args)";
+    my %args     = @_;
 
-    my $opts = join ' ', @opts;
+    my $cp_settings = cp_get($project,$cid); 
 
-    if (-d sparrow_root."/projects/$project/sites/$sid" ){
-        my $base_url = site_base_url($project,$sid);
-        print "[site info] \n";
-        print "\tname: $sid\n";
-        print "\tbase url: $base_url\n";
-        if ($opts=~/--swat/){
+    open F, ">", sparrow_root."/projects/$project/checkpoints/$cid/settings.json" or 
+        confess "can't open file to write: projects/$project/checkpoints/$cid/settings.json";
 
-            print "\n\nswat settings:\n\n";
-            my $swat_ini_file =  sparrow_root."/projects/$project/sites/$sid/swat.my";
-            if ( -f $swat_ini_file ){
-                open F, $swat_ini_file or confess  "can't open $swat_ini_file to read: $!";
-                while(my $l = <F>){
-                    print $l;
-                };
-                close;
-            } else {
-                print "\n\nswat settings: not found\n";
-            }
-        }
-
-    }else{
-        confess "unknown site $sid in project $project";
-
+    for my $f (keys %args){
+        $cp_settings->{$f} = $args{$f};
     }
-    
-}
 
-sub site_base_url {
-
-    my $project = shift or confess "usage: site_base_url(project,site)";
-    my $sid = shift or confess "usage: site_base_url(project,site)";
-
-    open F, sparrow_root."/projects/$project/sites/$sid/base_url" or 
-    confess "can't open file projects/$project/sites/$sid/base_url to read";
-
-    my $base_url = <F>;
-    chomp $base_url;
-    close F;
-    $base_url;
-
-}
-
-sub set_base_url {
-
-    my $project  = shift or confess "usage: set_base_url(*project,checkpoint,base_url)";
-    my $cid      = shift or confess "usage: set_base_url(project,*checkpoint,base_url)";
-    my $base_url = shift or confess "usage: set_base_url(project,checkpoint,*base_url)";
-
-    open F, ">", sparrow_root."/projects/$project/checkpoints/$cid/base_url" or 
-        confess "can't open file to write: projects/$project/checkpoints/$cid/base_url";
-    print F $base_url;
+    print F encode_json($cp_settings);
     close F;
 
 }

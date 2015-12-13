@@ -6,9 +6,8 @@ validator: [ \
 
 OK
 
-begin:
-{
-    'plugin' => 'test777',
-    'base_url' => '127.0.0.1'
-};
-end:
+base_url: 127.0.0.1
+plugin: test777
+
+
+

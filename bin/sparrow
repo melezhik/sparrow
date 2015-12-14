@@ -5,7 +5,6 @@ use strict;
 use Sparrow::Constants;
 use Sparrow::Commands::Plugin;
 use Sparrow::Commands::Project;
-use Sparrow::Commands::Swat;
 use Sparrow::Misc;
 use Carp;
 

@@ -77,7 +77,7 @@ sub project_remove {
         rmtree( sparrow_root."/projects/$project" );
         print "project $project successfully removed\n\n"
     }else{
-        warn "unknown project";
+        warn "unknown project $project";
     }
 
 }
@@ -101,7 +101,7 @@ sub project_show {
 
     my $project = shift or confess('usage: project_show(project)');;
 
-    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
     print "[project $project]\n\n";
 

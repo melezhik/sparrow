@@ -79,15 +79,23 @@ sub install_plugin {
     my $list = read_plugin_list('as_hash');
 
     if ($list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $type){
-        warn "both public and private $pid plugin foudn, use --private or --public flag to choose which you want to install";
+        warn "both public and private $pid plugin found, use --private or --public flag to choose which you want to install";
         return;
     }elsif ($type) {
         confess 'type should be one of two: private|public' unless $type=~/--(private|local)$/;
-        print "installing $type\@$pid ...\n"
+        print "installing $type\@$pid ...\n";
     }elsif($list->{'public@'.$pid}) {
-        print "installing public\@$pid ...\n"
+        print "installing public\@$pid ...\n";
     }elsif($list->{'private@'.$pid}) {
-        print "installing public\@$pid ...\n"
+        print "installing private\@$pid ...\n";
+        if ( -d sparrow_root."/plugins/private/$pid" ){
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton");
+        }else{
+            execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton");
+        }
+
     }else{
         confess "unknown plugin type: $list->{type}";
     }

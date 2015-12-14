@@ -102,7 +102,7 @@ sub project_show {
 
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
-    print "[project $project info]\n\n";
+    print "[project $project]\n\n";
 
     print "[checkpoints]\n\n";
 
@@ -139,8 +139,16 @@ sub check_set {
     my $cid      = shift or confess "usage: check_set(project,*checkpoint,args)";
     my %args     = @_;
 
+    confess "usage: check_set(project,checkpoint,*args)" unless %args;
+
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
     confess "unknown project $project" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+
+    for my $f (keys %args){
+        confess "unknow arg: $f" unless $f=~/^-(u|p)$/;
+    }
+
 
     if ($args{'-u'}){
         cp_set($project,$cid,'base_url',$args{'-u'});

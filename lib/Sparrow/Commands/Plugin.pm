@@ -10,6 +10,8 @@ use Sparrow::Misc;
 use Carp;
 use File::Basename;
 use HTTP::Tiny;
+use JSON;
+
 
 use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
 
@@ -85,7 +87,20 @@ sub install_plugin {
         confess 'type should be one of two: private|public' unless $type=~/--(private|local)$/;
         print "installing $type\@$pid ...\n";
     }elsif($list->{'public@'.$pid}) {
-        print "installing public\@$pid ...\n";
+        if ( -d sparrow_root."/plugins/public/$pid" ){
+
+        }else{
+
+            my $v = $list->{'public@'.$pid}->{version};
+
+            print "installing public\@$pid version $v ...\n";
+
+            execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && curl -f -o $pid-v$v.tar.gz ".sparrow_box_api_url."/distros/$pid-v$v.tar.gz");
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
+
+        }
+        
     }elsif($list->{'private@'.$pid}) {
         print "installing private\@$pid ...\n";
         if ( -d sparrow_root."/plugins/private/$pid" ){

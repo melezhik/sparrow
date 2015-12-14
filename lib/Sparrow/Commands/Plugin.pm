@@ -11,6 +11,7 @@ use Carp;
 use File::Basename;
 use HTTP::Tiny;
 use JSON;
+use version;
 
 
 use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
@@ -22,7 +23,6 @@ our @EXPORT = qw{
 
     install_plugin
     show_plugin
-    update_plugin
     remove_plugin
 
     upload_plugin
@@ -84,10 +84,27 @@ sub install_plugin {
         warn "both public and private $pid plugin found, use --private or --public flag to choose which you want to install";
         return;
     }elsif ($type) {
+
         confess 'type should be one of two: private|public' unless $type=~/--(private|local)$/;
         print "installing $type\@$pid ...\n";
+
     }elsif($list->{'public@'.$pid}) {
-        if ( -d sparrow_root."/plugins/public/$pid" ){
+
+        if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+
+            open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
+            my $sp = join "", <F>;
+            my $spj = decode_json($sp);
+            close F;
+
+            my $plg_v  = version->parse($list->{'public@'.$pid}->{version});
+            my $inst_v = version->parse($spj->{version});
+
+            if ($plg_v > $inst_v){
+                print "upgrading public\@$pid from version $inst_v to version $plg_v ...\n";
+            }else{
+                print "public\@$pid is uptodate ($inst_v)\n";
+            }
 
         }else{
 
@@ -95,6 +112,7 @@ sub install_plugin {
 
             print "installing public\@$pid version $v ...\n";
 
+            execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
             execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && curl -f -o $pid-v$v.tar.gz ".sparrow_box_api_url."/distros/$pid-v$v.tar.gz");
             execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
@@ -137,19 +155,6 @@ sub show_plugin {
                 confess "unkown plugin $pid";
             }
         }
-}
-
-sub update_plugin {
-
-    my $pid = shift or confess('usage: update_plugin(plugin_name)');
-
-    if (-d sparrow_root()."/plugins/$pid"){
-        print "updating plugin $pid ...\n";
-        execute_shell_command("cd ".(sparrow_root)."/plugins/$pid && git pull && carton");
-    }else{
-        confess "plugin $pid is not installed";
-    }
-
 }
 
 sub remove_plugin {

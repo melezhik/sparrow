@@ -1,5 +1,6 @@
 
-validator: [ \
+validator: use test; \
+[ \
     -f sparrow_root."/projects/foo100/checkpoints/bar/settings.json" ,      \
      sparrow_root."/projects/foo100/checkpoints/bar/settings.json exists"   \
 ]

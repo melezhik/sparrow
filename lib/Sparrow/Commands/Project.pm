@@ -133,19 +133,6 @@ sub check_add {
 
 }
 
-sub check_remove {
-
-    my $project = shift or confess "usage: check_remove(*project,checkpoint)";
-    my $cid     = shift or confess "usage: check_remove(project,*checkpoint)";
-
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
-
-    execute_shell_command("rm -rf ".sparrow_root."/projects/$project/checkpoints/$cid");
-
-    print "checkpoint $project/$cid successfully removed \n\n";
-
-}
-
 sub check_set {
 
     my $project  = shift or confess "usage: check_set(*project,checkpoint,args)";

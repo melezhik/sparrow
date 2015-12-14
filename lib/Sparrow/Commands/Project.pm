@@ -12,6 +12,7 @@ use File::Basename;
 use File::Path;
 
 use JSON;
+use Data::Dumper;
 
 our @EXPORT = qw{
 
@@ -100,7 +101,7 @@ sub project_show {
 
     my $project = shift or confess('usage: project_show(project)');;
 
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
     print "[project $project]\n\n";
 
@@ -133,6 +134,35 @@ sub check_add {
 
 }
 
+
+sub check_show {
+
+    my $project  = shift or confess "usage: check_show(*project,checkpoint)";
+    my $cid      = shift or confess "usage: check_show(project,*checkpoint)";
+
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+
+    print "[checkpoint $project/$cid]\n\n";
+
+    local $Data::Dumper::Terse=1;
+    print Dumper(cp_get($project,$cid)), "\n\n";    
+
+    if (-f sparrow_root."/projects/$project/checkpoints/$cid/swat.my"){
+       print "[swat settings]\n\n";
+        open F, sparrow_root."/projects/$project/checkpoints/$cid/swat.my" 
+            or confess "can't open ".sparrow_root."/projects/$project/checkpoints/$cid/swat.my to read: $!";
+        print join "", <F>;
+        close F;
+    }else{
+       print "swat settings: not found\n"
+    }
+
+
+}
+
+
 sub check_set {
 
     my $project  = shift or confess "usage: check_set(*project,checkpoint,args)";
@@ -141,8 +171,8 @@ sub check_set {
 
     confess "usage: check_set(project,checkpoint,*args)" unless %args;
 
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
 
     for my $f (keys %args){
@@ -215,12 +245,6 @@ sub cp_set {
 
 }
 
-
-sub link_is_dangling {
-
-    my $l = shift;
-    return stat($l) ? 0 : 1;
-}
 
 1;
 

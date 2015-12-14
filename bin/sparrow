@@ -74,7 +74,7 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        project_show($name);
+        project_show($name, @ARGV);
 
     } elsif ( $action eq 'remove') {
 

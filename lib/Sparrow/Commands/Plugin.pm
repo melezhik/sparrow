@@ -166,7 +166,7 @@ sub show_plugin {
 
 sub remove_plugin {
 
-    my $pid = shift or confess('usage: remove_plugin(plugin_name)');
+    my $pid = shift or confess('usage: remove_plugin(*plugin_name)');
 
     if (-d sparrow_root."/plugins/$pid"){
         print "removing plugin $pid ...\n";
@@ -225,8 +225,17 @@ sub read_plugin_list {
 
 sub upload_plugin {
 
+    open F, "$ENV{USER}/sparrowhub.json" or confess "can't open $ENV{USER}/sparrowhub.json to read: $!";
+    my $s = join "", <F>;
+    close F;
+
+    my $cred = decode_json($s);
+
     execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
-    execute_shell_command('curl -f -X POST '.sparrow_box_api_url.'/upload -F archive=@/tmp/archive.tar.gz');
+    execute_shell_command(
+        "curl -H 'sparrow-user: $cred->{user}' " .
+        "-H 'sparrow-token: $cred->{token}' " .
+        '-f -X POST '.sparrow_box_api_url.'/upload -F archive=@/tmp/archive.tar.gz');
 
 }
 

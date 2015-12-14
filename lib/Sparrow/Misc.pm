@@ -63,7 +63,8 @@ sub usage {
 sub init_sparrow_env {
 
     mkpath(sparrow_root);
-    mkpath(sparrow_root.'/plugins');
+    mkpath(sparrow_root.'/plugins/private');
+    mkpath(sparrow_root.'/plugins/public');
     mkpath(sparrow_root.'/projects');
 
     print "# sparrow environment initialized at ".sparrow_root, "\n";

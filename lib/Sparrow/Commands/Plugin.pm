@@ -32,7 +32,21 @@ sub show_installed_plugins {
 
     print "[installed sparrow plugins]\n\n";
 
-    my $root_dir = sparrow_root.'/plugins';
+    print "[public]\n\n";
+
+    my $root_dir = sparrow_root.'/plugins/public';
+
+    opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
+
+    for my $p (grep { ! /^\.{1,2}$/ } readdir($dh)){
+        print basename($p),"\n";
+    }
+
+    closedir $dh;
+
+    print "[private]\n\n";
+
+    my $root_dir = sparrow_root.'/plugins/private';
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
@@ -59,21 +73,25 @@ sub show_plugins {
 
 sub install_plugin {
 
-    my $pid = shift;
+    my $pid     = shift or confess 'usage: install_plugin(name,type)';
+    my $type    = shift;
 
     my $list = read_plugin_list('as_hash');
 
-
-    if ($list->{$pid}){
-        if (-d sparrow_root."/plugins/$pid"){
-            confess("plugin $pid already installed!\n".
-            "you should remove plugin first by `sparrow plg remove $pid` to reinstall it \n");
-        }
-        print "installing plugin $pid ...\n";
-        execute_shell_command('cd '.sparrow_root."/plugins && git clone $list->{$pid}->{url} $pid && cd $pid && carton");
+    if ($list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $type){
+        warn "both public and private $pid plugin foudn, use --private or --public flag to choose which you want to install";
+        return;
+    }elsif ($type) {
+        confess 'type should be one of two: private|public' unless $type=~/--(private|local)$/;
+        print "installing $type\@$pid ...\n"
+    }elsif($list->{'public@'.$pid}) {
+        print "installing public\@$pid ...\n"
+    }elsif($list->{'private@'.$pid}) {
+        print "installing public\@$pid ...\n"
     }else{
-        confess "unknown plugin $pid";
+        confess "unknown plugin type: $list->{type}";
     }
+
 
 }
 sub show_plugin {
@@ -138,7 +156,7 @@ sub read_plugin_list {
         next unless $i=~/\S+/;
         my @foo = split /\s+/, $i;
         push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
-        $list{$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
+        $list{'private@'.$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
     }
     close F;
 
@@ -151,7 +169,7 @@ sub read_plugin_list {
             next unless $i=~/\S+/;
             my @foo = split /\s+/, $i;
             push @list, { name => $foo[0], version => $foo[1], type => 'public' } ;
-            $list{$foo[0]} = { name => $foo[0], version => $foo[1], type => 'public'  };
+            $list{'public@'.$foo[0]} = { name => $foo[0], version => $foo[1], type => 'public'  };
         } 
     }else{
         confess "bad response from $index_url\n$response->{status}\n$response->{reason}\n";

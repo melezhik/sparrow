@@ -1,0 +1,12 @@
+
+validator: use test; \
+[ \
+    -f sparrow_root."/projects/foo100/checkpoints/bar/swat.my" ,      \
+     sparrow_root."/projects/foo100/checkpoints/bar/swat.my exists"   \
+]
+
+OK
+
+
+
+

@@ -162,6 +162,9 @@ sub check_swat_set {
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+    confess "please setup your preferable editor via EDITOR environment variable\n" unless editor;
+
+    exec editor.' '.sparrow_root."/projects/$project/checkpoints/$cid/swat.my";
 
 }
 

@@ -2,6 +2,6 @@ OK
 
 validator: [ \
      ! -d (sparrow_root."/projects/foo100/checkpoints/bar") ,           \
-     "/projects/foo100/checkpoints/bar does not exists"                 \
+     "directory projects/foo100/checkpoints/bar does not exists"                 \
 ]
 

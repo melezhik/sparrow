@@ -98,7 +98,7 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        check_swat_set($name);
+        check_swat_set($name, @ARGV);
 
     } elsif ( $action eq 'check_show' ){
 

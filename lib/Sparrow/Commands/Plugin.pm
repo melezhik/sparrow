@@ -122,7 +122,7 @@ sub install_plugin {
             execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
             execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o $pid-v$v.tar.gz ".sparrow_box_api_url."/distros/$pid-v$v.tar.gz");
-            execute_shell_command("echo cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
+            execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
 
         }
         

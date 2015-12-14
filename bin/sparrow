@@ -94,6 +94,12 @@ if ($object eq  'plg'){
 
         check_set($name, @ARGV);
 
+    } elsif ( $action eq 'check_swat_set') {
+
+        my $name = shift @ARGV;
+
+        check_swat_set($name);
+
     } elsif ( $action eq 'check_show' ){
 
         my $name = shift @ARGV;

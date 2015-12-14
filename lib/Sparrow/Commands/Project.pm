@@ -22,10 +22,14 @@ our @EXPORT = qw{
 
 
     check_add
-    check_run
-    check_set
     check_show
     check_remove
+
+    check_set
+    check_swat_set
+
+
+    check_run
 
     cp_get
     cp_set
@@ -57,7 +61,7 @@ sub project_create {
     } else {
         mkpath sparrow_root."/projects/$project";
         mkpath sparrow_root."/projects/$project/checkpoints";
-        print "project $project is successfully created\n\n"
+        print "project $project successfully created\n\n"
     }
 
 
@@ -67,12 +71,27 @@ sub project_remove {
 
     my $project = shift or confess('usage: project_remove(project)');
 
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
 
-    rmtree( sparrow_root."/projects/$project" );
+    if (-d sparrow_root."/projects/$project"){
+        rmtree( sparrow_root."/projects/$project" );
+        print "project $project successfully removed\n\n"
+    }else{
+        warn "unknown project";
+    }
 
-    print "project $project is successfully removed\n\n"
+}
 
+sub check_remove {
+
+    my $project = shift or confess('usage: checkpoint_remove(*project,checkpoint)');
+    my $cid     = shift or confess('usage: checkpoint_remove(project,*checkpoint)');
+
+    if (-d sparrow_root."/projects/$project" and -d sparrow_root."/projects/$project/checkpoints/$cid" ){
+        rmtree( sparrow_root."/projects/$project/checkpoints/$cid" );
+        print "checkpoint $project/$cid successfully removed\n\n";
+    }else{
+        warn "unknown checkpoint";
+    }
 
 }
 
@@ -104,13 +123,13 @@ sub check_add {
     my $project = shift or confess "usage: check_add(*project,checkpoint)";
     my $cid     = shift or confess "usage: check_add(project,*checkpoint)";
 
-    confess "unknown project $project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
-    confess "checkpoint $cid already exists" if  -d sparrow_root."/projects/$project/checkpoints/$cid";
+    confess "checkpoint $project/$cid already exists" if  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
     mkdir sparrow_root."/projects/$project/checkpoints/$cid" or confess "can't create checkpoint directory: $!";
 
-    print "checkpoint $cid is successfully added to project $project\n\n";
+    print "checkpoint $project/$cid successfully created\n\n";
 
 }
 
@@ -123,7 +142,7 @@ sub check_remove {
 
     execute_shell_command("rm -rf ".sparrow_root."/projects/$project/checkpoints/$cid");
 
-    print "checkpoint $cid is successfully removed from project $project\n\n";
+    print "checkpoint $project/$cid successfully removed \n\n";
 
 }
 
@@ -145,6 +164,17 @@ sub check_set {
         print "set plugin\n\n";
     }    
 
+
+}
+
+
+sub check_swat_set {
+
+    my $project  = shift or confess "usage: check_swat_set(*project,checkpoint)";
+    my $cid      = shift or confess "usage: check_swat_set(project,*checkpoint)";
+
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
 }
 

@@ -207,6 +207,32 @@ sub check_swat_set {
 }
 
 
+sub check_run {
+
+    my $project  = shift or confess "usage: check_run(*project,checkpoint)";
+    my $cid      = shift or confess "usage: check_run(project,*checkpoint)";
+
+
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+    my $cp_set = cp_get($project,$cid);
+
+    confess "plugin not test" unless $cp_set->{'plugin'};
+    confess "base_url not test" unless $cp_set->{'base_url'};
+
+    my $pdir = sparrow_root."/plugins/".($cp_set->{'plugin'});
+
+    confess 'plugin not installed' unless -d $pdir;
+
+    my $cmd = 'cd '.sparrow_root."/projects/$project/checkpoints/$cid && swat $pdir ".($cp_set->{base_url});
+
+    exec $cmd;
+
+
+}
+
+
 sub cp_get {
 
     my $project = shift or confess "usage: cp_get(*project,checkpoint)";

@@ -6,6 +6,9 @@ our $VERSION = '0.0.7';
 
 __END__
 
+=pod
+
+
 =encoding utf8
 
 
@@ -141,13 +144,13 @@ I<sparrow project check_add $project_name $checkpoint_name>
 
 =item *
 
-Checkpoints tie together tested web service and sparrow plugin.
+Checkpoints tie together tested web service and sparrow plugin
 
 
 
 =item *
 
-Checkpoints belong to projects, so to create a checkpoint you need to point a project.
+Checkpoints belong to projects, so to create a checkpoint you need to point a project
 
 
 
@@ -181,13 +184,15 @@ Once checkpoint is created you need to setup it. Setting checkpoint means provid
 
 A plugin name sets a sparrow plugin to run swat test suite from.
 
-A base url sets a web service root URL. Base url be set in L<curl compliant|http://curl.haxx.se/docs/manpage.html>.
+A base url sets a web service root URL to send http requests provided by test suite.
+
+Base url be set in L<curl compliant|http://curl.haxx.se/docs/manpage.html>.
 
 Command examples:
 
-    sparrow check\_set foo nginx-check -p swat-apache -u 127.0.0.1
-    sparrow check\_set foo nginx-check -p swat-nginx -u http://127.0.0.1
-    sparrow check\_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
+    sparrow check_set foo nginx-check -p swat-apache -u 127.0.0.1
+    sparrow check_set foo nginx-check -p swat-nginx -u http://127.0.0.1
+    sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
 
 To get checkpoint info say this:
 
@@ -227,7 +232,7 @@ This command setups L<swat ini file|https://github.com/melezhik/swat#swat-ini-fi
 
 More information on swat ini files syntax could be found here - L<https://github.com/melezhik/swat#swat-ini-files|https://github.com/melezhik/swat#swat-ini-files>
 
-To get checkpoint swat settings say this:
+To see checkpoint swat settings say this:
 
 I<sparrow project check_show $project_name $checkpoint_name --swat>
 
@@ -242,7 +247,7 @@ NOT IMPLEMENTED YET.
 
 I<GET /$project_name/check_run/$project_name/$checkpoint_name>
 
-Sparrow rest API allow to run swat test suites remotely over http.
+Sparrow rest API allow to run swat test suites remotely over http. This function is not implimented yet.
 
     # runs sparrow rest API daemon
     sparrowd
@@ -331,7 +336,7 @@ private plugins should be listed at sparrow plugin list file (SPL file)
 
 =head3 SPL FILE
 
-Sparrow plugin list is represented by text file placed at `\~/sparrow/sparrow.list'
+Sparrow plugin list is represented by text file placed at `\~/sparrow.list'
 
 SPL file should contains lines in the following format:
 
@@ -509,7 +514,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
     cat ~/sparrowhub.json
     
     {
-        "username": "melezhik",
+        "user"  : "melezhik",
         "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
 
@@ -533,7 +538,7 @@ Install sparrow client on your machine
 
 =item *
 
-Then go to directory where your plugin source code at and say sparrow plg upload. That's it
+Then go to directory where your plugin source code at and say `sparrow plg upload'. That's it
 
 
 =back

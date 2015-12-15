@@ -14,7 +14,7 @@ use JSON;
 use version;
 
 
-use constant sparrow_box_api_url => 'http://127.0.0.1:3000';
+use constant sparrow_hub_api_url => 'http://127.0.0.1:3000';
 
 our @EXPORT = qw{
 
@@ -106,8 +106,13 @@ sub install_plugin {
                 print "upgrading public\@$pid from version $inst_v to version $plg_v ...\n";
 
                 execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
+
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o $pid-v$plg_v.tar.gz ".sparrow_box_api_url."/distros/$pid-v$plg_v.tar.gz");
+
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && 
+                curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o 
+                $pid-v$plg_v.tar.gz ".sparrow_hub_api_url."/distros/$pid-v$plg_v.tar.gz");
+
                 execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
 
             }else{
@@ -121,8 +126,13 @@ sub install_plugin {
             print "installing public\@$pid version $v ...\n";
 
             execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
+
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
-            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o $pid-v$v.tar.gz ".sparrow_box_api_url."/distros/$pid-v$v.tar.gz");
+
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && 
+            curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o 
+            $pid-v$v.tar.gz ".sparrow_hub_api_url."/distros/$pid-v$v.tar.gz");
+
             execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
 
         }
@@ -186,7 +196,7 @@ sub read_plugin_list {
     my $mode = shift || 'as_array';
 
 
-    my $index_url = sparrow_box_api_url.'/index';
+    my $index_url = sparrow_hub_api_url.'/api/v1/index';
 
     my $response = HTTP::Tiny->new->get($index_url);
  
@@ -237,7 +247,7 @@ sub upload_plugin {
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .
-        '-f -X POST '.sparrow_box_api_url.'/upload -F archive=@/tmp/archive.tar.gz');
+        '-f -X POST '.sparrow_hub_api_url.'/api/v1/upload -F archive=@/tmp/archive.tar.gz');
 
 }
 

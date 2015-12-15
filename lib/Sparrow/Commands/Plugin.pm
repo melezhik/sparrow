@@ -23,7 +23,9 @@ our @EXPORT = qw{
     show_installed_plugins    
 
     install_plugin
+
     show_plugin
+
     remove_plugin
 
     upload_plugin
@@ -64,7 +66,7 @@ sub show_installed_plugins {
 
     closedir $dh;
 
-    print "[private]\n\n";
+    print "\n\n[private]\n\n";
 
     my $root_dir = sparrow_root.'/plugins/private';
 
@@ -96,7 +98,7 @@ sub install_plugin {
 
     }elsif($list->{'public@'.$pid}) {
 
-        if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+    if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
 
             open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
             my $sp = join "", <F>;
@@ -162,22 +164,54 @@ sub show_plugin {
 
     my $pid = shift or confess 'usage: show_plugin(plugin_name)';
 
-        if (-d sparrow_root."/plugins/$pid"){
-            my $list = read_plugin_list('as_hash');
-            print "[plugin $pid] info\n";
-            print "\tinstalled: YES\n";
-            print "\tgit url: ",( $list->{$pid} ? $list->{$pid}->{url} : 'unknown' ) ,"\n";
-            # execute_shell_command("cd ".sparrow_root."/plugins/$pid && git log -n 1 --pretty=oneline");
-        }else{
-            my $list = read_plugin_list('as_hash');
-            if ($list->{$pid}){
-                print "[plugin $pid] info\n";
-                print "\tinstalled: NO\n";
-                print "\tgit url:",$list->{$pid}->{url},"\n";
-            }else{
-                confess "unkown plugin $pid";
-            }
+    my $list = read_plugin_list('as_hash');
+
+    my $installed = ( -f sparrow_root."/plugins/public/$pid/sparrow.json" or -d sparrow_root."/plugins/private/$pid/" ) ? 1 : 0;
+
+    my $listed = ( $list->{'public@'.$pid} or $list->{'private@'.$pid} ) ? 1 : 0;
+
+    if ($listed and $list->{'public@'.$pid} ) {
+
+        my $inst_version = '';
+        my $desc = '';
+
+        if ( open F, sparrow_root."/plugins/public/$pid/sparrow.json" ){
+            my $s = join "", <F>;
+            close F;
+            my $spj = decode_json($s);
+            $inst_version = $spj->{version};
+            $desc = $spj->{desciption};
+        } else {
+            $inst_version = 'unknown';
+            $desc = 'unknown';
         }
+
+
+        print "plugin name: $pid\n";
+        print "plugin type: public\n";
+        print "installed: ",($installed ? 'YES':'NO'),"\n";
+        print "plugin version: ",$list->{'public@'.$pid}->{version},"\n";
+        print "plugin installed version: ",$inst_version,"\n" if $installed;
+        print "plugin desciption: $desc\n";
+
+    }
+
+    if( $listed and $list->{'private@'.$pid} ) {
+        print "plugin name: $pid\n";
+        print "plugin type: private\n";
+        print "installed: ",($installed ? 'YES':'NO'),"\n";
+    }
+
+    if (! $listed ) {
+        if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+            print "public\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";
+        }
+        if ( -d sparrow_root."/plugins/private/$pid" ){
+            print "private\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";
+        }
+    
+    }
+
 }
 
 sub remove_plugin {

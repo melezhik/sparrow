@@ -192,11 +192,24 @@ sub check_set {
         cp_set($project,$cid,'base_url',$args{'-u'});
         print "set base_url\n\n";
     }    
-    if ($args{'-p'}){
-        cp_set($project,$cid,'plugin',$args{'-p'});
-        print "set plugin\n\n";
-    }    
 
+    if ($args{'-p'}){
+
+        my $pid = $args{'-p'};
+    
+        if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" and -d sparrow_root."/plugins/private/$pid" ){
+            warn "both public and private plugins installed, use --public or --private flag to choose proper one";
+            return;
+        }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  ){
+            cp_set($project,$cid,'plugin',$pid);
+            print "set plugin to public\@$pid\n\n";
+        }elsif( -d sparrow_root."/plugins/private/$pid/" ){
+            cp_set($project,$cid,'plugin',$pid);
+            print "set plugin to private\@$pid\n\n";
+        }else{
+            confess "plugin is not installed, you need to install it first to use in checkpoint";
+        }    
+    }
 
 }
 

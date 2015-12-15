@@ -83,20 +83,19 @@ sub show_installed_plugins {
 
 sub install_plugin {
 
-    my $pid     = shift or confess 'usage: install_plugin(name,type)';
-    my $type    = shift;
+    my $pid  = shift or confess 'usage: install_plugin(name)';
+
+    my $ptype = $_ if $pid=~s/\@(public|private)//;
 
     my $list = read_plugin_list('as_hash');
 
-    if ($list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $type){
-        warn "both public and private $pid plugin found, use --private or --public flag to choose which you want to install";
+    if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype){
+        warn "both public and private $pid plugin exists; 
+choose `sparrow plg install public\@$pid install` or `sparrow plg install private\@$pid install`
+to overcome this ambiguity";
         return;
-    }elsif ($type) {
 
-        confess 'type should be one of two: private|public' unless $type=~/--(private|local)$/;
-        print "installing $type\@$pid ...\n";
-
-    }elsif($list->{'public@'.$pid}) {
+    } elsif($list->{'public@'.$pid} and $ptype ne 'private' ) {
 
     if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
 
@@ -144,7 +143,7 @@ sub install_plugin {
 
         }
         
-    }elsif($list->{'private@'.$pid}) {
+    }elsif($list->{'private@'.$pid} and $ptype ne 'public' ) {
         print "installing private\@$pid ...\n";
         if ( -d sparrow_root."/plugins/private/$pid" ){
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
@@ -155,7 +154,7 @@ sub install_plugin {
         }
 
     }else{
-        confess "unknown plugin type: $list->{type}";
+        confess "unknown plugin";
     }
 
 

@@ -248,8 +248,8 @@ sub check_run {
 
     my $cp_set = cp_get($project,$cid);
 
-    confess "plugin not test" unless $cp_set->{'plugin'};
-    confess "base_url not test" unless $cp_set->{'base_url'};
+    confess "plugin not set" unless $cp_set->{'plugin'};
+    confess "base_url not set" unless $cp_set->{'base_url'};
 
     
     my $pdir = sparrow_root."/plugins/".($cp_set->{'install_dir'});

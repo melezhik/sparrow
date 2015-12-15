@@ -313,7 +313,7 @@ A detailed information concerning version syntax could be find here -
 
 * name - plugin name.
 
-Only symbols \`a-zA-Z1-9_-' are allowable in plugin name
+Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name
 
 * description - a short description of your plugin
 

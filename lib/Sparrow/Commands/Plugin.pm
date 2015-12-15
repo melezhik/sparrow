@@ -243,6 +243,22 @@ sub upload_plugin {
 
     my $cred = decode_json($s);
 
+    open F, 'sparrow.json' or confess "can't open sparrow.json to read: $!";
+    $s = join "", <F>;
+    close F;
+
+    my $spj = decode_json($s);
+
+    # validating json file
+
+    my $plg_v    = version->parse($spj->{version}) or confess "version not found in sparrow.json file";;
+    my $plg_name = $spj->{name} or confess "name not found in sparrow.json file";
+    my $desc     = $spj->{description} or confess "description not found in sparrow.json file";
+
+    $plg_name=~/^[\w\d-\._]+$/ or confess 'name parameter does not meet naming requirements - /^[\w\d-\._]+$/';
+
+    print "sparrow.json file validated ... \n";
+
     execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .

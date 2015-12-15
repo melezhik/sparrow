@@ -349,7 +349,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
     cat ~/sparrowhub.json
 
     {
-        "username": "melezhik",
+        "user"  : "melezhik",
         "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
 

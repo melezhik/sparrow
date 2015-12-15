@@ -66,10 +66,11 @@ sub show_plugins {
     my $list = read_plugin_list();
 
     print "[available sparrow plugins]\n\n";
-    print "name | type | version | git url \n";
+    print "type    name\n\n";
+    
 
     for my $p (@{$list}){
-        print "$p->{name} | $p->{type} | $p->{url} | $p->{version}  \n";
+        print "$p->{type}\t$p->{name}\n";
     }
 }
 
@@ -225,7 +226,7 @@ sub read_plugin_list {
 
 sub upload_plugin {
 
-    open F, "$ENV{USER}/sparrowhub.json" or confess "can't open $ENV{USER}/sparrowhub.json to read: $!";
+    open F, "$ENV{HOME}/sparrowhub.json" or confess "can't open $ENV{HOME}/sparrowhub.json to read: $!";
     my $s = join "", <F>;
     close F;
 

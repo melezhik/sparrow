@@ -251,12 +251,14 @@ sub check_run {
     confess "plugin not test" unless $cp_set->{'plugin'};
     confess "base_url not test" unless $cp_set->{'base_url'};
 
-    my $pdir = sparrow_root."/plugins/".($cp_set->{'plugin'});
+    
+    my $pdir = sparrow_root."/plugins/".($cp_set->{'install_dir'});
 
     confess 'plugin not installed' unless -d $pdir;
 
     my $cmd = 'cd '.sparrow_root."/projects/$project/checkpoints/$cid && swat $pdir ".($cp_set->{base_url});
-
+    
+    print "# running $cmd ...\n\n";
     exec $cmd;
 
 
@@ -274,6 +276,11 @@ sub cp_get {
         my $str = join "", <F>;
         close F;
         $data = decode_json($str);
+        if ($data->{plugin}) {
+            my ($t,$name) = split '@' , $data->{plugin};
+            $data->{install_dir} =  "$t/$name";
+            $data->{type} = $t;
+        }
     } else {
         $data = {};
     }

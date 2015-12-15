@@ -27,7 +27,7 @@ if ($object eq  'plg'){
 
         show_installed_plugins();
 
-    } if ( $action eq 'search') {
+    } elsif ( $action eq 'search') {
 
         search_plugins(@ARGV);
 

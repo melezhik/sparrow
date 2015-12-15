@@ -114,9 +114,9 @@ sub install_plugin {
 
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && 
-                curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o 
-                $pid-v$plg_v.tar.gz ".sparrow_hub_api_url."/distros/$pid-v$plg_v.tar.gz");
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && \\ 
+                curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o  \\
+                $pid-v$plg_v.tar.gz ".sparrow_hub_api_url."/plugins/$pid-v$plg_v.tar.gz");
 
                 execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
 
@@ -134,9 +134,9 @@ sub install_plugin {
 
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && 
-            curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o 
-            $pid-v$v.tar.gz ".sparrow_hub_api_url."/distros/$pid-v$v.tar.gz");
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid &&  \\
+            curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o \\
+            $pid-v$v.tar.gz ".sparrow_hub_api_url."/plugins/$pid-v$v.tar.gz");
 
             execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
 
@@ -183,13 +183,21 @@ sub show_plugin {
 sub remove_plugin {
 
     my $pid = shift or confess('usage: remove_plugin(*plugin_name)');
+    my $rm_cnt = 0;
 
-    if (-d sparrow_root."/plugins/$pid"){
-        print "removing plugin $pid ...\n";
-        execute_shell_command("rm -rf ".sparrow_root."/plugins/$pid/");
-    }else{
-        confess "plugin $pid is not installed";
+    if (-d sparrow_root."/plugins/public/$pid"){
+        print "removing public\@$pid ...\n";
+        execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid/");
+        $rm_cnt++;
     }
+
+    if (-d sparrow_root."/plugins/private/$pid"){
+        print "removing private\@$pid ...\n";
+        execute_shell_command("rm -rf ".sparrow_root."/plugins/private/$pid/");
+        $rm_cnt++;
+    }
+
+    warn "plugin is not installed" unless $rm_cnt;
 
 }
 

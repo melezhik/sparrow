@@ -1,0 +1,13 @@
+validator: use test; \
+[ \
+    -f sparrow_root."/plugins/public/foo-test/sparrow.json" ,      \
+     sparrow_root."/plugins/public/foo-test/sparrow.json exists"   \
+]
+
+begin:
+
+    regexp: type\s+name
+    :blank_line
+    regexp: public\s+foo-test
+
+end:

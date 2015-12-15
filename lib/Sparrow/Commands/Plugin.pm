@@ -179,7 +179,7 @@ sub show_plugin {
             my $s = join "", <F>;
             close F;
             my $spj = decode_json($s);
-            $inst_version = $spj->{version};
+            $inst_version = eval { version->parse($spj->{version})->numify };
             $desc = $spj->{desciption};
         } else {
             $inst_version = 'unknown';
@@ -209,7 +209,7 @@ sub show_plugin {
         if ( -d sparrow_root."/plugins/private/$pid" ){
             print "private\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";
         }
-    
+        warn "unknown plugin" unless $installed;
     }
 
 }

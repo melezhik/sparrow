@@ -35,7 +35,7 @@ our @EXPORT = qw{
 
 sub search_plugins {
 
-    my $pattern  = shift or confess 'usage: search_plugins(pattern)';
+    my $pattern  = shift || '.*';
 
     my $list = read_plugin_list();
 
@@ -85,13 +85,18 @@ sub install_plugin {
 
     my $pid  = shift or confess 'usage: install_plugin(name)';
 
-    my $ptype = $_ if $pid=~s/\@(public|private)//;
+    my $ptype;
+
+    if ($pid=~/(public|private)@/){
+        $ptype = $1;
+        $pid=~s/(public|private)@//;
+    }
 
     my $list = read_plugin_list('as_hash');
 
     if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype){
         warn "both public and private $pid plugin exists; 
-choose `sparrow plg install public\@$pid install` or `sparrow plg install private\@$pid install`
+choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid`
 to overcome this ambiguity";
         return;
 
@@ -262,6 +267,7 @@ sub read_plugin_list {
     while ( my $i = <F> ){
         chomp $i;
         next unless $i=~/\S+/;
+        next if $i=~/^\s*#/;
         my @foo = split /\s+/, $i;
         push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
         $list{'private@'.$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };

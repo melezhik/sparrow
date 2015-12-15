@@ -315,11 +315,10 @@ A detailed information concerning version syntax could be find here -
 
 Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name
 
-* description - a short description of your plugin
-
 This the list of optional parameters you may set as well:
 
 * url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
+* description - a short description of your plugin
 
 
 # PUBLISHING SPARROW PLUGINS

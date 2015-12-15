@@ -253,7 +253,6 @@ sub upload_plugin {
 
     my $plg_v    = version->parse($spj->{version}) or confess "version not found in sparrow.json file";;
     my $plg_name = $spj->{name} or confess "name not found in sparrow.json file";
-    my $desc     = $spj->{description} or confess "description not found in sparrow.json file";
 
     $plg_name=~/^[\w\d-\._]+$/ or confess 'name parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 

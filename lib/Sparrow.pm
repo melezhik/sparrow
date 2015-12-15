@@ -527,7 +527,7 @@ Get rest api token
 
 =back
 
-Login into your account. Go on profile settings page and then hit "generate token" button.
+Login into your account. Go on "Profile" page, then on "My Token" page and then hit "Regenerate Token" link.
 
 Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
 

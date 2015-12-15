@@ -185,16 +185,6 @@ sub read_plugin_list {
 
     my $mode = shift || 'as_array';
 
-    open F, spl_file or confess $!;
-
-    while ( my $i = <F> ){
-        chomp $i;
-        next unless $i=~/\S+/;
-        my @foo = split /\s+/, $i;
-        push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
-        $list{'private@'.$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
-    }
-    close F;
 
     my $index_url = sparrow_box_api_url.'/index';
 
@@ -211,6 +201,17 @@ sub read_plugin_list {
         confess "bad response from $index_url\n$response->{status}\n$response->{reason}\n";
     }
 
+    open F, spl_file or confess $!;
+
+    while ( my $i = <F> ){
+        chomp $i;
+        next unless $i=~/\S+/;
+        my @foo = split /\s+/, $i;
+        push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
+        $list{'private@'.$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
+    }
+
+    close F;
 
     my $retval;
 

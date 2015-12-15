@@ -66,26 +66,39 @@ For example:
 
     sparrow project foo remove
 
-## download and install swat plugins
-
-*sparrow plg install $plugin\_name*
+## search sparrow plugins
 
 Sparrow plugin is a shareable swat test suite.
 
 One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action for details.
 
-    sparrow plg list # to get available plugin list
+To search available plugins say this:
+
+*sparrow plg search $pattern*
+
+For exmaple:
+
+    sparrow plg search nginx
+
+Pattern should be perl regexp pattern. Examples:
+
+* .*    # find any
+* nginx # find nginx plugins
+
+## download and install sparrow plugins
+
+*sparrow plg install $plugin\_name*
+
+For example:
+
+    sparrow plg search nginx # to get available nginx* plugins
     sparrow plg install swat-nginx # to download and install a chosen plugin
 
 Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
 
-To see available plugin list say this:
-
-*sparrow plg list*
-
 To see installed plugin list say this:
 
-*sparrow plg list --installed*
+*sparrow plg list*
 
 To get installed plugin info say this:
 
@@ -205,7 +218,6 @@ There are two type of sparrow plugins:
 
 Both public and private plugins are installed with help of sparrow client:
 
-    sparrow  plg list
     sparrow plg install plugin_name
 
 ## PUBLIC PLUGINS

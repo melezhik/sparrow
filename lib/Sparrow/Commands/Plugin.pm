@@ -18,8 +18,9 @@ use constant sparrow_hub_api_url => 'http://127.0.0.1:3000';
 
 our @EXPORT = qw{
 
+    search_plugins
+
     show_installed_plugins    
-    show_plugins
 
     install_plugin
     show_plugin
@@ -28,6 +29,23 @@ our @EXPORT = qw{
     upload_plugin
 
 };
+
+
+sub search_plugins {
+
+    my $pattern  = shift or confess 'usage: search_plugins(pattern)';
+
+    my $list = read_plugin_list();
+
+    print "[found sparrow plugins]\n\n";
+    print "type    name\n\n";
+    
+
+    my $re = qr/$pattern/; 
+    for my $p (grep { $_->{name}=~ $re }   @{$list}){
+        print "$p->{type}\t$p->{name}\n";
+    }
+}
 
 
 sub show_installed_plugins {
@@ -60,19 +78,6 @@ sub show_installed_plugins {
 
 }
 
-
-sub show_plugins {
-
-    my $list = read_plugin_list();
-
-    print "[available sparrow plugins]\n\n";
-    print "type    name\n\n";
-    
-
-    for my $p (@{$list}){
-        print "$p->{type}\t$p->{name}\n";
-    }
-}
 
 sub install_plugin {
 

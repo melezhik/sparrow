@@ -25,13 +25,11 @@ if ($object eq  'plg'){
 
     if ( $action eq 'list') {
 
-        my $options = join ' ', @ARGV;
+        show_installed_plugins();
 
-        if ($options =~ /--installed/){
-            show_installed_plugins();
-        } else {
-            show_plugins();
-        }
+    } if ( $action eq 'search') {
+
+        search_plugins(@ARGV);
 
     } elsif ( $action eq 'install'){
 

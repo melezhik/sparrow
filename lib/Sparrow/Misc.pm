@@ -23,7 +23,7 @@ sub execute_shell_command {
 sub usage {
 
     print "usage: sparrow project|plg action args\n";
-    print "where action: list|create|remove|show|install|check_add|check_run|check_set|check_remove and args depend on action\n";
+    print "where action: list|search|create|remove|show|install|check_add|check_run|check_set|check_remove and args depend on action\n";
 
 
     print "action examples:\n";
@@ -36,8 +36,8 @@ sub usage {
 
     print "\n[plugins]:\n\n";
 
-    print "\tsparrow plg list                # show available plugin list \n";
-    print "\tsparrow plg list --installed    # show installed plugins \n";
+    print "\tsparrow plg search foo          # search plugins \n";
+    print "\tsparrow plg list                # show installed plugins \n";
     print "\tsparrow plg install swat-nginx  # install plugin \n";
     print "\tsparrow plg remove  swat-nginx  # remove plugin\n";
     print "\tsparrow plg show    swat-nginx  # get plugin info\n";

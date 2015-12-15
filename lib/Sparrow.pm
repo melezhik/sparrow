@@ -102,26 +102,51 @@ For example:
     sparrow project foo remove
 
 
-=head2 download and install swat plugins
-
-I<sparrow plg install $plugin_name>
+=head2 search sparrow plugins
 
 Sparrow plugin is a shareable swat test suite.
 
 One could install sparrow plugin and then run related swat tests, see L<check|#run-swat-tests> action for details.
 
-    sparrow plg list # to get available plugin list
+To search available plugins say this:
+
+I<sparrow plg search $pattern>
+
+For exmaple:
+
+    sparrow plg search nginx
+
+Pattern should be perl regexp pattern. Examples:
+
+=over
+
+=item *
+
+.*    # find any
+
+
+=item *
+
+nginx # find nginx plugins
+
+
+=back
+
+
+=head2 download and install sparrow plugins
+
+I<sparrow plg install $plugin_name>
+
+For example:
+
+    sparrow plg search nginx # to get available nginx* plugins
     sparrow plg install swat-nginx # to download and install a chosen plugin
 
 Check L<sparrow-plugins|#sparrow-plugins> section to know more about sparrow plugins.
 
-To see available plugin list say this:
-
-I<sparrow plg list>
-
 To see installed plugin list say this:
 
-I<sparrow plg list --installed>
+I<sparrow plg list>
 
 To get installed plugin info say this:
 
@@ -280,7 +305,6 @@ private plugins are provided by internal or external git repositories and I<not 
 
 Both public and private plugins are installed with help of sparrow client:
 
-    sparrow  plg list
     sparrow plg install plugin_name
 
 
@@ -448,16 +472,7 @@ name - plugin name.
 
 =back
 
-Only symbols `a-zA-Z1-9_-' are allowable in plugin name
-
-=over
-
-=item *
-
-description - a short description of your plugin
-
-
-=back
+Only symbols `a-zA-Z1-9_-.' are allowable in plugin name
 
 This the list of optional parameters you may set as well:
 
@@ -466,6 +481,11 @@ This the list of optional parameters you may set as well:
 =item *
 
 url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
+
+
+=item *
+
+description - a short description of your plugin
 
 
 =back

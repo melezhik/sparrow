@@ -57,6 +57,8 @@ sub project_create {
 
     my $project = shift or confess('usage: project_create(project)');;
 
+    $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
+
     if ( -d sparrow_root."/projects/$project" ){
         print "project $project already exists - nothing to do here ... \n\n"
     } else {
@@ -72,6 +74,7 @@ sub project_remove {
 
     my $project = shift or confess('usage: project_remove(project)');
 
+    $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if (-d sparrow_root."/projects/$project"){
         rmtree( sparrow_root."/projects/$project" );
@@ -86,6 +89,9 @@ sub check_remove {
 
     my $project = shift or confess('usage: checkpoint_remove(*project,checkpoint)');
     my $cid     = shift or confess('usage: checkpoint_remove(project,*checkpoint)');
+
+    $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
+    $cid=~/^[\w\d-\._]+$/ or confess 'checkpoint parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if (-d sparrow_root."/projects/$project" and -d sparrow_root."/projects/$project/checkpoints/$cid" ){
         rmtree( sparrow_root."/projects/$project/checkpoints/$cid" );
@@ -125,8 +131,10 @@ sub check_add {
     my $cid     = shift or confess "usage: check_add(project,*checkpoint)";
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
-
     confess "checkpoint $project/$cid already exists" if  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+    $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
+    $cid=~/^[\w\d-\._]+$/ or confess 'checkpoint parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     mkdir sparrow_root."/projects/$project/checkpoints/$cid" or confess "can't create checkpoint directory: $!";
 

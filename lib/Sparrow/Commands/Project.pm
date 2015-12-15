@@ -196,15 +196,24 @@ sub check_set {
     if ($args{'-p'}){
 
         my $pid = $args{'-p'};
+
+        my $ptype;
     
-        if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" and -d sparrow_root."/plugins/private/$pid" ){
-            warn "both public and private plugins installed, use --public or --private flag to choose proper one";
+        if ($pid=~/(public|private)@/){
+            $ptype = $1;
+            $pid=~s/(public|private)@//;
+        }
+        
+        if (! $ptype and -f sparrow_root."/plugins/public/$pid/sparrow.json" and -d sparrow_root."/plugins/private/$pid" ){
+        warn "both public and private $pid plugin exists;
+choose `public\@$pid` or `private\@$pid`
+to overcome this ambiguity";
             return;
-        }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  ){
-            cp_set($project,$cid,'plugin',$pid);
+        }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
+            cp_set($project,$cid,'plugin',"public\@$pid");
             print "set plugin to public\@$pid\n\n";
-        }elsif( -d sparrow_root."/plugins/private/$pid/" ){
-            cp_set($project,$cid,'plugin',$pid);
+        }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
+            cp_set($project,$cid,'plugin',"private\@$pid");
             print "set plugin to private\@$pid\n\n";
         }else{
             confess "plugin is not installed, you need to install it first to use in checkpoint";

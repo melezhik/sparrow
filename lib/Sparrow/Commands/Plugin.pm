@@ -325,7 +325,9 @@ sub upload_plugin {
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .
-        '-f -X POST '.sparrow_hub_api_url.'/api/v1/upload -F archive=@/tmp/archive.tar.gz');
+        '-f -X POST '.sparrow_hub_api_url.'/api/v1/upload -F archive=@/tmp/archive.tar.gz',
+        silent => 1,
+    );
 
 }
 

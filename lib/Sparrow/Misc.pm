@@ -18,7 +18,15 @@ our @EXPORT = qw {
 sub execute_shell_command {
 
     my $cmd = shift;
-    confess "failed execute: $cmd" unless system($cmd) == 0;
+    my %opts = @_;
+
+    my $st = ( system($cmd) == 0 );
+
+    if ($opts{silent}){
+        die "failed to execute shell command" unless $st;
+    } else {
+        confess "failed to execute shell command: $cmd" unless $st;
+    }
 }
 
 sub usage {
@@ -62,13 +70,10 @@ sub usage {
 
 
 sub init_sparrow_env {
-
     mkpath(sparrow_root);
     mkpath(sparrow_root.'/plugins/private');
     mkpath(sparrow_root.'/plugins/public');
     mkpath(sparrow_root.'/projects');
-
-    # print "# sparrow environment initialized at ".sparrow_root, "\n\n\n";
 }
 
 1;

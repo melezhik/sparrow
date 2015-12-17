@@ -14,7 +14,7 @@ use JSON;
 use version;
 
 
-use constant sparrow_hub_api_url => 'http://127.0.0.1:3000';
+use constant sparrow_hub_api_url => 'https://sparrowhub.org';
 
 our @EXPORT = qw{
 

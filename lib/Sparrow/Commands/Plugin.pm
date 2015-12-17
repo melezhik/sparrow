@@ -226,13 +226,20 @@ sub remove_plugin {
     my $pid = shift or confess('usage: remove_plugin(*plugin_name)');
     my $rm_cnt = 0;
 
-    if (-d sparrow_root."/plugins/public/$pid"){
+    my $ptype;
+
+    if ($pid=~/(public|private)@/){
+        $ptype = $1;
+        $pid=~s/(public|private)@//;
+    }
+
+    if (-d sparrow_root."/plugins/public/$pid" and $ptype ne 'private' ){
         print "removing public\@$pid ...\n";
         execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid/");
         $rm_cnt++;
     }
 
-    if (-d sparrow_root."/plugins/private/$pid"){
+    if (-d sparrow_root."/plugins/private/$pid" and $ptype ne 'public' ){
         print "removing private\@$pid ...\n";
         execute_shell_command("rm -rf ".sparrow_root."/plugins/private/$pid/");
         $rm_cnt++;

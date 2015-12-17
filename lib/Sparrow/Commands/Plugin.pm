@@ -186,25 +186,26 @@ sub show_plugin {
             close F;
             my $spj = decode_json($s);
             $inst_version = eval { version->parse($spj->{version})->numify };
-            $desc = $spj->{desciption};
+            $desc = $spj->{description};
         } else {
             $inst_version = 'unknown';
             $desc = 'unknown';
         }
 
 
-        print "plugin name: $pid\n";
-        print "plugin type: public\n";
+        print "name: $pid\n";
+        print "type: public\n";
         print "installed: ",($installed ? 'YES':'NO'),"\n";
-        print "plugin version: ",$list->{'public@'.$pid}->{version},"\n";
-        print "plugin installed version: ",$inst_version,"\n" if $installed;
-        print "plugin desciption: $desc\n";
+        print "version: ",$list->{'public@'.$pid}->{version},"\n";
+        print "installed version: ",$inst_version,"\n" if $installed;
+        print "description: $desc\n";
 
     }
 
     if( $listed and $list->{'private@'.$pid} ) {
-        print "plugin name: $pid\n";
-        print "plugin type: private\n";
+        print "\n\n\n";
+        print "name: $pid\n";
+        print "type: private\n";
         print "installed: ",($installed ? 'YES':'NO'),"\n";
     }
 

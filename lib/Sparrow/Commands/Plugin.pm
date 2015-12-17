@@ -172,8 +172,6 @@ sub show_plugin {
 
     my $list = read_plugin_list('as_hash');
 
-    my $installed = ( -f sparrow_root."/plugins/public/$pid/sparrow.json" or -d sparrow_root."/plugins/private/$pid/" ) ? 1 : 0;
-
     my $listed = ( $list->{'public@'.$pid} or $list->{'private@'.$pid} ) ? 1 : 0;
 
     if ($listed and $list->{'public@'.$pid} ) {
@@ -192,21 +190,21 @@ sub show_plugin {
             $desc = 'unknown';
         }
 
-
+        print "\n";
         print "name: $pid\n";
         print "type: public\n";
-        print "installed: ",($installed ? 'YES':'NO'),"\n";
+        print "installed: ",(  -f sparrow_root."/plugins/public/$pid/sparrow.json"   ? 'YES':'NO'),"\n";
         print "version: ",$list->{'public@'.$pid}->{version},"\n";
-        print "installed version: ",$inst_version,"\n" if $installed;
+        print "installed version: ",$inst_version,"\n" if -f sparrow_root."/plugins/public/$pid/sparrow.json";
         print "description: $desc\n";
 
     }
 
     if( $listed and $list->{'private@'.$pid} ) {
-        print "\n\n\n";
+        print "\n";
         print "name: $pid\n";
         print "type: private\n";
-        print "installed: ",($installed ? 'YES':'NO'),"\n";
+        print "installed: ",( -d sparrow_root."/plugins/private/$pid/" ? 'YES':'NO'),"\n";
     }
 
     if (! $listed ) {
@@ -216,7 +214,10 @@ sub show_plugin {
         if ( -d sparrow_root."/plugins/private/$pid" ){
             print "private\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";
         }
-        warn "unknown plugin" unless $installed;
+        warn "unknown plugin" unless (
+            -f sparrow_root."/plugins/public/$pid/sparrow.json" or
+             -d sparrow_root."/plugins/private/$pid" 
+        ); 
     }
 
 }

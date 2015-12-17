@@ -91,8 +91,9 @@ Pattern should be perl regexp pattern. Examples:
 
 For example:
 
-    sparrow plg search nginx # to get available nginx* plugins
+    sparrow plg search nginx # to get know available nginx* plugins
     sparrow plg install swat-nginx # to download and install a chosen plugin
+    sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
 
 Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
 

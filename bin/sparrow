@@ -33,7 +33,7 @@ if ($object eq  'plg'){
 
     } elsif ( $action eq 'install'){
 
-        install_plugin( shift @ARGV );        
+        install_plugin( @ARGV );        
 
     } elsif( $action  eq 'remove'){
 

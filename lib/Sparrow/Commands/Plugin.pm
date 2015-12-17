@@ -83,7 +83,8 @@ sub show_installed_plugins {
 
 sub install_plugin {
 
-    my $pid  = shift or confess 'usage: install_plugin(name)';
+    my $pid  = shift or confess 'usage: install_plugin(name,opts)';
+    my %opts = @_;
 
     my $ptype;
 
@@ -102,7 +103,7 @@ to overcome this ambiguity";
 
     } elsif($list->{'public@'.$pid} and $ptype ne 'private' ) {
 
-    if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+    if (! $opts{'--version'}  and  -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
 
             open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
             my $sp = join "", <F>;
@@ -120,11 +121,11 @@ to overcome this ambiguity";
 
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && \\ 
-                curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o  \\
-                $pid-v$plg_v.tar.gz ".sparrow_hub_api_url."/plugins/$pid-v$plg_v.tar.gz");
+                execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
+                sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
+                sparrow_hub_api_url."/plugins/$pid-v$plg_v.tar.gz && echo");
 
-                execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
 
             }else{
                 print "public\@$pid is uptodate ($inst_v)\n";
@@ -132,19 +133,20 @@ to overcome this ambiguity";
 
         }else{
 
-            my $v = $list->{'public@'.$pid}->{version};
-
+            my $v = $opts{'--version'} ||  $list->{'public@'.$pid}->{version};
+            my $vn = version->parse($v)->numify; 
+            
             print "installing public\@$pid version $v ...\n";
 
             execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
 
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid &&  \\
-            curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o \\
-            $pid-v$v.tar.gz ".sparrow_hub_api_url."/plugins/$pid-v$v.tar.gz");
+            execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
+            sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
+            sparrow_hub_api_url."/plugins/$pid-v$vn.tar.gz && echo");
 
-            execute_shell_command("echo; cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$v.tar.gz && carton");
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$vn.tar.gz && carton");
 
         }
         

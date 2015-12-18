@@ -112,7 +112,7 @@ To search available plugins say this:
 
 I<sparrow plg search $pattern>
 
-For exmaple:
+For example:
 
     sparrow plg search nginx
 
@@ -135,7 +135,7 @@ nginx # find nginx plugins
 
 =head2 build / reload sparrow index
 
-Sparrow index is cached data used by sparrow to search plugins. 
+Sparrow index is cached data used by sparrow to search plugins.
 
 Index consists of two parts:
 
@@ -153,7 +153,7 @@ public  plugins index, L<PUBLIC PLUGINS|#public-plugins> section for details
 
 =back
 
-There are two basic commnad to work with index:
+There are two basic command to work with index:
 
 =over
 
@@ -317,7 +317,7 @@ NOT IMPLEMENTED YET.
 
 I<GET /$project_name/check_run/$project_name/$checkpoint_name>
 
-Sparrow rest API allow to run swat test suites remotely over http. This function is not implimented yet.
+Sparrow rest API allow to run swat test suites remotely over http. This function is not implemented yet.
 
     # runs sparrow rest API daemon
     sparrowd

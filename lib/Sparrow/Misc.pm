@@ -31,11 +31,14 @@ sub execute_shell_command {
 
 sub usage {
 
-    print "usage: sparrow project|plg action args\n";
+    print "usage: sparrow project|plg|index action args\n";
     print "where action: list|search|create|remove|show|install|check_add|check_run|check_set|check_remove and args depend on action\n";
 
 
     print "action examples:\n";
+
+    print "\n[index]:\n\n";
+    print "\tsparrow index reload # get freash index from SparrowHub\n";
 
     print "\n[projects]:\n\n";
     print "\tsparrow project create foo # create a project\n";

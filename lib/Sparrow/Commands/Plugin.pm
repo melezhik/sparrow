@@ -13,9 +13,6 @@ use HTTP::Tiny;
 use JSON;
 use version;
 
-
-use constant sparrow_hub_api_url => 'https://sparrowhub.org';
-
 our @EXPORT = qw{
 
     search_plugins
@@ -123,7 +120,7 @@ to overcome this ambiguity";
 
                 execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
                 sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
-                sparrow_hub_api_url."/plugins/$pid-v$plg_v.tar.gz && echo");
+                sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz && echo");
 
                 execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
 
@@ -144,7 +141,7 @@ to overcome this ambiguity";
 
             execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
             sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
-            sparrow_hub_api_url."/plugins/$pid-v$vn.tar.gz && echo");
+            sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz && echo");
 
             execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$vn.tar.gz && carton");
 
@@ -166,6 +163,7 @@ to overcome this ambiguity";
 
 
 }
+
 sub show_plugin {
 
     my $pid = shift or confess 'usage: show_plugin(plugin_name)';
@@ -257,23 +255,23 @@ sub read_plugin_list {
 
     my $mode = shift || 'as_array';
 
+    # read public plugins list first
+    open F, spi_file() or confess "can't open ".spl_file()." to read";
 
-    my $index_url = sparrow_hub_api_url.'/api/v1/index';
+    while ( my $i = <F> ){
+        chomp $i;
+        next unless $i=~/\S+/;
+        my @foo = split /\s+/, $i;
+        push @list, { name => $foo[0], version => $foo[1], type => 'public' } ;
+        $list{'public@'.$foo[0]} = { name => $foo[0], version => $foo[1], type => 'public'  };
+    } 
 
-    my $response = HTTP::Tiny->new->get($index_url);
- 
-    if ($response->{success}){
-        for my $i (split "\n", $response->{content}){
-            next unless $i=~/\S+/;
-            my @foo = split /\s+/, $i;
-            push @list, { name => $foo[0], version => $foo[1], type => 'public' } ;
-            $list{'public@'.$foo[0]} = { name => $foo[0], version => $foo[1], type => 'public'  };
-        } 
-    }else{
-        confess "bad response from $index_url\n$response->{status}\n$response->{reason}\n";
-    }
+    close F;
 
-    open F, spl_file or confess $!;
+
+    # read private plugins list then
+
+    open F, spl_file() or confess "can't open ".spl_file()." to read";
 
     while ( my $i = <F> ){
         chomp $i;
@@ -325,7 +323,7 @@ sub upload_plugin {
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .
-        '-f -X POST '.sparrow_hub_api_url.'/api/v1/upload -F archive=@/tmp/archive.tar.gz',
+        '-f -X POST '.sparrow_hub_api_url().'/api/v1/upload -F archive=@/tmp/archive.tar.gz',
         silent => 1,
     );
 

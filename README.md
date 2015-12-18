@@ -85,6 +85,17 @@ Pattern should be perl regexp pattern. Examples:
 * .*    # find any
 * nginx # find nginx plugins
 
+## build / reload sparrow index
+
+*sparrow index reload*
+
+This command will fetch fresh index from SparrowHub and update local sparrow cache.
+
+You need this to get know about any updates, changes on SparrowHub public plugins repository.
+
+See [PUBLIC PLUGINS](#public-plugins) section for details
+
+
 ## download and install sparrow plugins
 
 *sparrow plg install $plugin\_name*

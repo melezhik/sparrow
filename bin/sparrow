@@ -3,9 +3,13 @@
 use strict;
 
 use Sparrow::Constants;
-use Sparrow::Commands::Plugin;
+
 use Sparrow::Commands::Project;
+use Sparrow::Commands::Plugin;
+
+use Sparrow::Commands::Index;
 use Sparrow::Misc;
+
 use Carp;
 
 unless (@ARGV) {
@@ -48,6 +52,20 @@ if ($object eq  'plg'){
         show_plugin( shift @ARGV );        
 
     } else  { 
+
+        confess "unknown command: $action @ARGV";
+
+    }
+
+} elsif ($object eq  'index'){
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'reload') {
+
+        build_index();
+
+    }else{
 
         confess "unknown command: $action @ARGV";
 

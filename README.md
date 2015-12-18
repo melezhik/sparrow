@@ -1,7 +1,7 @@
 # NAME
 
 Sparrow
-   
+ 
 # SYNOPSIS
 
 Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
@@ -76,7 +76,7 @@ To search available plugins say this:
 
 *sparrow plg search $pattern*
 
-For exmaple:
+For example:
 
     sparrow plg search nginx
 
@@ -87,14 +87,14 @@ Pattern should be perl regexp pattern. Examples:
 
 ## build / reload sparrow index
 
-Sparrow index is cached data used by sparrow to search plugins. 
+Sparrow index is cached data used by sparrow to search plugins.
 
 Index consists of two parts:
 
 * private plugins index , see [SPL file](#spl-file) section for details
 * public  plugins index, [PUBLIC PLUGINS](#public-plugins) section for details
 
-There are two basic commnad to work with index:
+There are two basic command to work with index:
 
 * *sparrow index summary*
 
@@ -223,7 +223,7 @@ NOT IMPLEMENTED YET.
 
 *GET /$project\_name/check\_run/$project\_name/$checkpoint\_name*
 
-Sparrow rest API allow to run swat test suites remotely over http. This function is not implimented yet.
+Sparrow rest API allow to run swat test suites remotely over http. This function is not implemented yet.
 
     # runs sparrow rest API daemon
     sparrowd
@@ -420,6 +420,7 @@ This program is free software; you can redistribute it and/or modify it under th
 # THANKS
 
 * to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
+
 
 
 

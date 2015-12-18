@@ -1,8 +1,7 @@
-0.0.7
+0.0.7 2015-12-18
 
+* integration with SparrowHub - https://sparrowhub.org
 * checkpoints as replacements for sites and linked plugins
-* introducing public and private plugins
-* implimenting `plg upload` and `plg list` for SparrowBox API
 
 
 0.0.6 2015-12-03

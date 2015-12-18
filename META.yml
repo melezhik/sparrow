@@ -20,7 +20,6 @@ no_index:
     - t
 requires:
   Carton: 0
-  HTTP::Tiny: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow

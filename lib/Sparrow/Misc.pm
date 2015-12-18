@@ -38,7 +38,8 @@ sub usage {
     print "action examples:\n";
 
     print "\n[index]:\n\n";
-    print "\tsparrow index reload # get freash index from SparrowHub\n";
+    print "\tsparrow index update  # get freash index from SparrowHub\n";
+    print "\tsparrow index summary # print cached index summary\n";
 
     print "\n[projects]:\n\n";
     print "\tsparrow project create foo # create a project\n";
@@ -73,10 +74,12 @@ sub usage {
 
 
 sub init_sparrow_env {
+
     mkpath(sparrow_root);
     mkpath(sparrow_root.'/plugins/private');
     mkpath(sparrow_root.'/plugins/public');
     mkpath(sparrow_root.'/projects');
+
 }
 
 1;

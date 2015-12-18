@@ -87,14 +87,28 @@ Pattern should be perl regexp pattern. Examples:
 
 ## build / reload sparrow index
 
-*sparrow index reload*
+Sparrow index is cached data used by sparrow to search plugins. 
 
-This command will fetch fresh index from SparrowHub and update local sparrow cache.
+Index consists of two parts:
+
+* private plugins index , see [SPL file](#spl-file) section for details
+* public  plugins index, [PUBLIC PLUGINS](#public-plugins) section for details
+
+There are two basic commnad to work with index:
+
+* *sparrow index summary*
+
+This command will show timestamps and file locations for public and private index files
+
+*sparrow index update*
+
+This command will fetch fresh index from SparrowHub and update local cached index.
+
+This is very similar to what `cpan index reload` command does.
 
 You need this to get know about any updates, changes on SparrowHub public plugins repository.
 
-See [PUBLIC PLUGINS](#public-plugins) section for details
-
+See [PUBLIC PLUGINS](#public-plugins) section for details.
 
 ## download and install sparrow plugins
 

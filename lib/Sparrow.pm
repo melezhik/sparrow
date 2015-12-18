@@ -133,6 +133,50 @@ nginx # find nginx plugins
 =back
 
 
+=head2 build / reload sparrow index
+
+Sparrow index is cached data used by sparrow to search plugins. 
+
+Index consists of two parts:
+
+=over
+
+=item *
+
+private plugins index , see L<SPL file|#spl-file> section for details
+
+
+=item *
+
+public  plugins index, L<PUBLIC PLUGINS|#public-plugins> section for details
+
+
+=back
+
+There are two basic commnad to work with index:
+
+=over
+
+=item *
+
+I<sparrow index summary>
+
+
+=back
+
+This command will show timestamps and file locations for public and private index files
+
+I<sparrow index update>
+
+This command will fetch fresh index from SparrowHub and update local cached index.
+
+This is very similar to what C<cpan index reload> command does.
+
+You need this to get know about any updates, changes on SparrowHub public plugins repository.
+
+See L<PUBLIC PLUGINS|#public-plugins> section for details.
+
+
 =head2 download and install sparrow plugins
 
 I<sparrow plg install $plugin_name>

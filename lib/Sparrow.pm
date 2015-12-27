@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.0.7';
+our $VERSION = '0.0.8';
 
 1;
 
@@ -208,7 +208,7 @@ For example:
 
 =head2 create checkpoints
 
-I<sparrow project check_add $project_name $checkpoint_name>
+I<sparrow check add $project_name $checkpoint_name>
 
 =over
 
@@ -228,13 +228,13 @@ Checkpoints belong to projects, so to create a checkpoint you need to point a pr
 
 Command examples:
 
-    sparrow project check_add foo nginx-check
-    sparrow project check_add foo tomcat-app-check
+    sparrow check foo nginx-check
+    sparrow check foo tomcat-app-check
 
 
 =head2 setup checkpoints
 
-I<sparrow project check_set $project_name $checkpoint_name $args>
+I<sparrow check set $project_name $checkpoint_name $args>
 
 Once checkpoint is created you need to setup it. Setting checkpoint means providing 2 obligatory parameters:
 
@@ -260,55 +260,45 @@ Base url be set in L<curl compliant|http://curl.haxx.se/docs/manpage.html>.
 
 Command examples:
 
-    sparrow check_set foo nginx-check -p swat-apache -u 127.0.0.1
-    sparrow check_set foo nginx-check -p swat-nginx -u http://127.0.0.1
-    sparrow check_set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
+    sparrow check set foo nginx-check -p swat-apache -u 127.0.0.1
+    sparrow check set foo nginx-check -p swat-nginx -u http://127.0.0.1
+    sparrow check set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
 
 To get checkpoint info say this:
 
-I<sparrow project check_show $project_name $checkpoint_name>
+I<sparrow check show $project_name $checkpoint_name>
 
 For example:
 
-    sparrow project check_show foo nginx-check
+    sparrow check show foo nginx-check
 
 
 =head2 run swat tests
 
-I<sparrow project check_run $project_name $checkpoint_name>
+I<sparrow check run $project_name $checkpoint_name>
 
 Once sparrow project is configured and has some checkpoints you may run swat tests:
 
 Examples:
 
-    sparrow project check_run foo nginx-check
+    sparrow check run foo nginx-check
     
-    sparrow project check_run foo tomcat-app-check
+    sparrow check run foo tomcat-app-check
 
 
 =head2 customize swat settings for checkpoint
 
-I<sparrow project check_set $project_name $checkpoint_name --swat>
-
-Executing check_set action with `--swat' flag allow to customize swat settings for given checkpoint.
+I<sparrow check set_swat $project_name $checkpoint_name >
 
 This command setups L<swat ini file|https://github.com/melezhik/swat#swat-ini-files> for swat test suite provided by plugin.
 
     export EDITOR=nano
-    sparrow project check_set foo nginx-app --swat
+    sparrow check set_swat foo nginx-app
     
         port=88
         prove_options='-sq'
 
 More information on swat ini files syntax could be found here - L<https://github.com/melezhik/swat#swat-ini-files|https://github.com/melezhik/swat#swat-ini-files>
-
-To see checkpoint swat settings say this:
-
-I<sparrow project check_show $project_name $checkpoint_name --swat>
-
-For example:
-
-    sparrow project check_show foo nginx-app --swat
 
 
 =head2 run swat tests remotely
@@ -324,6 +314,16 @@ Sparrow rest API allow to run swat test suites remotely over http. This function
     
     # runs swat tests via http call
     curl http://127.0.0.1:5090/check_run/foo/nginx-app
+
+
+=head2 remove checkpoints
+
+I<sparrow check remove $project_name $checkpoint_name>
+
+Examples:
+
+    # remove checkpoint nginx-check in project foo
+    sparrow check remove foo nginx-check
 
 
 =head1 SPARROW PLUGINS

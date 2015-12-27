@@ -6,8 +6,9 @@ use Sparrow::Constants;
 
 use Sparrow::Commands::Project;
 use Sparrow::Commands::Plugin;
-
+use Sparrow::Commands::CheckPoint;
 use Sparrow::Commands::Index;
+
 use Sparrow::Misc;
 
 use Carp;
@@ -105,57 +106,57 @@ if ($object eq  'plg'){
 
         project_remove($name);
 
-    } elsif ( $action eq 'check_add') {
+    } else  { 
+
+        confess "unknown command: $action @ARGV";
+
+    }
+
+} elsif ($object eq  'check') {
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'add') {
 
         my $name = shift @ARGV;
 
         check_add($name, @ARGV);
 
-    } elsif ( $action eq 'check_set') {
+    } elsif ( $action eq 'set_swat' ) {
+
+        my $name = shift @ARGV;
+
+        check_set_swat($name, @ARGV);
+
+    } elsif ( $action eq 'set') {
 
         my $name = shift @ARGV;
 
         check_set($name, @ARGV);
 
-    } elsif ( $action eq 'check_swat_set') {
-
-        my $name = shift @ARGV;
-
-        check_swat_set($name, @ARGV);
-
-    } elsif ( $action eq 'check_show' ){
+    } elsif ( $action eq 'show' ){
 
         my $name = shift @ARGV;
 
         check_show($name, @ARGV);
 
-    } elsif( $action  eq 'check_run'){
+    } elsif( $action  eq 'run'){
 
         my $name = shift @ARGV;
 
         check_run($name, @ARGV);
 
-    } elsif( $action  eq 'check_remove'){
+    } elsif( $action  eq 'remove'){
 
         my $name = shift @ARGV;
 
         check_remove($name, @ARGV);
 
-
-    } elsif ( $action )  { 
+    } else  { 
 
         confess "unknown command: $action @ARGV";
 
-    } else { # default project action
-
-        my $name = shift @ARGV;
-
-        project_show($name);
     }
-
-} else {
-
-    confess "unknown command: $object @ARGV";
 
 }
 

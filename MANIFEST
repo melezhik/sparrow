@@ -10,6 +10,7 @@ inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Sparrow.pm
+lib/Sparrow/Commands/CheckPoint.pm
 lib/Sparrow/Commands/Index.pm
 lib/Sparrow/Commands/Plugin.pm
 lib/Sparrow/Commands/Project.pm
@@ -25,12 +26,12 @@ t/checkpoint-create/story.check
 t/checkpoint-create/story.pm
 t/checkpoint-remove/story.check
 t/checkpoint-remove/story.pm
+t/checkpoint-set-swat/story.check
+t/checkpoint-set-swat/story.pl
+t/checkpoint-set-swat/story.pm
 t/checkpoint-set/story.check
 t/checkpoint-set/story.pl
 t/checkpoint-set/story.pm
-t/checkpoint-swat-set/story.check
-t/checkpoint-swat-set/story.pl
-t/checkpoint-swat-set/story.pm
 t/lib/test.pm
 t/modules/plg/install/story.check
 t/modules/plg/install/story.pl

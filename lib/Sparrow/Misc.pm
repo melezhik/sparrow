@@ -79,6 +79,7 @@ sub init_sparrow_env {
     mkpath(sparrow_root.'/plugins/private');
     mkpath(sparrow_root.'/plugins/public');
     mkpath(sparrow_root.'/projects');
+    mkpath(sparrow_root.'/reports');
 
 }
 

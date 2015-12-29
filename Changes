@@ -1,8 +1,16 @@
+0.0.9 2015-12-29
+
+* documentation small improvements
+* new option `--cron` for check run command
+* internal tests improvements
+
 0.0.8 2015-12-27
 
-* **breaking changes**
-* changed checkpoints commands API, see documentation
-* code refactoring
+* *breaking changes*
+
+    * changed checkpoints commands API, see documentation
+
+    * code refactoring
 
 0.0.7 2015-12-18
 

@@ -160,9 +160,9 @@ sub check_set_swat {
 
 sub check_run {
 
-    my $project  = shift or confess "usage: check_run(*project,checkpoint)";
-    my $cid      = shift or confess "usage: check_run(project,*checkpoint)";
-
+    my $project  = shift or confess "usage: check_run(*project,checkpoint,options)";
+    my $cid      = shift or confess "usage: check_run(project,*checkpoint,options)";
+    my $options  = shift || '';
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
@@ -179,9 +179,13 @@ sub check_run {
 
     my $cmd = 'cd '.sparrow_root."/projects/$project/checkpoints/$cid && swat $pdir ".($cp_set->{base_url});
     
-    print "# running $cmd ...\n\n";
-    exec $cmd;
-
+    if ($options=~/\b--cron\b/) {
+        my $repo_file = sparrow_root.'/reports'.$$.'.txt';
+        execute_shell_command("$cmd 1>$repo_file ".'&2>1 || cat '.$repo_file , silent => 1 );
+    } else {
+        print "# running $cmd ...\n\n";
+        exec $cmd;
+    }
 
 }
 

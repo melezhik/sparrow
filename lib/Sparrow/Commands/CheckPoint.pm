@@ -177,7 +177,8 @@ sub check_run {
 
     confess 'plugin not installed' unless -d $pdir;
 
-    my $cmd = 'cd '.sparrow_root."/projects/$project/checkpoints/$cid && swat $pdir ".($cp_set->{base_url});
+    my $cmd = 'export swat_my='.sparrow_root."/projects/$project/checkpoints/$cid/swat.my".' && cd '.$pdir.' && '.
+    "carton exec 'swat ./ ".($cp_set->{base_url})."'";
     
     if ($options=~/--cron/) {
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$cid.'-'.$$.'.txt';

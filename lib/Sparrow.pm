@@ -122,12 +122,17 @@ Pattern should be perl regexp pattern. Examples:
 
 =item *
 
-.*    # find any
+C<.*>    # find any   plugin
 
 
 =item *
 
-nginx # find nginx plugins
+C<nginx> # find nginx plugins
+
+
+=item *
+
+C<kelp-> # find kelp  plugins
 
 
 =back
@@ -203,7 +208,7 @@ I<sparrow plg remove $plugin_name>
 
 For example:
 
-    sparrow plg remove swat-tomcat
+    sparrow plg remove swat-kelp
 
 
 =head2 create checkpoints
@@ -260,9 +265,10 @@ Base url be set in L<curl compliant|http://curl.haxx.se/docs/manpage.html>.
 
 Command examples:
 
-    sparrow check set foo nginx-check -p swat-apache -u 127.0.0.1
-    sparrow check set foo nginx-check -p swat-nginx -u http://127.0.0.1
-    sparrow check set foo tomcat-app-check -p swat-tomcat -u my.app.local:8080/foo/bar
+    sparrow check set foo kelp-check -p swat-kelp -u 127.0.0.1:3000
+    sparrow check set foo nginx-check -p swat-nginx -u http://my.nginx.host
+    sparrow check set foo mongo-app-check -p swat-mongodb-http  -u http://localhost:28017
+    sparrow check set foo my-app-check -p swat-my-app -u http://my.nginx.host:5555/foo/bar/baz
 
 To get checkpoint info say this:
 
@@ -284,6 +290,13 @@ Examples:
     sparrow check run foo nginx-check
     
     sparrow check run foo tomcat-app-check
+
+Use option --cron to run swat tests in `cron' mode - if tests succeeds not output will be given,
+if tests fails a normal output will be yieled as if you run without this option. 
+
+Example:
+
+    sparrow check run foo nginx-app-check --cron
 
 
 =head2 customize swat settings for checkpoint

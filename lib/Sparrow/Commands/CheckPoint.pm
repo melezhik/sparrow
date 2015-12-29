@@ -179,9 +179,9 @@ sub check_run {
 
     my $cmd = 'cd '.sparrow_root."/projects/$project/checkpoints/$cid && swat $pdir ".($cp_set->{base_url});
     
-    if ($options=~/\b--cron\b/) {
-        my $repo_file = sparrow_root.'/reports'.$$.'.txt';
-        execute_shell_command("$cmd 1>$repo_file ".'&2>1 || cat '.$repo_file , silent => 1 );
+    if ($options=~/--cron/) {
+        my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$cid.'-'.$$.'.txt';
+        exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
         print "# running $cmd ...\n\n";
         exec $cmd;

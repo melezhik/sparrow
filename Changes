@@ -1,3 +1,7 @@
+0.0.10 2015-12-29
+
+* a couple of hot fixes: 1) create spl_file if not exists; 2) removed HTTP::Tiny usage
+
 0.0.9 2015-12-29
 
 * documentation small improvements

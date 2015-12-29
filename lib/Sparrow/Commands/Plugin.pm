@@ -9,7 +9,6 @@ use Sparrow::Misc;
 
 use Carp;
 use File::Basename;
-use HTTP::Tiny;
 use JSON;
 use version;
 

@@ -81,6 +81,7 @@ sub init_sparrow_env {
     mkpath(sparrow_root.'/projects');
     mkpath(sparrow_root.'/reports');
 
+    execute_shell_command('touch '.spl_file()) unless -f spl_file();
 }
 
 1;

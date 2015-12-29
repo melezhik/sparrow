@@ -26,6 +26,9 @@ t/checkpoint-create/story.check
 t/checkpoint-create/story.pm
 t/checkpoint-remove/story.check
 t/checkpoint-remove/story.pm
+t/checkpoint-run/story.check
+t/checkpoint-run/story.pl
+t/checkpoint-run/story.pm
 t/checkpoint-set-swat/story.check
 t/checkpoint-set-swat/story.pl
 t/checkpoint-set-swat/story.pm
@@ -51,6 +54,8 @@ t/plg/search/story.pl
 t/plg/upload/foo-test/Changes.md
 t/plg/upload/foo-test/cpanfile
 t/plg/upload/foo-test/get.txt
+t/plg/upload/foo-test/hook.pm
+t/plg/upload/foo-test/host
 t/plg/upload/foo-test/README.md
 t/plg/upload/foo-test/sparrow.json
 t/project-create/story.check

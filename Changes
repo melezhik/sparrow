@@ -1,7 +1,8 @@
-# 0.0.12 
+# 0.0.12 2015-12-30
 
 * now it's possible to set SaprrowHub credentials via sph_user and sph_token environment variables
-
+* added missed dependencies ( at least for perl <= 5.20, thanks to Travis!  ) - Json
+* added build status badge to README.md file
 
 0.0.11 2015-12-29
 

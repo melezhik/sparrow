@@ -1,3 +1,4 @@
+.travis.yml
 bin/sparrow
 Changes
 inc/Module/Install.pm

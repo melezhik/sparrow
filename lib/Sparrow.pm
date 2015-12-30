@@ -16,6 +16,8 @@ __END__
 
 Sparrow
 
+L<![Build Status](https://travis-ci.org/melezhik/nginx-swat-test.svg)|https://travis-ci.org/melezhik/sparrow>
+
 
 =head1 SYNOPSIS
 
@@ -629,6 +631,11 @@ For example:
 
     $ cd plugin_root_directory
     $ sparrow plg upload
+
+Another way to supply sparrow with valid SparrowHub credentials - use C<sph_user> and C<sph_token> environment variables.
+Probably useful in automation scripts:
+
+    $ sph_user=melezhik sph_token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83 sparrow plg upload
 
 
 =head1 AUTHOR

@@ -32,10 +32,12 @@
       },
       "runtime" : {
          "requires" : {
-            "Carton" : "0"
+            "Carton" : "0",
+            "JSON" : "0",
+            "version" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "v0.0.11"
+   "version" : "v0.0.12"
 }

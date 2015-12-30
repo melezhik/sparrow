@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.0.12';
+our $VERSION = '0.0.13';
 
 1;
 
@@ -576,7 +576,7 @@ Get registered at SparrowHub
 
 =back
 
-Go to L<http://sparrowhub.org|http://sparrowhub.org>
+Go to L<https://sparrowhub.org|https://sparrowhub.org>
 
 =over
 

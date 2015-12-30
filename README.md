@@ -385,7 +385,7 @@ To publish you plugin into SparrowHub you need:
 
 * Get registered at SparrowHub
 
-Go to [http://sparrowhub.org](http://sparrowhub.org)
+Go to [https://sparrowhub.org](https://sparrowhub.org)
 
 * Get rest api token
 

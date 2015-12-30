@@ -1,0 +1,8 @@
+language: "perl"
+perl:
+  - "5.20"
+
+install:
+    - cpanm -q swat Outthentic
+
+script: "story --root t/"

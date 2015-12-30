@@ -297,14 +297,27 @@ sub read_plugin_list {
 
 sub upload_plugin {
 
-    open F, "$ENV{HOME}/sparrowhub.json" or confess "can't open $ENV{HOME}/sparrowhub.json to read: $!";
-    my $s = join "", <F>;
-    close F;
+    # get user/token by environment variables
+    # usefull when making tests
 
-    my $cred = decode_json($s);
+    my $cred;
+
+    if ($ENV{sph_user} and $ENV{sph_token}){
+        $cred->{user} = $ENV{sph_user};
+        $cred->{token} = $ENV{sph_token};
+    }
+
+    # or read from $ENV{HOME}/sparrowhub.json
+    else{
+        open F, "$ENV{HOME}/sparrowhub.json" or confess "can't open $ENV{HOME}/sparrowhub.json to read: $!";
+        my $s = join "", <F>;
+        close F;
+        $cred = decode_json($s);
+    }
+
 
     open F, 'sparrow.json' or confess "can't open sparrow.json to read: $!";
-    $s = join "", <F>;
+    my $s = join "", <F>;
     close F;
 
     my $spj = decode_json($s);

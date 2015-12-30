@@ -1,5 +1,5 @@
 {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "name" : "foo-test",
     "description" : "fake plugin, for test purposes",
     "url" : "https://sparrowhub.org"

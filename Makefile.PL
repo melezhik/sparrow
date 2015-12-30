@@ -9,6 +9,8 @@ all_from       'lib/Sparrow.pm';
 # Specific dependencies
 
 requires    'Carton';
+requires    'JSON';
+requires    'version';
 
 license     'perl';
 

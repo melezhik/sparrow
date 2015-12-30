@@ -5,4 +5,4 @@ perl:
 install:
     - cpanm -q swat Outthentic
 
-script: "perl Makefile.PL && make test && sudo make install && strun --root t/"
+script: "perl Makefile.PL && make test && sudo make install && sparrow index update && strun --root t/"

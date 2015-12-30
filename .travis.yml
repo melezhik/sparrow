@@ -3,6 +3,6 @@ perl:
   - "5.20"
 
 install:
-    - cpanm -q Outthentic
+    - cpanm Outthentic
 
-script: "perl Makefile.PL && make test && sudo make install && sparrow index update && strun --root t/"
+script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install && sparrow index update && strun --root t/"

@@ -2,7 +2,7 @@
 
 Sparrow
 
-[![Build Status](https://travis-ci.org/melezhik/nginx-swat-test.svg)](https://travis-ci.org/melezhik/sparrow)
+[![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
  
 # SYNOPSIS
 

@@ -6,7 +6,7 @@ Sparrow
  
 # SYNOPSIS
 
-Sparrow - outthentic test manager. 
+Sparrow - outthentic tests manager. 
 
 Manage outthentic family test suites.
 
@@ -188,23 +188,20 @@ Which is a plugin name providing test suite.
 
 _Sometimes_ ( for example in case of swat test suite ) you need to set a base url or host:
 
-* -h base\_url | host
+* --host base\_url | host
 
-A base url sets a web service root URL to send http requests provided by swat test suite.
-
-A host sets an application hostname in case of any network service being tested 
-but not necessarily one  accessed by http protocol - for example mysql server or ssh server.
+This parameter sets base url or hostname of a web service or application being tested.
 
 Command examples:
 
     sparrow check set foo ssh-check   -p ssh  
-    sparrow check set foo ssh-check   -p ssh -h 127.0.0.1
-    sparrow check set foo mysql-check -p mysql -h 127.0.0.1:3306
+    sparrow check set foo ssh-check   -p ssh --host 127.0.0.1
+    sparrow check set foo mysql-check -p mysql --host 127.0.0.1:3306
 
-    sparrow check set foo kelp-check -p swat-kelp -u 127.0.0.1:3000
-    sparrow check set foo nginx-check -p swat-nginx -u http://my.nginx.host
-    sparrow check set foo mongo-app-check -p swat-mongodb-http  -u http://localhost:28017
-    sparrow check set foo my-app-check -p swat-my-app -u http://my.nginx.host:5555/foo/bar/baz
+    sparrow check set foo kelp-check -p swat-kelp --host 127.0.0.1:3000
+    sparrow check set foo nginx-check -p swat-nginx --host http://my.nginx.host
+    sparrow check set foo mongo-app-check -p swat-mongodb-http  --host http://localhost:28017
+    sparrow check set foo my-app-check -p swat-my-app --host http://my.nginx.host:5555/foo/bar/baz
 
 To get checkpoint info say this:
 
@@ -342,7 +339,7 @@ Once you add a proper entries into SPL file you may list and install a private p
 
 Here is a brief description of the process:
 
-## create swat test suite
+## swat test suite
 
 To get know to create swat tests please follow swat project documentation -
 [https://github.com/melezhik/swat](https://github.com/melezhik/swat).
@@ -351,7 +348,7 @@ A simplest swat test to check that web service returns \`200 OK' when receive \`
 
     echo 200 OK > get.txt
 
-## create a cpanfile
+### create a cpanfile
 
 As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies you need to create a valid
 [cpanfile](https://metacpan.org/pod/cpanfile) in the plugin root directory.
@@ -369,7 +366,7 @@ Of course you may also add other dependencies your plugin might need:
 
     require 'HTML::Entities'
 
-## create sparrow.json file
+### create sparrow.json file
 
 Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub.
 
@@ -378,13 +375,14 @@ In case of private plugin you may skip this step.
 Create sparrow.json file and place it in plugin root directory:
 
     {
-        "version" => "0.1.1",
-        "name" => "my-cool-plugin",
+        "version": "0.1.1",
+        "name": "my-cool-plugin",
+        "engine": "swat", 
         "description" => "this is a great plugin!",
         "url" => "http://...."
     }
 
-This is the list of obligatory parameter you have to set:
+This is the list of obligatory parameters you have to set:
 
 * version - perl version string.
 
@@ -397,15 +395,19 @@ Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name
 
 This the list of optional parameters you may set as well:
 
+* engine 
+
+Defines test framework for test suite. Default value is \`swat'. Other possible value is 'outhentic', see
+[outthentic test suite section](#outthentic-test-suite)
+
 * url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
+
 * description - a short description of your plugin
 
-## create outthentic test suite
+### outthentic test suite
 
-Creation of outthentic test suites is very similar to swat one 
-except you gave to to use a bit different file layout of your project.
-
-Please visit [outthentic documentation](https://github.com/melezhik/outthentic) to know details.
+Creation of outthentic tests is very similar to a swat tests, but you'd better read [outthentic documentation](https://github.com/melezhik/outthentic) to 
+understand the difference.
 
 Once your test suite is ready prepare the same additional stuff as with swat test suite:
 
@@ -418,11 +420,8 @@ Cpanfile should declare at least a dependency on Outthentic perl module:
 
     require 'Outthentic';
 
-Sparrow.json  file for outhentic test suite is almost the same as for the swat one except you need to
-set plugin_type field as \`outthentic' so sparrow could "understand" that your test suite
-realates [outthentic](https://github.com/melezhik/outthentic) not [swat](https://github.com/melezhik/swat) 
-
-( not setting plugin_type at all means your test suite is a swat one ):
+Sparrow.json file does not differ from the one described at [swat test suite](#swat-test-suite) section, except for
+\`engine' value:
 
     {
         "plugin_type": "outthentic"

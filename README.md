@@ -417,10 +417,10 @@ Cpanfile should declare at least a dependency on Outthentic perl module:
     require 'Outthentic';
 
 Sparrow.json  file for outhentic test suite is almost the same as for the swat one except you need to
-set plugin_type field as 'outthentic' so sparrow could "understand" that your test suite
+set plugin_type field as \`outthentic' so sparrow could "understand" that your test suite
 realates [outthentic](https://github.com/melezhik/outthentic) not [swat](https://github.com/melezhik/swat) 
 
-( (*) not setting plugin_type at all means your test suite is a swat one ):
+( not setting plugin_type at all means your test suite is a swat one ):
 
     {
         "plugin_type" => "outthentic"

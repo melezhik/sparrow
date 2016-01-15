@@ -16,7 +16,7 @@ The project is still in very alpha stage. Things might change. But you can start
 
 # Outthentic family frameworks
 
-Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic).
+Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic-dsl).
 
 Currently there are two members of outthentic family test frameworks:
 

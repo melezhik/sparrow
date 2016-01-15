@@ -421,10 +421,10 @@ Cpanfile should declare at least a dependency on Outthentic perl module:
     require 'Outthentic';
 
 Sparrow.json file does not differ from the one described at [swat test suite](#swat-test-suite) section, except for
-\`engine' value:
+\`engine' field value:
 
     {
-        "plugin_type": "outthentic"
+        "engine": "outthentic"
     }
 
 # PUBLISHING SPARROW PLUGINS

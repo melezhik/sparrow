@@ -24,7 +24,7 @@ Currently there are two members of outthentic family test frameworks:
 
 * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
 
-In the documentation term outthentic tests relates both to swat and outthentic testing frameworks
+In the documentation term \`outthentic tests' relates both to swat and outthentic testing frameworks.
 
 # Sparrow summary
 
@@ -403,22 +403,24 @@ This the list of optional parameters you may set as well:
 Creation of outthentic test suites is very similar to swat one 
 except you gave to to use a bit different file layout of your project.
 
-Please visit [outthentic documentation](https://github.com/melezhik/outthentic) to get onto details.
+Please visit [outthentic documentation](https://github.com/melezhik/outthentic) to know details.
 
 Once your test suite is ready prepare the same additional stuff as with swat test suite:
 
 * cpanfile
 * sparrow.json
 
-Cpanfile should at least have to declare a  dependency on Outthentic perl module:
+Cpanfile should declare at least a dependency on Outthentic perl module:
 
     $ cat cpanfile
 
     require 'Outthentic';
 
-And sparrow.json is almost the same as with swat test suite one except you need to
+Sparrow.json  file for outhentic test suite is almost the same as for the swat one except you need to
 set plugin_type field as 'outthentic' so sparrow could "understand" that your test suite
-is outthentic, not swat ( not setting plugin_type at all means your test suite is swat one ):
+realates [outthentic](https://github.com/melezhik/outthentic) not [swat](https://github.com/melezhik/swat) 
+
+( (*) not setting plugin_type at all means your test suite is a swat one ):
 
     {
         "plugin_type" => "outthentic"

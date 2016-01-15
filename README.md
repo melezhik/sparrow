@@ -6,17 +6,30 @@ Sparrow
  
 # SYNOPSIS
 
-Sparrow - [swat](https://github.com/melezhik/swat) based monitoring tool.
-  
+Sparrow - outthentic test manager. 
+
+Manage outthentic family test suites.
+
 # CAVEAT
 
 The project is still in very alpha stage. Things might change. But you can start play with it :-)
 
+# Outthentic family frameworks
 
-# FEATURES
+Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic).
 
-* console client to setup and run swat test suites
-* installs and runs sparrow plugins - shareable swat test suites
+Currently there are two members of outthentic family test frameworks:
+
+* [swat](https://github.com/melezhik/swat) - web application testing framework
+
+* [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
+
+In the documentation term outthentic tests relates both to swat and outthentic testing frameworks
+
+# Sparrow summary
+
+* console client to setup and run outthentic test suites
+* installs and runs sparrow plugins - shareable outthentic test suites
 * ability to run tests remotely over rest API (TODO)
 
 # DEPENDENCIES
@@ -40,9 +53,9 @@ These are actions provided by sparrow console client:
 
 Create a sparrow project.
 
-Sparrow project is a container for swat test suites and tested web services.
+Sparrow project is a container for outthentic test suites and tested web services or applications.
 
-Sparrow project is entry point where one run swat tests against different applications.
+Sparrow project is entry point where one run outthentic tests against different web services or applications.
 
 Example command:
 
@@ -70,9 +83,9 @@ For example:
 
 ## search sparrow plugins
 
-Sparrow plugin is a shareable swat test suite.
+Sparrow plugin is a shareable outthentic test suite.
 
-One could install sparrow plugin and then run related swat tests, see [check](#run-swat-tests) action for details.
+One could install sparrow plugin and then run related outthentic tests, see [check](#run-tests) action for details.
 
 To search available plugins say this:
 
@@ -80,13 +93,16 @@ To search available plugins say this:
 
 For example:
 
+    sparrow plg search apache
     sparrow plg search nginx
+    sparrow plg search ssh
+    sparrow plg search mysql
 
 Pattern should be perl regexp pattern. Examples:
 
-* `.*`    # find any   plugin
-* `nginx` # find nginx plugins
-* `kelp-` # find kelp  plugins
+* `.*`     # find any   plugin
+* `nginx`  # find nginx plugins
+* `mysql-` # find mysql plugins
 
 ## build / reload sparrow index
 
@@ -119,8 +135,8 @@ See [PUBLIC PLUGINS](#public-plugins) section for details.
 
 For example:
 
-    sparrow plg search nginx # to get know available nginx* plugins
-    sparrow plg install swat-nginx # to download and install a chosen plugin
+    sparrow plg search  nginx        # to get know available nginx* plugins
+    sparrow plg install swat-nginx   # to download and install a chosen plugin
     sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
 
 Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
@@ -145,7 +161,7 @@ For example:
 
 *sparrow check add $project\_name $checkpoint\_name*
 
-* Checkpoints tie together tested web service and sparrow plugin
+* Checkpoints tie together tested web service or application and sparrow plugin
 
 * Checkpoints belong to projects, so to create a checkpoint you need to point a project
 
@@ -154,23 +170,34 @@ Command examples:
 
     sparrow check foo nginx-check
     sparrow check foo tomcat-app-check
+    sparrow check foo ssh-check
 
 ## setup checkpoints
 
 *sparrow check set $project\_name $checkpoint\_name $args*
 
-Once checkpoint is created you need to setup it. Setting checkpoint means providing 2 obligatory parameters:
+Once checkpoint is created you need to setup it. 
+
+Setting checkpoint means providing one obligatory parameter:
 
 * -p plugin\_name
-* -u base\_url
 
-A plugin name sets a sparrow plugin to run swat test suite from.
+Which is a plugin name providing test suite.
 
-A base url sets a web service root URL to send http requests provided by test suite.
+_Sometimes_ ( for example in case of swat test suite ) you need to set a base url or host:
 
-Base url be set in [curl compliant](http://curl.haxx.se/docs/manpage.html).
+* -h base\_url | host
+
+A base url sets a web service root URL to send http requests provided by swat test suite.
+
+A host sets an application hostname in case of any network service being tested 
+but not necessarily one  accessed by http protocol - for example mysql server or ssh server.
 
 Command examples:
+
+    sparrow check set foo ssh-check   -p ssh  
+    sparrow check set foo ssh-check   -p ssh -h 127.0.0.1
+    sparrow check set foo mysql-check -p mysql -h 127.0.0.1:3306
 
     sparrow check set foo kelp-check -p swat-kelp -u 127.0.0.1:3000
     sparrow check set foo nginx-check -p swat-nginx -u http://my.nginx.host
@@ -185,11 +212,11 @@ For example:
 
     sparrow check show foo nginx-check
 
-## run swat tests
+## run tests
 
 *sparrow check run $project\_name $checkpoint\_name*
 
-Once sparrow project is configured and has some checkpoints you may run swat tests:
+Once sparrow project is configured and has some checkpoints you may run tests:
 
 Examples:
 
@@ -197,35 +224,39 @@ Examples:
 
     sparrow check run foo tomcat-app-check
 
+    sparrow check run foo ssh-check
 
-Use option --cron to run swat tests in \`cron' mode - if tests succeeds not output will be given,
-if tests fails a normal output will be yieled as if you run without this option. 
+Use option --cron to run tests in \`cron' mode - if tests succeeds not output will be given,
+if tests fails a normal output will be yielded as if you run without this option. 
 
 Example:
 
     sparrow check run foo nginx-app-check --cron
 
-## customize swat settings for checkpoint
+## customize settings for checkpoint
 
-*sparrow check set_swat $project\_name $checkpoint\_name *
+*sparrow check customset $project\_name $checkpoint\_name *
 
-This command setups [swat ini file](https://github.com/melezhik/swat#swat-ini-files) for swat test suite provided by plugin.
+This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) for test suite provided by plugin.
 
     export EDITOR=nano
-    sparrow check set_swat foo nginx-app
+    sparrow check customset foo nginx-app
 
         port=88
         prove_options='-sq'
 
-More information on swat ini files syntax could be found here - [https://github.com/melezhik/swat#swat-ini-files](https://github.com/melezhik/swat#swat-ini-files)
+More information on ini files syntax could be found here:
 
-## run swat tests remotely
+* [swat ini files](https://github.com/melezhik/swat#swat-ini-files)
+* [outthentic ini files](https://github.com/melezhik/outthentic#ini-files)
+
+## run tests remotely
 
 NOT IMPLEMENTED YET.
 
 *GET /$project\_name/check\_run/$project\_name/$checkpoint\_name*
 
-Sparrow rest API allow to run swat test suites remotely over http. This function is not implemented yet.
+Sparrow rest API allow to run test suites remotely over http. This function is not implemented yet.
 
     # runs sparrow rest API daemon
     sparrowd
@@ -244,7 +275,7 @@ Examples:
 
 # SPARROW PLUGINS
 
-Sparrow plugins are shareable swat test suites installed from remote sources.
+Sparrow plugins are shareable outthentic test suites installed from remote sources.
 
 There are two type of sparrow plugins:
 
@@ -318,11 +349,10 @@ A simplest swat test to check that web service returns \`200 OK' when receive \`
 
     echo 200 OK > get.txt
 
-
 ## create a cpanfile
 
 As sparrow relies on [carton](https://metacpan.org/pod/Carton) to handle perl dependencies you need to create a valid
-[cpafile](https://metacpan.org/pod/cpanfile) in the plugin root directory.
+[cpanfile](https://metacpan.org/pod/cpanfile) in the plugin root directory.
 
 The minimal dependency you have to declare is swat perl module:
 
@@ -368,6 +398,31 @@ This the list of optional parameters you may set as well:
 * url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
 * description - a short description of your plugin
 
+## create outthentic test suite
+
+Creation of outthentic test suites is very similar to swat one 
+except you gave to to use a bit different file layout of your project.
+
+Please visit [outthentic documentation](https://github.com/melezhik/outthentic) to get onto details.
+
+Once your test suite is ready prepare the same additional stuff as with swat test suite:
+
+* cpanfile
+* sparrow.json
+
+Cpanfile should at least have to declare a  dependency on Outthentic perl module:
+
+    $ cat cpanfile
+
+    require 'Outthentic';
+
+And sparrow.json is almost the same as with swat test suite one except you need to
+set plugin_type field as 'outthentic' so sparrow could "understand" that your test suite
+is outthentic, not swat ( not setting plugin_type at all means your test suite is swat one ):
+
+    {
+        "plugin_type" => "outthentic"
+    }
 
 # PUBLISHING SPARROW PLUGINS
 

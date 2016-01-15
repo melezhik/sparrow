@@ -24,12 +24,14 @@ Currently there are two members of outthentic family test frameworks:
 
 * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
 
-In the documentation term \`outthentic tests' relates both to swat and outthentic testing frameworks.
+In the documentation below term \`outthentic tests' ( _in most cases_ ) relates both to swat and outthentic testing frameworks.
 
 # Sparrow summary
 
 * console client to setup and run outthentic test suites
+
 * installs and runs sparrow plugins - shareable outthentic test suites
+
 * ability to run tests remotely over rest API (TODO)
 
 # DEPENDENCIES

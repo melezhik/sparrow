@@ -423,7 +423,7 @@ realates [outthentic](https://github.com/melezhik/outthentic) not [swat](https:/
 ( not setting plugin_type at all means your test suite is a swat one ):
 
     {
-        "plugin_type" => "outthentic"
+        "plugin_type": "outthentic"
     }
 
 # PUBLISHING SPARROW PLUGINS

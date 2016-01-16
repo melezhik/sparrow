@@ -26,7 +26,7 @@ So, _swat test suites_ are those running under swat framework
 
 So, _generic test suites_ are those running under outthentic framework
 
-In the documentation below term \`outthentic tests' relates both to swat and generice tests.
+In the documentation below term \`outthentic tests' relates both to swat and generic tests.
 
 # Sparrow summary
 
@@ -242,7 +242,7 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
 
     # ini file for swat test suite:
     export EDITOR=nano
-    sparrow check customset foo tomcat-app
+    sparrow check ini foo tomcat-app
 
         port=8080
         prove_options='-sq'
@@ -250,7 +250,7 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
 
     # ini file for generic test suite:
     export EDITOR=nano
-    sparrow check customset foo foo-app
+    sparrow check ini foo foo-app
 
         [main]
         foo = 1

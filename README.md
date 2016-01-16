@@ -239,7 +239,6 @@ Example:
 This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) for test suite provided by plugin.
 
     # ini file for swat test suite:
-
     export EDITOR=nano
     sparrow check customset foo tomcat-app
 
@@ -247,7 +246,7 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
         prove_options='-sq'
 
 
-    # ini file for swat test suite:
+    # ini file for outthentic test suite:
     export EDITOR=nano
     sparrow check customset foo foo-app
 

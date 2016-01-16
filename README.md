@@ -178,32 +178,30 @@ Command examples:
 
 ## setup checkpoints
 
-*sparrow check set $project\_name $checkpoint\_name $args*
+*sparrow check set $project\_name $checkpoint\_name $plg_name [$host]*
 
 Once checkpoint is created you need to setup it. 
 
-Setting checkpoint means providing one obligatory parameter:
+By setting checkpoint you bind it to a certain plugin:
 
-* -p plugin\_name
+* plugin\_name
 
-Which is a plugin name providing test suite.
+Is a name of plugin to run tests.
 
-_Sometimes_ ( for example in case of swat test suite ) you need to set a base url or host:
+* host
 
-* --host base\_url | host
-
-This parameter sets base url or hostname of a web service or application being tested.
+This optional parameter sets base url or hostname of a web service or application being tested.
 
 Command examples:
 
-    sparrow check set foo ssh-check   -p ssh  
-    sparrow check set foo ssh-check   -p ssh --host 127.0.0.1
-    sparrow check set foo mysql-check -p mysql --host 127.0.0.1:3306
+    sparrow check set foo ssh-check swat-ssh  
+    sparrow check set foo ssh-check swat-ssh -127.0.0.1
+    sparrow check set foo mysql-check swat-mysql 127.0.0.1:3306
 
-    sparrow check set foo kelp-check -p swat-kelp --host 127.0.0.1:3000
-    sparrow check set foo nginx-check -p swat-nginx --host http://my.nginx.host
-    sparrow check set foo mongo-app-check -p swat-mongodb-http  --host http://localhost:28017
-    sparrow check set foo my-app-check -p swat-my-app --host http://my.nginx.host:5555/foo/bar/baz
+    sparrow check set foo kelp-check swat-kelp 127.0.0.1:3000
+    sparrow check set foo nginx-check swat-nginx http://my.nginx.host
+    sparrow check set foo mongo-app-check swat-mongodb-http http://localhost:28017
+    sparrow check set foo my-app-check swat-my-app http://my.nginx.host:5555/foo/bar/baz
 
 To get checkpoint info say this:
 

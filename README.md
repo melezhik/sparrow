@@ -232,18 +232,29 @@ Example:
 
     sparrow check run foo nginx-app-check --cron
 
-## customize settings for checkpoint
+## initialize checkpoint
 
-*sparrow check customset $project\_name $checkpoint\_name *
+*sparrow check ini $project\_name $checkpoint\_name *
 
 This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) for test suite provided by plugin.
 
-    export EDITOR=nano
-    sparrow check customset foo nginx-app
+    # ini file for swat test suite:
 
-        port=88
+    export EDITOR=nano
+    sparrow check customset foo tomcat-app
+
+        port=8080
         prove_options='-sq'
 
+
+    # ini file for swat test suite:
+    export EDITOR=nano
+    sparrow check customset foo foo-app
+
+        [main]
+        foo = 1
+        bar = 2
+ 
 More information on ini files syntax could be found here:
 
 * [swat ini files](https://github.com/melezhik/swat#swat-ini-files)

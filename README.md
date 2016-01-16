@@ -178,7 +178,7 @@ Command examples:
 
 ## setup checkpoints
 
-*sparrow check set $project\_name $checkpoint\_name $plg_name [$host]*
+*sparrow check set $project\_name $checkpoint\_name $plugin_name [$host]*
 
 Once checkpoint is created you need to setup it. 
 
@@ -195,7 +195,7 @@ This optional parameter sets base url or hostname of a web service or applicatio
 Command examples:
 
     sparrow check set foo ssh-check swat-ssh  
-    sparrow check set foo ssh-check swat-ssh -127.0.0.1
+    sparrow check set foo ssh-check swat-ssh 127.0.0.1
     sparrow check set foo mysql-check swat-mysql 127.0.0.1:3306
 
     sparrow check set foo kelp-check swat-kelp 127.0.0.1:3000

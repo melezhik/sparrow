@@ -342,7 +342,7 @@ Example entries:
 
 Once you add a proper entries into SPL file you may list and install a private plugins:
 
-    sparrow plg info    swat-yars
+    sparrow plg show    swat-yars
     sparrow plg install swat-yars
 
 # CREATING SPARROW PLUGINS

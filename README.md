@@ -6,9 +6,7 @@ Sparrow
  
 # SYNOPSIS
 
-Sparrow - outthentic tests manager. 
-
-Manage outthentic family test suites.
+Sparrow - outthentic tests manager.  Manages outthentic family test suites.
 
 # CAVEAT
 
@@ -22,9 +20,13 @@ Currently there are two members of outthentic family test frameworks:
 
 * [swat](https://github.com/melezhik/swat) - web application testing framework
 
+So, _swat test suites_ are those running under swat framework
+
 * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
 
-In the documentation below term \`outthentic tests' ( _in most cases_ ) relates both to swat and outthentic testing frameworks.
+So, _generic test suites_ are those running under outthentic framework
+
+In the documentation below term \`outthentic tests' relates both to swat and generice tests.
 
 # Sparrow summary
 
@@ -246,7 +248,7 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
         prove_options='-sq'
 
 
-    # ini file for outthentic test suite:
+    # ini file for generic test suite:
     export EDITOR=nano
     sparrow check customset foo foo-app
 
@@ -256,8 +258,8 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
  
 More information on ini files syntax could be found here:
 
-* [swat ini files](https://github.com/melezhik/swat#swat-ini-files)
-* [outthentic ini files](https://github.com/melezhik/outthentic#ini-files)
+* [swat tests ini files](https://github.com/melezhik/swat#swat-ini-files)
+* [generic tests ini files](https://github.com/melezhik/outthentic#ini-files)
 
 ## run tests remotely
 
@@ -407,16 +409,16 @@ This the list of optional parameters you may set as well:
 
 * engine 
 
-Defines test framework for test suite. Default value is \`swat'. Other possible value is 'outhentic', see
-[outthentic test suite section](#outthentic-test-suite)
+Defines test framework for test suite. Default value is \`swat'. Other possible value is 'generic', see
+[generic test suite section](#generic-test-suite)
 
 * url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
 
 * description - a short description of your plugin
 
-### outthentic test suite
+### generic test suite
 
-Creation of outthentic tests is very similar to a swat tests, but you'd better read [outthentic documentation](https://github.com/melezhik/outthentic) to 
+Creation of generic tests is very similar to a swat tests, but you'd better read [outthentic framework documentation](https://github.com/melezhik/outthentic) to 
 understand the difference.
 
 Once your test suite is ready prepare the same additional stuff as with swat test suite:
@@ -434,7 +436,7 @@ Sparrow.json file does not differ from the one described at [swat test suite](#s
 \`engine' field value:
 
     {
-        "engine": "outthentic"
+        "engine": "generic"
     }
 
 # PUBLISHING SPARROW PLUGINS

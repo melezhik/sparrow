@@ -236,7 +236,7 @@ Example:
 
 *sparrow check ini $project\_name $checkpoint\_name *
 
-This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) for test suite provided by plugin.
+This command setups ini file for test suite provided by plugin.
 
     # ini file for swat test suite:
     export EDITOR=nano
@@ -257,7 +257,7 @@ This command setups [ini file](https://github.com/melezhik/swat#swat-ini-files) 
 More information on ini files syntax could be found here:
 
 * [swat tests ini files](https://github.com/melezhik/swat#swat-ini-files)
-* [generic tests ini files](https://github.com/melezhik/outthentic#ini-files)
+* [generic tests ini files](https://github.com/melezhik/outthentic#test-suite-ini-file)
 
 ## run tests remotely
 

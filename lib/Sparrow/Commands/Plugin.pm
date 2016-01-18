@@ -26,7 +26,7 @@ our @EXPORT = qw{
 
     upload_plugin
 
-    plg_meta
+    plugin_meta
 
 };
 

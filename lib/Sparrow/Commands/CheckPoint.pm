@@ -193,7 +193,6 @@ sub check_run {
         $cmd.=" --host $cp_set->{base_url}" if $cp_set->{'base_url'};
         $cmd.=" '"
     }else{
-        confess "host not set" unless $cp_set->{'base_url'};
         my $ini_file_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
         $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
         $cmd.=" $cp_set->{base_url}";

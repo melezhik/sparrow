@@ -20,17 +20,20 @@ lib/Sparrow/Misc.pm
 Makefile.PL
 MANIFEST			This list of files
 README.md
+README.pod
 t/00.t
 t/checkpoint-create/story.check
 t/checkpoint-create/story.pm
+t/checkpoint-ini/story.check
+t/checkpoint-ini/story.pl
+t/checkpoint-ini/story.pm
+t/checkpoint-load-ini/story.check
+t/checkpoint-load-ini/story.pm
 t/checkpoint-remove/story.check
 t/checkpoint-remove/story.pm
 t/checkpoint-run/story.check
 t/checkpoint-run/story.pl
 t/checkpoint-run/story.pm
-t/checkpoint-set-swat/story.check
-t/checkpoint-set-swat/story.pl
-t/checkpoint-set-swat/story.pm
 t/checkpoint-set/story.check
 t/checkpoint-set/story.pl
 t/checkpoint-set/story.pm
@@ -65,3 +68,4 @@ t/project/remove/story.check
 t/project/remove/story.pl
 t/story.check
 t/story.pl
+t/suite.ini

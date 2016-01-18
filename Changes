@@ -1,6 +1,20 @@
+0.0.14  
+
+* breaking changes:
+
+    * check set_swat is deprecated due to check set ini
+
+* new commands:
+
+    * check set ini
+
+    * check load_ini    
+
+* support for generic plugins ( outthentic )
+
 0.0.13  2015-12-30
 
-    - documentation release - correct url to SparrowHub - https://sparrowhub.org  
+- documentation release - correct url to SparrowHub - https://sparrowhub.org  
 
 # 0.0.12 2015-12-30
 

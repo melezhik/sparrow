@@ -67,7 +67,7 @@ sub check_show {
     my $ini_file = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
 
     if (-f $ini_file){
-       print "[test suite ini file]\n\n";
+       print "[test suite ini file - $ini_file]\n\n";
         open F, $ini_file or confess "can't open $ini_file to read: $!";
         print join "", <F>;
         close F;
@@ -160,6 +160,8 @@ sub check_load_ini {
 
     my $dest_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
     copy($ini_file_path,$dest_path) or confess "Copy failed: $!";
+
+    print "loaded test suite ini from $ini_file_path OK \n\n";
 
 }
 

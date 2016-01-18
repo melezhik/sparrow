@@ -122,11 +122,17 @@ if ($object eq  'plg'){
 
         check_add($name, @ARGV);
 
-    } elsif ( $action eq 'set_swat' ) {
+    } elsif ( $action eq 'ini' ) {
 
         my $name = shift @ARGV;
 
-        check_set_swat($name, @ARGV);
+        check_ini($name, @ARGV);
+
+    } elsif ( $action eq 'load_ini' ) {
+
+        my $name = shift @ARGV;
+
+        check_load_ini($name, @ARGV);
 
     } elsif ( $action eq 'set') {
 

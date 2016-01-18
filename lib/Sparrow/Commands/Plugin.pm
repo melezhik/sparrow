@@ -26,6 +26,8 @@ our @EXPORT = qw{
 
     upload_plugin
 
+    plg_meta
+
 };
 
 
@@ -341,6 +343,19 @@ sub upload_plugin {
 
 }
 
+sub plugin_meta {
+
+    my $path = shift or confess('usage: plugin_mate(path)');
+
+    open F, "$path/sparrow.json" or confess "can't open sparrow.json to read: $!";
+    my $s = join "", <F>;
+    close F;
+
+    my $spj = decode_json($s);
+
+    return $spj;
+
+}
 
 1;
 

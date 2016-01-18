@@ -6,6 +6,7 @@ use base 'Exporter';
 
 use Sparrow::Constants;
 use Sparrow::Misc;
+use Sparrow::Commands::Plugin;
 
 use Carp;
 use File::Basename;
@@ -13,6 +14,7 @@ use File::Path;
 
 use JSON;
 use Data::Dumper;
+use File::Copy;
 
 our @EXPORT = qw{
 
@@ -21,7 +23,8 @@ our @EXPORT = qw{
     check_remove
 
     check_set
-    check_set_swat
+    check_ini
+    check_load_ini
 
     check_run
 
@@ -61,14 +64,15 @@ sub check_show {
     local $Data::Dumper::Terse=1;
     print Dumper(cp_get($project,$cid)), "\n\n";    
 
-    if (-f sparrow_root."/projects/$project/checkpoints/$cid/swat.my"){
-       print "[swat settings]\n\n";
-        open F, sparrow_root."/projects/$project/checkpoints/$cid/swat.my" 
-            or confess "can't open ".sparrow_root."/projects/$project/checkpoints/$cid/swat.my to read: $!";
+    my $ini_file = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+
+    if (-f $ini_file){
+       print "[test suite ini file]\n\n";
+        open F, $ini_file or confess "can't open $ini_file to read: $!";
         print join "", <F>;
         close F;
     }else{
-       print "swat settings: not found\n"
+       print "test suite ini file: not found\n"
     }
 
 
@@ -94,66 +98,68 @@ sub check_remove {
 
 sub check_set {
 
-    my $project  = shift or confess "usage: check_set(*project,checkpoint,args)";
-    my $cid      = shift or confess "usage: check_set(project,*checkpoint,args)";
-    my %args     = @_;
+    my $project  = shift or confess "usage: check_set(*project,checkpoint,plugin,host)";
+    my $cid      = shift or confess "usage: check_set(project,*checkpoint,plugin,host)";
+    my $pid      = shift or confess "usage: check_set(project,checkpoint,plugin*,host)";
+    my $host     = shift;
 
-    confess "usage: check_set(project,checkpoint,*args)" unless %args;
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
 
 
-    for my $f (keys %args){
-        confess "unknow arg: $f" unless $f=~/^-(u|p)$/;
-    }
-
-
-    if ($args{'-u'}){
-        cp_set($project,$cid,'base_url',$args{'-u'});
-        print "set base_url\n\n";
+    if ($host){
+        cp_set($project,$cid,'base_url',$host);
+        print "checkpoint - set host to $host\n\n";
     }    
 
-    if ($args{'-p'}){
+    my $ptype;
 
-        my $pid = $args{'-p'};
-
-        my $ptype;
-    
-        if ($pid=~/(public|private)@/){
-            $ptype = $1;
-            $pid=~s/(public|private)@//;
-        }
-        
-        if (! $ptype and -f sparrow_root."/plugins/public/$pid/sparrow.json" and -d sparrow_root."/plugins/private/$pid" ){
-        warn "both public and private $pid plugin exists;
-choose `public\@$pid` or `private\@$pid`
-to overcome this ambiguity";
-            return;
-        }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
-            cp_set($project,$cid,'plugin',"public\@$pid");
-            print "set plugin to public\@$pid\n\n";
-        }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
-            cp_set($project,$cid,'plugin',"private\@$pid");
-            print "set plugin to private\@$pid\n\n";
-        }else{
-            confess "plugin is not installed, you need to install it first to use in checkpoint";
-        }    
+    if ($pid=~/(public|private)@/){
+        $ptype = $1;
+        $pid=~s/(public|private)@//;
     }
+    
+    if (! $ptype and -f sparrow_root."/plugins/public/$pid/sparrow.json" and -d sparrow_root."/plugins/private/$pid" ){
+        warn "both public and private $pid plugin exists; choose `public\@$pid` or `private\@$pid` to overcome this ambiguity";
+        return;
+    }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
+        cp_set($project,$cid,'plugin',"public\@$pid");
+        print "checkpoint - set plugin to public\@$pid\n\n";
+    }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
+        cp_set($project,$cid,'plugin',"private\@$pid");
+        print "checkpoint - set plugin to private\@$pid\n\n";
+    }else{
+        confess "plugin is not installed, you need to install it first to use in checkpoint";
+    }    
 
 }
 
 
-sub check_set_swat {
+sub check_ini {
 
-    my $project  = shift or confess "usage: check_set_swat(*project,checkpoint)";
-    my $cid      = shift or confess "usage: check_set_swat(project,*checkpoint)";
+    my $project  = shift or confess "usage: check_ini(*project,checkpoint)";
+    my $cid      = shift or confess "usage: check_ini(project,*checkpoint)";
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
     confess "please setup your preferable editor via EDITOR environment variable\n" unless editor;
 
-    exec editor.' '.sparrow_root."/projects/$project/checkpoints/$cid/swat.my";
+    exec editor.' '.sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+
+}
+
+sub check_load_ini {
+
+    my $project         = shift or confess "usage: check_load_ini(*project,checkpoint,path)";
+    my $cid             = shift or confess "usage: check_load_ini(project,*checkpoint,path)";
+    my $ini_file_path   = shift or confess "usage: check_load_ini(project,*checkpoint,path)";
+
+    confess "unknown project" unless  -d sparrow_root."/projects/$project";
+    confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+    my $dest_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+    copy($ini_file_path,$dest_path) or confess "Copy failed: $!";
 
 }
 
@@ -170,15 +176,29 @@ sub check_run {
     my $cp_set = cp_get($project,$cid);
 
     confess "plugin not set" unless $cp_set->{'plugin'};
-    confess "base_url not set" unless $cp_set->{'base_url'};
 
-    
     my $pdir = sparrow_root."/plugins/".($cp_set->{'install_dir'});
 
     confess 'plugin not installed' unless -d $pdir;
 
-    my $cmd = 'export swat_my='.sparrow_root."/projects/$project/checkpoints/$cid/swat.my".' && cd '.$pdir.' && '.
-    "carton exec 'swat ./ ".($cp_set->{base_url})."'";
+    my $spj = plugin_meta($pdir);
+    my $cmd;
+    
+    if ($spj->{engine} and $spj->{engine} eq 'generic'){
+        my $ini_file_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+        $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ ";
+        $cmd.=" --ini $ini_file_path" if -f $ini_file_path;
+        $cmd.=" --host $cp_set->{base_url}" if $cp_set->{'base_url'};
+        $cmd.=" '"
+    }else{
+        confess "host not set" unless $cp_set->{'base_url'};
+        my $ini_file_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+        $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
+        $cmd.=" $cp_set->{base_url}";
+        $cmd.=" --ini $ini_file_path" if -f $ini_file_path;
+        $cmd.=" '"
+    }
+
     
     if ($options=~/--cron/) {
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$cid.'-'.$$.'.txt';

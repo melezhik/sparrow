@@ -234,19 +234,11 @@ Example:
 
 ## initialize checkpoint
 
-*sparrow check ini $project\_name $checkpoint\_name *
+*sparrow check ini $project\_name $checkpoint\_name*
 
-This command setups ini file for test suite provided by plugin.
+This command setups ini file for test suite provided by checkpoint's plugin.
 
-    # ini file for swat test suite:
-    export EDITOR=nano
-    sparrow check ini foo tomcat-app
-
-        port=8080
-        prove_options='-sq'
-
-
-    # ini file for generic test suite:
+    # ini file for foo-app test suite:
     export EDITOR=nano
     sparrow check ini foo foo-app
 
@@ -258,6 +250,14 @@ More information on ini files syntax could be found here:
 
 * [swat tests ini files](https://github.com/melezhik/swat#swat-ini-files)
 * [generic tests ini files](https://github.com/melezhik/outthentic#test-suite-ini-file)
+
+Alternatively you may load plguin ini file from file path
+
+*sparrow check load_ini $project\_name $checkpoint\_name path/to/file*
+
+For example:
+
+    sparrow check load_ini foo foo-app /path/to/ini/file
 
 ## run tests remotely
 

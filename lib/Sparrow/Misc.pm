@@ -61,8 +61,9 @@ sub usage {
     print "\tsparrow check remove   foo nginx         # remove checkpoint named `nginx' in project foo\n";
     print "\tsparrow check show     foo nginx         # get checkpoint info \n";
     print "\tsparrow check run      foo nginx         # run checkpoint tests info \n";
-    print "\tsparrow check set      foo nginx -u 127.0.0.1 -p swat-nginx  # set checkpoint parameters \n";
-    print "\tsparrow check set_swat foo nginx         # set swat.ini file for checkpoint \n";
+    print "\tsparrow check set      foo nginx 127.0.0.1 swat-nginx  # set checkpoint parameters \n";
+    print "\tsparrow check ini      foo nginx         # initialize sparrow plugin \n";
+    print "\tsparrow check load_ini foo nginx /path/to/ini/file # load sparrow plugin initialization from file \n";
 
     print "\n\n";
 

@@ -34,6 +34,9 @@ t/checkpoint-remove/story.pm
 t/checkpoint-run/story.check
 t/checkpoint-run/story.pl
 t/checkpoint-run/story.pm
+t/checkpoint-run2/story.check
+t/checkpoint-run2/story.pl
+t/checkpoint-run2/story.pm
 t/checkpoint-set/story.check
 t/checkpoint-set/story.pl
 t/checkpoint-set/story.pm

@@ -333,7 +333,7 @@ sub upload_plugin {
 
     print "sparrow.json file validated ... \n";
 
-    execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    execute_shell_command('tar --exclude *.ini --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .

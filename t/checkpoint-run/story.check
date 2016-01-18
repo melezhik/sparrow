@@ -1,3 +1,5 @@
+swat ./
+'swat ./  127.0.0.1 '
 All tests successful.
 Result: PASS
 

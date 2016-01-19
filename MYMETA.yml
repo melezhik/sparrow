@@ -1,5 +1,5 @@
 ---
-abstract: 'Sparrow - swat based monitoring tool'
+abstract: 'Sparrow - outthentic tests manager'
 author:
   - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:
@@ -21,4 +21,4 @@ requires:
   Carton: '0'
   JSON: '0'
   version: '0'
-version: v0.0.14
+version: v0.0.15

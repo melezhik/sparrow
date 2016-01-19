@@ -1,5 +1,5 @@
 ---
-abstract: 'Sparrow - swat based monitoring tool'
+abstract: 'Sparrow - outthentic tests manager'
 author:
   - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:
@@ -25,4 +25,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.0.14
+version: 0.0.15

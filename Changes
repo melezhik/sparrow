@@ -1,3 +1,9 @@
+0.0.15  2016-01-19
+
+* actualized distribution short description
+
+* hot fix for plg upload command ( *.ini was accidentally ignored, but now only suite.ini gets ignored when creating tarball  )
+
 0.0.14  2016-01-19
 
 * breaking changes:

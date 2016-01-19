@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 # Define metadata
 name           'Sparrow';
-abstract       'Sparrow - swat based monitoring tool';
+abstract       'Sparrow - outthentic tests manager';
 
 all_from       'lib/Sparrow.pm';
 

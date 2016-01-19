@@ -1,14 +1,14 @@
-0.0.14  
+0.0.14  2016-01-19
 
 * breaking changes:
 
-    * check set_swat is deprecated due to check set ini
+    * command \`check set_swat' is deprecated due to check set ini
 
-* new commands:
+* new commands to support test suite ini files:
 
-    * check set ini
+    * \`check set ini'
 
-    * check load_ini    
+    * \`check load_ini'    
 
 * support for generic plugins ( outthentic )
 

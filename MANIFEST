@@ -19,6 +19,7 @@ lib/Sparrow/Constants.pm
 lib/Sparrow/Misc.pm
 Makefile.PL
 MANIFEST			This list of files
+META.yml
 README.md
 README.pod
 t/00.t
@@ -37,10 +38,16 @@ t/checkpoint-run/story.pm
 t/checkpoint-run2/story.check
 t/checkpoint-run2/story.pl
 t/checkpoint-run2/story.pm
+t/checkpoint-run3/story.check
+t/checkpoint-run3/story.pl
+t/checkpoint-run3/story.pm
 t/checkpoint-set/story.check
 t/checkpoint-set/story.pl
 t/checkpoint-set/story.pm
 t/lib/test.pm
+t/modules/plg-generic/install/story.check
+t/modules/plg-generic/install/story.pl
+t/modules/plg-generic/install/story.pm
 t/modules/plg/install/story.check
 t/modules/plg/install/story.pl
 t/modules/plg/install/story.pm

@@ -126,6 +126,7 @@ to overcome this ambiguity";
                 execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
 
             }else{
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton");
                 print "public\@$pid is uptodate ($inst_v)\n";
             }
 

@@ -389,7 +389,7 @@ Create sparrow.json file and place it in plugin root directory:
         "name": "my-cool-plugin",
         "engine": "swat", 
         "description" : "this is a great plugin!",
-        "url" => "http://...."
+        "url" : "http://...."
     }
 
 This is the list of obligatory parameters you have to set:

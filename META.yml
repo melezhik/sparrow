@@ -25,4 +25,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.0.15
+version: 0.0.16

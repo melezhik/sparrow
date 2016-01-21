@@ -1,3 +1,10 @@
+0.0.16 2016-01-21
+
+* public plugin install - always use `carton` to install dependencies probably missed for previous
+
+* index update - use `curl -k` in attempt to solve centos5 ssl related issues. it looks like a dirty hack but I could
+not find any better
+
 0.0.15  2016-01-19
 
 * actualized distribution short description

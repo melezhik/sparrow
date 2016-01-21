@@ -119,7 +119,7 @@ to overcome this ambiguity";
 
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-                execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
+                execute_shell_command("curl -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
                 sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
                 sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz && echo");
 
@@ -141,7 +141,7 @@ to overcome this ambiguity";
 
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-            execute_shell_command("curl -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
+            execute_shell_command("curl -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
             sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
             sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz && echo");
 

@@ -1,3 +1,7 @@
+0.0.18
+
+* do not exclude suite.ini when uploading plugin
+
 0.0.17 2016-01-21
 
 * public plugin install - use `curl -k` in attempt to solve centos5 ssl related issues. it looks like a dirty hack but I could

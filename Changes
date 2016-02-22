@@ -1,3 +1,7 @@
+0.0.19
+
+* make `carton update` when install public plugin
+
 0.0.18 2016-02-17
 
 * do not exclude suite.ini when uploading plugin

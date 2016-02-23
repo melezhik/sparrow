@@ -56,6 +56,10 @@ if ($object eq  'plg'){
 
         show_plugin( shift @ARGV );        
 
+    } elsif ( $action  eq 'run'){
+
+        run_plugin( shift @ARGV );        
+
     } else  { 
 
         confess "unknown command: $action @ARGV";

@@ -61,6 +61,9 @@ t/modules/project/create/story.check
 t/modules/project/create/story.pl
 t/plg/list/story.check
 t/plg/list/story.pl
+t/plg/run/story.check
+t/plg/run/story.pl
+t/plg/run/story.pm
 t/plg/search/story.check
 t/plg/search/story.pl
 t/plg/upload/foo-test/Changes.md

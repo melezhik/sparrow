@@ -1,6 +1,8 @@
 0.0.20 2016-02-23
 
-* action `sparrow plg run` to run plugins as is without check points
+* action `sparrow plg run` to run plugin tests as is ( without check points )
+
+* documentation improved
 
 0.0.19 2016-02-22
 
@@ -100,13 +102,13 @@ not find any better
 0.0.3 2015-11-30
 
 * minor improvements in output ( sorting, etc )
-* propogate some errors in more meaningful maner
-* cleanup documentaion
+* propagate some errors in more meaningful manner
+* cleanup documentation
 
 0.0.2 2015-11-29
 
 * various bug fixes
-* refactroing
+* refactoring
 * add some remove operations
 * improved documentation
 

@@ -54,13 +54,14 @@ sub usage {
     print "\tsparrow plg install swat-nginx  # install plugin \n";
     print "\tsparrow plg remove  swat-nginx  # remove plugin\n";
     print "\tsparrow plg show    swat-nginx  # get plugin info\n";
+    print "\tsparrow plg run     swat-nginx  # run plguin tests\n";
 
 
     print "\n[checkpoints]:\n\n";
     print "\tsparrow check add      foo nginx         # create checkpoint named `nginx' in project foo\n";
     print "\tsparrow check remove   foo nginx         # remove checkpoint named `nginx' in project foo\n";
     print "\tsparrow check show     foo nginx         # get checkpoint info \n";
-    print "\tsparrow check run      foo nginx         # run checkpoint tests info \n";
+    print "\tsparrow check run      foo nginx         # run checkpoint tests \n";
     print "\tsparrow check set      foo nginx 127.0.0.1 swat-nginx  # set checkpoint parameters \n";
     print "\tsparrow check ini      foo nginx         # initialize sparrow plugin \n";
     print "\tsparrow check load_ini foo nginx /path/to/ini/file # load sparrow plugin initialization from file \n";

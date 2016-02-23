@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.0.19';
+our $VERSION = '0.0.20';
 
 1;
 
@@ -115,7 +115,9 @@ Sparrow project is entry point where one run outthentic tests against different 
 
 Example command:
 
-    sparrow project create foo
+    sparrow project create dev-db-servers
+    
+    sparrow project create production-web-servers
 
 To get project info say this:
 
@@ -123,7 +125,7 @@ I<sparrow project show $project_name>
 
 For example:
 
-    sparrow project show foo
+    sparrow project show dev-db-servers
 
 To see projects list say this:
 
@@ -135,7 +137,7 @@ I<sparrow project remove $project_name>
 
 For example:
 
-    sparrow project foo remove
+    sparrow project qa-db-servers remove
 
 
 =head2 search sparrow plugins
@@ -247,7 +249,7 @@ I<sparrow plg remove $plugin_name>
 
 For example:
 
-    sparrow plg remove swat-kelp
+    sparrow plg remove df-check
 
 
 =head2 create checkpoints
@@ -272,9 +274,10 @@ Checkpoints belong to projects, so to create a checkpoint you need to point a pr
 
 Command examples:
 
-    sparrow check foo nginx-check
-    sparrow check foo tomcat-app-check
-    sparrow check foo ssh-check
+    sparrow check production-web-servers nginx
+    sparrow check production-web-servers apache
+    sparrow check db-servers mysql
+    sparrow check my-machine sshd
 
 
 =head2 setup checkpoints
@@ -309,14 +312,14 @@ This optional parameter sets base url or hostname of a web service or applicatio
 
 Command examples:
 
-    sparrow check set foo ssh-check swat-ssh  
-    sparrow check set foo ssh-check swat-ssh 127.0.0.1
-    sparrow check set foo mysql-check swat-mysql 127.0.0.1:3306
+    sparrow check set localhost sshd sshd-check  
+    sparrow check set localhost sshd sshd-check 127.0.0.1
+    sparrow check set db-servers mysql outth-mysql 127.0.0.1:3306
     
-    sparrow check set foo kelp-check swat-kelp 127.0.0.1:3000
-    sparrow check set foo nginx-check swat-nginx http://my.nginx.host
-    sparrow check set foo mongo-app-check swat-mongodb-http http://localhost:28017
-    sparrow check set foo my-app-check swat-my-app http://my.nginx.host:5555/foo/bar/baz
+    sparrow check set cpan-modules kelp swat-kelp 127.0.0.1:3000
+    sparrow check set production-web-servers nginx swat-nginx http://my.nginx.host
+    sparrow check set db-servers mongo swat-mongodb-http http://localhost:28017
+    sparrow check set dev-app my-cool-app swat-my-app http://my.dev.host:5555/foo/bar/baz
 
 To get checkpoint info say this:
 
@@ -324,32 +327,64 @@ I<sparrow check show $project_name $checkpoint_name>
 
 For example:
 
-    sparrow check show foo nginx-check
+    sparrow check show production-web-servers nginx
 
 
 =head2 run tests
 
-I<sparrow check run $project_name $checkpoint_name>
+There are two ways to run tests. 
 
-Once sparrow project is configured and has some checkpoints you may run tests:
+First one is to run tests I<via checkpoint interface> :
+
+I<sparrow check run $project_name $check_name>
 
 Examples:
 
-    sparrow check run foo nginx-check
+    sparrow check run my-machine sshd
     
-    sparrow check run foo tomcat-app-check
-    
-    sparrow check run foo ssh-check
+    sparrow check run production-web-servers nginx
 
-Use option --cron to run tests in `cron' mode - if tests succeeds not output will be given,
-if tests fails a normal output will be yielded as if you run without this option. 
+Second way is simply run tests I<via plugin interface> :
+
+I<sparrow plg run $plugin_name>
+
+The 2 tests examples above could be run as plugins tests:
+
+    sparrow plg run sshd-check
+    
+    sparrow plg run swat-nginx
+
+=over
+
+=item *
+
+Choose run tests via checkpoint interface when you want to add host settings for test suite.
+
+
+
+=item *
+
+Choose run tests via plugin interface when you have no host specific settings for test suite.
+
+
+
+=back
+
+I<Warning>: you can run only L<public plugins|#public-plugins> tests using plugin interface.
+
+
+=head2 Running tests under cron.
+
+I<sparrow check run $project_name $check_name --cron>
+
+When running tests under cron mode a normal output suppressed and is emitted only if tests fails.
 
 Example:
 
-    sparrow check run foo nginx-app-check --cron
+    sparrow check run my-machine sshd --cron
 
 
-=head2 initialize checkpoint
+=head2 initialize checkpoints
 
 I<sparrow check ini $project_name $checkpoint_name>
 
@@ -379,7 +414,7 @@ L<generic tests ini files|https://github.com/melezhik/outthentic#test-suite-ini-
 
 =back
 
-Alternatively you may load plguin ini file from file path
+Alternatively you may load plugin ini file from file path
 
 I<sparrow check load_ini $project_name $checkpoint_name path/to/file>
 
@@ -400,7 +435,7 @@ Sparrow rest API allow to run test suites remotely over http. This function is n
     sparrowd
     
     # runs swat tests via http call
-    curl http://127.0.0.1:5090/check_run/foo/nginx-app
+    curl http://127.0.0.1:5090/check_run/db-servers/mysql
 
 
 =head2 remove checkpoints

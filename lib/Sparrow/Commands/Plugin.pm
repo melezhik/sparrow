@@ -24,6 +24,8 @@ our @EXPORT = qw{
 
     remove_plugin
 
+    run_plugin
+
     upload_plugin
 
     plugin_meta
@@ -166,6 +168,30 @@ to overcome this ambiguity";
 
 }
 
+sub run_plugin {
+
+    my $pid         = shift or confess "usage: run_plugin(*plugin_name,options)";
+    my $options     = shift || '';
+
+    my $pdir = sparrow_root."/plugins/public/$pid";
+
+    confess 'plugin not installed' unless -d $pdir;
+
+    my $spj = plugin_meta($pdir);
+    my $cmd;
+
+    if ($spj->{engine} and $spj->{engine} eq 'generic'){
+        $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ '";
+    }else{
+        $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ '";
+    }
+
+
+    print "# running $cmd ...\n\n";
+    exec $cmd;
+
+}
+
 sub show_plugin {
 
     my $pid = shift or confess 'usage: show_plugin(plugin_name)';
@@ -221,6 +247,7 @@ sub show_plugin {
     }
 
 }
+
 
 sub remove_plugin {
 

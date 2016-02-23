@@ -1,3 +1,7 @@
+0.0.20 2016-02-23
+
+* action `sparrow plg run` to run plugins as is without check points
+
 0.0.19 2016-02-22
 
 * execute `carton update` when install public plugin

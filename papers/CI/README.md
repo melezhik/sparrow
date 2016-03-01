@@ -8,7 +8,7 @@ on cases when something goes wrong.
 Consider simple example of how sparrow could be used to build up some basic parts
 of your infrastructure.
 
-# web applicaton developement 
+# web application development 
 
 We have a simple Dancer2 application we are going to deploy on developer environment:
 
@@ -47,7 +47,7 @@ We are going to deploy application on dedicated server used for development envi
 
 
 In these lines we fetch source code from remote git repository and run dancer application. Good so far.
-These steps could be automated in various ways ( jenkins, crontab , whatever your favourite CI tool ).
+These steps could be automated in various ways ( jenkins, crontab , whatever your favorite CI tool ).
 
 Last command should emit following:
 
@@ -59,7 +59,7 @@ Which means our application is running.
 # building up test harness 
 
 As we need to ensure that app is running correctly after get deployed we need some integration testing for it.
-With sparrow it is as simple as writting a few lines of code:
+With sparrow it is as simple as writing a few lines of code:
 
     git init # let's keep test suite case under git
     echo 127.0.0.1:5000 > host
@@ -73,7 +73,7 @@ With sparrow it is as simple as writting a few lines of code:
     git push -u origin master 
 
 
-Now when we are done with creating a very simple test suite let's go to developmet server and create some check points:
+Now when we are done with creating a very simple test suite let's go to development server and create some check points:
 
     ssh dev.server
     cpanm Sparrow
@@ -108,7 +108,7 @@ Ok, we see that our tests succeed and we can continue with development
 
 # adding new feature to web application
 
-Let's add authetication to your application:
+Let's add authentication to your application:
 
 
 app.psgi
@@ -148,10 +148,9 @@ Let's create a check list we need to ensure:
 
 * when user hits /public route he sees 'public area'
 * when user hits /private route for a first time he gets redirected to /login page and then gets a session cookies
-* when user hits /private rouites for a second time he sees 'private area'
-* when user gets /logout his session cookies are removed ( meaning a second test case could be passed again )
+* when user hits /private routes for a second time he sees 'private area'
 
-Now create antother suite case for the stories above, we are going to keep under another git repository and
+Now create another suite case for the stories above, we are going to keep under another git repository and
 then deliver tests as another sparrow plugin as we did with the `testapp` suite case:
 
 
@@ -176,23 +175,111 @@ then deliver tests as another sparrow plugin as we did with the `testapp` suite 
 
 ## private area first time 
 
-    mkdir private-fisrt-time
+    mkdir private-first-time
     nano private-first-time/hook.pm
 
         run_swat_module( GET => '/logout' );
         run_swat_module( GET => '/private' , { auth => 0 } );
         set_response('done');
 
-    echo done > private-fisrt-time/get.txt
+    echo done > private-first-time/get.txt
 
     mkdir logout/
     echo swat_module=1 > logout/swat.ini
+    echo 200 OK > logout/get.txt
 
     mkdir private/
+
+    nano private/swat.ini
+
+        swat_module=1
+        curl_params="-b ${test_root_dir}/cook.txt"
+
     nano private/get.txt
 
         generator: [ module_variable('auth') ? 'private area' : 'login and to back to' ]
 
+## private area second time 
+
+    mkdir private-second-time
+    nano private-second-time/hook.pm
+
+        run_swat_module( GET => '/login' );
+        run_swat_module( GET => '/private' , { auth => 1 } );
+        set_response('done');
+
+    mkdir login/
+
+    nano login/swat.ini
+
+        swat_module=1
+        curl_params="-c ${test_root_dir}/cook.txt"
+
+    echo 200 OK > login/get.txt
 
 
 
+
+And finally we can commit changes to git and push them to remote.
+
+    git add .
+    git commit -a -m 'authentication check test suite'
+    git push
+
+    
+# testing new features
+
+As we did with basic test suite we now are able to run tests for authentication feature:
+
+
+    ssh dev.server
+    echo "testapp2 https://github.com/melezhik/footest2.git" >> ~/sparrow.list      
+    sparrow index update
+    sparrow plg install testapp2
+
+    sparrow check add webapp auth_suite
+    sparrow check set  webapp auth_suite testapp2
+    
+    sparrow check run webapp auth_suite
+
+
+The output of the second test suite will be:
+
+    # running cd /home/vagrant/sparrow/plugins/private/testapp2 && carton exec 'swat ./   ' ...
+    
+    /home/vagrant/.swat/.cache/1085/prove/private-first-time/00.GET.t ...
+    # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -f -D - '127.0.0.1:5000/logout'
+    ok 1 - server returned successful response
+    ok 2 - output match '200 OK'
+    # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -b /home/vagrant/.swat/.cache/1085/prove/cook.txt -f -D - '127.0.0.1:5000/private'
+    ok 3 - server returned successful response
+    ok 4 - output match 'login and to back to'
+    ok 5 - server response is spoofed
+    # response saved to /home/vagrant/.swat/.cache/1085/prove/xDQuPGlVog
+    ok 6 - output match 'done'
+    1..6
+    ok
+    /home/vagrant/.swat/.cache/1085/prove/public/00.GET.t ...............
+    # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -f -D - '127.0.0.1:5000/public'
+    ok 1 - server returned successful response
+    ok 2 - output match '200 OK'
+    ok 3 - output match 'public area'
+    1..3
+    ok
+    /home/vagrant/.swat/.cache/1085/prove/private-second-time/00.GET.t ..
+    # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -c /home/vagrant/.swat/.cache/1085/prove/cook.txt -f -D - '127.0.0.1:5000/login'
+    ok 1 - server returned successful response
+    ok 2 - output match '200 OK'
+    # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -b /home/vagrant/.swat/.cache/1085/prove/cook.txt -f -D - '127.0.0.1:5000/private'
+    ok 3 - server returned successful response
+    ok 4 - output match 'private area'
+    ok 5 - server response is spoofed
+    # response saved to /home/vagrant/.swat/.cache/1085/prove/hvtwlrTqEZ
+    ok 6 - output match 'done'
+    1..6
+    ok
+    All tests successful.
+    Files=3, Tests=15,  0 wallclock secs ( 0.03 usr  0.01 sys +  0.17 cusr  0.01 csys =  0.22 CPU)
+    Result: PASS
+    
+    

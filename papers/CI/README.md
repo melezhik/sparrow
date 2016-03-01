@@ -1,7 +1,7 @@
-# continue integration using sparrow tool chain
+# continuous integration using sparrow tool chain
 
 Sparrow is a tool to automate testing infrastructure. Automated testing
-is essential part of continue integration processes as it provides fast feedback
+is essential part of continuous integration processes as it provides fast feedback
 on cases when something goes wrong.
 
 

@@ -303,7 +303,7 @@ Sparrow tool chains has following features:
 * sparrow test infrastructure is easy to bootstrap on different environments (dev,test,prod) - everybody involved
 is able now to run desired test suite with easiness
 
-* swat output is intended to make it easy, clear debugging/troubleshooting  process, in most case you just rerun curl command ( against tested server )
+* swat output is intended to simplify debugging/troubleshooting  process, in most cases you just rerun curl command ( against tested server )
 with parameters extracted from test output.
 
 

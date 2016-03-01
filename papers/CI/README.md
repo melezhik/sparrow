@@ -310,9 +310,9 @@ with parameters extracted from test output.
 # PS 
 
 ## paper source code
-the source code for this post could be found here - https://github.com/melezhik/sparrow/tree/master/papers/CI
+the source code for this post could be found [here](https://github.com/melezhik/sparrow/tree/master/papers/CI)
 
-# code  examples :
+## code  examples :
 
 * [webapp](https://github.com/melezhik/webapp)
 * [webapp-basic-check](https://github.com/melezhik/webapp-basic-check)

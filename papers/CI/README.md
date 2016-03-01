@@ -10,7 +10,7 @@ of your infrastructure.
 
 # web application development 
 
-We have a simple Dancer2 application we are going to deploy on developer environment:
+We have a simple Dancer2 application we are going to deploy on development environment:
 
 
 app.psgi
@@ -58,7 +58,7 @@ Which means our application is running.
 
 # building up test harness 
 
-As we need to ensure that app is running correctly after get deployed we need some integration testing for it.
+As we need to ensure that app is running correctly after being deployed we have to add  some integration tests for it.
 With sparrow it is as simple as writing a few lines of code:
 
     git init # let's keep test suite case under git
@@ -306,5 +306,15 @@ is able now to run desired test suite with easiness
 * swat output is intended to make it easy, clear debugging/troubleshooting  process, in most case you just rerun curl command ( against tested server )
 with parameters extracted from test output.
 
- 
+
+# PS 
+
+## paper source code
+the source code for this post could be found here - https://github.com/melezhik/sparrow/tree/master/papers/CI
+
+# code  examples :
+
+* [webapp](https://github.com/melezhik/webapp)
+* [webapp-basic-check](https://github.com/melezhik/webapp-basic-check)
+* [webapp-auth-check](https://github.com/melezhik/webapp-auth-check)
 

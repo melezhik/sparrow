@@ -1,6 +1,6 @@
 # continuous integration using sparrow tool chain
 
-Sparrow is a tool to automate testing infrastructure. Automated testing
+[Sparrow](https://github.com/melezhik/sparrow) is a tool to automate testing infrastructure. Automated testing
 is essential part of continuous integration processes as it provides fast feedback
 on cases when something goes wrong.
 
@@ -62,11 +62,17 @@ As we need to ensure that app is running correctly after get deployed we need so
 With sparrow it is as simple as writing a few lines of code:
 
     git init # let's keep test suite case under git
+
     echo 127.0.0.1:5000 > host
-    echo 200 OK > get.txt
-    echo 'Hello World!' >> get.txt
-    echo '{}'> sparrow.json
+
+    nano get.txt
+        200 OK
+        Hello World!
+
+    echo '{}' > sparrow.json
+
     echo "requires 'swat';" > cpanfile
+
     git add .
     git commit -a -m 'basic test suite'
     git remote add origin https://github.com/melezhik/webapp-basic-check.git
@@ -170,8 +176,10 @@ then deliver tests as another sparrow plugin as we did with the basic suite case
 ## public area test
 
     mkdir public
-    echo 200 OK > public/get.txt
-    echo 'public area' >> public/get.txt
+
+    nano public/get.txt
+        200 OK
+        public area
 
 
 ## private area first time 

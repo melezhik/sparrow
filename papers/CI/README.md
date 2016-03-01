@@ -45,11 +45,15 @@ We are going to deploy application on dedicated server used for development envi
     cpanm Dancer2
     plackup
 
-    # HTTP::Server::PSGI: Accepting connections at http://0:5000/
-
 
 In these lines we fetch source code from remote git repository and run dancer application. Good so far.
 These steps could be automated in various ways ( jenkins, crontab , whatever your favourite CI tool ).
+
+Last command should emit following:
+
+    HTTP::Server::PSGI: Accepting connections at http://0:5000/
+
+Which means our application is running.
 
 
 # building up test harness 
@@ -83,6 +87,7 @@ Now when we are done with creating a very simple test suite let's go to developm
     
     sparrow check run webapp basic_suite
 
+Output of last command will be:
 
     # running cd /home/vagrant/sparrow/plugins/private/testapp && carton exec 'swat ./   ' ...
     
@@ -97,4 +102,11 @@ Now when we are done with creating a very simple test suite let's go to developm
     Files=1, Tests=3,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.04 cusr  0.00 csys =  0.07 CPU)
     Result: PASS
     
+
+Ok, we see that our tests succeed and we can continue with development
+
+
+# Adding new feature to web application
+
+Let's add new route 
 

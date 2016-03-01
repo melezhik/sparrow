@@ -1,4 +1,4 @@
-# continue integration using sparrow tool chain
+# Continue integration using sparrow tool chain
 
 Sparrow is a tool to automate testing infrastructure. Automated testing
 is essential part of continue integration processes as it provides fast feedback
@@ -35,7 +35,7 @@ Let's keep source code at git repository:
     git remote add origin https://github.com/melezhik/foo.git
     git push -u origin master
 
-# development server
+# Development server
 
 We are going to deploy application on dedicated server used for development environment:
 
@@ -56,7 +56,7 @@ Last command should emit following:
 Which means our application is running.
 
 
-# building up test harness 
+# Building up test harness 
 
 As we need to ensure that app is running correctly after get deployed we need some integration testing for it.
 With sparrow it is as simple as writting a few lines of code:
@@ -108,5 +108,38 @@ Ok, we see that our tests succeed and we can continue with development
 
 # Adding new feature to web application
 
-Let's add new route 
+Let's add HTTP Basic authentication to your application:
+
+
+app.psgi
+
+    #!/usr/bin/env perl
+
+    use Dancer2;
+    use Dancer2::Plugin::Auth::Tiny;
+
+    set show_errors => 1;
+    set session     => 'Simple';
+
+
+    get '/' => sub {
+        "Hello World!"
+    };
+
+
+    get '/public' => sub { return 'public area' };
+
+    get '/private' => needs login => sub { return 'private area' };
+
+    get '/login' => sub {
+        session "user" => "Robin Good";
+        return "login and to back to " . params->{return_url};
+    };
+
+    get '/logout' => sub {
+        app->destroy_session;
+        redirect uri_for('/public');
+    };
+
+    dance;
 

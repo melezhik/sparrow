@@ -108,7 +108,7 @@ Ok, we see that our tests succeed and we can continue with development
 
 # Adding new feature to web application
 
-Let's add HTTP Basic authentication to your application:
+Let's add authetication to your application:
 
 
 app.psgi

@@ -1,4 +1,4 @@
-# Continue integration using sparrow tool chain
+# continue integration using sparrow tool chain
 
 Sparrow is a tool to automate testing infrastructure. Automated testing
 is essential part of continue integration processes as it provides fast feedback
@@ -35,7 +35,7 @@ Let's keep source code at git repository:
     git remote add origin https://github.com/melezhik/foo.git
     git push -u origin master
 
-# Development server
+# development server
 
 We are going to deploy application on dedicated server used for development environment:
 
@@ -56,7 +56,7 @@ Last command should emit following:
 Which means our application is running.
 
 
-# Building up test harness 
+# building up test harness 
 
 As we need to ensure that app is running correctly after get deployed we need some integration testing for it.
 With sparrow it is as simple as writting a few lines of code:
@@ -106,7 +106,7 @@ Output of last command will be:
 Ok, we see that our tests succeed and we can continue with development
 
 
-# Adding new feature to web application
+# adding new feature to web application
 
 Let's add authetication to your application:
 

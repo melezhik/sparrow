@@ -143,3 +143,39 @@ app.psgi
 
     dance;
 
+
+Let's create a check list we need to ensure:
+
+* when user hits /public route he sees 'public area'
+* when user hits /private route for a first time he gets redirected to /login page and then gets a session cookies
+* when user hits /private rouites for a second time he sees 'private area'
+* when user gets /logout his session cookies are removed ( meaning a second test case could be passed again )
+
+Now create antother suite case for the stories above, we are going to keep under another git repository and
+then deliver tests as another sparrow plugin as we did with the `testapp` suite case:
+
+
+## creating test suite skeleton
+
+    git init
+    echo 127.0.0.1:5000 > host
+    echo 200 OK > get.txt
+    echo 'Hello World!' >> get.txt
+    echo '{}'> sparrow.json
+    echo "requires 'swat';" > cpanfile
+    git add .
+    git commit -a -m 'authentication test suite'
+    git remote add origin https://github.com/melezhik/footest2.git
+    git push -u origin master 
+
+
+## public area test
+
+    mkdir piblic
+    echo 200 OK > public/get.txt
+    echo 'public area' >> public/get.txt
+
+
+
+
+

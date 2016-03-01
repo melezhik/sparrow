@@ -159,8 +159,6 @@ then deliver tests as another sparrow plugin as we did with the `testapp` suite 
 
     git init
     echo 127.0.0.1:5000 > host
-    echo 200 OK > get.txt
-    echo 'Hello World!' >> get.txt
     echo '{}'> sparrow.json
     echo "requires 'swat';" > cpanfile
     git add .
@@ -171,10 +169,29 @@ then deliver tests as another sparrow plugin as we did with the `testapp` suite 
 
 ## public area test
 
-    mkdir piblic
+    mkdir public
     echo 200 OK > public/get.txt
     echo 'public area' >> public/get.txt
 
+
+## private area first time 
+
+    mkdir private-fisrt-time
+    nano private-first-time/hook.pm
+
+        run_swat_module( GET => '/logout' );
+        run_swat_module( GET => '/private' , { auth => 0 } );
+        set_response('done');
+
+    echo done > private-fisrt-time/get.txt
+
+    mkdir logout/
+    echo swat_module=1 > logout/swat.ini
+
+    mkdir private/
+    nano private/get.txt
+
+        generator: [ module_variable('auth') ? 'private area' : 'login and to back to' ]
 
 
 

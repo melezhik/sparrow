@@ -32,7 +32,7 @@ Let's keep source code at git repository:
     git add app.psgi
     git commit -a -m 'my web application'
 
-    git remote add origin https://github.com/melezhik/foo.git
+    git remote add origin https://github.com/melezhik/webapp.git
     git push -u origin master
 
 # development server
@@ -40,7 +40,7 @@ Let's keep source code at git repository:
 We are going to deploy application on dedicated server used for development environment:
 
     ssh dev.server
-    git clone https://github.com/melezhik/foo.git
+    git clone https://github.com/melezhik/webapp.git
     cd webapp
     cpanm Dancer2
     plackup
@@ -69,7 +69,7 @@ With sparrow it is as simple as writing a few lines of code:
     echo "requires 'swat';" > cpanfile
     git add .
     git commit -a -m 'basic test suite'
-    git remote add origin https://github.com/melezhik/footest.git
+    git remote add origin https://github.com/melezhik/webapp-basic-check.git
     git push -u origin master 
 
 
@@ -77,19 +77,20 @@ Now when we are done with creating a very simple test suite let's go to developm
 
     ssh dev.server
     cpanm Sparrow
-    echo "testapp https://github.com/melezhik/footest.git" > ~/sparrow.list      
+
+    echo "basic-check https://github.com/melezhik/webapp-basic-check.git" > ~/sparrow.list      
     sparrow index update
-    sparrow plg install testapp
+    sparrow plg install basic-check
 
     sparrow project create webapp
-    sparrow check add webapp basic_suite
-    sparrow check set  webapp basic_suite testapp
+    sparrow check add webapp basic
+    sparrow check set  webapp basic basic-check
     
-    sparrow check run webapp basic_suite
+    sparrow check run webapp basic
 
 Output of last command will be:
 
-    # running cd /home/vagrant/sparrow/plugins/private/testapp && carton exec 'swat ./   ' ...
+    # running cd /home/vagrant/sparrow/plugins/private/basic-check && carton exec 'swat ./   ' ...
     
     /home/vagrant/.swat/.cache/30818/prove/00.GET.t ..
     # trying ... curl -X GET -k --connect-timeout 20 -m 20 -L -f -D - '127.0.0.1:5000/'
@@ -103,7 +104,7 @@ Output of last command will be:
     Result: PASS
     
 
-Ok, we see that our tests succeed and we can continue with development
+Ok, we see that our tests succeed and we can continue with development.
 
 
 # adding new feature to web application
@@ -151,7 +152,7 @@ Let's create a check list we need to ensure:
 * when user hits /private routes for a second time he sees 'private area'
 
 Now create another suite case for the stories above, we are going to keep under another git repository and
-then deliver tests as another sparrow plugin as we did with the `testapp` suite case:
+then deliver tests as another sparrow plugin as we did with the basic suite case:
 
 
 ## creating test suite skeleton
@@ -162,7 +163,7 @@ then deliver tests as another sparrow plugin as we did with the `testapp` suite 
     echo "requires 'swat';" > cpanfile
     git add .
     git commit -a -m 'authentication test suite'
-    git remote add origin https://github.com/melezhik/footest2.git
+    git remote add origin https://github.com/melezhik/webapp-auth-check.git
     git push -u origin master 
 
 
@@ -233,14 +234,14 @@ As we did with basic test suite we now are able to run tests for authentication 
 
 
     ssh dev.server
-    echo "testapp2 https://github.com/melezhik/footest2.git" >> ~/sparrow.list      
+    echo "auth-check https://github.com/melezhik/webapp-auth-check.git" >> ~/sparrow.list      
     sparrow index update
-    sparrow plg install testapp2
+    sparrow plg install auth-check
 
-    sparrow check add webapp auth_suite
-    sparrow check set  webapp auth_suite testapp2
+    sparrow check add webapp auth
+    sparrow check set  webapp auth auth-check
     
-    sparrow check run webapp auth_suite
+    sparrow check run webapp auth
 
 
 The output of the second test suite will be:
@@ -283,3 +284,19 @@ The output of the second test suite will be:
     Result: PASS
     
     
+# Summary
+
+Sparrow tool chains has following features:
+
+* integration tests suites are decoupled from application code
+
+* tests could be grouped by types/environments and developed/delivered as dedicated test suites - aka sparrow plugins
+
+* sparrow test infrastructure is easy to bootstrap on different environments (dev,test,prod) - everybody involved
+is able now to run desired test suite with easiness
+
+* swat output is intended to make it easy, clear debugging/troubleshooting  process, in most case you just rerun curl command ( against tested server )
+with parameters extracted from test output.
+
+ 
+

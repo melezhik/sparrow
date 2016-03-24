@@ -17,6 +17,6 @@ our @EXPORT = qw {
 sub spl_file () {  "$ENV{HOME}/sparrow.list" };
 sub spi_file () {  "$ENV{HOME}/sparrow.index" };
 sub sparrow_root () { "$ENV{HOME}/sparrow" };
-sub sparrow_hub_api_url () { 'https://sparrowhub.org' };
+sub sparrow_hub_api_url () { $ENV{sparrow_hub_api_url} || 'https://sparrowhub.org' };
 sub editor () { $ENV{'EDITOR'} };
 

@@ -1,3 +1,7 @@
+0.0.21
+
+* sparrow_hub_api_url could be set by $sparrow_hub_api_url environment variable
+
 0.0.20 2016-02-23
 
 * action `sparrow plg run` to run plugin tests as is ( without check points )

@@ -23,6 +23,8 @@ META.yml
 papers/CI/README.md
 README.md
 t/00.t
+t/checkpoint-create-existed/story.check
+t/checkpoint-create-existed/story.pm
 t/checkpoint-create/story.check
 t/checkpoint-create/story.pm
 t/checkpoint-ini/story.check

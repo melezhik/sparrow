@@ -1,6 +1,7 @@
-0.0.21
+0.0.21 2016-03-28
 
 * sparrow_hub_api_url could be set by $sparrow_hub_api_url environment variable
+* 0 Exit code when trying to create an already existing checkpoint - issues/1
 
 0.0.20 2016-02-23
 

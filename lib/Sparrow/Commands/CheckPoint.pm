@@ -39,7 +39,11 @@ sub check_add {
     my $cid     = shift or confess "usage: check_add(project,*checkpoint)";
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
-    confess "checkpoint $project/$cid already exists" if  -d sparrow_root."/projects/$project/checkpoints/$cid";
+
+    if  (-d sparrow_root."/projects/$project/checkpoints/$cid"){
+      print "checkpoint $project/$cid already exists - nothing to do here\n\n";
+      exit(0);
+    }
 
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
     $cid=~/^[\w\d-\._]+$/ or confess 'checkpoint parameter does not meet naming requirements - /^[\w\d-\._]+$/';

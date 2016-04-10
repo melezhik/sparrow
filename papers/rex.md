@@ -154,3 +154,6 @@ Now let's commit our changes
     $ git commit -m 'add simple story' -a
     $ git push
 
+# Using Rex::Misc::Sparrow module to run sparrow plugin
+
+

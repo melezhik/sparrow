@@ -4,8 +4,8 @@ Server automation with rex and sparrow
 
 # Using rex and sparrow to automate your server infrastructure
 
-Rex - is a server automation tool written on perl, using ssh rex allow you execute various commands
-on your server remotely. Well rex is able to do more ;), check out rex documentation!
+[Rex](http://rexify.org) - is a server automation tool written on perl, using ssh rex allow you execute various commands
+on your server remotely. Well rex is able to do more ;), check out rex documentaOODtion!
 
 Sparrow is tool to install and run outthentic test suites - various tests to ensure your system
 works as expected. Under the hood every sparrow plugin ( test suite ) - is small test case to
@@ -142,5 +142,7 @@ Here we state that process by PID taken from pid file `~/app/app.pid` should exi
 dancer application. That is it!
 
 
-    
-  
+Other considerations on _why_ PID based check is important:
+
+* PID file could be removed ( while application is running ) which is BAD
+* PID file could exist while application is not running which is BAD as well

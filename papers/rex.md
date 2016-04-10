@@ -157,3 +157,31 @@ Now let's commit our changes
 # Using Rex::Misc::Sparrow module to run sparrow plugin
 
 
+Running sparrow plugin with rex is easy using Rex::Misc::Sparrow, let's
+amend Rexfile a little bit:
+
+
+    $ nano Rexfile
+
+    use Rex::Misc::ShellBlock;
+    use Rex::CMDB;
+
+    set cmdb => { type => 'YAML', path => 'cmdb' };
+    require Rex::Misc::Sparrow;
+
+    task "deploy", sub {
+      shell_block <<'EOF';
+        test -f ~/web-app/app.pid && kill `cat ~/web-app/app.pid`
+        rm -rf ~/web-app
+        git clone https://github.com/melezhik/web-app.git ~/web-app
+        cd ~/web-app
+        nohup plackup app.pl 1>nohup.log 2>&1 & echo -n $! > app.pid
+    EOF
+    };
+
+
+Now running `rex -T` examine what has changed:
+
+
+    $ rex -T
+

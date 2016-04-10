@@ -103,14 +103,14 @@ First of all let's keep test source code under git, the same as we did with appl
 
     $ git init .
     $ git remote add origin https://github.com/melezhik/web-app-check.git
-
+    
 
 Then let's create a sparrow json file to define plugin metadata:
 
     $ nano sparrow.json
 
     {
-      "engine" : "generic",
+      "engine" : "generic"
     }    
 
 A few explanation here. Not to dive into sparrow tool guts we only have to define here a engine for our plugin.
@@ -122,8 +122,7 @@ Ok, the let's commit our changes:
 
 
     $ git add sparrow.json
-    $ commit -a -m 'add plugin metadata'
-
+    $ git commit -a -m 'add plugin metadata'
 
 Now let's create a our test, as you can see it simple! A few perl code and some [outthentic DSL](https://github.com/melezhik/outthentic-dsl)
 
@@ -135,14 +134,23 @@ Now let's create a our test, as you can see it simple! A few perl code and some 
 
     $ nano story.check
 
-    dancer
+    plackup
 
 
-Here we state that process by PID taken from pid file `~/app/app.pid` should exist and should be bind with
-dancer application. That is it!
+Here we state that process by PID taken from pid file `~/app/app.pid` should exist and should relate to
+plackup script. That is it!
 
 
 Other considerations on _why_ PID based check is important:
 
 * PID file could be removed ( while application is running ) which is BAD
 * PID file could exist while application is not running which is BAD as well
+
+
+Now let's commit our changes
+
+
+    $ git add .
+    $ git commit -m 'add simple story' -a
+    $ git push
+

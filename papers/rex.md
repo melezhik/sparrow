@@ -24,12 +24,12 @@ valid process ID.
 Let's create a simple dancer application:
 
 
-  $ cat app.pl
-
-  use Dancer2;
-  get '/' => sub { "Hello World" };
-  dance;    
+    $ cat app.pl
   
+    use Dancer2;
+    get '/' => sub { "Hello World" };
+    dance;    
+    
 
 That's it. Real application is of course has more files and complex structure but for the 
 purpose of this tutorial it is enough.
@@ -37,13 +37,13 @@ purpose of this tutorial it is enough.
 
 Let's keep source code at git repository:
 
-
-  $ git init
-  $ git add.pl
-  $ git commit -a -m 'application file'
-  $ git remote add origin master http://your.git.repo.app
-  $ git push
-
+  
+    $ git init
+    $ git add.pl
+    $ git commit -a -m 'application file'
+    $ git remote add origin master http://your.git.repo.app
+    $ git push
+  
 
 Ok. Now we are ready to deploy things with rex:
 
@@ -54,19 +54,19 @@ Ok. Now we are ready to deploy things with rex:
 Rexfile should defined a task to `git clone` our source code and run dancer application:
 
 
-  $ cat Rexfile
-
-  use Rex::Misc::ShellBlock;
-
-  task "deploy", sub {
-    shell_block <<'EOF';
-      rm -rf ~/app
-      git clone http://your.git.repo.app
-      cd app
-      nohup dance & echo -n $! > app.pid
-    EOF
-  };
-
+    $ cat Rexfile
+  
+    use Rex::Misc::ShellBlock;
+  
+    task "deploy", sub {
+      shell_block <<'EOF';
+        rm -rf ~/app
+        git clone http://your.git.repo.app
+        cd app
+        nohup dance & echo -n $! > app.pid
+      EOF
+    };
+  
 
 Again for the sake of simplicity of our tutorial we intentionally assume that some conditions are met on our
 server:

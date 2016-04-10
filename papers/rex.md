@@ -78,9 +78,69 @@ server:
 Ok now let run our rex task:
 
 
-  $ rex -H my.app.server deploy
+    $ rex -H my.app.server deploy
 
 
 If everything is fine, we will have our application running on our server.
 
 
+# Sparrow plugin
+
+But could we ensure that application is running? Beside doing some http requests and 
+receiving a proper response, which could be thought as integration tests first of all
+let's do simple check which probably would be done by every system administrator -
+check if process given by pid file exists:
+
+    $ ps --pid `cat ~/app/app.pid`
+
+Ok this trivial check let us know at least that application is running from the *system point of view*.
+
+Let's write sparrow plugin to automate such a checking:
+
+
+First of all let's keep test source code under git, the same as we did with application source code:
+
+    $ git init .
+    $ git remote add origin master http://sparrow.plg
+
+
+Then let's create a sparrow json file to define plugin metadata:
+
+
+    $ nano sparrow.json
+
+    {
+      "engine" : "generic",
+    }    
+
+A few explanation here. Not to dive into sparrow tool guts we only have to define here a engine for our plugin.
+As we want make some system level tests and do not want to have http related tests we choose here "generic"
+engine, more details on sparrow json file syntax could be found at sparrow [documentation](https://github.com/melezhik/sparrow#create-sparrowjson-file)
+ 
+
+Ok, the let's commit our changes:
+
+
+    $ git add sparrow.json
+    $ commit -a -m 'add plugin metadata'
+
+
+Now let's create a our test, as you can see it simple! A few perl code and some [outthentic DSL](https://github.com/melezhik/outthentic-dsl)
+
+
+    $ nano story.pl
+
+    exec 'ps --pid `cat ~/app/app.pid`'
+
+
+    $ nano story.check
+
+    dancer
+
+
+Here we state that process by PID taken from pid file `~/app/app.pid` should exist and should be bind with
+dancer application. That is it!
+
+
+    
+  

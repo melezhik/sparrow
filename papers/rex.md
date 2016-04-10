@@ -7,10 +7,10 @@ Server automation with rex and sparrow
 [Rex](http://rexify.org) - is a server automation tool written on perl, using ssh rex allow you execute various commands
 on your server remotely. Well rex is able to do more ;), check out rex documentation!
 
-Sparrow is tool to install and run outthentic test suites - various tests to ensure your system
+[Sparrow](https://github.com/melezhik/sparrow) is a tool to install and run outthentic test suites - various tests to ensure your system
 works as expected. Under the hood every sparrow plugin ( test suite ) - is small test case to
 run some system commands and verify/analyze their output. It is very similar to what a system
-administrators do on daily basis, but this is run automatically.
+administrators do on daily basis, but this could be done automatically!
 
 # Hello world example
 
@@ -146,6 +146,13 @@ Other considerations on _why_ PID based check is important:
 * PID file could be removed ( while application is running ) which is BAD
 * PID file could exist while application is not running which is BAD as well
 
+And finaly lets create cpanfile to declare CPAN dependencies as sparrow uses carton/cpanfile mechanism to hanlder
+prerequisitives. Right now it is one dependency - is a [Outthentic](https://github.com/melezhik/outthentic) test suite runner:
+
+
+    $ nano cpanfile
+
+    requires "Outthentic";
 
 Now let's commit our changes
 
@@ -184,4 +191,48 @@ Now running `rex -T` examine what has changed:
 
 
     $ rex -T
+
+    Tasks
+     deploy
+    
+     Misc:Sparrow:check      Runs sparrow checks
+     Misc:Sparrow:configure  Configure sparrow checks
+     Misc:Sparrow:setup      Setup sparrow
+    
+    
+As we can see new task are available. We are almost done, all we have to do now is to:
+
+* setup [SPL](https://github.com/melezhik/sparrow#spl-file) file as we use [private](https://github.com/melezhik/sparrow#private-plugins) sparrow plguins ( the one we have just create and committed )
+* describe desired sparrow plugins configuration via CMDB file
+
+
+## Setup SPL file
+
+As SPL file is just a index file  to describe availbale sparrow plguins delivered via git repositories
+it is convenient to set it up via rex template:
+
+
+    $ nano Rexfile
+
+
+    task set_spl => sub {
+      file "/root/sparrow.list",
+        content => template('files/spl.conf', list => { 'web-app-check' => 'https://github.com/melezhik/web-app-check.git' } )
+    }
+
+
+    $ cat files/spl.conf
+    <% for my $plg (keys %{ $list }) { %>
+    <%= $plg %> <%= $list{$plg} %>
+    <% } %>
+
+
+Once files/spl.conf gets applied it result in SPL file being created on target server:
+
+
+    $ cat /root/sparrow.list
+
+    web-app-check https://github.com/melezhik/web-app-check.git
+
+Which makes it possible to install private sparrow plugin from remote git repository.
 

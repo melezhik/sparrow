@@ -62,12 +62,13 @@ Rexfile should defined a task to `git clone` our source code and run dancer appl
       shell_block <<'EOF';
         test -f ~/web-app/app.pid && kill `cat ~/web-app/app.pid`
         rm -rf ~/web-app
-        git clone https://github.com/melezhik/web-app.git
-        cd app
-        nohup dance & echo -n $! > app.pid
+        git clone https://github.com/melezhik/web-app.git ~/web-app
+        cd ~/web-app
+        nohup plackup app.pl 1>nohup.log 2>&1 & echo -n $! > app.pid
     EOF
     };
     
+        
 Again for the sake of simplicity of our tutorial we intentionally assume that some conditions are met on our
 server:
 
@@ -79,10 +80,10 @@ Ok now let run our rex task:
 
 
     $ rex deploy
+    [2016-04-10 23:43:04] INFO - Running task deploy on <local>
 
 
 If everything is fine, we will have our application running on our server.
-
 
 # Sparrow plugin
 
@@ -91,7 +92,7 @@ receiving a proper response, which could be thought as integration tests first o
 let's do simple check which probably would be done by every system administrator -
 check if process given by pid file exists:
 
-    $ ps --pid `cat ~/app/app.pid`
+    $ ps --pid `cat ~/web-app/app.pid`
 
 Ok this trivial check let us know at least that application is running from the *system point of view*.
 
@@ -101,11 +102,10 @@ Let's write sparrow plugin to automate such a checking:
 First of all let's keep test source code under git, the same as we did with application source code:
 
     $ git init .
-    $ git remote add origin master http://sparrow.plg
+    $ git remote add origin https://github.com/melezhik/web-app-check.git
 
 
 Then let's create a sparrow json file to define plugin metadata:
-
 
     $ nano sparrow.json
 

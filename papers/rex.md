@@ -5,7 +5,7 @@ Server automation with rex and sparrow
 # Using rex and sparrow to automate your server infrastructure
 
 [Rex](http://rexify.org) - is a server automation tool written on perl, using ssh rex allow you execute various commands
-on your server remotely. Well rex is able to do more ;), check out rex documentaOODtion!
+on your server remotely. Well rex is able to do more ;), check out rex documentation!
 
 Sparrow is tool to install and run outthentic test suites - various tests to ensure your system
 works as expected. Under the hood every sparrow plugin ( test suite ) - is small test case to
@@ -39,10 +39,10 @@ Let's keep source code at git repository:
 
   
     $ git init
-    $ git add.pl
-    $ git commit -a -m 'application file'
-    $ git remote add origin master http://your.git.repo.app
-    $ git push
+    $ git add app.pl
+    $ git commit -m initial-commit -a
+    $ git remote add origin https://github.com/melezhik/web-app.git
+    $ git push -u origin master
   
 
 Ok. Now we are ready to deploy things with rex:
@@ -57,17 +57,17 @@ Rexfile should defined a task to `git clone` our source code and run dancer appl
     $ cat Rexfile
   
     use Rex::Misc::ShellBlock;
-  
+    
     task "deploy", sub {
       shell_block <<'EOF';
-        rm -rf ~/app
-        git clone http://your.git.repo.app
+        test -f ~/web-app/app.pid && kill `cat ~/web-app/app.pid`
+        rm -rf ~/web-app
+        git clone https://github.com/melezhik/web-app.git
         cd app
         nohup dance & echo -n $! > app.pid
-      EOF
+    EOF
     };
-  
-
+    
 Again for the sake of simplicity of our tutorial we intentionally assume that some conditions are met on our
 server:
 
@@ -78,7 +78,7 @@ server:
 Ok now let run our rex task:
 
 
-    $ rex -H my.app.server deploy
+    $ rex deploy
 
 
 If everything is fine, we will have our application running on our server.

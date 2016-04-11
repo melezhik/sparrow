@@ -49,7 +49,7 @@ There are tow types of outthentic suites or sparrow plugins:
 
 * Swat test suites
 
-* Generic test suites
+* Generic suites
 
 ## Swat test suites
 
@@ -59,8 +59,10 @@ Swat is in turn based on Outthentic DSL.
 ## Generic suites
 
 Are those base on [outthentic](https://github.com/melezhik/outthentic) generic purposes testing / monitoring framework.
-Outthentic framework is in turn based in Outthentic DSL.
+Outthentic framework is in turn based in Outthentic DSL. 
 
+Generic suites unlike swat test suites is generic purpose suites for various task, like
+monitoring processes in process list or investigating log entries on given content.
 
 # Sparrow basic entities
 

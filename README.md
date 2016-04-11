@@ -259,13 +259,6 @@ Command examples:
     # bind mongo checkpoint to swat-mongodb-http plugin and sets mongodb http API URL
     sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
 
-To get checkpoint detailed information say this:
-
-*sparrow check show $project\_name $checkpoint\_name*
-
-For example:
-
-    $ sparrow check show webservers nginx
 
 ## Run suites
 
@@ -307,19 +300,20 @@ Example:
 
 ## Configuring checkpoints
 
-Checkpoint configuration is configuration for plugin binded to checkpoint. Use this command to
-set checkpoint configuration:
+Checkpoint configuration is a configuration data consumed by plugin binded to checkpoint. 
+
+Sparrow support two configuration formats:
+
+* .ini 
+* YAML
+
+.Ini style format is _default_ format for checkpoint configuration. 
+
+Use `check ini` command to set checkpoint configuration:
 
 *sparrow check ini $project\_name $checkpoint\_name*
 
-This command configures sparrow plugin binded to checkpoint. There are two formats supported:
-
-* YAML
-* .ini 
-
-Sparrow will examine a content of configuration file and try to identify format automatically.
-
-For example for .ini format:
+For example:
 
     $ export EDITOR=nano
 
@@ -329,27 +323,49 @@ For example for .ini format:
         # disk used threshold in %
         threshold = 80
 
-Or yaml format:
+Having this sparrow will save plugin configuration in the file related to checkpoint and will use it during
+checkpoint run:
 
-    $ sparrow check ini system disk
+    $ sparrow check run system disk # the value of disk.threshold is 80
+
+User also could copy existed configuration from file using `check load_ini` command:
+
+*sparrow check load_ini $project\_name $checkpoint\_name /path/to/file*
+
+For example:
+
+    $ sparrow check load_ini system disk /etc/plugins/disk.ini
+
+To get checkpoint configuration use `sparrow check show` command:
+
+*sparrow check show $project\_name $checkpoint\_name*
+
+For example:
+
+    $ sparrow check show webservers nginx
+
+Alternative way to configure sparrow checkpoint is to load configuration from yaml file during checkpoint [run](#run-suites):
+
+    $ cat disk.yml
 
     ---
     disk
       threshold: 80
+
+    $ sparrow check run system disk --yml disk.yml
      
-More information on outthentic suites configuration could be found here:
+While `sparrow check ini/load_ini` command save checkpoint configuration and make it persistent,
+`sparrow check run --yml` command apply checkpoint configuration only for checkpoint run and could be treated
+as session basis configuration. For common usage, when user run checkpoints manually first approach is more
+convenient, while second one is way automatic, when checkpoints configurations kept as yaml files
+are maintained out of sparrow scope ( f.e. by other configuration management tools ) and applied
+during checkpoint run.
+ 
+
+More information on outthentic suites configurations could be found here:
 
 * [swat suites configuration files](https://github.com/melezhik/swat#swat-ini-files)
 * [generic suites configuration files](https://github.com/melezhik/outthentic#test-suite-ini-file)
-
-Alternatively you may load plugin ini file from file path
-
-*sparrow check load_ini $project\_name $checkpoint\_name path/to/file*
-
-For example:
-
-    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.ini
-    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.yml
 
 ## Removing checkpoints
 

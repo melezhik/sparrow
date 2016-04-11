@@ -13,7 +13,7 @@ Sparrow - outthentic plugins manager.  Manages outthentic family suites.
 The project is still in very alpha stage. Things might change. But you can start play with it :-)
 
 
-# INSTALL
+# Install
 
     $ sudo yum install git
     $ sudo yum install curl # skip this if you are not going to use private sparrow plugins
@@ -72,7 +72,7 @@ A sparrow plugins which you search, install and (optionally) configure. Usually 
 monitoring / testing suite to solve a specific issue. For example check available disk space of
 ensure service is running. There are a plenty of plugins at SparrowHub.
 
-## Checkpoint 
+## Checkpoints 
 
 Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
 but many ones require some piece of input data. For example hostname o be verified or internal parameters to
@@ -99,7 +99,7 @@ for web servers status so on.
 Now having a knowledges about basic sparrow entities let's dive  into sparrow API provided by `sparrow`
 console client.
 
-## Projects
+## Projects API
 
 Sparrow project is a logical group of sparrow checkpoints. To create a project use this command:
 
@@ -133,7 +133,9 @@ For example:
 
     sparrow project web-servers remove
 
-## Search sparrow plugins
+Note - this command will remove all checkpoints related to project as well!
+
+## Search plugins API
 
 Sparrow plugin is a shareable outthentic suite.
 
@@ -157,7 +159,7 @@ Pattern should be perl regexp pattern. Examples:
 * `nginx`  # find nginx plugins
 * `mysql-` # find mysql plugins
 
-## Sparrow index
+## Sparrow index API
 
 Sparrow index is cached data used by sparrow to search plugins.
 
@@ -182,7 +184,7 @@ You need this to get know about any updates, changes of SparrowHub repository.
 
 See [PUBLIC PLUGINS](#public-plugins) section for details on sparrow public plugins and SparrowHub.
 
-## Download and install sparrow plugins
+## Installing sparrow plugins
 
 *sparrow plg install $plugin\_name*
 
@@ -210,7 +212,7 @@ For example:
 
     $ sparrow plg remove df-check
 
-## Checkpoints
+## Checkpoints API
 
 To create a checkpoint use this command:
 
@@ -346,7 +348,7 @@ For example:
     $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.ini
     $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.yml
 
-## Remove checkpoints
+## Removing checkpoints
 
 Use this command to remove checkpoint data from project container:
 
@@ -357,30 +359,30 @@ Examples:
     # remove checkpoint nginx from project web-servers
     $ sparrow check remove web-servers nginx
 
-# SPARROW PLUGINS
+# Sparrow plugins
 
-Sparrow plugins are shareable outthentic test suites installed from remote sources.
+Sparrow plugins are shareable outthentic suites installed from remote sources.
 
 There are two type of sparrow plugins:
 
-* public plugins are provided by [SparrowHub](https://sparrowhub.org/) community plugin repository and considered as public access
+* public plugins are provided by [SparrowHub](https://sparrowhub.org/) community plugin repository and considered as public access.
 
-* private plugins are provided by internal or external git repositories and _not necessary_ considered as public access
+* private plugins are provided by internal or external git repositories and _not necessary_ considered as public access.
 
 Both public and private plugins are installed with help of sparrow client:
 
-    sparrow plg install plugin_name
+*sparrow plg install plugin_name*
 
-## PUBLIC PLUGINS
+## Public plugins
 
 The public plugins features:
 
-* they are kept in a central place called [SparrowHub](https://sparrowhub.org/) - community plugins repository
+* they are kept in a central place called [SparrowHub](https://sparrowhub.org/) - community plugins repository.
 
-* they are versioned so you may install various version of a one plugin
+* they are versioned so you may install various version of a one plugin.
 
  
-## PRIVATE PLUGINS
+## Private plugins
 
 Private plugins are ones created by you and not supposed to be accessed publicly.
 
@@ -392,7 +394,7 @@ The private plugins features:
 
 * private plugins should be listed at sparrow plugin list file (SPL file)
 
-### SPL FILE
+### SPL file
 
 Sparrow plugin list is represented by text file placed at `\~/sparrow.list'
 
@@ -420,11 +422,11 @@ Once you add a proper entries into SPL file you may list and install a private p
     sparrow plg show    swat-yars
     sparrow plg install swat-yars
 
-# CREATING SPARROW PLUGINS
+# Create sparrow plugin
 
 Here is a brief description of the process:
 
-## swat test suite
+## Swat test suites
 
 To get know to create swat tests please follow swat project documentation -
 [https://github.com/melezhik/swat](https://github.com/melezhik/swat).
@@ -482,19 +484,19 @@ This the list of optional parameters you may set as well:
 
 * engine 
 
-Defines test framework for test suite. Default value is \`swat'. Other possible value is 'generic', see
-[generic test suite section](#generic-test-suite)
+Defines framework for suite. Default value is \`swat'. Other possible value is 'generic', see
+[generic suites section](#generic-suites)
 
 * url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
 
 * description - a short description of your plugin
 
-### generic test suite
+### Generic suites
 
-Creation of generic tests is very similar to a swat tests, but you'd better read [outthentic framework documentation](https://github.com/melezhik/outthentic) to 
+Creation of generic suites is very similar to a swat test suites, but you'd better read [outthentic framework documentation](https://github.com/melezhik/outthentic) to 
 understand the difference.
 
-Once your test suite is ready prepare the same additional stuff as with swat test suite:
+Once your suite is ready add the same metadata as with swat test suite:
 
 * cpanfile
 * sparrow.json
@@ -512,15 +514,15 @@ Sparrow.json file does not differ from the one described at [swat test suite](#s
         "engine": "generic"
     }
 
-# PUBLISHING SPARROW PLUGINS
+# Publishing sparrow plugins
 
 ## Private plugin
 
-All you need is to keep a plugin source code in the remote git repository.
+* All you need is to keep a plugin source code in the remote git repository.
 
-Plugin root directory should be repository root directory.
+* Plugin root directory should be repository root directory.
 
-Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see [SPL FILE](#) section how to do this.
+* Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see [SPL FILE](#) section how to do this.
 
 ## Public plugin
 

@@ -41,7 +41,7 @@ SparrowHub is a [Central repository](https://sparrowhub.org) of sparrow plugins.
 ## Sparrow tool
 
 `sparrow` is a console client to search, install, setup and finally run various sparrow plugins.
-Thinks about it as of cpan client for CPAN modules or gem client for ruby gems.
+Think about it as of cpan client for CPAN modules or gem client for ruby gems.
 
 ## Two types of sparrow plugins
 
@@ -131,7 +131,7 @@ To remove project data say this:
 
 For example:
 
-    sparrow project web-servers remove
+    $ sparrow project web-servers remove
 
 Note - this command will remove all checkpoints related to project as well!
 
@@ -263,7 +263,7 @@ To get checkpoint detailed information say this:
 
 For example:
 
-    sparrow check show nginx
+    $ sparrow check show webservers nginx
 
 ## Run suites
 

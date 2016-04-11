@@ -25,28 +25,31 @@ The project is still in very alpha stage. Things might change. But you can start
 
 Outthentic suites are small testing / monitoring suites for various cases from monitoring available disk space
 to checking if your web server is healthy. Term outthentic refers to [Outthentic DSL](https://github.com/melezhik/outthentic-dsl)
-which is DSL used in such a suites. There are 2 type of outthentic 
+which is DSL used in such a suites. There are 2 type of outthentic suites - swat and generic. Read further.
 
 ## Sparrow plugins
 
-Reusable \`outthentic suites' distributed via outthentic suites repository - [SparrowHub](https://sparrowhub.org)
-are called sparrow plugins. Term plugins refers to different outthentic suites could be pluggable and used
-via a single interface of sparrow client. It is very close to conception of for example CPAN modules or ruby gems.
+Sparrow plugins are shareable outthentic suites distributed via outthentic suites repository - [SparrowHub](https://sparrowhub.org)
+Term plugins refers to the idea of different outthentic suites could be pluggable and so get used on single machine
+via a unified interface of sparrow console client. It is very close to the conception of CPAN modules in Perl or ruby gems in Ruby.
 
 
 ## SparrowHub
 
-[Central repository](https://sparrowhub.org) of sparrow plugins.
+SparrowHub is a [Central repository](https://sparrowhub.org) of sparrow plugins. 
 
+## Sparrow tool
+
+`sparrow` is a console client to search, install, setup and finally run various sparrow plugins.
+Thinks about it as of cpan client for CPAN modules or gem client for ruby gems.
 
 ## 2 type of sparrow plugins
 
-There are 2 typo of outthentic suites:
+There are 2 typo of outthentic suites or sparrow plugins:
 
 * Swat test suites
 
 * Generic test suites
-
 
 ## Swat test suites
 
@@ -58,39 +61,34 @@ Swat is in turn based on Outthentic DSL.
 Are those base on [outthentic](https://github.com/melezhik/outthentic) generic purposes testing / monitoring framework.
 Outthentic framework is in turn based in Outthentic DSL.
 
-## Sparrow tool
-
-`sparrow` is a console client to install, setup and run sparrow plugins.
 
 # Sparrow basic entities
 
-Basically you deal with 3 type of entities:
+Basically user deal with 3 type of entities:
 
-## plugins
+## Plugins
 
 A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
 monitoring / testing suite to solve a specific issue. For example check available disk space of
 ensure service is running. There are a plenty of plugins at SparrowHub.
 
-## checkpoint 
+## Checkpoint 
 
-Checkpoint is configurable sparrow plugin. Some sparrow does not require configuration and could be run as is,
-but many require some piece of input data to bind to. For example hostname or internal plugin parameters
+Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
+but many ones require some piece of input data. For example hostname o be verified or internal parameters to
 to adjust plugin logic. Checkpoint is a container for:
 
 * plugin
 * plugin configuration
-
 
 Plugin configuration is just a text file in one of 2 formats:
 
 * .ini style format
 * YAML format
 
-You could read about plugin configuration further in this documentation.
+Plugin configuration will be explain latter.
 
-
-## projects
+## Projects
 
 Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
 different logical groups. Like one for system checks - disk available space or RAM status, other
@@ -101,21 +99,19 @@ for web servers status so on.
 Now having a knowledges about basic sparrow entities let's dive  into sparrow API provided by `sparrow`
 console client.
 
+## Projects
 
-## create a project
+Sparrow project is a logical group of sparrow checkpoints. To create a project use this command:
 
 *sparrow project create $project\_name*
 
-Create a sparrow project.
-
-Sparrow project is a logical group of sparrow plugins and their
-
 Example command:
 
-    # system level check
-    sparrow project create system
+    # system level checks
+    $ sparrow project create system
 
-    sparrow project create production-web-servers
+    # web servers checks
+    $ sparrow project create web-servers
 
 To get project info say this:
 
@@ -123,9 +119,9 @@ To get project info say this:
 
 For example:
 
-    sparrow project show dev-db-servers
+    $ sparrow project show system
 
-To see projects list say this:
+To get all projects list say this:
 
 *sparrow project list*
 
@@ -135,13 +131,13 @@ To remove project data say this:
 
 For example:
 
-    sparrow project qa-db-servers remove
+    sparrow project web-servers remove
 
-## search sparrow plugins
+## Search sparrow plugins
 
-Sparrow plugin is a shareable outthentic test suite.
+Sparrow plugin is a shareable outthentic suite.
 
-One could install sparrow plugin and then run related outthentic tests, see [check](#run-tests) action for details.
+One could install sparrow plugin and then run related outthentic scenarios, see [check](#run-tests) action for details.
 
 To search available plugins say this:
 
@@ -149,10 +145,11 @@ To search available plugins say this:
 
 For example:
 
-    sparrow plg search apache
-    sparrow plg search nginx
-    sparrow plg search ssh
-    sparrow plg search mysql
+    # list all available plugins
+    $ sparrow plg search 
+  
+    # find foo-* plugins
+    $ sparrow plg search foo
 
 Pattern should be perl regexp pattern. Examples:
 
@@ -160,7 +157,7 @@ Pattern should be perl regexp pattern. Examples:
 * `nginx`  # find nginx plugins
 * `mysql-` # find mysql plugins
 
-## build / reload sparrow index
+## Sparrow index
 
 Sparrow index is cached data used by sparrow to search plugins.
 
@@ -185,15 +182,15 @@ You need this to get know about any updates, changes on SparrowHub public plugin
 
 See [PUBLIC PLUGINS](#public-plugins) section for details.
 
-## download and install sparrow plugins
+## Download and install sparrow plugins
 
 *sparrow plg install $plugin\_name*
 
 For example:
 
-    sparrow plg search  nginx        # to get know available nginx* plugins
-    sparrow plg install swat-nginx   # to download and install a chosen plugin
-    sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
+    $ sparrow plg search  nginx        # to get know available nginx* plugins
+    $ sparrow plg install nginx-check  # to download and install a chosen plugin
+    $ sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
 
 Check [sparrow-plugins](#sparrow-plugins) section to know more about sparrow plugins.
 
@@ -213,23 +210,21 @@ For example:
 
     sparrow plg remove df-check
 
-## create checkpoints
+## Checkpoints
+
+To create a checkpoint use this command:
 
 *sparrow check add $project\_name $checkpoint\_name*
 
-* Checkpoints tie together tested web service or application and sparrow plugin
-
-* Checkpoints belong to projects, so to create a checkpoint you need to point a project
-
+Checkpoints are parts of projects, so to create a checkpoint you always have to point a project.
 
 Command examples:
 
-    sparrow check production-web-servers nginx
-    sparrow check production-web-servers apache
-    sparrow check db-servers mysql
-    sparrow check my-machine sshd
+    $ sparrow check add web-servers nginx
+    $ sparrow check add system disk
 
-## setup checkpoints
+## Setup checkpoints
+
 
 *sparrow check set $project\_name $checkpoint\_name $plugin_name [$host]*
 

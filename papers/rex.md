@@ -23,7 +23,7 @@ valid process ID.
 
 Let's create a simple dancer application:
 
-
+  
     $ cat app.pl
   
     use Dancer2;
@@ -79,9 +79,9 @@ server:
 Ok now let run our rex task:
 
 
-    $ rex deploy
-    [2016-04-10 23:43:04] INFO - Running task deploy on <local>
-
+    $ rex -H 127.0.0.1 deploy
+    [2016-04-11 13:45:42] INFO - Running task deploy on <local>
+    [2016-04-11 13:45:44] INFO - All tasks successful on all hosts
 
 If everything is fine, we will have our application running on our server.
 
@@ -187,18 +187,30 @@ amend Rexfile a little bit:
     };
 
 
+Now haiving add Rex::Misc::Sparrow tasks into our Rexfile let's create cmdb file:
+
+
+    $ mkdir cmdb
+    $ nano cmdb/default.yml
+
+
+    sparrow:
+        system:
+            - checkname: webapp
+              plugin: private@web-app-check
+    
 Now running `rex -T` examine what has changed:
 
 
     $ rex -T
 
     Tasks
-     deploy
+     deploy        
     
-     Misc:Sparrow:check      Runs sparrow checks
-     Misc:Sparrow:configure  Configure sparrow checks
-     Misc:Sparrow:setup      Setup sparrow
-    
+     Misc:Sparrow:check    Runs sparrow checks
+     Misc:Sparrow:configure    Configure sparrow checks
+     Misc:Sparrow:dump_config  Dumps sparrow configuration
+     Misc:Sparrow:setup    Setup sparrow
     
 As we can see new task are available. We are almost done, all we have to do now is to:
 

@@ -242,8 +242,16 @@ it is convenient to set it up via rex template:
     <% } %>
 
 
-Once files/spl.conf gets applied it result in SPL file being created on target server:
 
+Ok. Let's go ahead and try our new tasks.
+
+## Set_spl
+
+    $ rex set_spl
+    [2016-04-11 13:59:15] INFO - Running task set_spl on <local>
+    [2016-04-11 13:59:16] INFO - All tasks successful on all hosts
+
+Once set_spl task is applied it results in SPL file being created on target server:
 
     $ cat ~/sparrow.list
 
@@ -252,11 +260,8 @@ Once files/spl.conf gets applied it result in SPL file being created on target s
 Which makes it possible to install private sparrow plugin from remote git repository.
 
 
-Ok. Let's go ahead and try our new tasks.
+## Misc:Sparrow:setup
 
 
-    $ rex set_spl
-
-
-
+  $ rex Misc:Sparrow:setup
 

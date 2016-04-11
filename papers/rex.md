@@ -228,23 +228,35 @@ it is convenient to set it up via rex template:
 
 
     task set_spl => sub {
-      file "/root/sparrow.list",
-        content => template('files/spl.conf', list => { 'web-app-check' => 'https://github.com/melezhik/web-app-check.git' } )
+      file "~/sparrow.list",
+        content => template(
+          'files/sparrow.list', 
+          list => { 'web-app-check' => 'https://github.com/melezhik/web-app-check.git' } 
+        );
     }
 
-
-    $ cat files/spl.conf
+    $ mkdir files
+    $ nano files/sparrow.list
     <% for my $plg (keys %{ $list }) { %>
-    <%= $plg %> <%= $list{$plg} %>
+    <%= $plg %> <%= $list->{$plg} %>
     <% } %>
 
 
 Once files/spl.conf gets applied it result in SPL file being created on target server:
 
 
-    $ cat /root/sparrow.list
+    $ cat ~/sparrow.list
 
     web-app-check https://github.com/melezhik/web-app-check.git
 
 Which makes it possible to install private sparrow plugin from remote git repository.
+
+
+Ok. Let's go ahead and try our new tasks.
+
+
+    $ rex set_spl
+
+
+
 

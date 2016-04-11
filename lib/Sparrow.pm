@@ -21,7 +21,7 @@ L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.
 
 =head1 SYNOPSIS
 
-Sparrow - outthentic tests manager.  Manages outthentic family test suites.
+Sparrow - outthentic plugins manager.  Manages outthentic family suites.
 
 
 =head1 CAVEAT
@@ -29,95 +29,151 @@ Sparrow - outthentic tests manager.  Manages outthentic family test suites.
 The project is still in very alpha stage. Things might change. But you can start play with it :-)
 
 
-=head1 Outthentic family frameworks
+=head1 Install
 
-Outthentic tests are those using L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl>.
+    $ sudo yum install git
+    $ sudo yum install curl # skip this if you are not going to use private sparrow plugins
+    $ cpanm Sparrow
 
-Currently there are two members of outthentic family test frameworks:
+
+=head1 Glossary 
+
+
+=head2 Outthentic suites
+
+Outthentic suites are small testing / monitoring suites for various cases from monitoring available disk space
+to checking if your web server is healthy. Term outthentic refers to L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl>
+which is DSL used in such a suites. There are 2 type of outthentic suites - swat and generic. Read further.
+
+
+=head2 Sparrow plugins
+
+Sparrow plugins are shareable outthentic suites distributed via outthentic suites repository - L<SparrowHub|https://sparrowhub.org>.
+Term plugins refers to the idea of different outthentic suites could be pluggable and so get used on single machine
+via a unified interface of sparrow console client. It is very close to the conception of CPAN modules in Perl or ruby gems in Ruby.
+
+
+=head2 SparrowHub
+
+SparrowHub is a L<Central repository|https://sparrowhub.org> of sparrow plugins. 
+
+
+=head2 Sparrow tool
+
+C<sparrow> is a console client to search, install, setup and finally run various sparrow plugins.
+Think about it as of cpan client for CPAN modules or gem client for ruby gems.
+
+
+=head2 Two types of sparrow plugins
+
+There are tow types of outthentic suites or sparrow plugins:
 
 =over
 
 =item *
 
-L<swat|https://github.com/melezhik/swat> - web application testing framework
+Swat test suites
+
+
+
+=item *
+
+Generic test suites
+
 
 
 =back
 
-So, I<swat test suites> are those running under swat framework
+
+=head2 Swat test suites
+
+Are those based on L<swat|https://github.com/melezhik/swat> web application testing framework.
+Swat is in turn based on Outthentic DSL.
+
+
+=head2 Generic suites
+
+Are those base on L<outthentic|https://github.com/melezhik/outthentic> generic purposes testing / monitoring framework.
+Outthentic framework is in turn based in Outthentic DSL.
+
+
+=head1 Sparrow basic entities
+
+Basically user deal with 3 type of entities:
+
+
+=head2 Plugins
+
+A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
+monitoring / testing suite to solve a specific issue. For example check available disk space of
+ensure service is running. There are a plenty of plugins at SparrowHub.
+
+
+=head2 Checkpoints 
+
+Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
+but many ones require some piece of input data. For example hostname o be verified or internal parameters to
+to adjust plugin logic. Checkpoint is a container for:
 
 =over
 
 =item *
 
-L<outthentic|https://github.com/melezhik/outthentic> - generic purposes testing framework
+plugin
+
+
+=item *
+
+plugin configuration
 
 
 =back
 
-So, I<generic test suites> are those running under outthentic framework
-
-In the documentation below term `outthentic tests' relates both to swat and generic tests.
-
-
-=head1 Sparrow summary
+Plugin configuration is just a text file in one of 2 formats:
 
 =over
 
 =item *
 
-console client to setup and run outthentic test suites
-
-
-
-=item *
-
-installs and runs sparrow plugins - shareable outthentic test suites
-
+.ini style format
 
 
 =item *
 
-ability to run tests remotely over rest API (TODO)
-
+YAML format
 
 
 =back
 
-
-=head1 DEPENDENCIES
-
-git, curl, bash
+Plugin configuration will be explain latter.
 
 
-=head1 INSTALL
+=head2 Projects
 
-    sudo yum install git
-    sudo yum install curl
-    
-    cpanm Sparrow
-
-
-=head1 USAGE
-
-These are actions provided by sparrow console client:
+Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
+different logical groups. Like one for system checks - disk available space or RAM status, other
+for web servers status so on. 
 
 
-=head2 create a project
+=head1 API
+
+Now having a knowledges about basic sparrow entities let's dive  into sparrow API provided by C<sparrow>
+console client.
+
+
+=head2 Projects API
+
+Sparrow project is a logical group of sparrow checkpoints. To create a project use this command:
 
 I<sparrow project create $project_name>
 
-Create a sparrow project.
-
-Sparrow project is a container for outthentic test suites and tested web services or applications.
-
-Sparrow project is entry point where one run outthentic tests against different web services or applications.
-
 Example command:
 
-    sparrow project create dev-db-servers
+    # system level checks
+    $ sparrow project create system
     
-    sparrow project create production-web-servers
+    # web servers checks
+    $ sparrow project create web-servers
 
 To get project info say this:
 
@@ -125,9 +181,9 @@ I<sparrow project show $project_name>
 
 For example:
 
-    sparrow project show dev-db-servers
+    $ sparrow project show system
 
-To see projects list say this:
+To get all projects list say this:
 
 I<sparrow project list>
 
@@ -137,14 +193,16 @@ I<sparrow project remove $project_name>
 
 For example:
 
-    sparrow project qa-db-servers remove
+    $ sparrow project web-servers remove
+
+Note - this command will remove all checkpoints related to project as well!
 
 
-=head2 search sparrow plugins
+=head2 Search plugins API
 
-Sparrow plugin is a shareable outthentic test suite.
+Sparrow plugin is a shareable outthentic suite.
 
-One could install sparrow plugin and then run related outthentic tests, see L<check|#run-tests> action for details.
+One could install sparrow plugin and then run related outthentic scenarios, see L<check|#run-tests> action for details.
 
 To search available plugins say this:
 
@@ -152,10 +210,11 @@ I<sparrow plg search $pattern>
 
 For example:
 
-    sparrow plg search apache
-    sparrow plg search nginx
-    sparrow plg search ssh
-    sparrow plg search mysql
+    # list all available plugins
+    $ sparrow plg search 
+      
+    # find foo-* plugins
+    $ sparrow plg search foo
 
 Pattern should be perl regexp pattern. Examples:
 
@@ -179,7 +238,7 @@ C<mysql-> # find mysql plugins
 =back
 
 
-=head2 build / reload sparrow index
+=head2 Sparrow index API
 
 Sparrow index is cached data used by sparrow to search plugins.
 
@@ -218,20 +277,20 @@ This command will fetch fresh index from SparrowHub and update local cached inde
 
 This is very similar to what C<cpan index reload> command does.
 
-You need this to get know about any updates, changes on SparrowHub public plugins repository.
+You need this to get know about any updates, changes of SparrowHub repository.
 
-See L<PUBLIC PLUGINS|#public-plugins> section for details.
+See L<PUBLIC PLUGINS|#public-plugins> section for details on sparrow public plugins and SparrowHub.
 
 
-=head2 download and install sparrow plugins
+=head2 Installing sparrow plugins
 
 I<sparrow plg install $plugin_name>
 
 For example:
 
-    sparrow plg search  nginx        # to get know available nginx* plugins
-    sparrow plg install swat-nginx   # to download and install a chosen plugin
-    sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
+    $ sparrow plg search  nginx        # to get know available nginx* plugins
+    $ sparrow plg install nginx-check  # to download and install a chosen plugin
+    $ sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
 
 Check L<sparrow-plugins|#sparrow-plugins> section to know more about sparrow plugins.
 
@@ -249,61 +308,50 @@ I<sparrow plg remove $plugin_name>
 
 For example:
 
-    sparrow plg remove df-check
+    $ sparrow plg remove df-check
 
 
-=head2 create checkpoints
+=head2 Checkpoints API
+
+To create a checkpoint use this command:
 
 I<sparrow check add $project_name $checkpoint_name>
 
-=over
-
-=item *
-
-Checkpoints tie together tested web service or application and sparrow plugin
-
-
-
-=item *
-
-Checkpoints belong to projects, so to create a checkpoint you need to point a project
-
-
-
-=back
+Checkpoints are parts of projects, so to create a checkpoint you always have to point a project.
 
 Command examples:
 
-    sparrow check production-web-servers nginx
-    sparrow check production-web-servers apache
-    sparrow check db-servers mysql
-    sparrow check my-machine sshd
+    $ sparrow check add web-servers nginx
+    $ sparrow check add system disk
 
 
-=head2 setup checkpoints
+=head2 Setup checkpoints
 
-I<sparrow check set $project_name $checkpoint_name $plugin_name [$host]>
-
-Once checkpoint is created you need to setup it. 
-
-By setting checkpoint you bind it to a certain plugin:
+Setting checkpoint you:
 
 =over
 
 =item *
 
-plugin_name
+bind checkpoint to sparrow plugin
+
+
+=item *
+
+(optionally) set hostname parameter for sparrow plugin
 
 
 =back
 
-Is a name of plugin to run tests.
+This command is used to set checkpoint:
+
+I<sparrow check set $project_name $checkpoint_name $plugin_name [$host]>
 
 =over
 
 =item *
 
-host
+hostname
 
 
 =back
@@ -312,104 +360,140 @@ This optional parameter sets base url or hostname of a web service or applicatio
 
 Command examples:
 
-    sparrow check set localhost sshd sshd-check  
-    sparrow check set localhost sshd sshd-check 127.0.0.1
-    sparrow check set db-servers mysql outth-mysql 127.0.0.1:3306
+    # bind nginx checkpoint to swat-nginx plugin
+    sparrow check set webservers nginx swat-nginx  
     
-    sparrow check set cpan-modules kelp swat-kelp 127.0.0.1:3000
-    sparrow check set production-web-servers nginx swat-nginx http://my.nginx.host
-    sparrow check set db-servers mongo swat-mongodb-http http://localhost:28017
-    sparrow check set dev-app my-cool-app swat-my-app http://my.dev.host:5555/foo/bar/baz
+    # bind nginx checkpoint to swat-nginx plugin, explicitly sets hostname to 127.0.0.1
+    sparrow check set webservers nginx swat-nginx 127.0.0.1
+    
+    # the same as above but for remote nginx server, hostname 192.168.0.1
+    sparrow check set webservers nginx-remote swat-nginx  192.168.0.1
+    
+    # bind mysql-server to outth-mysql plugin and sets mysql server address
+    sparrow check set db-servers mysql-server outth-mysql 127.0.0.1:3306
+    
+    # bind mongo checkpoint to swat-mongodb-http plugin and sets mongodb http API URL
+    sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
 
-To get checkpoint info say this:
+To get checkpoint detailed information say this:
 
 I<sparrow check show $project_name $checkpoint_name>
 
 For example:
 
-    sparrow check show production-web-servers nginx
+    $ sparrow check show webservers nginx
 
 
-=head2 run tests
+=head2 Run suites
 
-There are two ways to run tests. 
+There are two ways to run outthentic suites:
 
-First one is to run tests I<via checkpoint interface> :
+First one is to run suite I<via checkpoint interface> :
 
 I<sparrow check run $project_name $check_name>
 
 Examples:
 
-    sparrow check run my-machine sshd
-    
-    sparrow check run production-web-servers nginx
+    $ sparrow check run system disk
 
-Second way is simply run tests I<via plugin interface> :
+Second way is simply run tests I<via plugin interface> , in this case you do not need a checkpoint at all
+to run a plugin, but the other side of this - you rely on I<default> plugin configuration and can't
+define your own one:
 
 I<sparrow plg run $plugin_name>
 
-The 2 tests examples above could be run as plugins tests:
-
-    sparrow plg run sshd-check
-    
-    sparrow plg run swat-nginx
+  $ sparrow plg run system disk
 
 =over
 
 =item *
 
-Choose run tests via checkpoint interface when you want to add host settings for test suite.
+Choose checkpoint interface when you want to add some specific settings for outthentic suite.
 
 
 
 =item *
 
-Choose run tests via plugin interface when you have no host specific settings for test suite.
+Choose plugin interface when you have no host specific settings for suite and default settings are just enough for you.
+Notice that many sparrow plugins still require a specific configuration and can't be run  this way.
+
+
+
+=item *
+
+Only L<public plugins|#public-plugins> could be run using plugin interface.
 
 
 
 =back
 
-I<Warning>: you can run only L<public plugins|#public-plugins> tests using plugin interface.
 
-
-=head2 Running tests under cron.
+=head2 Running tests under cron
 
 I<sparrow check run $project_name $check_name --cron>
 
-When running tests under cron mode a normal output suppressed and is emitted only if tests fails.
+When running suite with cron mode enabled a normal output suppressed and is only emitted if suite fails.
 
 Example:
 
-    sparrow check run my-machine sshd --cron
+    $ sparrow check system disk --cron
 
 
-=head2 initialize checkpoints
+=head2 Configuring checkpoints
+
+Checkpoint configuration is configuration for plugin binded to checkpoint. Use this command to
+set checkpoint configuration:
 
 I<sparrow check ini $project_name $checkpoint_name>
 
-This command setups ini file for test suite provided by checkpoint's plugin.
-
-    # ini file for foo-app test suite:
-    export EDITOR=nano
-    sparrow check ini foo foo-app
-    
-        [main]
-        foo = 1
-        bar = 2
-
-More information on ini files syntax could be found here:
+This command configures sparrow plugin binded to checkpoint. There are two formats supported:
 
 =over
 
 =item *
 
-L<swat tests ini files|https://github.com/melezhik/swat#swat-ini-files>
+YAML
 
 
 =item *
 
-L<generic tests ini files|https://github.com/melezhik/outthentic#test-suite-ini-file>
+.ini 
+
+
+=back
+
+Sparrow will examine a content of configuration file and try to identify format automatically.
+
+For example for .ini format:
+
+    $ export EDITOR=nano
+    
+    $ sparrow check ini system disk
+    
+        [disk]
+        # disk used threshold in %
+        threshold = 80
+
+Or yaml format:
+
+    $ sparrow check ini system disk
+    
+    ---
+    disk
+      threshold: 80
+
+More information on outthentic suites configuration could be found here:
+
+=over
+
+=item *
+
+L<swat suites configuration files|https://github.com/melezhik/swat#swat-ini-files>
+
+
+=item *
+
+L<generic suites configuration files|https://github.com/melezhik/outthentic#test-suite-ini-file>
 
 
 =back
@@ -420,37 +504,25 @@ I<sparrow check load_ini $project_name $checkpoint_name path/to/file>
 
 For example:
 
-    sparrow check load_ini foo foo-app /path/to/ini/file
+    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.ini
+    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.yml
 
 
-=head2 run tests remotely
+=head2 Removing checkpoints
 
-NOT IMPLEMENTED YET.
-
-I<GET /$project_name/check_run/$project_name/$checkpoint_name>
-
-Sparrow rest API allow to run test suites remotely over http. This function is not implemented yet.
-
-    # runs sparrow rest API daemon
-    sparrowd
-    
-    # runs swat tests via http call
-    curl http://127.0.0.1:5090/check_run/db-servers/mysql
-
-
-=head2 remove checkpoints
+Use this command to remove checkpoint data from project container:
 
 I<sparrow check remove $project_name $checkpoint_name>
 
 Examples:
 
-    # remove checkpoint nginx-check in project foo
-    sparrow check remove foo nginx-check
+    # remove checkpoint nginx from project web-servers
+    $ sparrow check remove web-servers nginx
 
 
-=head1 SPARROW PLUGINS
+=head1 Sparrow plugins
 
-Sparrow plugins are shareable outthentic test suites installed from remote sources.
+Sparrow plugins are shareable outthentic suites installed from remote sources.
 
 There are two type of sparrow plugins:
 
@@ -458,13 +530,13 @@ There are two type of sparrow plugins:
 
 =item *
 
-public plugins are provided by L<SparrowHub|https://sparrowhub.org/> community plugin repository and considered as public access
+public plugins are provided by L<SparrowHub|https://sparrowhub.org/> community plugin repository and considered as public access.
 
 
 
 =item *
 
-private plugins are provided by internal or external git repositories and I<not necessary> considered as public access
+private plugins are provided by internal or external git repositories and I<not necessary> considered as public access.
 
 
 
@@ -472,10 +544,10 @@ private plugins are provided by internal or external git repositories and I<not 
 
 Both public and private plugins are installed with help of sparrow client:
 
-    sparrow plg install plugin_name
+I<sparrow plg install plugin_name>
 
 
-=head2 PUBLIC PLUGINS
+=head2 Public plugins
 
 The public plugins features:
 
@@ -483,20 +555,20 @@ The public plugins features:
 
 =item *
 
-they are kept in a central place called L<SparrowHub|https://sparrowhub.org/> - community plugins repository
+they are kept in a central place called L<SparrowHub|https://sparrowhub.org/> - community plugins repository.
 
 
 
 =item *
 
-they are versioned so you may install various version of a one plugin
+they are versioned so you may install various version of a one plugin.
 
 
 
 =back
 
 
-=head2 PRIVATE PLUGINS
+=head2 Private plugins
 
 Private plugins are ones created by you and not supposed to be accessed publicly.
 
@@ -525,7 +597,7 @@ private plugins should be listed at sparrow plugin list file (SPL file)
 =back
 
 
-=head3 SPL FILE
+=head3 SPL file
 
 Sparrow plugin list is represented by text file placed at `\~/sparrow.list'
 
@@ -564,16 +636,16 @@ Example entries:
 
 Once you add a proper entries into SPL file you may list and install a private plugins:
 
-    sparrow plg show    swat-yars
-    sparrow plg install swat-yars
+    $ sparrow plg show    swat-yars
+    $ sparrow plg install swat-yars
 
 
-=head1 CREATING SPARROW PLUGINS
+=head1 Create sparrow plugin
 
 Here is a brief description of the process:
 
 
-=head2 swat test suite
+=head2 Swat test suites
 
 To get know to create swat tests please follow swat project documentation -
 L<https://github.com/melezhik/swat|https://github.com/melezhik/swat>.
@@ -653,8 +725,8 @@ engine
 
 =back
 
-Defines test framework for test suite. Default value is `swat'. Other possible value is 'generic', see
-L<generic test suite section|#generic-test-suite>
+Defines framework for suite. Default value is `swat'. Other possible value is 'generic', see
+L<generic suites section|#generic-suites>
 
 =over
 
@@ -673,12 +745,12 @@ description - a short description of your plugin
 =back
 
 
-=head3 generic test suite
+=head3 Generic suites
 
-Creation of generic tests is very similar to a swat tests, but you'd better read L<outthentic framework documentation|https://github.com/melezhik/outthentic> to 
+Creation of generic suites is very similar to a swat test suites, but you'd better read L<outthentic framework documentation|https://github.com/melezhik/outthentic> to 
 understand the difference.
 
-Once your test suite is ready prepare the same additional stuff as with swat test suite:
+Once your suite is ready add the same metadata as with swat test suite:
 
 =over
 
@@ -708,16 +780,32 @@ Sparrow.json file does not differ from the one described at L<swat test suite|#s
     }
 
 
-=head1 PUBLISHING SPARROW PLUGINS
+=head1 Publishing sparrow plugins
 
 
 =head2 Private plugin
 
+=over
+
+=item *
+
 All you need is to keep a plugin source code in the remote git repository.
+
+
+
+=item *
 
 Plugin root directory should be repository root directory.
 
+
+
+=item *
+
 Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see L<SPL FILE|#> section how to do this.
+
+
+
+=back
 
 
 =head2 Public plugin
@@ -748,7 +836,7 @@ Login into your account. Go on "Profile" page, then on "My Token" page and then 
 
 Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
 
-    cat ~/sparrowhub.json
+    $ cat ~/sparrowhub.json
     
     {
         "user"  : "melezhik",
@@ -805,14 +893,14 @@ L<Aleksei Melezhik|mailto:melezhik@gmail.com>
 https://github.com/melezhik/sparrow
 
 
-=head1 COPYRIGHT
+=head1 Copyright
 
 Copyright 2015 Alexey Melezhik.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
-=head1 THANKS
+=head1 Thanks
 
 =over
 

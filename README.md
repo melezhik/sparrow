@@ -319,9 +319,9 @@ Sparrow will examine a content of configuration file and try to identify format 
 
 For example for .ini format:
 
-    export EDITOR=nano
+    $ export EDITOR=nano
 
-    sparrow check ini system disk
+    $ sparrow check ini system disk
 
         [disk]
         # disk used threshold in %
@@ -329,11 +329,12 @@ For example for .ini format:
 
 Or yaml format:
 
-    sparrow check ini system disk
+    $ sparrow check ini system disk
+
     ---
     disk
       threshold: 80
- 
+     
 More information on outthentic suites configuration could be found here:
 
 * [swat suites configuration files](https://github.com/melezhik/swat#swat-ini-files)
@@ -419,8 +420,8 @@ Example entries:
 
 Once you add a proper entries into SPL file you may list and install a private plugins:
 
-    sparrow plg show    swat-yars
-    sparrow plg install swat-yars
+    $ sparrow plg show    swat-yars
+    $ sparrow plg install swat-yars
 
 # Create sparrow plugin
 
@@ -538,7 +539,7 @@ Login into your account. Go on "Profile" page, then on "My Token" page and then 
 
 Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
 
-    cat ~/sparrowhub.json
+    $ cat ~/sparrowhub.json
 
     {
         "user"  : "melezhik",

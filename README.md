@@ -36,7 +36,7 @@ via a unified interface of sparrow console client. It is very close to the conce
 
 ## SparrowHub
 
-SparrowHub is a [Central repository](https://sparrowhub.org) of sparrow plugins. 
+SparrowHub is a [central repository](https://sparrowhub.org) of sparrow plugins. 
 
 ## Sparrow tool
 
@@ -94,7 +94,7 @@ Plugin configuration will be explain latter.
 
 Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
 different logical groups. Like one for system checks - disk available space or RAM status, other
-for web servers status so on. 
+for web servers status, so on. 
 
 # API
 
@@ -103,11 +103,11 @@ console client.
 
 ## Projects API
 
-Sparrow project is a logical group of sparrow checkpoints. To create a project use this command:
+Sparrow project is a logical group of sparrow checkpoints. To create a project use `sparrow project create` command:
 
 *sparrow project create $project\_name*
 
-Example command:
+Command examples:
 
     # system level checks
     $ sparrow project create system
@@ -115,7 +115,7 @@ Example command:
     # web servers checks
     $ sparrow project create web-servers
 
-To get project info say this:
+To get project information say this:
 
 *sparrow project show $project\_name*
 
@@ -141,9 +141,9 @@ Note - this command will remove all checkpoints related to project as well!
 
 Sparrow plugin is a shareable outthentic suite.
 
-One could install sparrow plugin and then run related outthentic scenarios, see [check](#run-tests) action for details.
+One could install sparrow plugin and then run related outthentic scenarios, see [check](#running-suites) action for details.
 
-To search available plugins say this:
+To search available plugins use `sparrow plg search` command:
 
 *sparrow plg search $pattern*
 
@@ -155,7 +155,7 @@ For example:
     # find foo-* plugins
     $ sparrow plg search foo
 
-Pattern should be perl regexp pattern. Examples:
+Search pattern should be perl regular expression. Examples:
 
 * `.*`     # find any   plugin
 * `nginx`  # find nginx plugins
@@ -174,7 +174,7 @@ There are two basic command to work with index:
 
 * *sparrow index summary*
 
-This command will show timestamps and file locations for public and private index files
+This command will show timestamps and file locations for public and private index files.
 
 *sparrow index update*
 
@@ -182,9 +182,10 @@ This command will fetch fresh index from SparrowHub and update local cached inde
 
 This is very similar to what `cpan index reload` command does.
 
-You need this to get know about any updates, changes of SparrowHub repository.
+You need `sparrow index update` to get know about updates, changes of SparrowHub repository. For example
+when someone release new version of plugin.
 
-See [PUBLIC PLUGINS](#public-plugins) section for details on sparrow public plugins and SparrowHub.
+See [public plugins](#public-plugins) section for details on sparrow public plugins and SparrowHub.
 
 ## Installing sparrow plugins
 
@@ -202,11 +203,11 @@ To see installed plugin list say this:
 
 *sparrow plg list*
 
-To get installed plugin info say this:
+To get installed plugin information say this:
 
 *sparrow plg show $plugin\_name*
 
-To remove installed plugin:
+To remove installed plugin use `sparrow plg remove` command:
 
 *sparrow plg remove $plugin\_name*
 
@@ -216,7 +217,7 @@ For example:
 
 ## Checkpoints API
 
-To create a checkpoint use this command:
+To create a checkpoint use `sparrow check add` command:
 
 *sparrow check add $project\_name $checkpoint\_name*
 
@@ -229,18 +230,16 @@ Command examples:
 
 ## Setup checkpoints
 
-Setting checkpoint you:
+By setting checkpoint you:
 
 *  bind checkpoint to sparrow plugin
 * (optionally) set hostname parameter for sparrow plugin
 
-This command is used to set checkpoint:
+`sparrow check set` command is used to set checkpoint:
 
-*sparrow check set $project\_name $checkpoint\_name $plugin_name [$host]*
+*sparrow check set $project\_name $checkpoint\_name $plugin_name [$hostname]*
 
-* hostname
-
-This optional parameter sets base url or hostname of a web service or application being tested.
+Hostname is optional parameter to set base url or hostname of a web service or application being tested.
 
 Command examples:
 
@@ -260,26 +259,26 @@ Command examples:
     sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
 
 
-## Run suites
+## Running suites
 
 There are two ways to run outthentic suites:
 
-First one is to run suite _via checkpoint interface_ :
+First one is to run suite _via checkpoint interface_:
 
 *sparrow check run $project\_name $check\_name*
 
-Examples:
+For example:
 
     $ sparrow check run system disk
 
 
-Second way is simply run tests _via plugin interface_ , in this case you do not need a checkpoint at all
-to run a plugin, but the other side of this - you rely on _default_ plugin configuration and can't
+Second way is simply run tests _via plugin interface_, in this case you do not need a checkpoint at all
+to run a suite, because you run it as is. The back side of this approach you rely on _default_ plugin configuration and can't
 define your own one:
  
 *sparrow plg run $plugin\_name*
 
-    $ sparrow plg run df-check
+    $ sparrow plg run df-check # this suite will run with default values for disk.threshold parameter
 
 * Choose checkpoint interface when you want to add some specific settings for outthentic suite.
 
@@ -288,19 +287,24 @@ Notice that many sparrow plugins still require a specific configuration and can'
 
 * Only [public plugins](#public-plugins) could be run using plugin interface.
 
-## Running suites under cron
+## Running suites with cron
+
+When running suite under cron it is handy only have an output if something goes wrong, f.e.
+test suite failed or something else goes bad. Use `--cron` flag to enable this behavior:
 
 *sparrow check run $project\_name $check\_name --cron*
 
-When running suite with cron mode enabled a normal output suppressed and is only emitted if suite fails.
+Running checkpoint with --cron flag suppress a normal output and only emit something in case of failures.
 
 Example:
 
-    $ sparrow check system disk --cron
+    $ sparrow check system disk --cron # pleas keep quite if disk space is ok
 
 ## Configuring checkpoints
 
 Checkpoint configuration is a configuration data consumed by plugin binded to checkpoint. 
+One have to consult plugin documentation ( for public plugins - this is SparrowHub site ) to get know
+the structure of configuration data to feed.
 
 Sparrow support two configuration formats:
 
@@ -330,7 +334,7 @@ checkpoint run:
 
 User also could copy existed configuration from file using `check load_ini` command:
 
-*sparrow check load_ini $project\_name $checkpoint\_name /path/to/file*
+*sparrow check load_ini $project\_name $checkpoint\_name /path/to/ini/file*
 
 For example:
 
@@ -344,7 +348,7 @@ For example:
 
     $ sparrow check show webservers nginx
 
-Alternative way to configure sparrow checkpoint is to load configuration from yaml file during checkpoint [run](#run-suites):
+Alternative way to configure sparrow checkpoint is to load configuration from yaml file _during_ checkpoint [run](#running-suites):
 
     $ cat disk.yml
 

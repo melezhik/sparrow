@@ -358,14 +358,13 @@ Alternative way to configure sparrow checkpoint is to load configuration from ya
 
     $ sparrow check run system disk --yml disk.yml
      
-While `sparrow check ini/load_ini` command save checkpoint configuration and make it persistent,
-`sparrow check run --yml` command apply checkpoint configuration only for checkpoint run and could be treated
-as session basis configuration. For common usage, when user run checkpoints manually first approach is more
-convenient, while second one is way automatic, when checkpoints configurations kept as yaml files
-are maintained out of sparrow scope ( f.e. by other configuration management tools ) and applied
+While `sparrow check ini/load_ini` command saves checkpoint configuration and makes it persistent,
+`sparrow check run --yml` command applies checkpoint configuration only for checkpoint run and could be treated
+as runtime configuration. For common usage, when user run checkpoints manually first approach is more
+convenient, while second one is a _way automatic_, when checkpoints configurations are kept as yaml files
+and maintained out of sparrow scope ( f.e. by other configuration management tools ) and thus further applied
 during checkpoint run.
  
-
 More information on outthentic suites configurations could be found here:
 
 * [swat suites configuration files](https://github.com/melezhik/swat#swat-ini-files)

@@ -293,7 +293,7 @@ Notice that many sparrow plugins still require a specific configuration and can'
 
 * Only [public plugins](#public-plugins) could be run using plugin interface.
 
-## Running tests under cron.
+## Running tests under cron
 
 *sparrow check run $project\_name $check\_name --cron*
 
@@ -571,14 +571,14 @@ Probably useful in automation scripts:
 
 https://github.com/melezhik/sparrow
 
-# COPYRIGHT
+# Copyright
 
 Copyright 2015 Alexey Melezhik.
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
-# THANKS
+# Thanks
 
 * to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
 

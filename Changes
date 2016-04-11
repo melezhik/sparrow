@@ -1,3 +1,10 @@
+0.0.22
+
+* minor changes in help info
+
+* notion of yml files as configuration files for sparrow plugins
+
+
 0.0.21 2016-03-28
 
 * sparrow_hub_api_url could be set by $sparrow_hub_api_url environment variable

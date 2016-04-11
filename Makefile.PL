@@ -9,9 +9,8 @@ all_from       'lib/Sparrow.pm';
 # Specific dependencies
 
 requires    'Carton';
-requires    'JSON';
 requires    'version';
-
+requires    'JSON';
 license     'perl';
 
 repository  'https://github.com/melezhik/sparrow';

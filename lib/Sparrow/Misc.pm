@@ -51,20 +51,21 @@ sub usage {
 
     print "\tsparrow plg search foo          # search plugins \n";
     print "\tsparrow plg list                # show installed plugins \n";
-    print "\tsparrow plg install swat-nginx  # install plugin \n";
-    print "\tsparrow plg remove  swat-nginx  # remove plugin\n";
-    print "\tsparrow plg show    swat-nginx  # get plugin info\n";
-    print "\tsparrow plg run     swat-nginx  # run plguin tests\n";
+    print "\tsparrow plg install df-check    # install plugin \n";
+    print "\tsparrow plg remove  df-check    # remove plugin\n";
+    print "\tsparrow plg show    df-check    # get plugin info\n";
+    print "\tsparrow plg run     df-check    # run plguin tests\n";
 
 
     print "\n[checkpoints]:\n\n";
-    print "\tsparrow check add      foo nginx         # create checkpoint named `nginx' in project foo\n";
-    print "\tsparrow check remove   foo nginx         # remove checkpoint named `nginx' in project foo\n";
-    print "\tsparrow check show     foo nginx         # get checkpoint info \n";
-    print "\tsparrow check run      foo nginx         # run checkpoint tests \n";
-    print "\tsparrow check set      foo nginx 127.0.0.1 swat-nginx  # set checkpoint parameters \n";
-    print "\tsparrow check ini      foo nginx         # initialize sparrow plugin \n";
-    print "\tsparrow check load_ini foo nginx /path/to/ini/file # load sparrow plugin initialization from file \n";
+    print "\tsparrow check add      system disk           # create checkpoint named `disk' in project system\n";
+    print "\tsparrow check set      system disk df-disk   # bind check point to plugin \n";
+    print "\tsparrow check remove   system disk       # remove checkpoint named `disk' in project foo\n";
+    print "\tsparrow check show     system disk       # get checkpoint info \n";
+    print "\tsparrow check run      system disk       # run checkpoint tests \n";
+    print "\tsparrow check ini      system disk       # populate plugin configuration \n";
+    print "\tsparrow check load_ini system disk /path/to/ini/file # load plugin configuration from ini file \n";
+    print "\tsparrow check load_yml system disk /path/to/yml/file # load plugin configuration from yml file \n";
 
     print "\n\n";
 

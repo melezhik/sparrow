@@ -256,19 +256,33 @@ Example:
 
     sparrow check run my-machine sshd --cron
 
-## initialize checkpoints
+## configuring checkpoints
 
 *sparrow check ini $project\_name $checkpoint\_name*
 
-This command setups ini file for test suite provided by checkpoint's plugin.
+This command configures sparrow plugin binded to checkpoint. There are two formats supported:
 
-    # ini file for foo-app test suite:
+* YAML
+* .ini 
+
+Sparrow will examine a content of configuration file and try to identify format automatically.
+
+For example for .ini format:
+
     export EDITOR=nano
-    sparrow check ini foo foo-app
 
-        [main]
-        foo = 1
-        bar = 2
+    sparrow check ini system disk
+
+        [disk]
+        # disk used threshold in %
+        threshold = 80
+
+Of yaml format:
+
+    sparrow check ini system disk
+    ---
+    disk
+      threshold: 80
  
 More information on ini files syntax could be found here:
 

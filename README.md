@@ -288,7 +288,7 @@ Notice that many sparrow plugins still require a specific configuration and can'
 
 * Only [public plugins](#public-plugins) could be run using plugin interface.
 
-## Running tests under cron
+## Running suites under cron
 
 *sparrow check run $project\_name $check\_name --cron*
 

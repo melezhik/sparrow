@@ -263,49 +263,48 @@ For example:
 
     sparrow check show nginx
 
-## run tests
+## Run suites
 
-There are two ways to run tests. 
+There are two ways to run outthentic suites:
 
-First one is to run tests _via checkpoint interface_ :
+First one is to run suite _via checkpoint interface_ :
 
 *sparrow check run $project\_name $check\_name*
 
 Examples:
 
-    sparrow check run my-machine sshd
-
-    sparrow check run production-web-servers nginx
+    $ sparrow check run system disk
 
 
-Second way is simply run tests _via plugin interface_ :
+Second way is simply run tests _via plugin interface_ , in this case you do not need a checkpoint at all
+to run a plugin, but the other side of this - you rely on _default_ plugin configuration and can't
+define your own one:
  
-
 *sparrow plg run $plugin\_name*
 
-The 2 tests examples above could be run as plugins tests:
+  $ sparrow plg run system disk
 
-    sparrow plg run sshd-check
+* Choose checkpoint interface when you want to add some specific settings for outthentic suite.
 
-    sparrow plg run swat-nginx
+* Choose plugin interface when you have no host specific settings for suite and default settings are just enough for you.
+Notice that many sparrow plugins still require a specific configuration and can't be run  this way.
 
-* Choose run tests via checkpoint interface when you want to add host settings for test suite.
-
-* Choose run tests via plugin interface when you have no host specific settings for test suite.
-
-_Warning_: you can run only [public plugins](#public-plugins) tests using plugin interface.
+* Only [public plugins](#public-plugins) could be run using plugin interface.
 
 ## Running tests under cron.
 
 *sparrow check run $project\_name $check\_name --cron*
 
-When running tests under cron mode a normal output suppressed and is emitted only if tests fails.
+When running suite with cron mode enabled a normal output suppressed and is only emitted if suite fails.
 
 Example:
 
-    sparrow check run my-machine sshd --cron
+    $ sparrow check system disk --cron
 
-## configuring checkpoints
+## Configuring checkpoints
+
+Checkpoint configuration is configuration for plugin binded to checkpoint. Use this command to
+set checkpoint configuration:
 
 *sparrow check ini $project\_name $checkpoint\_name*
 
@@ -333,10 +332,10 @@ Or yaml format:
     disk
       threshold: 80
  
-More information on ini files syntax could be found here:
+More information on outthentic suites configuration could be found here:
 
-* [swat tests ini files](https://github.com/melezhik/swat#swat-ini-files)
-* [generic tests ini files](https://github.com/melezhik/outthentic#test-suite-ini-file)
+* [swat suites configuration files](https://github.com/melezhik/swat#swat-ini-files)
+* [generic suites configuration files](https://github.com/melezhik/outthentic#test-suite-ini-file)
 
 Alternatively you may load plugin ini file from file path
 
@@ -344,30 +343,19 @@ Alternatively you may load plugin ini file from file path
 
 For example:
 
-    sparrow check load_ini foo foo-app /path/to/ini/file
+    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.ini
+    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.yml
 
-## run tests remotely
+## Remove checkpoints
 
-NOT IMPLEMENTED YET.
-
-*GET /$project\_name/check\_run/$project\_name/$checkpoint\_name*
-
-Sparrow rest API allow to run test suites remotely over http. This function is not implemented yet.
-
-    # runs sparrow rest API daemon
-    sparrowd
-
-    # runs swat tests via http call
-    curl http://127.0.0.1:5090/check_run/db-servers/mysql
-
-## remove checkpoints
+Use this command to remove checkpoint data from project container:
 
 *sparrow check remove $project\_name $checkpoint\_name*
 
 Examples:
 
-    # remove checkpoint nginx-check in project foo
-    sparrow check remove foo nginx-check
+    # remove checkpoint nginx from project web-servers
+    $ sparrow check remove web-servers nginx
 
 # SPARROW PLUGINS
 

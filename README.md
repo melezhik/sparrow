@@ -29,7 +29,7 @@ which is DSL used in such a suites. There are 2 type of outthentic suites - swat
 
 ## Sparrow plugins
 
-Sparrow plugins are shareable outthentic suites distributed via outthentic suites repository - [SparrowHub](https://sparrowhub.org)
+Sparrow plugins are shareable outthentic suites distributed via outthentic suites repository - [SparrowHub](https://sparrowhub.org).
 Term plugins refers to the idea of different outthentic suites could be pluggable and so get used on single machine
 via a unified interface of sparrow console client. It is very close to the conception of CPAN modules in Perl or ruby gems in Ruby.
 
@@ -43,9 +43,9 @@ SparrowHub is a [Central repository](https://sparrowhub.org) of sparrow plugins.
 `sparrow` is a console client to search, install, setup and finally run various sparrow plugins.
 Thinks about it as of cpan client for CPAN modules or gem client for ruby gems.
 
-## 2 type of sparrow plugins
+## Two types of sparrow plugins
 
-There are 2 typo of outthentic suites or sparrow plugins:
+There are tow types of outthentic suites or sparrow plugins:
 
 * Swat test suites
 
@@ -178,9 +178,9 @@ This command will fetch fresh index from SparrowHub and update local cached inde
 
 This is very similar to what `cpan index reload` command does.
 
-You need this to get know about any updates, changes on SparrowHub public plugins repository.
+You need this to get know about any updates, changes of SparrowHub repository.
 
-See [PUBLIC PLUGINS](#public-plugins) section for details.
+See [PUBLIC PLUGINS](#public-plugins) section for details on sparrow public plugins and SparrowHub.
 
 ## Download and install sparrow plugins
 
@@ -208,7 +208,7 @@ To remove installed plugin:
 
 For example:
 
-    sparrow plg remove df-check
+    $ sparrow plg remove df-check
 
 ## Checkpoints
 
@@ -225,39 +225,43 @@ Command examples:
 
 ## Setup checkpoints
 
+Setting checkpoint you:
+
+*  bind checkpoint to sparrow plugin
+* (optionally) set hostname parameter for sparrow plugin
+
+This command is used to set checkpoint:
 
 *sparrow check set $project\_name $checkpoint\_name $plugin_name [$host]*
 
-Once checkpoint is created you need to setup it. 
-
-By setting checkpoint you bind it to a certain plugin:
-
-* plugin\_name
-
-Is a name of plugin to run tests.
-
-* host
+* hostname
 
 This optional parameter sets base url or hostname of a web service or application being tested.
 
 Command examples:
 
-    sparrow check set localhost sshd sshd-check  
-    sparrow check set localhost sshd sshd-check 127.0.0.1
-    sparrow check set db-servers mysql outth-mysql 127.0.0.1:3306
+    # bind nginx checkpoint to swat-nginx plugin
+    sparrow check set webservers nginx swat-nginx  
 
-    sparrow check set cpan-modules kelp swat-kelp 127.0.0.1:3000
-    sparrow check set production-web-servers nginx swat-nginx http://my.nginx.host
-    sparrow check set db-servers mongo swat-mongodb-http http://localhost:28017
-    sparrow check set dev-app my-cool-app swat-my-app http://my.dev.host:5555/foo/bar/baz
+    # bind nginx checkpoint to swat-nginx plugin, explicitly sets hostname to 127.0.0.1
+    sparrow check set webservers nginx swat-nginx 127.0.0.1
 
-To get checkpoint info say this:
+    # the same as above but for remote nginx server, hostname 192.168.0.1
+    sparrow check set webservers nginx-remote swat-nginx  192.168.0.1
+
+    # bind mysql-server to outth-mysql plugin and sets mysql server address
+    sparrow check set db-servers mysql-server outth-mysql 127.0.0.1:3306
+
+    # bind mongo checkpoint to swat-mongodb-http plugin and sets mongodb http API URL
+    sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
+
+To get checkpoint detailed information say this:
 
 *sparrow check show $project\_name $checkpoint\_name*
 
 For example:
 
-    sparrow check show production-web-servers nginx
+    sparrow check show nginx
 
 ## run tests
 

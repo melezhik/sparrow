@@ -12,40 +12,44 @@ Sparrow - outthentic tests manager.  Manages outthentic family test suites.
 
 The project is still in very alpha stage. Things might change. But you can start play with it :-)
 
-# Outthentic family frameworks
-
-Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic-dsl).
-
-Currently there are two members of outthentic family test frameworks:
-
-* [swat](https://github.com/melezhik/swat) - web application testing framework
-
-So, _swat test suites_ are those running under swat framework
-
-* [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
-
-So, _generic test suites_ are those running under outthentic framework
-
-In the documentation below term \`outthentic tests' relates both to swat and generic tests.
-
-# Sparrow summary
-
-* console client to setup and run outthentic test suites
-
-* installs and runs sparrow plugins - shareable outthentic test suites
-
-* ability to run tests remotely over rest API (TODO)
-
-# DEPENDENCIES
-
-git, curl, bash
 
 # INSTALL
 
-    sudo yum install git
-    sudo yum install curl
+    $ sudo yum install git
+    $ sudo yum install curl # skip this if you are not going to user private sparrow plugins
+    $ cpanm Sparrow
 
-    cpanm Sparrow
+# Glossary 
+
+## Outthentic family frameworks
+
+* Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic-dsl).
+
+* Currently there are two members of outthentic family test frameworks:
+
+  * [swat](https://github.com/melezhik/swat) - web application testing framework
+
+  * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
+
+So, _swat test suites_ are those running under swat framework
+
+So, _generic test suites_ are those running under outthentic framework
+
+* In the documentation below term \`outthentic tests' relates both to swat and generic tests.
+
+## Sparrow plugins
+
+Reusable \`outthentic tests' distributed via outthentic tests repository - [SparrowHub](https://sparrowhub.org)
+are called sparrow plugins
+
+## Sparrow tool
+
+`sparrow` is a console client to install, setup and run sparrow plugins 
+
+## SparrowHub
+
+[Central repository](https://sparrowhub.org) of sparrow plugins 
+
 
 # USAGE
 
@@ -57,13 +61,14 @@ These are actions provided by sparrow console client:
 
 Create a sparrow project.
 
-Sparrow project is a container for outthentic test suites and tested web services or applications.
+Sparrow project is a container for outthentic test suites.
 
 Sparrow project is entry point where one run outthentic tests against different web services or applications.
 
 Example command:
 
-    sparrow project create dev-db-servers
+    # system level chec
+    sparrow project create system
 
     sparrow project create production-web-servers
 
@@ -277,7 +282,7 @@ For example for .ini format:
         # disk used threshold in %
         threshold = 80
 
-Of yaml format:
+Or yaml format:
 
     sparrow check ini system disk
     ---

@@ -16,7 +16,7 @@ The project is still in very alpha stage. Things might change. But you can start
 # INSTALL
 
     $ sudo yum install git
-    $ sudo yum install curl # skip this if you are not going to user private sparrow plugins
+    $ sudo yum install curl # skip this if you are not going to use private sparrow plugins
     $ cpanm Sparrow
 
 # Glossary 
@@ -27,9 +27,9 @@ The project is still in very alpha stage. Things might change. But you can start
 
 * Currently there are two members of outthentic family test frameworks:
 
-  * [swat](https://github.com/melezhik/swat) - web application testing framework
+  * [swat](https://github.com/melezhik/swat) - web application testing framework.
 
-  * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework
+  * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework.
 
 So, _swat test suites_ are those running under swat framework
 
@@ -40,20 +40,57 @@ So, _generic test suites_ are those running under outthentic framework
 ## Sparrow plugins
 
 Reusable \`outthentic tests' distributed via outthentic tests repository - [SparrowHub](https://sparrowhub.org)
-are called sparrow plugins
+are called sparrow plugins.
 
 ## Sparrow tool
 
-`sparrow` is a console client to install, setup and run sparrow plugins 
+`sparrow` is a console client to install, setup and run sparrow plugins.
 
 ## SparrowHub
 
 [Central repository](https://sparrowhub.org) of sparrow plugins 
 
 
-# USAGE
+# Sparrow basic entities
 
-These are actions provided by sparrow console client:
+Basically you deal with 3 type of entities:
+
+## plugins
+
+A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
+monitoring / testing suite to solve a specific issue. For example check available disk space of
+ensure service is running. There are a plenty of plugins at SparrowHub.
+
+
+## checkpoint 
+
+Checkpoint is configurable sparrow plugin. Some sparrow does not require configuration and could be run as is,
+but many require some piece of input data to bind to. For example hostname or internal plugin parameters
+to adjust plugin logic. Checkpoint is a container for:
+
+* plugin
+* plugin configuration
+
+
+Plugin configuration is just a text file in one of 2 formats:
+
+* .ini style format
+* YAML format
+
+You could read about plugin configuration further in this documentation.
+
+
+## projects
+
+Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
+different logical groups. Like one for system checks - disk available space or RAM status, other
+for web servers status so on. 
+
+# API
+
+Now having a knowledges about basic sparrow entities let's dive  into sparrow API provided by `sparrow`
+console client.
+
 
 ## create a project
 
@@ -61,13 +98,11 @@ These are actions provided by sparrow console client:
 
 Create a sparrow project.
 
-Sparrow project is a container for outthentic test suites.
-
-Sparrow project is entry point where one run outthentic tests against different web services or applications.
+Sparrow project is a logical group of sparrow plugins and their
 
 Example command:
 
-    # system level chec
+    # system level check
     sparrow project create system
 
     sparrow project create production-web-servers

@@ -286,7 +286,7 @@ define your own one:
  
 *sparrow plg run $plugin\_name*
 
-    $ sparrow plg run system disk
+    $ sparrow plg run df-check
 
 * Choose checkpoint interface when you want to add some specific settings for outthentic suite.
 

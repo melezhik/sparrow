@@ -6,7 +6,7 @@ Sparrow
  
 # SYNOPSIS
 
-Sparrow - outthentic tests manager.  Manages outthentic family test suites.
+Sparrow - outthentic plugins manager.  Manages outthentic family suites.
 
 # CAVEAT
 
@@ -21,35 +21,46 @@ The project is still in very alpha stage. Things might change. But you can start
 
 # Glossary 
 
-## Outthentic family frameworks
+## Outthentic suites
 
-* Outthentic tests are those using [Outthentic DSL](https://github.com/melezhik/outthentic-dsl).
-
-* Currently there are two members of outthentic family test frameworks:
-
-  * [swat](https://github.com/melezhik/swat) - web application testing framework.
-
-  * [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing framework.
-
-So, _swat test suites_ are those running under swat framework
-
-So, _generic test suites_ are those running under outthentic framework
-
-* In the documentation below term \`outthentic tests' relates both to swat and generic tests.
+Outthentic suites are small testing / monitoring suites for various cases from monitoring available disk space
+to checking if your web server is healthy. Term outthentic refers to [Outthentic DSL](https://github.com/melezhik/outthentic-dsl)
+which is DSL used in such a suites. There are 2 type of outthentic 
 
 ## Sparrow plugins
 
-Reusable \`outthentic tests' distributed via outthentic tests repository - [SparrowHub](https://sparrowhub.org)
-are called sparrow plugins.
+Reusable \`outthentic suites' distributed via outthentic suites repository - [SparrowHub](https://sparrowhub.org)
+are called sparrow plugins. Term plugins refers to different outthentic suites could be pluggable and used
+via a single interface of sparrow client. It is very close to conception of for example CPAN modules or ruby gems.
+
+
+## SparrowHub
+
+[Central repository](https://sparrowhub.org) of sparrow plugins.
+
+
+## 2 type of sparrow plugins
+
+There are 2 typo of outthentic suites:
+
+* Swat test suites
+
+* Generic test suites
+
+
+## Swat test suites
+
+Are those based on [swat](https://github.com/melezhik/swat) web application testing framework.
+Swat is in turn based on Outthentic DSL.
+
+## Generic suites
+
+Are those base on [outthentic](https://github.com/melezhik/outthentic) generic purposes testing / monitoring framework.
+Outthentic framework is in turn based in Outthentic DSL.
 
 ## Sparrow tool
 
 `sparrow` is a console client to install, setup and run sparrow plugins.
-
-## SparrowHub
-
-[Central repository](https://sparrowhub.org) of sparrow plugins 
-
 
 # Sparrow basic entities
 
@@ -60,7 +71,6 @@ Basically you deal with 3 type of entities:
 A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
 monitoring / testing suite to solve a specific issue. For example check available disk space of
 ensure service is running. There are a plenty of plugins at SparrowHub.
-
 
 ## checkpoint 
 

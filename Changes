@@ -1,4 +1,8 @@
-0.0.22
+0.0.23 2016-04-12
+
+* hotfix for `--yaml path' resolution
+
+0.0.22 2016-04-12
 
 * a lot of updates of documentation
 * --yaml parameter to pass  yml configuration files for sparrow plugins

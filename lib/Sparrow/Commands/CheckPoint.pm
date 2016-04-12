@@ -192,7 +192,7 @@ sub check_run {
     
     if ($spj->{engine} and $spj->{engine} eq 'generic'){
         $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ ";
-        if ($options=~/--yaml\s+(\S+?)/){
+        if ($options=~/--yaml\s+(\S+)/){
           my $path = $1;
           $cmd.=" --yaml $path";
         }else{
@@ -204,7 +204,7 @@ sub check_run {
     }else{
         $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
         $cmd.=" $cp_set->{base_url}";
-        if ($options=~/--yaml\s+(\S+?)/){
+        if ($options=~/--yaml\s+(\S+)/){
           my $path = $1;
           $cmd.=" --yaml $path";
         }else{
@@ -219,7 +219,7 @@ sub check_run {
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$cid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
-        print "# running $cmd ...\n\n";
+        print "# $cmd\n\n";
         exec $cmd;
     }
 

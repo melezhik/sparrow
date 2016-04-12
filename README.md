@@ -379,8 +379,8 @@ during checkpoint run.
  
 More information on outthentic suites configurations could be found here:
 
-* [swat suites configuration files](https://github.com/melezhik/swat#swat-ini-files)
-* [generic suites configuration files](https://github.com/melezhik/outthentic#test-suite-ini-file)
+* [swat suites configuration files](https://github.com/melezhik/swat#suite-configuration)
+* [generic suites configuration files](https://github.com/melezhik/outthentic#suite-configuration)
 
 ## Removing checkpoints
 

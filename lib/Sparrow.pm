@@ -39,11 +39,22 @@ The project is still in very alpha stage. Things might change. But you can start
 =head1 Glossary 
 
 
+=head2 Outthentic DSL
+
+Outthentic is a word combined from two parts - `out' and `authentic', meaning that a program prints something into stdout and
+and someone proves program "authenticity" (correctness) by matching output for some rules defined in terms of Outthentic DSL - 
+is a language to verify, analyze unstructured text output.
+
+Follow L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl> to for details.
+
+
 =head2 Outthentic suites
 
-Outthentic suites are small testing / monitoring suites for various cases from monitoring available disk space
-to checking if your web server is healthy. Term outthentic refers to L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl>
-which is DSL used in such a suites. There are 2 type of outthentic suites - swat and generic. Read further.
+Outthentic suites are small scenarios based on Outthentic DSL to provide solutions
+for various testing, monitoring, reporting tasks from checking available disk space
+to ensuring that your web server is healthy.
+
+There are 2 type of outthentic suites - swat and generic. Read further.
 
 
 =head2 Sparrow plugins
@@ -55,7 +66,7 @@ via a unified interface of sparrow console client. It is very close to the conce
 
 =head2 SparrowHub
 
-SparrowHub is a L<Central repository|https://sparrowhub.org> of sparrow plugins. 
+SparrowHub is a L<central repository|https://sparrowhub.org> of sparrow plugins. 
 
 
 =head2 Sparrow tool
@@ -78,7 +89,7 @@ Swat test suites
 
 =item *
 
-Generic test suites
+Generic suites
 
 
 
@@ -88,13 +99,16 @@ Generic test suites
 =head2 Swat test suites
 
 Are those based on L<swat|https://github.com/melezhik/swat> web application testing framework.
-Swat is in turn based on Outthentic DSL.
+Swat is in turn based on Outthentic DSL. Swat test suites are dedicated to web application testing.
 
 
 =head2 Generic suites
 
-Are those base on L<outthentic|https://github.com/melezhik/outthentic> generic purposes testing / monitoring framework.
-Outthentic framework is in turn based in Outthentic DSL.
+Are those based on L<outthentic|https://github.com/melezhik/outthentic> - generic purposes testing / monitoring framework.
+Outthentic framework is in turn based in Outthentic DSL. 
+
+Generic suites unlike swat test suites is I<generic purposes> suites for various tasks, like
+monitoring processes in process list or investigating log entries. 
 
 
 =head1 Sparrow basic entities
@@ -104,16 +118,16 @@ Basically user deal with 3 type of entities:
 
 =head2 Plugins
 
-A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
-monitoring / testing suite to solve a specific issue. For example check available disk space of
-ensure service is running. There are a plenty of plugins at SparrowHub.
+A sparrow plugins which you search, install, configure and run. As already told, usually plugin is a small
+testing, monitoring, reporting suite to solve a specific issue. For example check available disk space or
+ensure that service is running. There are a plenty of plugins at SparrowHub.
 
 
 =head2 Checkpoints 
 
 Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
-but many ones require some piece of input data. For example hostname o be verified or internal parameters to
-to adjust plugin logic. Checkpoint is a container for:
+but many ones require some piece of input data. For example hostname of application being checked or supplimental parameters
+to adjust plugin logic. Thus, checkpoint is a container for:
 
 =over
 
@@ -152,7 +166,7 @@ Plugin configuration will be explain latter.
 
 Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
 different logical groups. Like one for system checks - disk available space or RAM status, other
-for web servers status so on. 
+for web servers status, so on. 
 
 
 =head1 API
@@ -163,11 +177,11 @@ console client.
 
 =head2 Projects API
 
-Sparrow project is a logical group of sparrow checkpoints. To create a project use this command:
+Sparrow project is a logical group of sparrow checkpoints. To create a project use C<sparrow project create> command:
 
 I<sparrow project create $project_name>
 
-Example command:
+Command examples:
 
     # system level checks
     $ sparrow project create system
@@ -175,7 +189,7 @@ Example command:
     # web servers checks
     $ sparrow project create web-servers
 
-To get project info say this:
+To get project information say this:
 
 I<sparrow project show $project_name>
 
@@ -202,9 +216,9 @@ Note - this command will remove all checkpoints related to project as well!
 
 Sparrow plugin is a shareable outthentic suite.
 
-One could install sparrow plugin and then run related outthentic scenarios, see L<check|#run-tests> action for details.
+One could install sparrow plugin and then run related outthentic scenarios, see L<check|#running-suites> action for details.
 
-To search available plugins say this:
+To search available plugins use C<sparrow plg search> command:
 
 I<sparrow plg search $pattern>
 
@@ -216,7 +230,7 @@ For example:
     # find foo-* plugins
     $ sparrow plg search foo
 
-Pattern should be perl regexp pattern. Examples:
+Search pattern should be perl regular expression. Examples:
 
 =over
 
@@ -269,7 +283,7 @@ I<sparrow index summary>
 
 =back
 
-This command will show timestamps and file locations for public and private index files
+This command will show timestamps and file locations for public and private index files.
 
 I<sparrow index update>
 
@@ -277,9 +291,10 @@ This command will fetch fresh index from SparrowHub and update local cached inde
 
 This is very similar to what C<cpan index reload> command does.
 
-You need this to get know about any updates, changes of SparrowHub repository.
+You need C<sparrow index update> to get know about updates, changes of SparrowHub repository. For example
+when someone release new version of plugin.
 
-See L<PUBLIC PLUGINS|#public-plugins> section for details on sparrow public plugins and SparrowHub.
+See L<public plugins|#public-plugins> section for details on sparrow public plugins and SparrowHub.
 
 
 =head2 Installing sparrow plugins
@@ -298,11 +313,11 @@ To see installed plugin list say this:
 
 I<sparrow plg list>
 
-To get installed plugin info say this:
+To get installed plugin information say this:
 
 I<sparrow plg show $plugin_name>
 
-To remove installed plugin:
+To remove installed plugin use C<sparrow plg remove> command:
 
 I<sparrow plg remove $plugin_name>
 
@@ -313,7 +328,7 @@ For example:
 
 =head2 Checkpoints API
 
-To create a checkpoint use this command:
+To create a checkpoint use C<sparrow check add> command:
 
 I<sparrow check add $project_name $checkpoint_name>
 
@@ -327,7 +342,7 @@ Command examples:
 
 =head2 Setup checkpoints
 
-Setting checkpoint you:
+By setting checkpoint you:
 
 =over
 
@@ -343,20 +358,11 @@ bind checkpoint to sparrow plugin
 
 =back
 
-This command is used to set checkpoint:
+C<sparrow check set> command is used to set checkpoint:
 
-I<sparrow check set $project_name $checkpoint_name $plugin_name [$host]>
+I<sparrow check set $project_name $checkpoint_name $plugin_name [$hostname]>
 
-=over
-
-=item *
-
-hostname
-
-
-=back
-
-This optional parameter sets base url or hostname of a web service or application being tested.
+Hostname is optional parameter to set base url or hostname of a web service or application being tested.
 
 Command examples:
 
@@ -375,34 +381,26 @@ Command examples:
     # bind mongo checkpoint to swat-mongodb-http plugin and sets mongodb http API URL
     sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
 
-To get checkpoint detailed information say this:
 
-I<sparrow check show $project_name $checkpoint_name>
-
-For example:
-
-    $ sparrow check show webservers nginx
-
-
-=head2 Run suites
+=head2 Running suites
 
 There are two ways to run outthentic suites:
 
-First one is to run suite I<via checkpoint interface> :
+First one is to run suite I<via checkpoint interface>:
 
 I<sparrow check run $project_name $check_name>
 
-Examples:
+For example:
 
     $ sparrow check run system disk
 
-Second way is simply run tests I<via plugin interface> , in this case you do not need a checkpoint at all
-to run a plugin, but the other side of this - you rely on I<default> plugin configuration and can't
+Second way is simply run tests I<via plugin interface>, in this case you do not need a checkpoint at all
+to run a suite, because you run it as is. The back side of this approach you rely on I<default> plugin configuration and can't
 define your own one:
 
 I<sparrow plg run $plugin_name>
 
-  $ sparrow plg run system disk
+    $ sparrow plg run df-check # this suite will run with default values for disk.threshold parameter
 
 =over
 
@@ -428,43 +426,49 @@ Only L<public plugins|#public-plugins> could be run using plugin interface.
 =back
 
 
-=head2 Running tests under cron
+=head2 Running suites with cron
+
+When running suite under cron it is handy only have an output if something goes wrong, f.e.
+test suite failed or something else goes bad. Use C<--cron> flag to enable this behavior:
 
 I<sparrow check run $project_name $check_name --cron>
 
-When running suite with cron mode enabled a normal output suppressed and is only emitted if suite fails.
+Running checkpoint with --cron flag suppress a normal output and only emit something in case of failures.
 
 Example:
 
-    $ sparrow check system disk --cron
+    $ sparrow check system disk --cron # pleas keep quite if disk space is ok
 
 
 =head2 Configuring checkpoints
 
-Checkpoint configuration is configuration for plugin binded to checkpoint. Use this command to
-set checkpoint configuration:
+Checkpoint configuration is a configuration data consumed by plugin binded to checkpoint. 
+One have to consult plugin documentation ( for public plugins - this is SparrowHub site ) to get know
+the structure of configuration data to feed.
 
-I<sparrow check ini $project_name $checkpoint_name>
-
-This command configures sparrow plugin binded to checkpoint. There are two formats supported:
+Sparrow support two configuration formats:
 
 =over
-
-=item *
-
-YAML
-
 
 =item *
 
 .ini 
 
 
+=item *
+
+YAML
+
+
 =back
 
-Sparrow will examine a content of configuration file and try to identify format automatically.
+.Ini style format is I<default> format for checkpoint configuration. 
 
-For example for .ini format:
+Use C<check ini> command to set checkpoint configuration:
+
+I<sparrow check ini $project_name $checkpoint_name>
+
+For example:
 
     $ export EDITOR=nano
     
@@ -474,38 +478,61 @@ For example for .ini format:
         # disk used threshold in %
         threshold = 80
 
-Or yaml format:
+Having this sparrow will save plugin configuration in the file related to checkpoint and will use it during
+checkpoint run:
 
-    $ sparrow check ini system disk
+    $ sparrow check run system disk # the value of disk.threshold is 80
+
+User also could copy existed configuration from file using C<check load_ini> command:
+
+I<sparrow check load_ini $project_name $checkpoint_name /path/to/ini/file>
+
+For example:
+
+    $ sparrow check load_ini system disk /etc/plugins/disk.ini
+
+To get checkpoint configuration use C<sparrow check show> command:
+
+I<sparrow check show $project_name $checkpoint_name>
+
+For example:
+
+    $ sparrow check show webservers nginx
+
+Alternative way to configure sparrow checkpoint is to load configuration from yaml file I<during> checkpoint L<run|#running-suites>:
+
+    $ cat disk.yml
     
     ---
     disk
       threshold: 80
+    
+    $ sparrow check run system disk --yaml disk.yml
 
-More information on outthentic suites configuration could be found here:
+While C<sparrow check ini/load_ini> command saves checkpoint configuration and makes it persistent,
+C<sparrow check run --yaml> command applies checkpoint configuration only for suite run and could be treated
+as runtime configuration. 
+
+For common usage, when user runs checkpoints manually first approach is more
+convenient, while second one is a I<way automatic>, when checkpoints configurations are kept as yaml files
+and maintained out of sparrow scope ( f.e. by other configuration management tools ) and thus further applied
+during checkpoint run.
+
+More information on outthentic suites configurations could be found here:
 
 =over
 
 =item *
 
-L<swat suites configuration files|https://github.com/melezhik/swat#swat-ini-files>
+L<swat suites configuration files|https://github.com/melezhik/swat#suite-configuration>
 
 
 =item *
 
-L<generic suites configuration files|https://github.com/melezhik/outthentic#test-suite-ini-file>
+L<generic suites configuration files|https://github.com/melezhik/outthentic#suite-configuration>
 
 
 =back
-
-Alternatively you may load plugin ini file from file path
-
-I<sparrow check load_ini $project_name $checkpoint_name path/to/file>
-
-For example:
-
-    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.ini
-    $ sparrow check load_ini foo foo-app /etc/plugins/foo-app.yml
 
 
 =head2 Removing checkpoints

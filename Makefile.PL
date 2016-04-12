@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 # Define metadata
 name           'Sparrow';
-abstract       'Sparrow - outthentic tests manager';
+abstract       'Sparrow - outthentic suites manager';
 
 all_from       'lib/Sparrow.pm';
 

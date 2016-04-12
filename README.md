@@ -24,7 +24,7 @@ The project is still in very alpha stage. Things might change. But you can start
 ## Outthentic DSL
 
 Outthentic is a word combined from two parts - \`out' and \`authentic', meaning that a program prints something into stdout and
-and someone prove program authenticity (correctness) by matching output for some rules defined in terms of Outthentic DSL - 
+and someone proves program "authenticity" (correctness) by matching output for some rules defined in terms of Outthentic DSL - 
 is a language to verify, analyze unstructured text output.
 
 Follow [Outthentic DSL](https://github.com/melezhik/outthentic-dsl) to for details.

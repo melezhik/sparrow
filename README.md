@@ -366,10 +366,10 @@ Alternative way to configure sparrow checkpoint is to load configuration from ya
     disk
       threshold: 80
 
-    $ sparrow check run system disk --yml disk.yml
+    $ sparrow check run system disk --yaml disk.yml
      
 While `sparrow check ini/load_ini` command saves checkpoint configuration and makes it persistent,
-`sparrow check run --yml` command applies checkpoint configuration only for suite run and could be treated
+`sparrow check run --yaml` command applies checkpoint configuration only for suite run and could be treated
 as runtime configuration. 
 
 For common usage, when user runs checkpoints manually first approach is more

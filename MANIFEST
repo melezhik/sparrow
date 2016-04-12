@@ -21,7 +21,9 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 papers/CI/README.md
+papers/rex.md
 README.md
+README.pod
 t/00.t
 t/checkpoint-create-existed/story.check
 t/checkpoint-create-existed/story.pm

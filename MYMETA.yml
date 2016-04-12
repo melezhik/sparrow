@@ -1,5 +1,5 @@
 ---
-abstract: 'Sparrow - outthentic tests manager'
+abstract: 'Sparrow - outthentic suites manager'
 author:
   - 'L<Aleksei Melezhik|mailto:melezhik@gmail.com>'
 build_requires:
@@ -21,5 +21,5 @@ requires:
   Carton: '0'
   JSON: '0'
   version: '0'
-version: v0.0.21
+version: v0.0.22
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

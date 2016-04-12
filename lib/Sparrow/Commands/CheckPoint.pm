@@ -174,7 +174,7 @@ sub check_run {
 
     my $project  = shift or confess "usage: check_run(*project,checkpoint,options)";
     my $cid      = shift or confess "usage: check_run(project,*checkpoint,options)";
-    my $options  = shift || '';
+    my $options  = join ' ', @ARGV;
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown checkpoint" unless  -d sparrow_root."/projects/$project/checkpoints/$cid";
@@ -191,16 +191,26 @@ sub check_run {
     my $cmd;
     
     if ($spj->{engine} and $spj->{engine} eq 'generic'){
-        my $ini_file_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
         $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ ";
-        $cmd.=" --ini $ini_file_path" if -f $ini_file_path;
+        if ($options=~/--yaml\s+(\S+?)/){
+          my $path = $1;
+          $cmd.=" --yaml $path";
+        }else{
+          my $path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+          $cmd.=" --ini $path" if -f $path;
+        }
         $cmd.=" --host $cp_set->{base_url}" if $cp_set->{'base_url'};
         $cmd.=" '"
     }else{
-        my $ini_file_path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
         $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
         $cmd.=" $cp_set->{base_url}";
-        $cmd.=" --ini $ini_file_path" if -f $ini_file_path;
+        if ($options=~/--yaml\s+(\S+?)/){
+          my $path = $1;
+          $cmd.=" --yaml $path";
+        }else{
+          my $path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
+          $cmd.=" --ini $path" if -f $path;
+        }
         $cmd.=" '"
     }
 

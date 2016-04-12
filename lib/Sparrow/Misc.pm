@@ -65,7 +65,6 @@ sub usage {
     print "\tsparrow check run      system disk       # run checkpoint tests \n";
     print "\tsparrow check ini      system disk       # populate plugin configuration \n";
     print "\tsparrow check load_ini system disk /path/to/ini/file # load plugin configuration from ini file \n";
-    print "\tsparrow check load_yml system disk /path/to/yml/file # load plugin configuration from yml file \n";
 
     print "\n\n";
 

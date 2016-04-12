@@ -31,9 +31,11 @@ Follow [Outthentic DSL](https://github.com/melezhik/outthentic-dsl) to for detai
 
 ## Outthentic suites
 
-Outthentic suites are small testing / monitoring suites for various cases from monitoring available disk space
-to checking if your web server is healthy. Term outthentic here refers to [Outthentic DSL](https://github.com/melezhik/outthentic-dsl)
-which such a suites are based on. There are 2 type of outthentic suites - swat and generic. Read further.
+Outthentic suites are small scenarios based on Outthentic DSL to provide solutions
+for various testing, monitoring, reporting tasks from checking available disk space
+to ensuring that your web server is healthy.
+ 
+There are 2 type of outthentic suites - swat and generic. Read further.
 
 ## Sparrow plugins
 
@@ -62,11 +64,11 @@ There are tow types of outthentic suites or sparrow plugins:
 ## Swat test suites
 
 Are those based on [swat](https://github.com/melezhik/swat) web application testing framework.
-Swat is in turn based on Outthentic DSL. Swat test suites is dedicated to web application testing.
+Swat is in turn based on Outthentic DSL. Swat test suites are dedicated to web application testing.
 
 ## Generic suites
 
-Are those base on [outthentic](https://github.com/melezhik/outthentic) generic purposes testing / monitoring framework.
+Are those based on [outthentic](https://github.com/melezhik/outthentic) - generic purposes testing / monitoring framework.
 Outthentic framework is in turn based in Outthentic DSL. 
 
 Generic suites unlike swat test suites is _generic purposes_ suites for various tasks, like
@@ -78,15 +80,15 @@ Basically user deal with 3 type of entities:
 
 ## Plugins
 
-A sparrow plugins which you search, install and (optionally) configure. Usually plugin is a small
-monitoring / testing suite to solve a specific issue. For example check available disk space of
-ensure service is running. There are a plenty of plugins at SparrowHub.
+A sparrow plugins which you search, install, configure and run. As already told, usually plugin is a small
+testing, monitoring, reporting suite to solve a specific issue. For example check available disk space or
+ensure that service is running. There are a plenty of plugins at SparrowHub.
 
 ## Checkpoints 
 
 Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
-but many ones require some piece of input data. For example hostname o be verified or internal parameters to
-to adjust plugin logic. Checkpoint is a container for:
+but many ones require some piece of input data. For example hostname of application being checked or supplimental parameters
+to adjust plugin logic. Thus, checkpoint is a container for:
 
 * plugin
 * plugin configuration

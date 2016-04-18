@@ -198,6 +198,9 @@ sub check_run {
         }else{
           my $path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
           $cmd.=" --ini $path" if -f $path;
+          if ($options=~s/\s+--\s+(.*)//){
+            my $runtime_params = join ' ', map { "--param $1" } split /\s+/, $1;
+          }
         }
         $cmd.=" --host $cp_set->{base_url}" if $cp_set->{'base_url'};
         $cmd.=" '"

@@ -275,7 +275,7 @@ There are two ways to run outthentic suites:
 
 First one is to run suite _via checkpoint interface_:
 
-*sparrow check run $project\_name $check\_name*
+*sparrow check run $project\_name $check\_name* [ -- runtime-parameters ]
 
 For example:
 
@@ -296,6 +296,16 @@ define your own one:
 Notice that many sparrow plugins still require a specific configuration and can't be run  this way.
 
 * Only [public plugins](#public-plugins) could be run using plugin interface.
+
+## Setting runtime parameters 
+
+It is possible to pass _whatever_ runtime parameters when invoke plugin run via checkpoint interface.
+
+
+    $ sparrow check run system disk -- disk.threshold=60
+
+Runtime parameters override default parameters values set in checkpoint configurations, see [configuring checkpoints](#Configuring-checkpoints)
+later.
 
 ## Running suites with cron
 

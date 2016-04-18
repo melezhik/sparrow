@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.0.23';
+our $VERSION = '0.0.24';
 
 1;
 

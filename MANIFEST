@@ -22,6 +22,7 @@ MANIFEST			This list of files
 META.yml
 papers/CI/README.md
 papers/rex.md
+papers/ssh.png
 README.md
 README.pod
 t/00.t

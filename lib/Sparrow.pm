@@ -126,7 +126,7 @@ ensure that service is running. There are a plenty of plugins at SparrowHub.
 =head2 Checkpoints 
 
 Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
-but many ones require some piece of input data. For example hostname of application being checked or supplimental parameters
+but many ones require some piece of input data. For example hostname of application being checked or supplemental parameters
 to adjust plugin logic. Thus, checkpoint is a container for:
 
 =over
@@ -388,7 +388,7 @@ There are two ways to run outthentic suites:
 
 First one is to run suite I<via checkpoint interface>:
 
-I<sparrow check run $project_name $check_name>
+I<sparrow check run $project_name $check_name> [ -- runtime-parameters ]
 
 For example:
 
@@ -424,6 +424,16 @@ Only L<public plugins|#public-plugins> could be run using plugin interface.
 
 
 =back
+
+
+=head2 Setting runtime parameters 
+
+It is possible to pass I<whatever> runtime parameters when invoke plugin run via checkpoint interface.
+
+    $ sparrow check run system disk -- --param disk.threshold=60
+
+Runtime parameters override default parameters values set in checkpoint configurations, see L<configuring checkpoints|#Configuring-checkpoints>
+later.
 
 
 =head2 Running suites with cron
@@ -927,13 +937,31 @@ Copyright 2015 Alexey Melezhik.
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
-=head1 Thanks
+=head1 See also
 
 =over
 
 =item *
 
-to God as - I<For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)>
+L<Outthentic|https://github.com/melezhik/outthentic> - Generic testing, reporting, monitoring framework consuming consuming Outthentic::DSL.
+
+
+
+=item *
+
+L<Swat|https://github.com/melezhik/swat> - Web testing framework consuming Outthentic::DSL.
+
+
+
+=item *
+
+L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl> - Outthentic::DSL specification.
+
 
 
 =back
+
+
+=head1 Thanks
+
+To God as the One Who inspires me to do my job!

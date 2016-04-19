@@ -87,7 +87,7 @@ ensure that service is running. There are a plenty of plugins at SparrowHub.
 ## Checkpoints 
 
 Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
-but many ones require some piece of input data. For example hostname of application being checked or supplimental parameters
+but many ones require some piece of input data. For example hostname of application being checked or supplemental parameters
 to adjust plugin logic. Thus, checkpoint is a container for:
 
 * plugin
@@ -302,7 +302,7 @@ Notice that many sparrow plugins still require a specific configuration and can'
 It is possible to pass _whatever_ runtime parameters when invoke plugin run via checkpoint interface.
 
 
-    $ sparrow check run system disk -- disk.threshold=60
+    $ sparrow check run system disk -- --param disk.threshold=60
 
 Runtime parameters override default parameters values set in checkpoint configurations, see [configuring checkpoints](#Configuring-checkpoints)
 later.
@@ -622,9 +622,19 @@ Copyright 2015 Alexey Melezhik.
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 
+# See also
+
+
+* [Outthentic](https://github.com/melezhik/outthentic) - Generic testing, reporting, monitoring framework consuming consuming Outthentic::DSL.
+
+* [Swat](https://github.com/melezhik/swat) - Web testing framework consuming Outthentic::DSL.
+
+* [Outthentic::DSL](https://github.com/melezhik/outthentic-dsl) - Outthentic::DSL specification.
+
 # Thanks
 
-* to God as - *For the LORD giveth wisdom: out of his mouth cometh knowledge and understanding. (Proverbs 2:6)*
+To God as the One Who inspires me to do my job!
+
 
 
 

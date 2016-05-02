@@ -1,3 +1,14 @@
+0.1.0
+
+BREAKING changes!!!
+
+* checkpoints replaced by tasks ( with a bit different command line arguments )
+
+* verbose option passed to task run action
+
+* boxes?
+
+
 0.0.24 2016-04-19
 
 * runtime parameters support for generic plugins ( first implementation, could buggy )

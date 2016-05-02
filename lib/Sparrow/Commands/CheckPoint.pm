@@ -198,13 +198,8 @@ sub check_run {
         }else{
           my $path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
           $cmd.=" --ini $path" if -f $path;
-          if ($options=~s/\s+--\s+(.*)//){
-            my $runtime_params = $1;
-            $cmd.=" $runtime_params ";
-          }
         }
         $cmd.=" --host $cp_set->{base_url}" if $cp_set->{'base_url'};
-        $cmd.=" '"
     }else{
         $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
         $cmd.=" $cp_set->{base_url}";
@@ -215,14 +210,14 @@ sub check_run {
           my $path = sparrow_root."/projects/$project/checkpoints/$cid/suite.ini";
           $cmd.=" --ini $path" if -f $path;
         }
-        $cmd.=" '"
     }
 
-    
-    if ($options=~/--cron/) {
+    if ($options=~s/--cron//) {
+        $cmd.=" $options'";
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$cid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
+        $cmd.=" $options'";
         print "# $cmd\n\n";
         exec $cmd;
     }

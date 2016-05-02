@@ -1,4 +1,4 @@
-regexp: 'swat \./\s+'
+regexp: swat \./\s+
 All tests successful.
 Result: PASS
 

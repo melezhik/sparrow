@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 # Define metadata
 name           'Sparrow';
-abstract       'Sparrow - outthentic suites manager';
+abstract       'Multipurposes scenarios manager';
 
 all_from       'lib/Sparrow.pm';
 

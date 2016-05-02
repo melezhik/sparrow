@@ -1,13 +1,6 @@
-0.1.0
+0.0.25 2016-05-02
 
-BREAKING changes!!!
-
-* checkpoints replaced by tasks ( with a bit different command line arguments )
-
-* verbose option passed to task run action
-
-* boxes?
-
+* a minor breaking changes in check run action ( see documentation )
 
 0.0.24 2016-04-19
 

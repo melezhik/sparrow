@@ -6,7 +6,7 @@ Sparrow
  
 # SYNOPSIS
 
-Sparrow - outthentic plugins manager.  Manages outthentic family suites.
+Sparrow - Multipurposes scenarios manager.
 
 # CAVEAT
 
@@ -275,7 +275,7 @@ There are two ways to run outthentic suites:
 
 First one is to run suite _via checkpoint interface_:
 
-*sparrow check run $project\_name $check\_name* [ -- runtime-parameters ]
+*sparrow check run $project\_name $check\_name* [ --options ]
 
 For example:
 
@@ -302,7 +302,14 @@ Notice that many sparrow plugins still require a specific configuration and can'
 It is possible to pass _whatever_ runtime parameters when invoke plugin run via checkpoint interface.
 
 
-    $ sparrow check run system disk -- --param disk.threshold=60
+    $ sparrow check run system disk --param threshold=60
+
+## Verbosity
+
+To enable verbosity run with \`--verbose' options:
+
+    $ sparrow check run system disk --verbose
+
 
 Runtime parameters override default parameters values set in checkpoint configurations, see [configuring checkpoints](#Configuring-checkpoints)
 later.

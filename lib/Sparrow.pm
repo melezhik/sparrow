@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.1.0';
+our $VERSION = '0.0.25';
 
 1;
 
@@ -21,7 +21,7 @@ L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.
 
 =head1 SYNOPSIS
 
-Sparrow - outthentic plugins manager.  Manages outthentic family suites.
+Sparrow - Multipurposes scenarios manager.
 
 
 =head1 CAVEAT
@@ -388,7 +388,7 @@ There are two ways to run outthentic suites:
 
 First one is to run suite I<via checkpoint interface>:
 
-I<sparrow check run $project_name $check_name> [ -- runtime-parameters ]
+I<sparrow check run $project_name $check_name> [ --options ]
 
 For example:
 
@@ -430,7 +430,14 @@ Only L<public plugins|#public-plugins> could be run using plugin interface.
 
 It is possible to pass I<whatever> runtime parameters when invoke plugin run via checkpoint interface.
 
-    $ sparrow check run system disk -- --param disk.threshold=60
+    $ sparrow check run system disk --param threshold=60
+
+
+=head2 Verbosity
+
+To enable verbosity run with `--verbose' options:
+
+    $ sparrow check run system disk --verbose
 
 Runtime parameters override default parameters values set in checkpoint configurations, see L<configuring checkpoints|#Configuring-checkpoints>
 later.

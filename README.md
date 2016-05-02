@@ -304,15 +304,14 @@ It is possible to pass _whatever_ runtime parameters when invoke plugin run via 
 
     $ sparrow check run system disk --param threshold=60
 
+Runtime parameters override default parameters values set in checkpoint configurations, see [configuring checkpoints](#configuring-checkpoints) section.
+
 ## Verbosity
 
 To enable verbosity run with \`--verbose' options:
 
     $ sparrow check run system disk --verbose
 
-
-Runtime parameters override default parameters values set in checkpoint configurations, see [configuring checkpoints](#Configuring-checkpoints)
-later.
 
 ## Running suites with cron
 

@@ -310,7 +310,7 @@ Runtime parameters override default parameters values set in checkpoint configur
 
 To enable verbosity run with \`--verbose' option. 
 
-This option makes a sence only for generic suites, follow [Outthentic documentation](#https://github.com/melezhik/outthentic#options) for details.
+This option makes a sence only for generic suites, follow [Outthentic documentation](https://github.com/melezhik/outthentic#options) for details.
 
     $ sparrow check run system disk --verbose
 

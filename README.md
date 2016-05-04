@@ -81,13 +81,13 @@ tasks run sequentially.
 
 # API
 
-This is sparrow command line API documentation.
+This is a sparrow command line API documentation.
 
 ## Projects API
 
 Sparrow project is a logical group of sparrow tasks. To create a project use `sparrow project create` command:
 
-*sparrow project create $project\_name*
+**sparrow project create $project\_name**
 
 Command examples:
 

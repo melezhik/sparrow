@@ -21,7 +21,7 @@ L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.
 
 =head1 SYNOPSIS
 
-Sparrow - Multipurposes scenarios manager.
+Sparrow - multipurposes scenarios manager.
 
 
 =head1 CAVEAT
@@ -36,98 +36,65 @@ The project is still in very alpha stage. Things might change. But you can start
     $ cpanm Sparrow
 
 
-=head1 Glossary 
+=head1 Sparrow plugins
+
+Sparrow plugins are shareable multipurposes scenarios distributed via central repository - L<SparrowHub|https://sparrowhub.org>.
+Every single plugin represents a various scripts to solve a specific task. Plugins are easily installed, configured and run on
+dedicated servers with the help of sparrow console client. 
+
+The notion of sparrow plugins is very close to the conception of CPAN modules in Perl or Ruby gems in Ruby.
+It's just a small suites of scripts to solve a specific tasks.
+
+To find a specific sparrow plugin say this:
+
+    $ sparrow plg search nginx
+
+To install a sparrow plugin say this: 
+
+    $ sparrow plg install nginx-check
+
+See L<sparrow command line API|#api> below.
 
 
-=head2 Outthentic DSL
+=head1 Sparrow client
 
-Outthentic is a word combined from two parts - `out' and `authentic', meaning that a program prints something into stdout and
-and someone proves program "authenticity" (correctness) by matching output for some rules defined in terms of Outthentic DSL - 
-is a language to verify, analyze unstructured text output.
-
-Follow L<Outthentic DSL|https://github.com/melezhik/outthentic-dsl> to for details.
+C<Sparrow> is a console client to search, install, setup and run various sparrow plugins. 
+Think about it as of C<cpan client> for CPAN modules or C<gem client> for Ruby gems.
 
 
-=head2 Outthentic suites
+=head1 Sparrow basic entities
 
-Outthentic suites are small scenarios based on Outthentic DSL to provide solutions
-for various testing, monitoring, reporting tasks from checking available disk space
-to ensuring that your web server is healthy.
-
-There are 2 type of outthentic suites - swat and generic. Read further.
-
-
-=head2 Sparrow plugins
-
-Sparrow plugins are shareable outthentic suites distributed via outthentic suites repository - L<SparrowHub|https://sparrowhub.org>.
-Term plugins refers to the idea of different outthentic suites could be pluggable and so get used on single machine
-via a unified interface of sparrow console client. It is very close to the conception of CPAN modules in Perl or ruby gems in Ruby.
-
-
-=head2 SparrowHub
-
-SparrowHub is a L<central repository|https://sparrowhub.org> of sparrow plugins. 
-
-
-=head2 Sparrow tool
-
-C<sparrow> is a console client to search, install, setup and finally run various sparrow plugins.
-Think about it as of cpan client for CPAN modules or gem client for ruby gems.
-
-
-=head2 Two types of sparrow plugins
-
-There are tow types of outthentic suites or sparrow plugins:
+Sparrow architecture comprises of 4 basic parts:
 
 =over
 
 =item *
 
-Swat test suites
-
+Plugins
 
 
 =item *
 
-Generic suites
+Tasks
 
+
+=item *
+
+Projects
+
+
+=item *
+
+Boxes
 
 
 =back
 
 
-=head2 Swat test suites
+=head1 Tasks
 
-Are those based on L<swat|https://github.com/melezhik/swat> web application testing framework.
-Swat is in turn based on Outthentic DSL. Swat test suites are dedicated to web application testing.
-
-
-=head2 Generic suites
-
-Are those based on L<outthentic|https://github.com/melezhik/outthentic> - generic purposes testing / monitoring framework.
-Outthentic framework is in turn based in Outthentic DSL. 
-
-Generic suites unlike swat test suites is I<generic purposes> suites for various tasks, like
-monitoring processes in process list or investigating log entries. 
-
-
-=head1 Sparrow basic entities
-
-Basically user deal with 3 type of entities:
-
-
-=head2 Plugins
-
-A sparrow plugins which you search, install, configure and run. As already told, usually plugin is a small
-testing, monitoring, reporting suite to solve a specific issue. For example check available disk space or
-ensure that service is running. There are a plenty of plugins at SparrowHub.
-
-
-=head2 Checkpoints 
-
-Checkpoint is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
-but many ones require some piece of input data. For example hostname of application being checked or supplemental parameters
-to adjust plugin logic. Thus, checkpoint is a container for:
+I<Task> is configurable sparrow plugin. Some plugins does not require configuration and could be run as is,
+but many ones require some piece of input data. Thus sparrow task is a container for:
 
 =over
 
@@ -149,7 +116,7 @@ Plugin configuration is just a text file in one of 2 formats:
 
 =item *
 
-.ini style format
+L<Config::General|https://metacpan.org/pod/Config::General> format
 
 
 =item *
@@ -159,100 +126,98 @@ YAML format
 
 =back
 
-Plugin configuration will be explain latter.
+
+=head1 Projects
+
+Projects are I<logical groups> of sparrow tasks. It is convenient to split a whole list of tasks to different logical groups. 
+Like some tasks for system related issues - f.e. checking L<disk available space|https://sparrowhub.org/info/df-check> or inspecting L<stale processes|https://sparrowhub.org/info/stale-proc-check>, other tasks for
+web services related issues - f.e. L<checking nginx health|https://sparrowhub.org/info/nginx-check> or L<monitoring http errors|https://sparrowhub.org/info/logdog> in web server logs, so on. 
 
 
-=head2 Projects
+=head1 Boxes
 
-Projects are logic groups of sparrow checkpoints. It's convenient to split a whole list of checkpoint to
-different logical groups. Like one for system checks - disk available space or RAM status, other
-for web servers status, so on. 
+Sparrow boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
+tasks run sequentially.
 
 
 =head1 API
 
-Now having a knowledges about basic sparrow entities let's dive  into sparrow API provided by C<sparrow>
-console client.
+This is a sparrow command line API documentation.
 
 
 =head2 Projects API
 
-Sparrow project is a logical group of sparrow checkpoints. To create a project use C<sparrow project create> command:
+Sparrow project is a logical group of sparrow tasks. To create a project use C<sparrow project create> command:
 
-I<sparrow project create $project_name>
+B<sparrow project create $project_name>
 
 Command examples:
 
-    # system level checks
+    # system level tasks
     $ sparrow project create system
     
-    # web servers checks
+    # web servers related tasks
     $ sparrow project create web-servers
 
 To get project information say this:
 
-I<sparrow project show $project_name>
+B<sparrow project show $project_name>
 
 For example:
 
     $ sparrow project show system
 
-To get all projects list say this:
+To get projects list say this:
 
-I<sparrow project list>
+B<sparrow project list>
 
 To remove project data say this:
 
-I<sparrow project remove $project_name>
+B<sparrow project remove $project_name>
 
 For example:
 
     $ sparrow project web-servers remove
 
-Note - this command will remove all checkpoints related to project as well!
+NOTE! This command will remove all project tasks as well!
 
 
-=head2 Search plugins API
-
-Sparrow plugin is a shareable outthentic suite.
-
-One could install sparrow plugin and then run related outthentic scenarios, see L<check|#running-suites> action for details.
+=head2 Plugins API
 
 To search available plugins use C<sparrow plg search> command:
 
-I<sparrow plg search $pattern>
+B<sparrow plg search $pattern>
 
-For example:
+Where $pattern is Perl regular expression pattern.
 
-    # list all available plugins
+Examples:
+
+    # find ssh-* plugins
+    $ sparrow plg search ssh
+    
+    [found sparrow plugins]
+    
+    type    name
+    
+    public  ssh-sudo-check
+    public  ssh-sudo-try
+    public  sshd-check
+    
+    # find package managers plugins
+    $ sparrow plg search package
+    
+    [found sparrow plugins]
+    
+    type    name
+    
+    public  package-generic
+
+To list all available plugins say this:
+
     $ sparrow plg search 
-      
-    # find foo-* plugins
-    $ sparrow plg search foo
-
-Search pattern should be perl regular expression. Examples:
-
-=over
-
-=item *
-
-C<.*>     # find any   plugin
 
 
-=item *
-
-C<nginx>  # find nginx plugins
-
-
-=item *
-
-C<mysql-> # find mysql plugins
-
-
-=back
-
-
-=head2 Sparrow index API
+=head3 Index API
 
 Sparrow index is cached data used by sparrow to search plugins.
 
@@ -278,14 +243,21 @@ There are two basic command to work with index:
 
 =item *
 
-I<sparrow index summary>
+B<sparrow index summary>
 
 
 =back
 
 This command will show timestamps and file locations for public and private index files.
 
-I<sparrow index update>
+=over
+
+=item *
+
+B<sparrow index update>
+
+
+=back
 
 This command will fetch fresh index from SparrowHub and update local cached index.
 
@@ -297,180 +269,140 @@ when someone release new version of plugin.
 See L<public plugins|#public-plugins> section for details on sparrow public plugins and SparrowHub.
 
 
-=head2 Installing sparrow plugins
+=head3 Installing sparrow plugins
 
-I<sparrow plg install $plugin_name>
+B<sparrow plg install $plugin_name>
 
 For example:
 
     $ sparrow plg search  nginx        # to get know available nginx* plugins
     $ sparrow plg install nginx-check  # to download and install a chosen plugin
-    $ sparrow plg install swat-mongodb-http --version 0.3.7 # install specific version
-
-Check L<sparrow-plugins|#sparrow-plugins> section to know more about sparrow plugins.
+    $ sparrow plg install nginx-check --version 0.1.1 # install specific version
 
 To see installed plugin list say this:
 
-I<sparrow plg list>
+    $ sparrow plg list
 
 To get installed plugin information say this:
 
-I<sparrow plg show $plugin_name>
+B<sparrow plg show $plugin_name>
 
-To remove installed plugin use C<sparrow plg remove> command:
+To remove plugin installed use C<sparrow plg remove> command:
 
-I<sparrow plg remove $plugin_name>
+B<sparrow plg remove $plugin_name>
 
 For example:
 
     $ sparrow plg remove df-check
 
 
-=head2 Checkpoints API
+=head2 Tasks API
 
-To create a checkpoint use C<sparrow check add> command:
 
-I<sparrow check add $project_name $checkpoint_name>
+=head3 Create tasks
 
-Checkpoints are parts of projects, so to create a checkpoint you always have to point a project.
+To create a task use C<sparrow task add> command:
+
+B<sparrow check add $project_name $task_name $plugin_name>
+
+Tasks always belong to projects, so to create a task you have to create a project first if not exists.
+Tasks binds a plugin with configuration, so to create a task you have to install a plugin first.
 
 Command examples:
 
-    $ sparrow check add web-servers nginx
-    $ sparrow check add system disk
+    $ sparrow project create system
+    $ sparrow plg install df-check
+    $ sparrow task add system disk-health df-check
 
 
-=head2 Setup checkpoints
+=head3 Run plugins
 
-By setting checkpoint you:
+There are two ways to run sparrow plugins:
 
 =over
 
 =item *
 
-bind checkpoint to sparrow plugin
+I<as>is
+
 
 
 =item *
 
-(optionally) set hostname parameter for sparrow plugin
+as tasks
+
 
 
 =back
 
-C<sparrow check set> command is used to set checkpoint:
+The first one is simplest as it does not require creating a task at all. If you don't want provide a specific plugin configuration,
+you may run a plugin as is using  C<sparrow plg run> command:
 
-I<sparrow check set $project_name $checkpoint_name $plugin_name [$hostname]>
-
-Hostname is optional parameter to set base url or hostname of a web service or application being tested.
-
-Command examples:
-
-    # bind nginx checkpoint to swat-nginx plugin
-    sparrow check set webservers nginx swat-nginx  
-    
-    # bind nginx checkpoint to swat-nginx plugin, explicitly sets hostname to 127.0.0.1
-    sparrow check set webservers nginx swat-nginx 127.0.0.1
-    
-    # the same as above but for remote nginx server, hostname 192.168.0.1
-    sparrow check set webservers nginx-remote swat-nginx  192.168.0.1
-    
-    # bind mysql-server to outth-mysql plugin and sets mysql server address
-    sparrow check set db-servers mysql-server outth-mysql 127.0.0.1:3306
-    
-    # bind mongo checkpoint to swat-mongodb-http plugin and sets mongodb http API URL
-    sparrow check set db-servers mongo swat-mongodb-http http://my.server:28017/mongoAPI
-
-
-=head2 Running suites
-
-There are two ways to run outthentic suites:
-
-First one is to run suite I<via checkpoint interface>:
-
-I<sparrow check run $project_name $check_name> [ --options ]
+B<sparrow plg run [ options ]>
 
 For example:
 
-    $ sparrow check run system disk
+    $ sparrow plg run df-check
 
-Second way is simply run tests I<via plugin interface>, in this case you do not need a checkpoint at all
-to run a suite, because you run it as is. The back side of this approach you rely on I<default> plugin configuration and can't
-define your own one:
+NOTE! Only L<public plugins|#public-plugins> could be run I<as>is_.
 
-I<sparrow plg run $plugin_name>
+The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-    $ sparrow plg run df-check # this suite will run with default values for disk.threshold parameter
+**sparrow task run $project_name $check_nameI< [ options ]>*
 
-=over
+For example:
 
-=item *
+    $ sparrow check run system disk-health
 
-Choose checkpoint interface when you want to add some specific settings for outthentic suite.
+See L<configuring tasks|#configuring-tasks> section on how one can configure task plugin.
 
 
+=head3 Setting runtime parameters 
 
-=item *
+It is possible to pass I<whatever> runtime configuration parameters when running tasks or plugins:
 
-Choose plugin interface when you have no host specific settings for suite and default settings are just enough for you.
-Notice that many sparrow plugins still require a specific configuration and can't be run  this way.
+    $ sparrow plg run df-check --param threshold=60
+    
+    $ sparrow check run system disk-health --param threshold=60
 
-
-
-=item *
-
-Only L<public plugins|#public-plugins> could be run using plugin interface.
+Runtime parameters override default parameters ones set in tasks configurations, see L<configuring tasks|#configuring-task> section.
 
 
+=head3 Setting outthentic parameters
 
-=back
+As sparrow runs plugins with the help of L<Outthentic scenarios runner|https://github.com/melezhik/outthentic#options> it accepts all
+I<runner related> parameters, check out L<Outthentic|https://github.com/melezhik/outthentic#options> for details. Other parameters examples:
 
-
-=head2 Setting runtime parameters 
-
-It is possible to pass I<whatever> runtime parameters when invoke plugin run via checkpoint interface.
-
-    $ sparrow check run system disk --param threshold=60
-
-Runtime parameters override default parameters values set in checkpoint configurations, see L<configuring checkpoints|#configuring-checkpoints> section.
+    $ sparrow check run system disk-health --verbose
+    $ sparrow check run system disk-health --verbose --prove '-Q'
 
 
-=head2 Verbosity
+=head3 Running tasks with cron
 
-To enable verbosity run with `--verbose' option. 
+When running tasks with cron it is handy only have an output if something goes wrong, 
+f.e. if plugin failed for some reasons. Use C<--cron> flag to enable this behavior:
 
-This option makes a sence only for generic suites, follow L<Outthentic documentation|https://github.com/melezhik/outthentic#options> for details.
-
-    $ sparrow check run system disk --verbose
-
-
-=head2 Running suites with cron
-
-When running suite under cron it is handy only have an output if something goes wrong, f.e.
-test suite failed or something else goes bad. Use C<--cron> flag to enable this behavior:
-
-I<sparrow check run $project_name $check_name --cron>
+B<sparrow check run $project_name $check_name --cron>
 
 Running checkpoint with --cron flag suppress a normal output and only emit something in case of failures.
 
 Example:
 
-    $ sparrow check system disk --cron # pleas keep quite if disk space is ok
+    $ sparrow check system disk-health --cron # pleas keep quite if disk space is ok
 
 
-=head2 Configuring checkpoints
+=head3 Configuring tasks
 
-Checkpoint configuration is a configuration data consumed by plugin binded to checkpoint. 
-One have to consult plugin documentation ( for public plugins - this is SparrowHub site ) to get know
-the structure of configuration data to feed.
+Task configuration is a some input parameters consumed by plugin binded to task. 
+User should consult plugin documentation to get know a certain structure of configuration data to feed.
 
-Sparrow support two configuration formats:
+Sparrow supports two configuration formats:
 
 =over
 
 =item *
 
-.ini 
+Config::General 
 
 
 =item *
@@ -480,94 +412,71 @@ YAML
 
 =back
 
-.Ini style format is I<default> format for checkpoint configuration. 
+Config::General format is I<default> format for task configuration.  Use C<task ini> command to set task configuration:
 
-Use C<check ini> command to set checkpoint configuration:
-
-I<sparrow check ini $project_name $checkpoint_name>
+B<sparrow task ini $project_name $checkpoint_name>
 
 For example:
 
     $ export EDITOR=nano
     
-    $ sparrow check ini system disk
+    $ sparrow check ini system disk-health
     
-        [disk]
-        # disk used threshold in %
-        threshold = 80
+    # disk used threshold in %
+    threshold = 80
 
-Having this sparrow will save plugin configuration in the file related to checkpoint and will use it during
-checkpoint run:
+Having this sparrow will save plugin configuration in the file related to task and will use it during task run:
 
-    $ sparrow check run system disk # the value of disk.threshold is 80
+    $ sparrow task run system disk-health # the value of threshold is 80
 
-User also could copy existed configuration from file using C<check load_ini> command:
+User could copy existed configuration from file using C<check load_ini> command:
 
-I<sparrow check load_ini $project_name $checkpoint_name /path/to/ini/file>
+B<sparrow task load_ini $project_name $checkpoint_name /path/to/ini/file>
 
 For example:
 
-    $ sparrow check load_ini system disk /etc/plugins/disk.ini
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.ini
 
-To get checkpoint configuration use C<sparrow check show> command:
+To get task configuration use C<sparrow task show> command:
 
-I<sparrow check show $project_name $checkpoint_name>
+B<sparrow task show $project_name $checkpoint_name>
 
 For example:
 
-    $ sparrow check show webservers nginx
+    $ sparrow task show system disk-health
 
 Alternative way to configure sparrow checkpoint is to load configuration from yaml file I<during> checkpoint L<run|#running-suites>:
 
     $ cat disk.yml
     
     ---
-    disk
-      threshold: 80
+    threshold: 80
     
     $ sparrow check run system disk --yaml disk.yml
 
-While C<sparrow check ini/load_ini> command saves checkpoint configuration and makes it persistent,
-C<sparrow check run --yaml> command applies checkpoint configuration only for suite run and could be treated
-as runtime configuration. 
+While C<sparrow task ini/load_ini> command saves checkpoint configuration and makes it persistent,
+C<sparrow task run --yaml> command applies plugin configuration only for runtime and won't save it after plugin execution.
 
-For common usage, when user runs checkpoints manually first approach is more
-convenient, while second one is a I<way automatic>, when checkpoints configurations are kept as yaml files
-and maintained out of sparrow scope ( f.e. by other configuration management tools ) and thus further applied
-during checkpoint run.
-
-More information on outthentic suites configurations could be found here:
-
-=over
-
-=item *
-
-L<swat suites configuration files|https://github.com/melezhik/swat#suite-configuration>
+For common usage, when user runs tasks manually first approach is more convenient, 
+while the second one is a I<way automatic>, when tasks configurations are kept as yaml files
+and maintained out of sparrow scope and applied during task run.
 
 
-=item *
+=head3 Removing tasks
 
-L<generic suites configuration files|https://github.com/melezhik/outthentic#suite-configuration>
+Use this command to remove task from the project container:
 
-
-=back
-
-
-=head2 Removing checkpoints
-
-Use this command to remove checkpoint data from project container:
-
-I<sparrow check remove $project_name $checkpoint_name>
+B<sparrow task remove $project_name $checkpoint_name>
 
 Examples:
 
-    # remove checkpoint nginx from project web-servers
-    $ sparrow check remove web-servers nginx
+    # remove task disk-health project system
+    $ sparrow check remove system disk-health
 
 
 =head1 Sparrow plugins
 
-Sparrow plugins are shareable outthentic suites installed from remote sources.
+Sparrow plugins are shareable multipurposes scenarios installed from remote sources.
 
 There are two type of sparrow plugins:
 
@@ -575,7 +484,7 @@ There are two type of sparrow plugins:
 
 =item *
 
-public plugins are provided by L<SparrowHub|https://sparrowhub.org/> community plugin repository and considered as public access.
+public plugins are provided by L<SparrowHub|https://sparrowhub.org/> community repository and considered as public access.
 
 
 
@@ -589,7 +498,7 @@ private plugins are provided by internal or external git repositories and I<not 
 
 Both public and private plugins are installed with help of sparrow client:
 
-I<sparrow plg install plugin_name>
+B<sparrow plg install plugin_name>
 
 
 =head2 Public plugins
@@ -676,62 +585,82 @@ A name of your sparrow plugin, could be arbitrary name but see restriction notic
 
 Example entries:
 
-    swat-yars   https://github.com/melezhik/swat-yars.git
-    metacpan    https://github.com/CPAN-API/metacpan-monitoring.git
+    package-generic   https://github.com/melezhik/package-generic.git
 
 Once you add a proper entries into SPL file you may list and install a private plugins:
 
-    $ sparrow plg show    swat-yars
-    $ sparrow plg install swat-yars
+    $ sparrow plg show package-generic
 
 
-=head1 Create sparrow plugin
+=head1 Publishing public sparrow plugin to SparrowHub
 
-Here is a brief description of the process:
+On how to create a sparrow plugins please follow L<Outthentic documentation|https://github.com/melezhik/outthentic>.
 
+Once a plugin is create you should do 4 simple steps:
 
-=head2 Swat test suites
+=over
 
-To get know to create swat tests please follow swat project documentation -
-L<https://github.com/melezhik/swat|https://github.com/melezhik/swat>.
+=item *
 
-A simplest swat test to check that web service returns `200 OK' when receive `GET /' request will be:
-
-    echo 200 OK > get.txt
+get registered on SparrowHub and create a token
 
 
-=head3 create a cpanfile
+=item *
 
-As sparrow relies on L<carton|https://metacpan.org/pod/Carton> to handle perl dependencies you need to create a valid
-L<cpanfile|https://metacpan.org/pod/cpanfile> in the plugin root directory.
+setup sparrowhub.json file
 
-The minimal dependency you have to declare is swat perl module:
 
-    $ cat cpanfile
+=item *
+
+create a plugin meta file - sparrow.json
+
+
+=item *
+
+upload a plugin with the help of C<sparrow plg upload> command
+
+
+=back
+
+
+=head2 Get registered on SparrowHub
+
+Go to L<https://sparrowhub.org/sign_up|https://sparrowhub.org/sign_up> and create an account
+
+
+=head2 Generate a token
+
+Login into SparrowHub, go to Profile page and hit "Regenerate Token" on  L<https://sparrowhub.org/token|https://sparrowhub.org/token>  page.
+
+
+=head2 Setup sparrowhub.json
+
+Once your get you token, setup a sparrowhub credentials on the machine where you are going upload plugin from:
+
+    $ cat ~/sparrowhub.json
     
-    require 'swat';
+    {
+        "user"  : "melezhik",
+        "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
+    }
 
-Of course you may also add other dependencies your plugin might need:
+NOTE! Another way to provide SparrowHub credentials is to set C<$sph_user> and C<$sph_token> environment variables:
 
-    $ cat cpanfile
-    
-    require 'HTML::Entities'
+    $ export sph_user=melezhik 
+    $ export sph_token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83
 
 
-=head3 create sparrow.json file
+=head2 Create a plugin meta file sparrow.json
 
-Sparrow.json file describes plugin's meta information required for plugin gets uploaded to SparrowHub.
+Sparrow.json file holds plugin  meta information required for plugin gets uploaded to SparrowHub.
 
-In case of private plugin you may skip this step.
-
-Create sparrow.json file and place it in plugin root directory:
+Create sparrow.json file and place it in a plugin root directory:
 
     {
         "version": "0.1.1",
-        "name": "my-cool-plugin",
-        "engine": "swat", 
-        "description" : "this is a great plugin!",
-        "url" : "http://...."
+        "name": "df-check",
+        "description" : "elementary file system checks using df utility report ",
+        "url" : "https://github.com/melezhik/df-check"
     }
 
 This is the list of obligatory parameters you have to set:
@@ -765,18 +694,6 @@ This the list of optional parameters you may set as well:
 
 =item *
 
-engine 
-
-
-=back
-
-Defines framework for suite. Default value is `swat'. Other possible value is 'generic', see
-L<generic suites section|#generic-suites>
-
-=over
-
-=item *
-
 url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
 
 
@@ -790,142 +707,56 @@ description - a short description of your plugin
 =back
 
 
-=head3 Generic suites
-
-Creation of generic suites is very similar to a swat test suites, but you'd better read L<outthentic framework documentation|https://github.com/melezhik/outthentic> to 
-understand the difference.
-
-Once your suite is ready add the same metadata as with swat test suite:
+=head2 Upload plugin
 
 =over
-
-=item *
-
-cpanfile
-
-
-=item *
-
-sparrow.json
-
-
-=back
-
-Cpanfile should declare at least a dependency on Outthentic perl module:
-
-    $ cat cpanfile
-    
-    require 'Outthentic';
-
-Sparrow.json file does not differ from the one described at L<swat test suite|#swat-test-suite> section, except for
-`engine' field value:
-
-    {
-        "engine": "generic"
-    }
-
-
-=head1 Publishing sparrow plugins
-
-
-=head2 Private plugin
-
-=over
-
-=item *
-
-All you need is to keep a plugin source code in the remote git repository.
-
-
-
-=item *
-
-Plugin root directory should be repository root directory.
-
-
-
-=item *
-
-Once a plugin is placed at git remote repository you need to add a proper entry into SPL file, see L<SPL FILE|#> section how to do this.
-
-
-
-=back
-
-
-=head2 Public plugin
-
-To publish you plugin into SparrowHub you need:
-
-=over
-
-=item *
-
-Get registered at SparrowHub
-
-
-=back
-
-Go to L<https://sparrowhub.org|https://sparrowhub.org>
-
-=over
-
-=item *
-
-Get rest api token
-
-
-=back
-
-Login into your account. Go on "Profile" page, then on "My Token" page and then hit "Regenerate Token" link.
-
-Once your get you token, setup a sparrowhub credentials on the machine where your are going upload plugin from:
-
-    $ cat ~/sparrowhub.json
-    
-    {
-        "user"  : "melezhik",
-        "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
-    }
-
-=over
-
-=item *
-
-Upload plugin
-
-=over
-
-=item *
-
-Check if you have sparrowhub credentials setup correctly ( previous step ) on your machine
-
 
 =item *
 
 Install sparrow client on your machine
 
+$ cpanm Sparrow
+
+
 
 =item *
 
-Then go to directory where your plugin source code at and say `sparrow plg upload'. That's it
+Go to directory where your plugin source code at and say:
+
+$ sparrow plg upload
+
 
 
 =back
 
+That's it!
+
+
+=head1 Publishing private sparrow plugins
+
+The process is almost the same as for public plugins, except you don't have to provide SparrowHub credentials
+and gets registered as you host your plugin at remote git repository. 
+
+You have to do 3 simple steps
+
+=over
+
+=item *
+
+create a plugin and commit it into local git repository, plugin root directory should be repository root directory
+
+
+=item *
+
+create plugin meta file - sparrow.json and commit it into local git repository ( sparrow.json file is the same as for public plugins )
+
+
+=item *
+
+push your changes into remote git repository
 
 
 =back
-
-For example:
-
-    $ cd plugin_root_directory
-    $ sparrow plg upload
-
-Another way to supply sparrow with valid SparrowHub credentials - use C<sph_user> and C<sph_token> environment variables.
-Probably useful in automation scripts:
-
-    $ sph_user=melezhik sph_token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83 sparrow plg upload
 
 
 =head1 AUTHOR
@@ -935,7 +766,7 @@ L<Aleksei Melezhik|mailto:melezhik@gmail.com>
 
 =head1 Home page
 
-https://github.com/melezhik/sparrow
+L<https://github.com/melezhik/sparrow|https://github.com/melezhik/sparrow>
 
 
 =head1 Copyright
@@ -951,20 +782,7 @@ This program is free software; you can redistribute it and/or modify it under th
 
 =item *
 
-L<Outthentic|https://github.com/melezhik/outthentic> - Generic testing, reporting, monitoring framework consuming consuming Outthentic::DSL.
-
-
-
-=item *
-
-L<Swat|https://github.com/melezhik/swat> - Web testing framework consuming Outthentic::DSL.
-
-
-
-=item *
-
-L<Outthentic::DSL|https://github.com/melezhik/outthentic-dsl> - Outthentic::DSL specification.
-
+L<Outthentic|https://github.com/melezhik/outthentic> - Multipurposes scenarios framework.
 
 
 =back

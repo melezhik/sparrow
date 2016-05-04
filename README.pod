@@ -312,7 +312,7 @@ There are two ways to run sparrow plugins:
 
 =item *
 
-I<as>is
+as_is
 
 
 
@@ -333,11 +333,11 @@ For example:
 
     $ sparrow plg run df-check
 
-NOTE! Only L<public plugins|#public-plugins> could be run I<as>is_.
+NOTE! Only L<public plugins|#public-plugins> could be run I<as_is>.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-**sparrow task run $project_name $check_nameI< [ options ]>*
+B<sparrow task run $project_name $check_name [ options ]>
 
 For example:
 
@@ -726,7 +726,7 @@ That's it!
 The process is almost the same as for public plugins, except you don't have to provide SparrowHub credentials
 and gets registered as you host your plugin at remote git repository. 
 
-You have to do 3 simple steps
+You have to do 3 simple steps:
 
 =over
 

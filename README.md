@@ -229,7 +229,7 @@ Command examples:
 
 There are two ways to run sparrow plugins:
 
-* _as_is
+* as\_is
 
 * as tasks
 
@@ -243,11 +243,11 @@ For example:
 
     $ sparrow plg run df-check
 
-NOTE! Only [public plugins](#public-plugins) could be run _as_is_.
+NOTE! Only [public plugins](#public-plugins) could be run _as\_is_.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-**sparrow task run $project\_name $check\_name* [ options ]**
+**sparrow task run $project\_name $check\_name [ options ]**
 
 For example:
 
@@ -504,7 +504,7 @@ That's it!
 The process is almost the same as for public plugins, except you don't have to provide SparrowHub credentials
 and gets registered as you host your plugin at remote git repository. 
 
-You have to do 3 simple steps
+You have to do 3 simple steps:
 
 * create a plugin and commit it into local git repository, plugin root directory should be repository root directory
 * create plugin meta file - sparrow.json and commit it into local git repository ( sparrow.json file is the same as for public plugins )

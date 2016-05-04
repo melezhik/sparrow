@@ -35,6 +35,7 @@
             "Carton" : "0",
             "JSON" : "0",
             "Outthentic" : "v0.1.0",
+            "Term::ANSIColor" : "4.02",
             "version" : "0"
          }
       }

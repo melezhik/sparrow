@@ -99,7 +99,7 @@ Command examples:
 
 To get project information say this:
 
-*sparrow project show $project\_name*
+**sparrow project show $project\_name**
 
 For example:
 
@@ -107,11 +107,11 @@ For example:
 
 To get projects list say this:
 
-*sparrow project list*
+**sparrow project list**
 
 To remove project data say this:
 
-*sparrow project remove $project\_name*
+**sparrow project remove $project\_name**
 
 For example:
 
@@ -123,7 +123,7 @@ Note - this command will remove all project tasks as well!
 
 To search available plugins use `sparrow plg search` command:
 
-*sparrow plg search $pattern*
+**sparrow plg search $pattern**
 
 Where $pattern is Perl regular expression pattern.
 
@@ -166,11 +166,11 @@ Index consists of two parts:
 
 There are two basic command to work with index:
 
-* *sparrow index summary*
+* **sparrow index summary**
 
 This command will show timestamps and file locations for public and private index files.
 
-*sparrow index update*
+* **sparrow index update**
 
 This command will fetch fresh index from SparrowHub and update local cached index.
 
@@ -183,7 +183,7 @@ See [public plugins](#public-plugins) section for details on sparrow public plug
 
 ### Installing sparrow plugins
 
-*sparrow plg install $plugin\_name*
+**sparrow plg install $plugin\_name**
 
 For example:
 
@@ -197,11 +197,11 @@ To see installed plugin list say this:
 
 To get installed plugin information say this:
 
-*sparrow plg show $plugin\_name*
+**sparrow plg show $plugin\_name**
 
 To remove plugin installed use `sparrow plg remove` command:
 
-*sparrow plg remove $plugin\_name*
+**sparrow plg remove $plugin\_name**
 
 For example:
 
@@ -213,7 +213,7 @@ For example:
 
 To create a task use `sparrow task add` command:
 
-*sparrow check add $project\_name $task\_name $plugin\_name*
+**sparrow check add $project\_name $task\_name $plugin\_name**
 
 Tasks always belong to projects, so to create a task you have to create a project first if not exists.
 Tasks binds a plugin with configuration, so to create a task you have to install a plugin first.
@@ -237,7 +237,7 @@ The first one is simplest as it does not require creating a task at all. If you 
 you may run a plugin as is using  `sparrow plg run` command:
 
 
-*sparrow plg run [ options ]
+**sparrow plg run [ options ]**
 
 For example:
 
@@ -247,7 +247,7 @@ NOTE! only [public plugins](#public-plugins) could be run _as_is_.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-*sparrow task run $project\_name $check\_name* [ options ]
+**sparrow task run $project\_name $check\_name* [ options ]**
 
 For example:
 
@@ -281,7 +281,7 @@ _runner related_ parameters, check out [Outthentic](https://github.com/melezhik/
 When running tasks with cron it is handy only have an output if something goes wrong, 
 f.e. if plugin failed for some reasons. Use `--cron` flag to enable this behavior:
 
-*sparrow check run $project\_name $check\_name --cron*
+**sparrow check run $project\_name $check\_name --cron**
 
 Running checkpoint with --cron flag suppress a normal output and only emit something in case of failures.
 
@@ -301,7 +301,7 @@ Sparrow supports two configuration formats:
 
 Config::General format is _default_ format for task configuration.  Use `task ini` command to set task configuration:
 
-*sparrow task ini $project\_name $checkpoint\_name*
+**sparrow task ini $project\_name $checkpoint\_name**
 
 For example:
 
@@ -318,7 +318,7 @@ Having this sparrow will save plugin configuration in the file related to task a
 
 User could copy existed configuration from file using `check load_ini` command:
 
-*sparrow task load_ini $project\_name $checkpoint\_name /path/to/ini/file*
+**sparrow task load_ini $project\_name $checkpoint\_name /path/to/ini/file**
 
 For example:
 
@@ -326,7 +326,7 @@ For example:
 
 To get task configuration use `sparrow task show` command:
 
-*sparrow task show $project\_name $checkpoint\_name*
+**sparrow task show $project\_name $checkpoint\_name**
 
 For example:
 
@@ -353,7 +353,7 @@ and maintained out of sparrow scope and applied during task run.
 
 Use this command to remove task from the project container:
 
-*sparrow task remove $project\_name $checkpoint\_name*
+**sparrow task remove $project\_name $checkpoint\_name**
 
 Examples:
 
@@ -372,7 +372,7 @@ There are two type of sparrow plugins:
 
 Both public and private plugins are installed with help of sparrow client:
 
-*sparrow plg install plugin_name*
+**sparrow plg install plugin_name**
 
 ## Public plugins
 

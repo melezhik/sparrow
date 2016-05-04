@@ -40,15 +40,15 @@ sub task_add {
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
-    if  (-d sparrow_root."/projects/$project/tasks/$tid"){
-      print "task $project/$tid already exists - nothing to do here\n\n";
-      exit(0);
-    }
 
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
     $tid=~/^[\w\d-\._]+$/ or confess 'task parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
-    mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
+    if  (-d sparrow_root."/projects/$project/tasks/$tid") {
+      print "task $project/$tid already exists, so will only update a binded plugin\n";
+    } else {
+      mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
+    }
 
     my $ptype;
 

@@ -1,7 +1,7 @@
 generator: <<CODE
 
 if ( story_var('task_exists') ) {
-  [ "task foo100/bar already exists - nothing to do here" ]
+  [ "task foo100/bar already exists, so will only update a binded plugin" ]
 } else {
   [ "task foo100/bar successfully created" ]
 }

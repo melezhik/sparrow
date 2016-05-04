@@ -1,4 +1,4 @@
-strun --root ./
+strun --root
 All tests successful.
 Result: PASS
 

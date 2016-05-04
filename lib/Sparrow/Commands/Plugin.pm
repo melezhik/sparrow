@@ -125,14 +125,17 @@ to overcome this ambiguity";
                 sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
                 sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz && echo");
 
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz && carton");
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz");
+
+                if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
+                }            
 
             }else{
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton && carton update");
                 print "public\@$pid is uptodate ($inst_v)\n";
             }
 
-        }else{
+        } else {
 
             my $v = $opts{'--version'} ||  $list->{'public@'.$pid}->{version};
             my $vn = version->parse($v)->numify; 
@@ -147,18 +150,25 @@ to overcome this ambiguity";
             sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
             sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz && echo");
 
-            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$vn.tar.gz && carton");
+            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$vn.tar.gz");
 
+            if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
+                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
+            }            
         }
         
-    }elsif($list->{'private@'.$pid} and $ptype ne 'public' ) {
+    } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
         print "installing private\@$pid ...\n";
         if ( -d sparrow_root."/plugins/private/$pid" ){
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton");
+            if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
+                execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
+            }            
         }else{
             execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton");
+            if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
+                execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
+            }            
         }
 
     }else{
@@ -171,23 +181,21 @@ to overcome this ambiguity";
 sub run_plugin {
 
     my $pid         = shift or confess "usage: run_plugin(*plugin_name,options)";
-    my $options     = shift || '';
+
+    my $parameters  = join ' ', @ARGV;
 
     my $pdir = sparrow_root."/plugins/public/$pid";
 
     confess 'plugin not installed' unless -d $pdir;
 
     my $spj = plugin_meta($pdir);
+
     my $cmd;
 
-    if ($spj->{engine} and $spj->{engine} eq 'generic'){
-        $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ '";
-    }else{
-        $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ '";
-    }
-
+    $cmd = "cd $pdir && PERL5LIB=local/lib/perl5 && strun --root ./ $parameters";
 
     print "# running $cmd ...\n\n";
+
     exec $cmd;
 
 }

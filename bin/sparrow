@@ -148,7 +148,9 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        task_run($name, @ARGV);
+        my $tid = shift @ARGV;
+
+        task_run($name, $tid, @ARGV);
 
     } elsif( $action  eq 'remove'){
 

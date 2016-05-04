@@ -30,9 +30,6 @@ t/lib/test.pm
 t/modules/plg-generic/install/story.check
 t/modules/plg-generic/install/story.pl
 t/modules/plg-generic/install/story.pm
-t/modules/plg/install/story.check
-t/modules/plg/install/story.pl
-t/modules/plg/install/story.pm
 t/modules/project/create/story.check
 t/modules/project/create/story.pl
 t/modules/project/task/create/story.check

@@ -167,36 +167,23 @@ sub task_run {
     confess 'plugin not installed' unless -d $pdir;
 
     my $spj = plugin_meta($pdir);
-    my $cmd;
     
-    if ($spj->{engine} and $spj->{engine} eq 'generic'){
-        $cmd = 'cd '.$pdir.' && '."carton exec 'strun --root ./ ";
-        if ($options=~/--yaml\s+(\S+)/){
-          my $path = $1;
-          $cmd.=" --yaml $path";
-        }else{
-          my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
-          $cmd.=" --ini $path" if -f $path;
-        }
-        $cmd.=" --host $task_set->{base_url}" if $task_set->{'base_url'};
+    my $cmd = "cd $pdir && PERL5LIB=local/lib/perl5 strun --root ./";
+
+    if ($options=~/--yaml\s+(\S+)/){
+      my $path = $1;
+      $cmd.=" --yaml $path";
     }else{
-        $cmd = 'cd '.$pdir.' && '."carton exec 'swat ./ ";
-        $cmd.=" $task_set->{base_url}";
-        if ($options=~/--yaml\s+(\S+)/){
-          my $path = $1;
-          $cmd.=" --yaml $path";
-        }else{
-          my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
-          $cmd.=" --ini $path" if -f $path;
-        }
+      my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+      $cmd.=" --ini $path" if -f $path;
     }
 
     if ($options=~s/--cron//) {
-        $cmd.=" $options'";
+        $cmd.=" $options";
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$tid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
-        $cmd.=" $options'";
+        $cmd.=" $options";
         print "# $cmd\n\n";
         exec $cmd;
     }

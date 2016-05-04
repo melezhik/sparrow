@@ -490,22 +490,21 @@ This the list of optional parameters you may set as well:
 ## Upload plugin
 
 * Install sparrow client on your machine
-
+    
     $ cpanm Sparrow
-
+    
 * Go to directory where your plugin source code at and say:
-
+    
     $ sparrow plg upload
-
+    
 That's it!
 
-
-# Publishing sparrow plugins
+# Publishing private sparrow plugins
 
 The process is almost the same as for public plugins, except you don't have to provide SparrowHub credentials
 and gets registered as you host your plugin at remote git repository. 
 
-You have to do 2 simple steps
+You have to do 3 simple steps
 
 * create a plugin and commit it into local git repository, plugin root directory should be repository root directory
 * create plugin meta file - sparrow.json and commit it into local git repository ( sparrow.json file is the same as for public plugins )

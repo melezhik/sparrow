@@ -117,7 +117,7 @@ For example:
 
     $ sparrow project web-servers remove
 
-Note - this command will remove all project tasks as well!
+NOTE! This command will remove all project tasks as well!
 
 ## Plugins API
 
@@ -243,7 +243,7 @@ For example:
 
     $ sparrow plg run df-check
 
-NOTE! only [public plugins](#public-plugins) could be run _as_is_.
+NOTE! Only [public plugins](#public-plugins) could be run _as_is_.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
@@ -253,7 +253,7 @@ For example:
 
     $ sparrow check run system disk-health
 
-See [configuring tasks](#configuring-task) section on how one can configure task plugin.
+See [configuring tasks](#configuring-tasks) section on how one can configure task plugin.
 
 ### Setting runtime parameters 
 
@@ -451,7 +451,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
         "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
 
-NOTE! - Another way to provide SparrowHub credentials is to set `$sph_user` and `$sph_token` environment variables:
+NOTE! Another way to provide SparrowHub credentials is to set `$sph_user` and `$sph_token` environment variables:
 
     $ export sph_user=melezhik 
     $ export sph_token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83

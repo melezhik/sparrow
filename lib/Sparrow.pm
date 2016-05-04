@@ -31,8 +31,8 @@ The project is still in very alpha stage. Things might change. But you can start
 
 =head1 Install
 
-    $ sudo yum install git
-    $ sudo yum install curl # skip this if you are not going to use private sparrow plugins
+    $ sudo yum install git # only required for installing private plugins
+    $ sudo yum install curl
     $ cpanm Sparrow
 
 
@@ -85,7 +85,7 @@ Projects
 
 =item *
 
-Boxes
+Task Boxes
 
 
 =back
@@ -134,10 +134,12 @@ Like some tasks for system related issues - f.e. checking L<disk available space
 web services related issues - f.e. L<checking nginx health|https://sparrowhub.org/info/nginx-check> or L<monitoring http errors|https://sparrowhub.org/info/logdog> in web server logs, so on. 
 
 
-=head1 Boxes
+=head1 Task Boxes
 
-Sparrow boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
+Sparrow tasks boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
 tasks run sequentially.
+
+WARNIGN! This feature is not implemented yet.
 
 
 =head1 API

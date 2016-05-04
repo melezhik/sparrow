@@ -1,3 +1,12 @@
+0.1.0 2016-05-04
+
+A historical release. BREAKING CHANGES:
+
+* checkpoints are replaced by tasks, see documentation
+* sparrow plugins no require cpanfile to get run
+* swat plugins are deprecated
+* a placeholder for task boxes features ( comming soon )
+
 0.0.25 2016-05-02
 
 * a minor breaking changes in check run action ( see documentation )

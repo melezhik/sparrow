@@ -15,8 +15,8 @@ The project is still in very alpha stage. Things might change. But you can start
 
 # Install
 
-    $ sudo yum install git
-    $ sudo yum install curl # skip this if you are not going to use private sparrow plugins
+    $ sudo yum install git # only required for installing private plugins
+    $ sudo yum install curl
     $ cpanm Sparrow
 
 # Sparrow plugins
@@ -51,7 +51,7 @@ Sparrow architecture comprises of 4 basic parts:
 * Plugins
 * Tasks
 * Projects
-* Boxes
+* Task Boxes
 
 
 # Tasks
@@ -73,11 +73,12 @@ Projects are _logical groups_ of sparrow tasks. It is convenient to split a whol
 Like some tasks for system related issues - f.e. checking [disk available space](https://sparrowhub.org/info/df-check) or inspecting [stale processes](https://sparrowhub.org/info/stale-proc-check), other tasks for
 web services related issues - f.e. [checking nginx health](https://sparrowhub.org/info/nginx-check) or [monitoring http errors](https://sparrowhub.org/info/logdog) in web server logs, so on. 
 
-# Boxes
+# Task Boxes
 
-Sparrow boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
+Sparrow tasks boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
 tasks run sequentially.
 
+WARNIGN! This feature is not implemented yet.
 
 # API
 

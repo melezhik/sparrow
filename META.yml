@@ -21,6 +21,7 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
+  Outthentic: 0.1.0
   version: 0
 resources:
   license: http://dev.perl.org/licenses/

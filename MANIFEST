@@ -44,10 +44,8 @@ t/plg/run/story.check
 t/plg/search/story.bash
 t/plg/search/story.check
 t/plg/upload/foo-test/Changes.md
-t/plg/upload/foo-test/cpanfile
 t/plg/upload/foo-test/get.txt
 t/plg/upload/foo-test/hook.pm
-t/plg/upload/foo-test/host
 t/plg/upload/foo-test/README.md
 t/plg/upload/foo-test/sparrow.json
 t/project-create/story.check

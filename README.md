@@ -23,7 +23,7 @@ The project is still in very alpha stage. Things might change. But you can start
 
 Sparrow plugins are shareable multipurposes scenarios distributed via central repository - [SparrowHub](https://sparrowhub.org).
 Every single plugin represents a various scripts to solve a specific task. Plugins are easily installed, configured and run on
-on dedicated server with the help of sparrow console client. 
+dedicated servers with the help of sparrow console client. 
 
 The notion of sparrow plugins is very close to the conception of CPAN modules in Perl or Ruby gems in Ruby.
 It's just a small suites of scripts to solve a specific tasks.
@@ -70,8 +70,8 @@ Plugin configuration is just a text file in one of 2 formats:
 # Projects
 
 Projects are _logical groups_ of sparrow tasks. It is convenient to split a whole list of tasks to different logical groups. 
-Like some tasks for system checks - [disk available space](https://sparrowhub.org/info/df-check) or checking [stale processes](https://sparrowhub.org/info/stale-proc-check), other ones
-for [web services checks](https://sparrowhub.org/info/nginx-check), so on. 
+Like some tasks for system related issues - f.e. checking [disk available space](https://sparrowhub.org/info/df-check) or inspecting [stale processes](https://sparrowhub.org/info/stale-proc-check), other tasks for
+web services related issues - f.e. [checking nginx health](https://sparrowhub.org/info/nginx-check) or [monitoring http errors](https://sparrowhub.org/info/logdog) in web server logs, so on. 
 
 # Boxes
 

@@ -1,0 +1,17 @@
+
+generator: <<CODE
+
+use test;
+
+[ 
+    "assert: ".(-f sparrow_root."/projects/foo100/tasks/bar/suite.ini"). 
+     " ".sparrow_root."/projects/foo100/tasks/bar/suite.ini exists" 
+]
+
+CODE
+
+OK
+
+
+
+

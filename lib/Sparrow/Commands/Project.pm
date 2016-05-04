@@ -49,7 +49,7 @@ sub project_create {
         print "project $project already exists - nothing to do here ... \n\n"
     } else {
         mkpath sparrow_root."/projects/$project";
-        mkpath sparrow_root."/projects/$project/checkpoints";
+        mkpath sparrow_root."/projects/$project/tasks";
         print "project $project successfully created\n\n"
     }
 
@@ -64,9 +64,9 @@ sub project_show {
 
     print "[project $project]\n\n";
 
-    print "[checkpoints]\n\n";
+    print "[tasks]\n\n";
 
-    my $root_dir = sparrow_root."/projects/$project/checkpoints/";
+    my $root_dir = sparrow_root."/projects/$project/tasks/";
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 

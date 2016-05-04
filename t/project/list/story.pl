@@ -1,3 +1,0 @@
-print `sparrow project list`;
-
-

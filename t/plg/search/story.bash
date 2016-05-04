@@ -1,0 +1,3 @@
+sparrow plg search foo
+
+

@@ -1,2 +1,2 @@
-usage: sparrow project|plg|index action args
+usage: sparrow index|plg|project|task action args
 

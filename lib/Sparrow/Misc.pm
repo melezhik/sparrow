@@ -31,13 +31,11 @@ sub execute_shell_command {
 
 sub usage {
 
-    print "usage: sparrow project|plg|index action args\n";
-    print "where action: list|search|create|remove|show|install|check_add|check_run|check_set|check_remove and args depend on action\n";
+    print "usage: sparrow index|plg|project|task action args\n\n";
 
+    print "action examples:\n\n";
 
-    print "action examples:\n";
-
-    print "\n[index]:\n\n";
+    print "\[index]:\n\n";
     print "\tsparrow index update  # get freash index from SparrowHub\n";
     print "\tsparrow index summary # print cached index summary\n";
 
@@ -57,14 +55,13 @@ sub usage {
     print "\tsparrow plg run     df-check    # run plguin tests\n";
 
 
-    print "\n[checkpoints]:\n\n";
-    print "\tsparrow check add      system disk           # create checkpoint named `disk' in project system\n";
-    print "\tsparrow check set      system disk df-disk   # bind check point to plugin \n";
-    print "\tsparrow check remove   system disk       # remove checkpoint named `disk' in project foo\n";
-    print "\tsparrow check show     system disk       # get checkpoint info \n";
-    print "\tsparrow check run      system disk       # run checkpoint tests \n";
-    print "\tsparrow check ini      system disk       # populate plugin configuration \n";
-    print "\tsparrow check load_ini system disk /path/to/ini/file # load plugin configuration from ini file \n";
+    print "\n[tasks]:\n\n";
+    print "\tsparrow task add         system disk df-check    # create task named `disk' tied to plugin df-check in project system\n";
+    print "\tsparrow task remove      system disk             # remove task named `disk' in project foo\n";
+    print "\tsparrow task show        system disk             # get `disk' task info \n";
+    print "\tsparrow task run         system disk             # run `disk' task \n";
+    print "\tsparrow task ini         system disk             # populate task plugin configuration \n";
+    print "\tsparrow task load_ini    system disk /path/to/ini/file # load plugin configuration from ini file \n";
 
     print "\n\n";
 

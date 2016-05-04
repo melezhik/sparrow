@@ -1,6 +1,0 @@
-generator: story_var('cp_exists') ?                             \
-[ "checkpoint foo100/bar already exists - nothing to do here" ] \
-: [ "checkpoint foo100/bar successfully created" ]
-
-directory projects/foo100/checkpoints/bar exists
-

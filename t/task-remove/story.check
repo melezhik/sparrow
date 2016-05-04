@@ -1,0 +1,11 @@
+OK
+
+generator: <<CODE
+
+[ 
+    ("assert: ").
+    (! -d (sparrow_root."/projects/foo100/tasks/bar")).
+    "directory projects/foo100/tasks/bar does not exists" 
+]
+
+CODE

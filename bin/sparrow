@@ -6,7 +6,7 @@ use Sparrow::Constants;
 
 use Sparrow::Commands::Project;
 use Sparrow::Commands::Plugin;
-use Sparrow::Commands::CheckPoint;
+use Sparrow::Commands::Task;
 use Sparrow::Commands::Index;
 
 use Sparrow::Misc;
@@ -116,7 +116,7 @@ if ($object eq  'plg'){
 
     }
 
-} elsif ($object eq  'check') {
+} elsif ($object eq  'task') {
 
     my $action = shift @ARGV;
 
@@ -124,49 +124,42 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        check_add($name, @ARGV);
+        task_add($name, @ARGV);
 
     } elsif ( $action eq 'ini' ) {
 
         my $name = shift @ARGV;
 
-        check_ini($name, @ARGV);
+        task_ini($name, @ARGV);
 
     } elsif ( $action eq 'load_ini' ) {
 
         my $name = shift @ARGV;
 
-        check_load_ini($name, @ARGV);
-
-    } elsif ( $action eq 'set') {
-
-        my $name = shift @ARGV;
-
-        check_set($name, @ARGV);
+        task_load_ini($name, @ARGV);
 
     } elsif ( $action eq 'show' ){
 
         my $name = shift @ARGV;
 
-        check_show($name, @ARGV);
+        task_show($name, @ARGV);
 
     } elsif( $action  eq 'run'){
 
         my $name = shift @ARGV;
 
-        check_run($name, @ARGV);
+        task_run($name, @ARGV);
 
     } elsif( $action  eq 'remove'){
 
         my $name = shift @ARGV;
 
-        check_remove($name, @ARGV);
+        task_remove($name, @ARGV);
 
     } else  { 
 
         confess "unknown command: $action @ARGV";
 
     }
-
 }
 

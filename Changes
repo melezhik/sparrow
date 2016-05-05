@@ -1,3 +1,7 @@
+0.1.1 2016-05-05
+
+* Dependencies support for Ruby ( Gemfile / bundler )
+
 0.1.0 2016-05-04
 
 A historical release. BREAKING CHANGES:

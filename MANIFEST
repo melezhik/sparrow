@@ -54,6 +54,8 @@ t/project/list/story.bash
 t/project/list/story.check
 t/project/remove/story.check
 t/project/remove/story.pl
+t/ruby-plg-run/story.bash
+t/ruby-plg-run/story.check
 t/story.bash
 t/story.check
 t/suite.ini

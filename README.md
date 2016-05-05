@@ -511,6 +511,20 @@ You have to do 3 simple steps:
 * create plugin meta file - sparrow.json and commit it into local git repository ( sparrow.json file is the same as for public plugins )
 * push your changes into remote git repository
 
+# Declaring dependencies
+
+This is the way how one can declare dependencies for sparrow plugins:
+
+    +----------+----------+
+    | Language |  File    |
+    +----------+----------+
+    | Perl     | cpanfile |
+    | Ruby     | Gemfile  |
+    +----------+----------+
+
+You should place a dependency file into a plugin root directory.
+
+ 
 # AUTHOR
 
 [Aleksei Melezhik](mailto:melezhik@gmail.com)

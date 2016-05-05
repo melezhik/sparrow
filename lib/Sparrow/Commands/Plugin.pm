@@ -131,8 +131,18 @@ to overcome this ambiguity";
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
                 }            
 
+                if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
+                }                
+
             }else{
                 print "public\@$pid is uptodate ($inst_v)\n";
+                if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
+                }            
+                if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
+                }                
             }
 
         } else {
@@ -155,6 +165,9 @@ to overcome this ambiguity";
             if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
             }            
+            if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
+            }                
         }
         
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
@@ -164,11 +177,17 @@ to overcome this ambiguity";
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
             }            
+            if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
+            }                
         }else{
             execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
             }            
+            if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
+            }                
         }
 
     }else{
@@ -369,7 +388,7 @@ sub upload_plugin {
 
     print "sparrow.json file validated ... \n";
 
-    execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
     execute_shell_command(
         "curl -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .

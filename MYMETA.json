@@ -34,13 +34,13 @@
          "requires" : {
             "Carton" : "0",
             "JSON" : "0",
-            "Outthentic" : "v0.1.0",
+            "Outthentic" : "v0.1.2",
             "Term::ANSIColor" : "4.02",
             "version" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "v0.1.0",
+   "version" : "v0.1.1",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }

@@ -750,6 +750,20 @@ push your changes into remote git repository
 =back
 
 
+=head1 Declaring dependencies
+
+This is the way how one can declare dependencies for sparrow plugins:
+
+    +----------+----------+
+    | Language |  File    |
+    +----------+----------+
+    | Perl     | cpanfile |
+    | Ruby     | Gemfile  |
+    +----------+----------+
+
+You should place a dependency file into a plugin root directory.
+
+
 =head1 AUTHOR
 
 L<Aleksei Melezhik|mailto:melezhik@gmail.com>

@@ -78,7 +78,7 @@ web services related issues - f.e. [checking nginx health](https://sparrowhub.or
 Sparrow tasks boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
 tasks run sequentially.
 
-WARNIGN! This feature is not implemented yet.
+WARNING! This feature is not implemented yet.
 
 # API
 

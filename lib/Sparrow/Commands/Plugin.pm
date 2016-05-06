@@ -211,7 +211,7 @@ sub run_plugin {
 
     my $cmd;
 
-    $cmd = "cd $pdir && PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";
+    $cmd = "cd $pdir && PATH=\$PATH:local/bin  PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";
 
     print "# running $cmd ...\n\n";
 

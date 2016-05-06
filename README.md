@@ -214,7 +214,7 @@ For example:
 
 To create a task use `sparrow task add` command:
 
-**sparrow check add $project\_name $task\_name $plugin\_name**
+**sparrow task add $project\_name $task\_name $plugin\_name**
 
 Tasks always belong to projects, so to create a task you have to create a project first if not exists.
 Tasks binds a plugin with configuration, so to create a task you have to install a plugin first.
@@ -248,11 +248,11 @@ NOTE! Only [public plugins](#public-plugins) could be run _as\_is_.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-**sparrow task run $project\_name $check\_name [ options ]**
+**sparrow task run $project\_name $task\_name [ options ]**
 
 For example:
 
-    $ sparrow check run system disk-health
+    $ sparrow task run system disk-health
 
 See [configuring tasks](#configuring-tasks) section on how one can configure task plugin.
 
@@ -263,7 +263,11 @@ It is possible to pass _whatever_ runtime configuration parameters when running 
 
     $ sparrow plg run df-check --param threshold=60
 
-    $ sparrow check run system disk-health --param threshold=60
+    $ sparrow task run system disk-health --param threshold=60
+
+    # or even nested and multi parameters!
+
+    $ sparrow plg run foo --param foo.bar.baz=60 --param id=100
 
 Runtime parameters override default parameters ones set in tasks configurations, see [configuring tasks](#configuring-task) section.
 
@@ -273,8 +277,8 @@ As sparrow runs plugins with the help of [Outthentic scenarios runner](https://g
 _runner related_ parameters, check out [Outthentic](https://github.com/melezhik/outthentic#options) for details. Other parameters examples:
 
 
-    $ sparrow check run system disk-health --verbose
-    $ sparrow check run system disk-health --verbose --prove '-Q'
+    $ sparrow task run system disk-health --silent
+    $ sparrow task run system disk-health --debug 1 --prove '-Q'
 
 
 ### Running tasks with cron
@@ -282,13 +286,13 @@ _runner related_ parameters, check out [Outthentic](https://github.com/melezhik/
 When running tasks with cron it is handy only have an output if something goes wrong, 
 f.e. if plugin failed for some reasons. Use `--cron` flag to enable this behavior:
 
-**sparrow check run $project\_name $check\_name --cron**
+**sparrow task run $project\_name $task\_name --cron**
 
-Running checkpoint with --cron flag suppress a normal output and only emit something in case of failures.
+Running task with --cron flag suppress a normal output and only emit something in case of failures.
 
 Example:
 
-    $ sparrow check system disk-health --cron # pleas keep quite if disk space is ok
+    $ sparrow task system disk-health --cron # pleas keep quite if disk space is ok
 
 ### Configuring tasks
 
@@ -302,13 +306,13 @@ Sparrow supports two configuration formats:
 
 Config::General format is _default_ format for task configuration.  Use `task ini` command to set task configuration:
 
-**sparrow task ini $project\_name $checkpoint\_name**
+**sparrow task ini $project\_name $task\_name**
 
 For example:
 
     $ export EDITOR=nano
 
-    $ sparrow check ini system disk-health
+    $ sparrow task ini system disk-health
 
     # disk used threshold in %
     threshold = 80
@@ -317,9 +321,9 @@ Having this sparrow will save plugin configuration in the file related to task a
 
     $ sparrow task run system disk-health # the value of threshold is 80
 
-User could copy existed configuration from file using `check load_ini` command:
+User could copy existed configuration from file using `task load_ini` command:
 
-**sparrow task load_ini $project\_name $checkpoint\_name /path/to/ini/file**
+**sparrow task load_ini $project\_name $task\_name /path/to/ini/file**
 
 For example:
 
@@ -327,23 +331,23 @@ For example:
 
 To get task configuration use `sparrow task show` command:
 
-**sparrow task show $project\_name $checkpoint\_name**
+**sparrow task show $project\_name $task\_name**
 
 For example:
 
     $ sparrow task show system disk-health
 
 
-Alternative way to configure sparrow checkpoint is to load configuration from yaml file _during_ checkpoint [run](#running-suites):
+Alternative way to configure sparrow task is to load configuration from yaml file _during_ task run:
 
     $ cat disk.yml
 
     ---
     threshold: 80
 
-    $ sparrow check run system disk --yaml disk.yml
+    $ sparrow task run system disk --yaml disk.yml
      
-While `sparrow task ini/load_ini` command saves checkpoint configuration and makes it persistent,
+While `sparrow task ini/load_ini` command saves task configuration and makes it persistent,
 `sparrow task run --yaml` command applies plugin configuration only for runtime and won't save it after plugin execution.
 
 For common usage, when user runs tasks manually first approach is more convenient, 
@@ -354,12 +358,12 @@ and maintained out of sparrow scope and applied during task run.
 
 Use this command to remove task from the project container:
 
-**sparrow task remove $project\_name $checkpoint\_name**
+**sparrow task remove $project\_name $task\_name**
 
 Examples:
 
     # remove task disk-health project system
-    $ sparrow check remove system disk-health
+    $ sparrow task remove system disk-health
 
 # Sparrow plugins
 
@@ -546,8 +550,3 @@ This program is free software; you can redistribute it and/or modify it under th
 # Thanks
 
 To God as the One Who inspires me to do my job!
-
-
-
-
-

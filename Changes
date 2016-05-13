@@ -1,3 +1,7 @@
+0.1.3 2016-05-13
+
+* run task, plugin: PERL5LIB exported now to respect carton environment
+
 0.1.2 2016-05-06
 
 * small documentation fixes

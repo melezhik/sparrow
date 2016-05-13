@@ -168,7 +168,7 @@ sub task_run {
 
     my $spj = plugin_meta($pdir);
     
-    my $cmd = "cd $pdir && PATH=\$PATH:local/bin && PERL5LIB=local/lib/perl5:\$PERL5LIB strun --root ./";
+    my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB strun --root ./";
 
     if ($options=~/--yaml\s+(\S+)/){
       my $path = $1;

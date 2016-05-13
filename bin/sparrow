@@ -7,6 +7,7 @@ use Sparrow::Constants;
 use Sparrow::Commands::Project;
 use Sparrow::Commands::Plugin;
 use Sparrow::Commands::Task;
+use Sparrow::Commands::TaskBox;
 use Sparrow::Commands::Index;
 
 use Sparrow::Misc;

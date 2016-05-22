@@ -8,11 +8,6 @@ Sparrow
 
 Sparrow - multipurposes scenarios manager.
 
-# CAVEAT
-
-The project is still in very alpha stage. Things might change. But you can start play with it :-)
-
-
 # Install
 
     $ sudo yum install git # only required for installing private plugins

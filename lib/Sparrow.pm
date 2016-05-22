@@ -24,11 +24,6 @@ L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.
 Sparrow - multipurposes scenarios manager.
 
 
-=head1 CAVEAT
-
-The project is still in very alpha stage. Things might change. But you can start play with it :-)
-
-
 =head1 Install
 
     $ sudo yum install git # only required for installing private plugins

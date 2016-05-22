@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.1.3';
+our $VERSION = '0.1.4';
 
 1;
 
@@ -345,8 +345,6 @@ B<sparrow plg run [ options ]>
 For example:
 
     $ sparrow plg run df-check
-
-NOTE! Only L<public plugins|#public-plugins> could be run I<as_is>.
 
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 

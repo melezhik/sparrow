@@ -203,9 +203,32 @@ sub run_plugin {
 
     my $parameters  = join ' ', @ARGV;
 
-    my $pdir = sparrow_root."/plugins/public/$pid";
+    my $ptype; 
+    my $pdir;
 
-    confess 'plugin not installed' unless -d $pdir;
+    if ($pid=~/(public|private)@/){
+        $ptype = $1;
+        $pid=~s/(public|private)@//;
+    }
+
+    my $list = read_plugin_list('as_hash');
+
+    if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype){
+        warn "both public and private $pid plugin exists; 
+choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid`
+to overcome this ambiguity";
+        return;
+
+    } elsif($list->{'public@'.$pid} and $ptype ne 'private' ) {
+      $pdir = sparrow_root."/plugins/public/$pid";
+      confess 'plugin not installed' unless -d $pdir;
+    } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
+      $pdir = sparrow_root."/plugins/private/$pid";
+      confess 'plugin not installed' unless -d $pdir;
+    }else{
+        confess "unknown plugin";
+    }
+
 
     my $spj = plugin_meta($pdir);
 

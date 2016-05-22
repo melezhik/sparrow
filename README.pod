@@ -335,8 +335,6 @@ For example:
 
     $ sparrow plg run df-check
 
-NOTE! Only L<public plugins|#public-plugins> could be run I<as_is>.
-
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
 B<sparrow task run $project_name $task_name [ options ]>

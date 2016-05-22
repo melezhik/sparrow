@@ -164,5 +164,19 @@ if ($object eq  'plg'){
         confess "unknown command: $action @ARGV";
 
     }
+
+} elsif ($object eq  'box') {
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'run') {
+
+      box_run(@ARGV);
+
+    }
+
+} else {
+    usage();
+    exit(1);
 }
 

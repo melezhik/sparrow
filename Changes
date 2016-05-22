@@ -1,3 +1,7 @@
+0.1.5 2016-05-22
+
+* run plugin command: do not read plugin meta for private plugins
+
 0.1.4 2016-05-22
 
 * private plugins could be run as is
@@ -23,7 +27,7 @@ A historical release. BREAKING CHANGES:
 * checkpoints are replaced by tasks, see documentation
 * sparrow plugins no require cpanfile to get run
 * swat plugins are deprecated
-* a placeholder for task boxes features ( comming soon )
+* a placeholder for task boxes features ( coming soon )
 
 0.0.25 2016-05-02
 

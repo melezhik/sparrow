@@ -230,8 +230,6 @@ to overcome this ambiguity";
     }
 
 
-    my $spj = plugin_meta($pdir);
-
     my $cmd;
 
     $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";

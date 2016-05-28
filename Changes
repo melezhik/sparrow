@@ -1,3 +1,7 @@
+0.1.6 2016-05-28
+
+* A no-changes release to require a latest version of Outthentic (0.1.4)
+
 0.1.5 2016-05-22
 
 * run plugin command: do not read plugin meta for private plugins

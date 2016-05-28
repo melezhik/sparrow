@@ -23,4 +23,4 @@ requires:
   Outthentic: v0.1.5
   Term::ANSIColor: '4.02'
   version: '0'
-version: v0.1.6
+version: v0.1.7

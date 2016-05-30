@@ -1,3 +1,3 @@
 sparrow plg install  ruby-test
-sparrow plg run  ruby-test -d 1
+sparrow plg run  ruby-test
 

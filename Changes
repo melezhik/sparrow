@@ -1,6 +1,9 @@
-0.1.8
+0.1.8 2016-06-15
 
 * task/json configuration support
+* made `sparrow index update` less verbose
+* made `sparrow task|plg run` output abit friendly
+* require latest version of Outthentic to support JSON configurations
 
 0.1.7 2016-05-28
 

@@ -234,7 +234,9 @@ to overcome this ambiguity";
 
     $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";
 
-    print "# running $cmd ...\n\n";
+
+    print map {"# $_\n"} split /&&\s+/, $cmd;
+    print "\n";
 
     exec $cmd;
 

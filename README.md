@@ -331,7 +331,7 @@ For example:
     $ sparrow task show system disk-health
 
 
-Alternative way to configure sparrow task is to load configuration from yaml file _during_ task run:
+Alternative way to configure sparrow task is to load configuration from yaml/json file _during_ task run:
 
     $ cat disk.yml
 
@@ -339,9 +339,17 @@ Alternative way to configure sparrow task is to load configuration from yaml fil
     threshold: 80
 
     $ sparrow task run system disk --yaml disk.yml
+
+    $ cat disk.json
+
+    {
+      "threshold": 80
+    }
+
+    $ sparrow task run system disk --json disk.json
      
 While `sparrow task ini/load_ini` command saves task configuration and makes it persistent,
-`sparrow task run --yaml` command applies plugin configuration only for runtime and won't save it after plugin execution.
+`sparrow task run --yaml|--json` command applies plugin configuration only for runtime and won't save it after plugin execution.
 
 For common usage, when user runs tasks manually first approach is more convenient, 
 while the second one is a _way automatic_, when tasks configurations are kept as yaml files

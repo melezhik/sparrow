@@ -187,7 +187,8 @@ sub task_run {
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
         $cmd.=" $options";
-        print "# $cmd\n\n";
+        print map {"# $_\n"} split /&&\s+/, $cmd;
+        print "\n";
         exec $cmd;
     }
 

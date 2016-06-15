@@ -19,8 +19,8 @@ our @EXPORT = qw{
 
 sub update_index {
 
-    print "get index updates from SparrowHub ...\n";
-    execute_shell_command("curl -k -L -f  -o ".spi_file.' '.sparrow_hub_api_url.'/api/v1/index')
+    print 'get index updates from SparrowHub ... ';
+    execute_shell_command("curl -s -k -L -f  -o ".spi_file.' '.sparrow_hub_api_url.'/api/v1/index'." && echo OK")
 
 };
 

@@ -173,6 +173,9 @@ sub task_run {
     if ($options=~/--yaml\s+(\S+)/){
       my $path = $1;
       $cmd.=" --yaml $path";
+    }elsif ($options=~/--json\s+(\S+)/){
+      my $path = $1;
+      $cmd.=" --json $path";
     }else{
       my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
       $cmd.=" --ini $path" if -f $path;

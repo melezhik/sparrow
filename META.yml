@@ -22,7 +22,7 @@ requires:
   Carton: 0
   JSON: 0
   Outthentic: 0.1.6
-  Term::ANSIColor: 4.02
+  Term::ANSIColor: '4.02'
   version: 0
 resources:
   license: http://dev.perl.org/licenses/

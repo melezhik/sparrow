@@ -22,9 +22,9 @@ requires:
   Carton: 0
   JSON: 0
   Outthentic: 0.1.6
-  Term::ANSIColor: '4.02'
+  Term::ANSIColor: 4.02
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.1.8
+version: 0.1.9

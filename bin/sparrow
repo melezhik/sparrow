@@ -55,7 +55,7 @@ if ($object eq  'plg'){
 
     } elsif ( $action  eq 'show'){
 
-        show_plugin( shift @ARGV );        
+        show_plugin( @ARGV );        
 
     } elsif ( $action  eq 'run'){
 

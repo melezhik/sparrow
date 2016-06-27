@@ -199,11 +199,20 @@ to overcome this ambiguity";
 
 sub run_plugin {
 
-    my $pid         = shift or confess "usage: run_plugin(*plugin_name,options)";
+    my $pid = shift or confess "usage: run_plugin(*plugin_name,parameters)";
 
-    my $parameters  = join ' ', @ARGV;
+    my @parameters;
+    my $verbose_mode = 0;
+
+    for my $i (@ARGV){
+      $verbose_mode=1, next if $i eq '--verbose';
+      push @parameters, $i;
+    }
+
+    my $parameters  = join ' ', @parameters;
 
     my $ptype; 
+
     my $pdir;
 
     if ($pid=~/(public|private)@/){
@@ -232,14 +241,15 @@ to overcome this ambiguity";
 
     my $cmd;
 
+
     $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";
 
-
-    print map {"# $_\n"} split /&&\s+/, $cmd;
-    print "\n";
+    if ($verbose_mode){
+      print map {"# $_\n"} split /&&\s+/, $cmd;
+      print "\n";
+    }
 
     exec $cmd;
-
 }
 
 sub show_plugin {

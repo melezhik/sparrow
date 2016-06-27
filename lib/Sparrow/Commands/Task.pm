@@ -151,9 +151,21 @@ sub task_load_ini {
 
 sub task_run {
 
-    my $project  = shift or confess "usage: task_run(*project,task,options)";
-    my $tid      = shift or confess "usage: task_run(project,*task,options)";
-    my $options  = join ' ', @ARGV;
+    my $project  = shift or confess "usage: task_run(*project,task,parameters)";
+    my $tid      = shift or confess "usage: task_run(project,*task,parameters)";
+
+    my @parameters;
+
+    my $verbose_mode=0;
+    my $cron_mode=0;
+
+    for my $i (@ARGV){
+      $verbose_mode=1, next if $i eq '--verbose';
+      $cron_mode=1, next if $i eq '--cron';
+      push @parameters, $i;
+    }
+
+    my $parameters = join ' ', @parameters;
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
@@ -170,10 +182,10 @@ sub task_run {
     
     my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./";
 
-    if ($options=~/--yaml\s+(\S+)/){
+    if ($parameters=~/--yaml\s+(\S+)/){
       my $path = $1;
       $cmd.=" --yaml $path";
-    }elsif ($options=~/--json\s+(\S+)/){
+    }elsif ($parameters=~/--json\s+(\S+)/){
       my $path = $1;
       $cmd.=" --json $path";
     }else{
@@ -181,14 +193,19 @@ sub task_run {
       $cmd.=" --ini $path" if -f $path;
     }
 
-    if ($options=~s/--cron//) {
-        $cmd.=" $options";
+    if ($cron_mode) {
+        $cmd.=" $parameters";
         my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$tid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
-        $cmd.=" $options";
-        print map {"# $_\n"} split /&&\s+/, $cmd;
-        print "\n";
+
+        $cmd.=" $parameters";
+
+        if ($verbose_mode){
+          print map {"# $_\n"} split /&&\s+/, $cmd;
+          print "\n";
+        }
+
         exec $cmd;
     }
 

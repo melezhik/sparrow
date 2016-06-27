@@ -233,15 +233,21 @@ The first one is simplest as it does not require creating a task at all. If you 
 you may run a plugin as is using  `sparrow plg run` command:
 
 
-**sparrow plg run [ options ]**
+**sparrow plg run [ parameters ]**
 
 For example:
 
     $ sparrow plg run df-check
 
+Parameters:
+
+* **verbose**
+
+Sets verbose mode to get some extra message when running plugin 
+
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-**sparrow task run $project\_name $task\_name [ options ]**
+**sparrow task run $project\_name $task\_name [ parameters ]**
 
 For example:
 
@@ -249,10 +255,13 @@ For example:
 
 See [configuring tasks](#configuring-tasks) section on how one can configure task plugin.
 
+Parameters:
+
+* **verbose**
+
 ### Setting runtime parameters 
 
 It is possible to pass _whatever_ runtime configuration parameters when running tasks or plugins:
-
 
     $ sparrow plg run df-check --param threshold=60
 
@@ -272,7 +281,6 @@ _runner related_ parameters, check out [Outthentic](https://github.com/melezhik/
 
     $ sparrow task run system disk-health --silent
     $ sparrow task run system disk-health --debug 1 --prove '-Q'
-
 
 ### Running tasks with cron
 

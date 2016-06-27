@@ -34,7 +34,7 @@
          "requires" : {
             "Carton" : "0",
             "JSON" : "0",
-            "Outthentic" : "v0.1.6",
+            "Outthentic" : "v0.1.7",
             "Term::ANSIColor" : "4.02",
             "version" : "0"
          }

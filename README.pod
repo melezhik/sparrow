@@ -324,21 +324,45 @@ as tasks
 The first one is simplest as it does not require creating a task at all. If you don't want provide a specific plugin configuration,
 you may run a plugin as is using  C<sparrow plg run> command:
 
-B<sparrow plg run [ options ]>
+B<sparrow plg run [ parameters ]>
 
 For example:
 
     $ sparrow plg run df-check
 
+Parameters:
+
+=over
+
+=item *
+
+B<verbose>
+
+
+=back
+
+Sets verbose mode to get some extra message when running plugin 
+
 The second way requires task creation and benefits in applying specific configuration for a plugin:
 
-B<sparrow task run $project_name $task_name [ options ]>
+B<sparrow task run $project_name $task_name [ parameters ]>
 
 For example:
 
     $ sparrow task run system disk-health
 
 See L<configuring tasks|#configuring-tasks> section on how one can configure task plugin.
+
+Parameters:
+
+=over
+
+=item *
+
+B<verbose>
+
+
+=back
 
 
 =head3 Setting runtime parameters 

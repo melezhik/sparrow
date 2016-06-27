@@ -21,7 +21,7 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
-  Outthentic: 0.1.6
+  Outthentic: 0.1.7
   Term::ANSIColor: 4.02
   version: 0
 resources:

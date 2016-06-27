@@ -1,3 +1,7 @@
+0.1.10 2016-06-27
+
+* correct location of spi, spl in case of running sparrow under sudo
+
 0.1.9 2016-06-27
 
 * verbose mode - show some message only when verbose mode is enabled

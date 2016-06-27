@@ -59,7 +59,7 @@ if ($object eq  'plg'){
 
     } elsif ( $action  eq 'run'){
 
-        run_plugin( shift @ARGV );        
+        run_plugin( @ARGV );        
 
     } else  { 
 

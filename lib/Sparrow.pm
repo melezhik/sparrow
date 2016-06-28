@@ -804,6 +804,23 @@ This is the way how one can declare dependencies for sparrow plugins:
 You should place a dependency file into a plugin root directory.
 
 
+=head1 Environment variables
+
+
+=head2 SPARROW_ROOT
+
+Sets sparrow root directory. If set than sparrow will be looking sparrow index and SPL files at following locations:
+
+    $SPARROW_ROOT/sparrow.index 
+    $SPARROW_ROOT/sparrow.list 
+
+As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT directory.
+
+For exmaple:
+
+    $ export SPARROW_ROOT=/opt/sparrow
+
+
 =head1 AUTHOR
 
 L<Aleksei Melezhik|mailto:melezhik@gmail.com>

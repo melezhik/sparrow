@@ -14,8 +14,8 @@ our @EXPORT = qw {
 
 
 
-sub spl_file () {  $ENV{SUDO_USER} ? "/home/$ENV{SUDO_USER}/sparrow.list" : "$ENV{HOME}/sparrow.list" };
-sub spi_file () {  $ENV{SUDO_USER} ? "/home/$ENV{SUDO_USER}/sparrow.index" : "$ENV{HOME}/sparrow.index" };
+sub spl_file () {  "$ENV{HOME}/sparrow.list" };
+sub spi_file () {  "$ENV{HOME}/sparrow.index" };
 sub sparrow_root () { "$ENV{HOME}/sparrow" };
 sub sparrow_hub_api_url () { $ENV{sparrow_hub_api_url} || 'https://sparrowhub.org' };
 sub editor () { $ENV{'EDITOR'} };

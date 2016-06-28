@@ -14,9 +14,11 @@ our @EXPORT = qw {
 
 
 
-sub spl_file () {  "$ENV{HOME}/sparrow.list" };
-sub spi_file () {  "$ENV{HOME}/sparrow.index" };
-sub sparrow_root () { "$ENV{HOME}/sparrow" };
+sub spl_file () {  $ENV{SPARROW_ROOT}  ? "$ENV{SPARROW_ROOT}/sparrow.list" : "$ENV{HOME}/sparrow.list" };
+sub spi_file () {  $ENV{SPARROW_ROOT}  ? "$ENV{SPARROW_ROOT}/sparrow.index" : "$ENV{HOME}/sparrow.index" };
+
+sub sparrow_root () { $ENV{SPARROW_ROOT} || "$ENV{HOME}/sparrow" };
+
 sub sparrow_hub_api_url () { $ENV{sparrow_hub_api_url} || 'https://sparrowhub.org' };
 sub editor () { $ENV{'EDITOR'} };
 

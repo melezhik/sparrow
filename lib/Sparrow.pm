@@ -174,7 +174,7 @@ B<sparrow project remove $project_name>
 
 For example:
 
-    $ sparrow project web-servers remove
+    $ sparrow project remove web-servers
 
 NOTE! This command will remove all project tasks as well!
 

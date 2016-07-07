@@ -111,7 +111,7 @@ To remove project data say this:
 
 For example:
 
-    $ sparrow project web-servers remove
+    $ sparrow project remove web-servers
 
 NOTE! This command will remove all project tasks as well!
 

@@ -32,3 +32,4 @@ sub index_summary {
 
 };
 
+1;

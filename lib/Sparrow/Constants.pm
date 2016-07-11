@@ -22,3 +22,4 @@ sub sparrow_root () { $ENV{SPARROW_ROOT} || "$ENV{HOME}/sparrow" };
 sub sparrow_hub_api_url () { $ENV{sparrow_hub_api_url} || 'https://sparrowhub.org' };
 sub editor () { $ENV{'EDITOR'} };
 
+1;

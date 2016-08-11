@@ -1,3 +1,8 @@
+0.1.12 2016-07-11
+
+* use latest version of Outthentic
+* a minor documentation fix pull/4  - thanks to @olshevskiy87
+
 0.1.11 2016-06-28
 
 * make spi, spl, sproot locations configurable

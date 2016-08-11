@@ -64,7 +64,7 @@ sub usage {
     print "\tsparrow task load_ini    system disk /path/to/ini/file # load plugin configuration from ini file \n";
 
     print "\n[task boxes]:\n\n";
-    print "\tsparrow box run # run task box \n";
+    print "\tsparrow box run /path/to/box.json # run task box \n";
 
     print "\n\n";
 

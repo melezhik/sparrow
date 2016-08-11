@@ -153,13 +153,15 @@ sub task_run {
 
     my $project  = shift or confess "usage: task_run(*project,task,parameters)";
     my $tid      = shift or confess "usage: task_run(project,*task,parameters)";
+    my @args     = @_; 
 
     my @parameters;
 
     my $verbose_mode=0;
+
     my $cron_mode=0;
 
-    for my $i (@ARGV){
+    for my $i (@args){
       $verbose_mode=1, next if $i eq '--verbose';
       $cron_mode=1, next if $i eq '--cron';
       push @parameters, $i;
@@ -195,7 +197,7 @@ sub task_run {
 
     if ($cron_mode) {
         $cmd.=" $parameters";
-        my $repo_file = sparrow_root.'/reports/report-'.$project.'-'.$tid.'-'.$$.'.txt';
+        my $repo_file = sparrow_root.'/cache/report-'.$project.'-'.$tid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
 

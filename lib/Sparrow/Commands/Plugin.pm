@@ -201,14 +201,18 @@ sub run_plugin {
 
     my $pid = shift or confess "usage: run_plugin(*plugin_name,parameters)";
 
+    my @args = @_;
+
     my @parameters;
+
     my $verbose_mode = 0;
 
-    for my $i (@ARGV){
+
+    for my $i (@args){
       $verbose_mode=1, next if $i eq '--verbose';
       push @parameters, $i;
     }
-
+  
     my $parameters  = join ' ', @parameters;
 
     my $ptype; 

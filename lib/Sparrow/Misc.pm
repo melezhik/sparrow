@@ -5,7 +5,8 @@ use strict;
 use base 'Exporter';
 use Carp;
 
-use File::Path;
+use File::Path qw(make_path remove_tree);
+
 use Sparrow::Constants;
 
 our @EXPORT = qw {
@@ -77,11 +78,12 @@ sub usage {
 
 sub init_sparrow_env {
 
-    mkpath(sparrow_root);
-    mkpath(sparrow_root.'/plugins/private');
-    mkpath(sparrow_root.'/plugins/public');
-    mkpath(sparrow_root.'/projects');
-    mkpath(sparrow_root.'/reports');
+    make_path(sparrow_root);
+    make_path(sparrow_root.'/plugins/private');
+    make_path(sparrow_root.'/plugins/public');
+    make_path(sparrow_root.'/projects');
+    remove_tree(sparrow_root.'/cache');
+    make_path(sparrow_root.'/cache');
 
     execute_shell_command('touch '.spl_file()) unless -f spl_file();
 }

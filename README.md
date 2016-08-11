@@ -37,6 +37,7 @@ See [sparrow command line API](#api) below.
 # Sparrow client
 
 `Sparrow` is a console client to search, install, setup and run various sparrow plugins. 
+
 Think about it as of `cpan client` for CPAN modules or `gem client` for Ruby gems.
 
 # Sparrow basic entities
@@ -74,6 +75,9 @@ Sparrow tasks boxes are JSON format files to describe sequential tasks to run.
 
 You could think about sparrow boxes as of multi tasks. Sparrow runs tasks from the box sequentially.
 
+
+***WARNING!*** This feature is still experimental, do not rely on it on production code, as
+things might change.
 
 # API
 

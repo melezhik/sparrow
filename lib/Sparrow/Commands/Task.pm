@@ -159,11 +159,14 @@ sub task_run {
 
     my $verbose_mode=0;
 
+    my $no_exec_mode=0;
+
     my $cron_mode=0;
 
     for my $i (@args){
-      $verbose_mode=1, next if $i eq '--verbose';
-      $cron_mode=1, next if $i eq '--cron';
+      $verbose_mode=1,  next if $i eq '--verbose';
+      $cron_mode=1,     next if $i eq '--cron';
+      $no_exec_mode=1,  next if $i eq '--no-exec';
       push @parameters, $i;
     }
 
@@ -207,8 +210,11 @@ sub task_run {
           print map {"# $_\n"} split /&&\s+/, $cmd;
           print "\n";
         }
-
-        exec $cmd;
+        if ($no_exec_mode){
+          execute_shell_command($cmd);
+        } else {
+          exec $cmd
+        }
     }
 
 }

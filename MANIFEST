@@ -60,6 +60,8 @@ t/ruby-plg-run/story.check
 t/story.bash
 t/story.check
 t/suite.ini
+t/task-box-run/story.bash
+t/task-box-run/story.check
 t/task-create-existed/story.check
 t/task-create-existed/story.pm
 t/task-create/story.check

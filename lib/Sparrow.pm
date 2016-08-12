@@ -21,7 +21,7 @@ L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.
 
 =head1 SYNOPSIS
 
-Sparrow - multipurposes scenarios manager.
+Sparrow - multipurpose scenarios manager.
 
 
 =head1 Install
@@ -33,7 +33,7 @@ Sparrow - multipurposes scenarios manager.
 
 =head1 Sparrow plugins
 
-Sparrow plugins are shareable multipurposes scenarios distributed via central repository - L<SparrowHub|https://sparrowhub.org>.
+Sparrow plugins are shareable multipurpose scenarios distributed via central repository - L<SparrowHub|https://sparrowhub.org>.
 Every single plugin represents a various scripts to solve a specific task. Plugins are easily installed, configured and run on
 dedicated servers with the help of sparrow console client. 
 
@@ -54,6 +54,7 @@ See L<sparrow command line API|#api> below.
 =head1 Sparrow client
 
 C<Sparrow> is a console client to search, install, setup and run various sparrow plugins. 
+
 Think about it as of C<cpan client> for CPAN modules or C<gem client> for Ruby gems.
 
 
@@ -131,10 +132,12 @@ web services related issues - f.e. L<checking nginx health|https://sparrowhub.or
 
 =head1 Task Boxes
 
-Sparrow tasks boxes are YAML format files to describe sequential tasks to run. You could think about sparrow boxes as of multi tasks -
-tasks run sequentially.
+Sparrow tasks boxes are JSON format files to describe sequential tasks to run. 
 
-WARNING! This feature is not implemented yet.
+You could think about sparrow boxes as of multi tasks. Sparrow runs tasks from the box sequentially.
+
+B<I<WARNING!>> This feature is still experimental, do not rely on it on production code, as
+things might change.
 
 
 =head1 API
@@ -505,9 +508,61 @@ Examples:
     $ sparrow task remove system disk-health
 
 
+=head2 Task boxes API
+
+Use this command to run task box
+
+B<sparrow box run $path>
+
+Where $path sets the file path to task box json file. A structure of the file:
+
+    [
+    
+      {
+        "task" : "task_name",
+        "plugin" : "plugin_name",
+        "data" : {
+            : plugin parameters 
+        }
+      },
+      {
+        // another task
+      },
+    
+      ...
+    
+    ]
+
+Command example:
+
+    $ sparrow box run /var/sparrow/boxes/nginx.json
+
+Thus task box files should hold a list of sparrow tasks. Here is example:
+
+    [
+    
+      {
+        "task" : "install favorite packages",
+        "plugin" : "package_generic",
+        "data" : {
+          "list" : "nano curl mc hunspell"
+        }
+      },
+      {
+        "task" : "setup git",
+        "plugin" : "git-base",
+        "data" : {
+          "email" : "melezhik@gmail.com", "name" : "Alexey Melezhik"
+          
+        }
+      }
+    
+    ]
+
+
 =head1 Sparrow plugins
 
-Sparrow plugins are shareable multipurposes scenarios installed from remote sources.
+Sparrow plugins are shareable multipurpose scenarios installed from remote sources.
 
 There are two type of sparrow plugins:
 
@@ -816,7 +871,7 @@ Sets sparrow root directory. If set than sparrow will be looking sparrow index a
 
 As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT directory.
 
-For exmaple:
+For example:
 
     $ export SPARROW_ROOT=/opt/sparrow
 
@@ -844,7 +899,7 @@ This program is free software; you can redistribute it and/or modify it under th
 
 =item *
 
-L<Outthentic|https://github.com/melezhik/outthentic> - Multipurposes scenarios framework.
+L<Outthentic|https://github.com/melezhik/outthentic> - Multipurpose scenarios framework.
 
 
 =back

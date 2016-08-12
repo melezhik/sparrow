@@ -1,0 +1,4 @@
+regexp: (Result: PASS)
+generator: <<CODE
+  [ "assert: ".(scalar @{captures()} == 3)." 3 <Result: PASS> lines found "  ]
+CODE

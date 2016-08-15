@@ -1,4 +1,4 @@
-regexp: (Result: PASS)
+regexp: (STATUS\t+SUCCEED)
 generator: <<CODE
-  [ "assert: ".(scalar @{captures()} == 3)." 3 <Result: PASS> lines found "  ]
+  [ "assert: ".(scalar @{captures()} == 3)." 3 <STATUS\\tSUCCEED> lines found "  ]
 CODE

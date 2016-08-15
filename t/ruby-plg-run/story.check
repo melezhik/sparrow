@@ -1,2 +1,2 @@
-scenario succeeded
-All tests successful.
+regexp: STATUS\tSUCCEED
+

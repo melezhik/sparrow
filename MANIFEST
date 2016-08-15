@@ -57,8 +57,6 @@ t/project/remove/story.check
 t/project/remove/story.pl
 t/ruby-plg-run/story.bash
 t/ruby-plg-run/story.check
-t/story.bash
-t/story.check
 t/suite.ini
 t/task-box-run/story.bash
 t/task-box-run/story.check
@@ -77,3 +75,4 @@ t/task-run/story.bash
 t/task-run/story.check
 t/task-run/story.pm
 t/testbox.json
+test.sh

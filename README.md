@@ -382,7 +382,7 @@ Examples:
 
 Use this command to run task box
 
-**sparrow box run $path**
+**sparrow box run $path [opts]**
 
 Where $path sets the file path to task box json file. A structure of the file:
 
@@ -432,6 +432,10 @@ Thus task box files should hold a list of sparrow tasks. Here is example:
 
     ]
 
+
+To suppress some extra message from this command use `--mode quiet`:
+
+    $ sparrow box run /path/to/my/box/ --mode quiet
 
 # Sparrow plugins
 

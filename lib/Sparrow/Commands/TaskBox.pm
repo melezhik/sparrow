@@ -19,7 +19,10 @@ our @EXPORT = qw{
 
 sub box_run {
 
-    my $path = shift or confess 'usage box_run(path)';
+    my $path = shift or confess 'usage box_run(path, opts)';
+    my %opts = @_;
+
+    my $quiet_mode = ( $opts{'--mode'} && $opts{'--mode'} eq 'quiet' ) ? 1 : 0;
 
     open JSON, $path or confess "can't open file $path to read: $!";
 
@@ -33,9 +36,9 @@ sub box_run {
       install_plugin($task->{plugin})        
     }
 
-    project_remove('taskbox');
+    project_remove('taskbox', { quiet => $quiet_mode  });
 
-    project_create('taskbox');
+    project_create('taskbox', { quiet => $quiet_mode });
 
 
     my $i=0;
@@ -54,7 +57,7 @@ sub box_run {
 
       (my $safe_task_name = $task->{task})=~s/[^\w_-]/-/g;
 
-      task_add('taskbox',$safe_task_name,$task->{plugin});
+      task_add('taskbox',$safe_task_name,$task->{plugin}, { quiet => $quiet_mode });
 
 
     }
@@ -62,17 +65,19 @@ sub box_run {
 
     $i=0;
 
+    print "\nrunning task box from $path ... \n\n";
+
     for my $task (@{$tasklist}){
 
       $i++;
 
-      print "$task->{task}\n";
+      print "running task <$task->{task}> ... \n";
 
       my $path = sparrow_root()."/cache/task_$i.json";
 
       (my $safe_task_name = $task->{task})=~s/[^\w_-]/-/g;
 
-      task_run('taskbox',$safe_task_name,'--no-exec', '--json',$path);
+      task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path);
 
     }
 

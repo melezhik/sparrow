@@ -34,9 +34,10 @@ our @EXPORT = qw{
 
 sub task_add {
 
-    my $project = shift or confess "usage: task_add(*project,task,plugin)";
-    my $tid     = shift or confess "usage: task_add(project,*task,plugin)";
-    my $pid     = shift or confess "usage: task_add(project,task,*plugin)";
+    my $project = shift or confess "usage: task_add(*project,task,plugin,opts)";
+    my $tid     = shift or confess "usage: task_add(project,*task,plugin,opts)";
+    my $pid     = shift or confess "usage: task_add(project,task,*plugin,opts)";
+    my $opts    = shift || {};
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
@@ -45,7 +46,7 @@ sub task_add {
     $tid=~/^[\w\d-\._]+$/ or confess 'task parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if  (-d sparrow_root."/projects/$project/tasks/$tid") {
-      print "task $project/$tid already exists, so will only update a binded plugin\n";
+      print "task $project/$tid already exists, so will only update a binded plugin\n" unless $opts->{quiet};
     } else {
       mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
     }
@@ -62,15 +63,15 @@ sub task_add {
         return;
     }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
         task_set($project,$tid,'plugin',"public\@$pid");
-        print "task - set plugin to public\@$pid\n";
+        print "task - set plugin to public\@$pid\n" unless $opts->{quiet};
     }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
         task_set($project,$tid,'plugin',"private\@$pid");
-        print "task - set plugin to private\@$pid\n";
+        print "task - set plugin to private\@$pid\n" unless $opts->{quiet};
     }else{
         confess "plugin is not installed, you need to install it first to use in task";
     }    
 
-    print "task $project/$tid successfully created\n";
+    print "task $project/$tid successfully created\n" unless $opts->{quiet};
 
 }
 
@@ -94,7 +95,7 @@ sub task_show {
        print "[test suite ini file - $ini_file]\n\n";
         open F, $ini_file or confess "can't open $ini_file to read: $!";
         print join "", <F>;
-        close F;
+        close F;  
     }else{
        print "test suite ini file: not found\n"
     }

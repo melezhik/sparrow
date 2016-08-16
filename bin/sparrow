@@ -125,7 +125,7 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        task_add($name, @ARGV);
+        task_add($name,@ARGV);
 
     } elsif ( $action eq 'ini' ) {
 

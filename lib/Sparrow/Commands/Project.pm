@@ -41,16 +41,17 @@ sub projects_list {
 
 sub project_create {
 
-    my $project = shift or confess('usage: project_create(project)');;
+    my $project = shift or confess('usage: project_create(project,opts)');
+    my $opts    = shift || {};
 
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if ( -d sparrow_root."/projects/$project" ){
-        print "project $project already exists - nothing to do here ... \n"
+        print "project $project already exists - nothing to do here ... \n" unless $opts->{quiet};
     } else {
         mkpath sparrow_root."/projects/$project";
         mkpath sparrow_root."/projects/$project/tasks";
-        print "project $project successfully created\n"
+        print "project $project successfully created\n" unless $opts->{quiet};
     }
 
 
@@ -81,13 +82,14 @@ sub project_show {
 
 sub project_remove {
 
-    my $project = shift or confess('usage: project_remove(project)');
+    my $project = shift or confess('usage: project_remove(project,opts)');
+    my $opts    = shift || {};
 
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if (-d sparrow_root."/projects/$project"){
         rmtree( sparrow_root."/projects/$project" );
-        print "project $project successfully removed\n"
+        print "project $project successfully removed\n" unless $opts->{quiet};
     }else{
         warn "unknown project $project";
     }

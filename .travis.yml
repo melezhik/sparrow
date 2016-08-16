@@ -5,4 +5,4 @@ perl:
 install:
     - cpanm Outthentic
 
-script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install && sparrow index update && strun --root t/ --match_l 200"
+script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install && ./test.sh"

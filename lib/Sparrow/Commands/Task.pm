@@ -62,15 +62,15 @@ sub task_add {
         return;
     }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
         task_set($project,$tid,'plugin',"public\@$pid");
-        print "task - set plugin to public\@$pid\n\n";
+        print "task - set plugin to public\@$pid\n";
     }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
         task_set($project,$tid,'plugin',"private\@$pid");
-        print "task - set plugin to private\@$pid\n\n";
+        print "task - set plugin to private\@$pid\n";
     }else{
         confess "plugin is not installed, you need to install it first to use in task";
     }    
 
-    print "task $project/$tid successfully created\n\n";
+    print "task $project/$tid successfully created\n";
 
 }
 
@@ -112,7 +112,7 @@ sub task_remove {
 
     if (-d sparrow_root."/projects/$project" and -d sparrow_root."/projects/$project/tasks/$tid" ){
         rmtree( sparrow_root."/projects/$project/tasks/$tid" );
-        print "task $project/$tid successfully removed\n\n";
+        print "task $project/$tid successfully removed\n";
     }else{
         warn "unknown task";
     }
@@ -144,7 +144,7 @@ sub task_load_ini {
     my $dest_path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
     copy($ini_file_path,$dest_path) or confess "Copy failed: $!";
 
-    print "loaded test suite ini from $ini_file_path OK \n\n";
+    print "loaded test suite ini from $ini_file_path OK \n";
 
 }
 

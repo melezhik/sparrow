@@ -7,7 +7,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 0
-generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142690'
+generated_by: 'Module::Install version 1.16, CPAN::Meta::Converter version 2.150005'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -15,12 +15,16 @@ meta-spec:
 name: Sparrow
 no_index:
   directory:
-    - t
     - inc
+    - t
 requires:
   Carton: '0'
   JSON: '0'
   Outthentic: v0.2.2
   Term::ANSIColor: '4.02'
   version: '0'
-version: v0.1.15
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: https://github.com/melezhik/sparrow
+version: 0.1.15
+x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

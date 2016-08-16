@@ -46,11 +46,11 @@ sub project_create {
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if ( -d sparrow_root."/projects/$project" ){
-        print "project $project already exists - nothing to do here ... \n\n"
+        print "project $project already exists - nothing to do here ... \n"
     } else {
         mkpath sparrow_root."/projects/$project";
         mkpath sparrow_root."/projects/$project/tasks";
-        print "project $project successfully created\n\n"
+        print "project $project successfully created\n"
     }
 
 
@@ -87,7 +87,7 @@ sub project_remove {
 
     if (-d sparrow_root."/projects/$project"){
         rmtree( sparrow_root."/projects/$project" );
-        print "project $project successfully removed\n\n"
+        print "project $project successfully removed\n"
     }else{
         warn "unknown project $project";
     }

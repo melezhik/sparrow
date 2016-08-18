@@ -21,10 +21,10 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
-  Outthentic: 0.2.5
-  Term::ANSIColor: 4.02
+  Outthentic: 0.2.6
+  Term::ANSIColor: '4.02'
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.1.17
+version: 0.1.18

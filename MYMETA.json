@@ -4,7 +4,7 @@
       "L<Aleksei Melezhik|mailto:melezhik@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142690",
+   "generated_by" : "ExtUtils::MakeMaker version 7.1, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -34,12 +34,13 @@
          "requires" : {
             "Carton" : "0",
             "JSON" : "0",
-            "Outthentic" : "v0.2.6",
+            "Outthentic" : "v0.2.7",
             "Term::ANSIColor" : "4.02",
             "version" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "v0.1.18"
+   "version" : "v0.1.19",
+   "x_serialization_backend" : "JSON::PP version 2.27300"
 }

@@ -1,4 +1,8 @@
-regexp: (STATUS\t+SUCCEED)
+task taskbox/disk-check successfully created
+task taskbox/disk-check_2 successfully created
+
+regexp: (STATUS\s+SUCCEED)
 generator: <<CODE
-  [ "assert: ".(scalar @{captures()} == 3)." 3 <STATUS\\tSUCCEED> lines found "  ]
+  [ "assert: ".(scalar @{captures()} == 4)." 4 tasks succeeded "  ]
 CODE
+

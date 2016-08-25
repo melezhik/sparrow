@@ -8,6 +8,13 @@
     }
   },
   {
+    "task" : "disk check",
+    "plugin" : "df-check",
+    "data" : {
+        "threshold" : 95
+    }
+  },
+  {
     "task" : "test plugin",
     "plugin" : "foo-generic",
     "data" : {

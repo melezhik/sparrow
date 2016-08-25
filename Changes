@@ -1,3 +1,7 @@
+0.1.22 2016-08-25
+
+* generated tasks names should be unique in task box queue
+
 0.1.21 2016-08-25
 
 * task box - remove duplicate plugin install commands

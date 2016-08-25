@@ -33,10 +33,10 @@ sub box_run {
 
     my $tasklist = decode_json $json_str;
 
-    my %seen;
+    my %plg_seen;
 
     for my $task (@{$tasklist}){
-      install_plugin($task->{plugin}) unless $seen{$task->{plugin}}++;        
+      install_plugin($task->{plugin}) unless $plg_seen{$task->{plugin}}++;        
     }
 
     project_remove('taskbox', { quiet => $quiet_mode  });
@@ -45,6 +45,8 @@ sub box_run {
 
 
     my $i=0;
+
+    my %task_seen;
 
     for my $task (@{$tasklist}) {
       
@@ -59,6 +61,8 @@ sub box_run {
       close JSON;
 
       (my $safe_task_name = $task->{task})=~s/[^\w_-]/-/g;
+
+      $safe_task_name.="_".$i if $task_seen{$safe_task_name}++;
 
       task_add('taskbox',$safe_task_name,$task->{plugin}, { quiet => $quiet_mode });
 

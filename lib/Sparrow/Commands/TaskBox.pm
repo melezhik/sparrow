@@ -20,6 +20,7 @@ our @EXPORT = qw{
 sub box_run {
 
     my $path = shift or confess 'usage box_run(path, opts)';
+
     my %opts = @_;
 
     my $quiet_mode = ( $opts{'--mode'} && $opts{'--mode'} eq 'quiet' ) ? 1 : 0;
@@ -32,8 +33,10 @@ sub box_run {
 
     my $tasklist = decode_json $json_str;
 
+    my %seen;
+
     for my $task (@{$tasklist}){
-      install_plugin($task->{plugin})        
+      install_plugin($task->{plugin}) unless $seen{$task->{plugin}}++;        
     }
 
     project_remove('taskbox', { quiet => $quiet_mode  });

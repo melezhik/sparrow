@@ -74,7 +74,7 @@ sub box_run {
 
       $i++;
 
-      print "\n[running task <$task->{task}>] ... \n";
+      print "\nrunning task <$task->{task}> ... \n";
 
       my $path = sparrow_root()."/cache/task_$i.json";
 

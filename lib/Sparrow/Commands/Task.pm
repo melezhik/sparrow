@@ -16,6 +16,8 @@ use JSON;
 use Data::Dumper;
 use File::Copy;
 
+use Term::ANSIColor;
+
 our @EXPORT = qw{
 
     task_add
@@ -156,6 +158,7 @@ sub task_run {
     my $tid      = shift or confess "usage: task_run(project,*task,parameters)";
     my @args     = @_; 
 
+
     my @parameters;
 
     my $verbose_mode=0;
@@ -206,6 +209,8 @@ sub task_run {
     } else {
 
         $cmd.=" $parameters";
+
+        print "\n",colored(['bright_red on_black'],"<$tid>"),"\n";
 
         if ($verbose_mode){
           print map {"# $_\n"} split /&&\s+/, $cmd;

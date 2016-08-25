@@ -1,6 +1,13 @@
-0.1.20 2016-08-25
+0.1.21 2016-08-25
 
 * task box - remove duplicate plugin install commands
+
+* impove sparrow task execution output ( I love when it colours! ;)
+
+
+0.1.20 2016-08-20
+ 
+* make it again dependent on the latest version of Outthentic
 
 0.1.19 2016-08-20
 

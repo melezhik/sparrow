@@ -10,6 +10,7 @@ use Sparrow::Commands::Project;
 use Sparrow::Commands::Task;
 use Sparrow::Commands::Plugin;
 use Sparrow::Constants;
+use Term::ANSIColor;
 
 our @EXPORT = qw{
 
@@ -74,7 +75,7 @@ sub box_run {
 
       $i++;
 
-      print "\nrunning task <$task->{task}> ... \n";
+      print "\n",colored(['bright_red on_black'],"<$task->{task}>"),"\n";
 
       my $path = sparrow_root()."/cache/task_$i.json";
 

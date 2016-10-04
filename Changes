@@ -1,3 +1,9 @@
+0.2.00 2016-10-04
+
+* swat plugins get back to sparrow family
+
+* `task add` action now accept --host parameter to make it possible run swat plugins
+
 0.1.22 2016-08-25
 
 * generated tasks names should be unique in task box queue

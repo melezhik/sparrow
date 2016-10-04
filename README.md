@@ -213,7 +213,7 @@ For example:
 
 To create a task use `sparrow task add` command:
 
-**sparrow task add $project\_name $task\_name $plugin\_name**
+**sparrow task add $project\_name $task\_name $plugin\_name [opts]**
 
 Tasks always belong to projects, so to create a task you have to create a project first if not exists.
 Tasks binds a plugin with configuration, so to create a task you have to install a plugin first.
@@ -224,6 +224,20 @@ Command examples:
     $ sparrow plg install df-check
     $ sparrow task add system disk-health df-check
 
+
+Options:
+
+* --quiet - suppress output of this command.
+
+For example:
+
+    $ sparrow task add system disk-health df-check --quiet 1
+
+* --host - pass hostname parameter.
+
+It's useful when create tasks for swat plugins
+
+    $ sparrow task add system pinto-health swat-pintod --host 127.0.0.1:3111
 
 ### Run plugins
 
@@ -277,14 +291,25 @@ It is possible to pass _whatever_ runtime configuration parameters when running 
 
 Runtime parameters override default parameters ones set in tasks configurations, see [configuring tasks](#configuring-task) section.
 
-### Setting outthentic parameters
+### Setting plugin runner parameters
 
-As sparrow runs plugins with the help of [Outthentic scenarios runner](https://github.com/melezhik/outthentic#options) it accepts all
-_runner related_ parameters, check out [Outthentic](https://github.com/melezhik/outthentic#options) for details. Other parameters examples:
+When executing sparrow plugin sparrow relies on underlying runner defined by plugin type. There are two types of sparrow plugins:
 
+* Outthentic Plugins
 
+* SWAT Plugins
+
+Both runners accept specific parameters. For outthentic runner parameters follow [Outthentic](https://github.com/melezhik/outthentic#options)
+documentation. For swat runner parameters follow [swat](https://github.com/melezhik/swat#swat-runner).
+
+Here are some examples:
+
+    # outthentic plugins:
     $ sparrow task run system disk-health --silent
-    $ sparrow task run system disk-health --debug 1 --prove '-Q'
+    $ sparrow task run system disk-health --debug 2
+
+    # swat plugins:
+    $ sparrow task run pinto pinto-health --prove -Q
 
 ### Running tasks with cron
 
@@ -549,7 +574,7 @@ Create sparrow.json file and place it in a plugin root directory:
 
 This is the list of obligatory parameters you have to set:
 
-* version - perl version string.
+* version - Perl version string.
 
 A detailed information concerning version syntax could be find here -
 [https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
@@ -630,6 +655,8 @@ Copyright 2015 Alexey Melezhik.
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 # See also
+
+* [SWAT](https://github.com/melezhik/swat) - Simple Web Application Test framework.
 
 * [Outthentic](https://github.com/melezhik/outthentic) - Multipurpose scenarios framework.
 

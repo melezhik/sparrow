@@ -39,7 +39,7 @@ sub task_add {
     my $project = shift or confess "usage: task_add(*project,task,plugin,opts)";
     my $tid     = shift or confess "usage: task_add(project,*task,plugin,opts)";
     my $pid     = shift or confess "usage: task_add(project,task,*plugin,opts)";
-    my $opts    = shift || {};
+    my %opts    = @_;
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
@@ -48,7 +48,7 @@ sub task_add {
     $tid=~/^[\w\d-\._]+$/ or confess 'task parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if  (-d sparrow_root."/projects/$project/tasks/$tid") {
-      print "task $project/$tid already exists, so will only update a binded plugin\n" unless $opts->{quiet};
+      print "task $project/$tid already exists, update task parameters\n" unless $opts{'--quiet'};
     } else {
       mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
     }
@@ -64,16 +64,20 @@ sub task_add {
         warn "both public and private $pid plugin exists; choose `public\@$pid` or `private\@$pid` to overcome this ambiguity";
         return;
     }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
-        task_set($project,$tid,'plugin',"public\@$pid");
-        print "task - set plugin to public\@$pid\n" unless $opts->{quiet};
-    }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne 'public'  ){
-        task_set($project,$tid,'plugin',"private\@$pid");
-        print "task - set plugin to private\@$pid\n" unless $opts->{quiet};
+        my @task_args = ($project,$tid,'plugin',"public\@$pid");
+        push @task_args, ('host', $opts{'--host'}) if $opts{'--host'};
+        task_set(@task_args);
+        print "task - set plugin to public\@$pid\n" unless $opts{'--quiet'};
+    }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne '--public'  ){
+        my @task_args = ($project,$tid,'plugin',"private\@$pid");
+        push @task_args, ('host', $opts{'--host'}) if $opts{'--host'};
+        task_set(@task_args);
+        print "task - set plugin to private\@$pid\n" unless $opts{'--quiet'};
     }else{
         confess "plugin is not installed, you need to install it first to use in task";
     }    
 
-    print "task $project/$tid successfully created\n" unless $opts->{quiet};
+    print "task $project/$tid successfully created\n" unless $opts{'--quiet'};
 
 }
 
@@ -255,7 +259,7 @@ sub task_set {
     my $tid      = shift or confess "usage: task_set(project,*task,args)";
     my %args     = @_;
 
-    my $task_settings = task_get($project,$tid); 
+    my $task_settings;
 
     open F, ">", sparrow_root."/projects/$project/tasks/$tid/settings.json" or 
         confess "can't open file to write: projects/$project/tasks/$tid/settings.json";

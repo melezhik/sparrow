@@ -1,6 +1,6 @@
-0.2.00 2016-10-04
+0.2.0 2016-10-04
 
-* swat plugins get back to sparrow family
+* swat plugins get back to sparrow family!!!
 
 * `task add` action now accept --host parameter to make it possible run swat plugins
 

@@ -57,6 +57,10 @@ if ($object eq  'plg'){
 
         show_plugin( @ARGV );        
 
+    } elsif ( $action  eq 'man'){
+
+        man_plugin( @ARGV );        
+
     } elsif ( $action  eq 'run'){
 
         run_plugin( @ARGV );        

@@ -53,6 +53,7 @@ sub usage {
     print "\tsparrow plg install df-check    # install plugin \n";
     print "\tsparrow plg remove  df-check    # remove plugin\n";
     print "\tsparrow plg show    df-check    # get plugin info\n";
+    print "\tsparrow plg man     df-check    # get plugin manual\n";
     print "\tsparrow plg run     df-check    # run plguin tests\n";
 
 

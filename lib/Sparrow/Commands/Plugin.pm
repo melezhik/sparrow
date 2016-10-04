@@ -22,6 +22,8 @@ our @EXPORT = qw{
 
     show_plugin
 
+    man_plugin 
+
     remove_plugin
 
     run_plugin
@@ -312,6 +314,18 @@ sub show_plugin {
 
 }
 
+sub man_plugin {
+
+    my $pid = shift or confess 'usage: man_plugin(plugin_name)';
+
+    # this should be changed in the future
+    # as this trivial code
+    # only dump a public plugin doc
+
+    exec("cat ".sparrow_root."/plugins/public/$pid/README.md");
+
+
+}
 
 sub remove_plugin {
 

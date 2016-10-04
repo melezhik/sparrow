@@ -1,5 +1,7 @@
 0.2.1 2016-10-04
 
+* made a trivial implementation of `plg man` command 
+
 * cleared in documentation on two types of sparrow plugins - Swat and Outthentic
 
 0.2.0 2016-10-04

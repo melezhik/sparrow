@@ -312,6 +312,17 @@ For example:
     $ sparrow plg remove df-check
 
 
+=head3 Getting plugin man page
+
+If plugin author supply his plugin with man page it could be shown as:
+
+B<sparrow plg man $plugin_name>
+
+For example:
+
+    $ sparrow plg man df-check
+
+
 =head2 Tasks API
 
 

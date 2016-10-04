@@ -23,10 +23,18 @@ dedicated servers with the help of sparrow console client.
 The notion of sparrow plugins is very close to the conception of CPAN modules in Perl or Ruby gems in Ruby.
 It's just a small suites of scripts to solve a specific tasks.
 
+Supported plugin types.
+
+Sparrow supports two types of plugins depending on underlying runner to execute plugin scenarios. They are:
+
+* [Outthentic](https://github.com/melezhik/outthentic) Plugins
+
+* [SWAT](https://github.com/melezhik/swat) Plugins
+
+
 To find a specific sparrow plugin say this:
 
     $ sparrow plg search nginx
-
 
 To install a sparrow plugin say this: 
 
@@ -58,10 +66,12 @@ but many ones require some piece of input data. Thus sparrow task is a container
 * plugin
 * plugin configuration
 
-Plugin configuration is just a text file in one of 2 formats:
+Plugin configuration is just a text file in one of 4 formats:
 
-* [Config::General](https://metacpan.org/pod/Config::General) format
-* YAML format
+* [Config::General](https://metacpan.org/pod/Config::General) format - consumed by Outthentic plugins
+* YAML format - consumed by Outthentic plugins
+* JSON format - consumed by Outthentic plugins
+* [Config::Tiny](https://metacpan.org/pod/Config::Tiny) format - consumed by Swat plugins
 
 # Projects
 
@@ -75,9 +85,6 @@ Sparrow tasks boxes are JSON format files to describe sequential tasks to run.
 
 You could think about sparrow boxes as of multi tasks. Sparrow runs tasks from the box sequentially.
 
-
-***WARNING!*** This feature is still experimental, do not rely on it on production code, as
-things might change.
 
 # API
 
@@ -117,7 +124,7 @@ For example:
 
     $ sparrow project remove web-servers
 
-NOTE! This command will remove all project tasks as well!
+***NOTE!*** This command will remove all project tasks as well!
 
 ## Plugins API
 
@@ -279,6 +286,8 @@ Parameters:
 
 ### Setting runtime parameters 
 
+***NOTE!*** Runtime parameters are only supported for Outthentic plugins.
+
 It is possible to pass _whatever_ runtime configuration parameters when running tasks or plugins:
 
     $ sparrow plg run df-check --param threshold=60
@@ -300,7 +309,7 @@ When executing sparrow plugin sparrow relies on underlying runner defined by plu
 * SWAT Plugins
 
 Both runners accept specific parameters. For outthentic runner parameters follow [Outthentic](https://github.com/melezhik/outthentic#options)
-documentation. For swat runner parameters follow [swat](https://github.com/melezhik/swat#swat-runner) documentation.
+documentation. For swat runner parameters follow [Swat](https://github.com/melezhik/swat#swat-runner) documentation.
 
 Here are some examples:
 
@@ -560,7 +569,7 @@ Once your get you token, setup a sparrowhub credentials on the machine where you
         "token" : "ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83"
     }
 
-NOTE! Another way to provide SparrowHub credentials is to set `$sph_user` and `$sph_token` environment variables:
+***NOTE!*** Another way to provide SparrowHub credentials is to set `$sph_user` and `$sph_token` environment variables:
 
     $ export sph_user=melezhik 
     $ export sph_token=ADB4F4DC-9F3B-11E5-B394-D4E152C9AB83

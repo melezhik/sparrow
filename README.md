@@ -530,7 +530,7 @@ how to create _scenarios suites_ to gets packaged and distributes as a sparrow p
 
 * For developing outthentic scenarios suites follow [Outthentic documentation](https://github.com/melezhik/outthentic).
 
-* For developing swat scenarios suites follow [Outthentic documentation](https://github.com/melezhik/outthentic).
+* For developing swat scenarios suites follow [Swat documentation](https://github.com/melezhik/swat).
 
 # Publishing public sparrow plugin to SparrowHub
 

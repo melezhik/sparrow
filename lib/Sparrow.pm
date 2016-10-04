@@ -303,7 +303,7 @@ For example:
 
 To create a task use C<sparrow task add> command:
 
-B<sparrow task add $project_name $task_name $plugin_name>
+B<sparrow task add $project_name $task_name $plugin_name [opts]>
 
 Tasks always belong to projects, so to create a task you have to create a project first if not exists.
 Tasks binds a plugin with configuration, so to create a task you have to install a plugin first.
@@ -313,6 +313,34 @@ Command examples:
     $ sparrow project create system
     $ sparrow plg install df-check
     $ sparrow task add system disk-health df-check
+
+Options:
+
+=over
+
+=item *
+
+--quiet - suppress output of this command.
+
+
+=back
+
+For example:
+
+    $ sparrow task add system disk-health df-check --quiet 1
+
+=over
+
+=item *
+
+--host - pass hostname parameter.
+
+
+=back
+
+It's useful when create tasks for swat plugins
+
+    $ sparrow task add web nginx-check swat-nginx --host 127.0.0.1:80
 
 
 =head3 Run plugins
@@ -394,13 +422,37 @@ It is possible to pass I<whatever> runtime configuration parameters when running
 Runtime parameters override default parameters ones set in tasks configurations, see L<configuring tasks|#configuring-task> section.
 
 
-=head3 Setting outthentic parameters
+=head3 Setting plugin runner parameters
 
-As sparrow runs plugins with the help of L<Outthentic scenarios runner|https://github.com/melezhik/outthentic#options> it accepts all
-I<runner related> parameters, check out L<Outthentic|https://github.com/melezhik/outthentic#options> for details. Other parameters examples:
+When executing sparrow plugin sparrow relies on underlying runner defined by plugin type. There are two types of sparrow plugins:
 
+=over
+
+=item *
+
+Outthentic Plugins
+
+
+
+=item *
+
+SWAT Plugins
+
+
+
+=back
+
+Both runners accept specific parameters. For outthentic runner parameters follow L<Outthentic|https://github.com/melezhik/outthentic#options>
+documentation. For swat runner parameters follow L<swat|https://github.com/melezhik/swat#swat-runner> documentation.
+
+Here are some examples:
+
+    # outthentic plugins:
     $ sparrow task run system disk-health --silent
-    $ sparrow task run system disk-health --debug 1 --prove '-Q'
+    $ sparrow task run system disk-health --debug 2
+    
+    # swat plugins:
+    $ sparrow task run web nginx-check --prove -Q
 
 
 =head3 Running tasks with cron
@@ -682,9 +734,29 @@ Once you add a proper entries into SPL file you may list and install a private p
     $ sparrow plg show package-generic
 
 
-=head1 Publishing public sparrow plugin to SparrowHub
+=head1 Developing sparrow plugins
 
-On how to create a sparrow plugins please follow L<Outthentic documentation|https://github.com/melezhik/outthentic>.
+As sparrow support two types of plugins - swat and outthentic, follow a related documentation pages on
+how to create I<scenarios suites> to gets packaged and distributes as a sparrow plugin:
+
+=over
+
+=item *
+
+For developing outthentic scenarios suites follow L<Outthentic documentation|https://github.com/melezhik/outthentic>.
+
+
+
+=item *
+
+For developing swat scenarios suites follow L<Swat documentation|https://github.com/melezhik/swat>.
+
+
+
+=back
+
+
+=head1 Publishing public sparrow plugin to SparrowHub
 
 Once a plugin is create you should do 4 simple steps:
 
@@ -747,25 +819,14 @@ Sparrow.json file holds plugin  meta information required for plugin gets upload
 Create sparrow.json file and place it in a plugin root directory:
 
     {
-        "version": "0.1.1",
         "name": "df-check",
+        "version": "0.1.1",
+        "plugin_type" : "outthentic"
         "description" : "elementary file system checks using df utility report ",
-        "url" : "https://github.com/melezhik/df-check"
+        "url" : "https://github.com/melezhik/df-check",
     }
 
-This is the list of obligatory parameters you have to set:
-
-=over
-
-=item *
-
-version - perl version string.
-
-
-=back
-
-A detailed information concerning version syntax could be find here -
-L<https://metacpan.org/pod/distribution/version/lib/version.pm|https://metacpan.org/pod/distribution/version/lib/version.pm>
+This is description of sparrow.json parameters:
 
 =over
 
@@ -776,25 +837,51 @@ name - plugin name.
 
 =back
 
-Only symbols `a-zA-Z1-9_-.' are allowable in plugin name
-
-This the list of optional parameters you may set as well:
+Only symbols `a-zA-Z1-9_-.' are allowable in plugin name. This parameter is obligatory, no default value.
 
 =over
 
 =item *
 
-url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
-
-
-
-=item *
-
-description - a short description of your plugin
-
+version - Perl version string.
 
 
 =back
+
+This parameter is obligatory. A detailed information concerning version syntax could be find here - L<https://metacpan.org/pod/distribution/version/lib/version.pm|https://metacpan.org/pod/distribution/version/lib/version.pm>
+
+=over
+
+=item *
+
+plugin_type - one of two - C<outthentic|swat> - sets plugin internal runner.
+
+
+=back
+
+This parameter is obligatory. Default value is C<outthentic>. 
+
+=over
+
+=item *
+
+url - a plugin web site http URL
+
+
+=back
+
+This parameter is optional and could be useful when you want to refer users to plugin documentation site.
+
+=over
+
+=item *
+
+description - a short description of a plugin.
+
+
+=back
+
+This one is optional, but very appreciated.
 
 
 =head2 Upload plugin
@@ -903,7 +990,14 @@ This program is free software; you can redistribute it and/or modify it under th
 
 =item *
 
+L<SWAT|https://github.com/melezhik/swat> - Simple Web Application Test framework.
+
+
+
+=item *
+
 L<Outthentic|https://github.com/melezhik/outthentic> - Multipurpose scenarios framework.
+
 
 
 =back

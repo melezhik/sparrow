@@ -193,7 +193,16 @@ sub task_run {
 
     my $spj = plugin_meta($pdir);
     
-    my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./";
+    my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
+
+    if ($spj->{plugin_type} eq 'outthentic'){
+      $cmd.="  strun --root ./ "
+    }elsif ( $spj->{plugin_type} eq 'swat' ) {
+      $cmd.="  swat ./ ". ($task_set->{host}).' ';
+    }else{
+      die "unsupported plugin type: $spj->{plugin_type}"
+    }
+
 
     if ($parameters=~/--yaml\s+(\S+)/){
       my $path = $1;

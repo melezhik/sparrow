@@ -36,11 +36,12 @@
             "JSON" : "0",
             "Outthentic" : "v0.2.10",
             "Term::ANSIColor" : "4.02",
+            "swat" : "v0.1.96",
             "version" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "v0.1.22",
+   "version" : "v0.2.0",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }

@@ -237,7 +237,7 @@ For example:
 
 It's useful when create tasks for swat plugins
 
-    $ sparrow task add system pinto-health swat-pintod --host 127.0.0.1:3111
+    $ sparrow task add web nginx-check swat-nginx --host 127.0.0.1:80
 
 ### Run plugins
 
@@ -309,7 +309,7 @@ Here are some examples:
     $ sparrow task run system disk-health --debug 2
 
     # swat plugins:
-    $ sparrow task run pinto pinto-health --prove -Q
+    $ sparrow task run web nginx-check --prove -Q
 
 ### Running tasks with cron
 
@@ -523,7 +523,7 @@ Once you add a proper entries into SPL file you may list and install a private p
 
     $ sparrow plg show package-generic
 
-# Developing sparrow plugins.
+# Developing sparrow plugins
 
 As sparrow support two types of plugins - swat and outthentic, follow a related documentation pages on
 how to create _scenarios suites_ to gets packaged and distributes as a sparrow plugin:

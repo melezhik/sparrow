@@ -300,7 +300,7 @@ When executing sparrow plugin sparrow relies on underlying runner defined by plu
 * SWAT Plugins
 
 Both runners accept specific parameters. For outthentic runner parameters follow [Outthentic](https://github.com/melezhik/outthentic#options)
-documentation. For swat runner parameters follow [swat](https://github.com/melezhik/swat#swat-runner).
+documentation. For swat runner parameters follow [swat](https://github.com/melezhik/swat#swat-runner) documentation.
 
 Here are some examples:
 

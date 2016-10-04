@@ -523,9 +523,16 @@ Once you add a proper entries into SPL file you may list and install a private p
 
     $ sparrow plg show package-generic
 
-# Publishing public sparrow plugin to SparrowHub
+# Developing sparrow plugins.
 
-On how to create a sparrow plugins please follow [Outthentic documentation](https://github.com/melezhik/outthentic).
+As sparrow support two types of plugins - swat and outthentic, follow a related documentation pages on
+how to create _scenarios suites_ to gets packaged and distributes as a sparrow plugin:
+
+* For developing outthentic scenarios suites follow [Outthentic documentation](https://github.com/melezhik/outthentic).
+
+* For developing swat scenarios suites follow [Outthentic documentation](https://github.com/melezhik/outthentic).
+
+# Publishing public sparrow plugin to SparrowHub
 
 Once a plugin is create you should do 4 simple steps:
 
@@ -566,28 +573,34 @@ Sparrow.json file holds plugin  meta information required for plugin gets upload
 Create sparrow.json file and place it in a plugin root directory:
 
     {
-        "version": "0.1.1",
         "name": "df-check",
+        "version": "0.1.1",
+        "plugin_type" : "outthentic"
         "description" : "elementary file system checks using df utility report ",
-        "url" : "https://github.com/melezhik/df-check"
+        "url" : "https://github.com/melezhik/df-check",
     }
 
-This is the list of obligatory parameters you have to set:
-
-* version - Perl version string.
-
-A detailed information concerning version syntax could be find here -
-[https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
+This is description of sparrow.json parameters:
 
 * name - plugin name.
 
-Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name
+Only symbols \`a-zA-Z1-9_-.' are allowable in plugin name. This parameter is obligatory, no default value.
 
-This the list of optional parameters you may set as well:
+* version - Perl version string.
 
-* url - an http URL for the site where one could find a detailed plugin information ( docs, source code, issues ... )
+This parameter is obligatory. A detailed information concerning version syntax could be find here - [https://metacpan.org/pod/distribution/version/lib/version.pm](https://metacpan.org/pod/distribution/version/lib/version.pm)
 
-* description - a short description of your plugin
+* plugin_type - one of two - `outthentic|swat` - sets plugin internal runner.
+
+This parameter is obligatory. Default value is `outthentic`. 
+
+* url - a plugin web site http URL
+
+This parameter is optional and could be useful when you want to refer users to plugin documentation site.
+
+* description - a short description of a plugin.
+
+This one is optional, but very appreciated.
 
 ## Upload plugin
 
@@ -639,6 +652,7 @@ As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT direct
 For example:
 
     $ export SPARROW_ROOT=/opt/sparrow
+
 
 # AUTHOR
 

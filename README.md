@@ -69,7 +69,7 @@ but many ones require some piece of input data. Thus sparrow task is a container
 Plugin configuration is just a text file in one of 4 formats:
 
 * [Config::General](https://metacpan.org/pod/Config::General) format - consumed by Outthentic plugins
-* YAML format - consumed by Outthentic plugins
+* YAML format - consumed by both Swat and Outthentic plugins
 * JSON format - consumed by Outthentic plugins
 * [Config::Tiny](https://metacpan.org/pod/Config::Tiny) format - consumed by Swat plugins
 
@@ -352,8 +352,10 @@ User should consult plugin documentation to get know a certain structure of conf
 
 Sparrow supports two configuration formats:
 
-* Config::General 
-* YAML
+* Config::Tiny    ( Swat plugins )
+* Config::General ( Outthentic plugins )
+* YAML ( Outthentic and Swat plugins )
+* JSON ( Outthentic plugins )
 
 Config::General format is _default_ format for task configuration.  Use `task ini` command to set task configuration:
 

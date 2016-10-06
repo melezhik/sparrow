@@ -245,10 +245,20 @@ to overcome this ambiguity";
     }
 
 
-    my $cmd;
+    my $spj = plugin_meta($pdir);
+
+    my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
+
+    if ($spj->{plugin_type} eq 'outthentic'){
+      $cmd.="  strun --root ./ "
+    }elsif ( $spj->{plugin_type} eq 'swat' ) {
+      $cmd.="  swat ./ ";
+    }else{
+      confess "unsupported plugin type: $spj->{plugin_type}"
+    }
 
 
-    $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && strun --root ./ $parameters";
+    $cmd.= " $parameters";
 
     if ($verbose_mode){
       print map {"# $_\n"} split /&&\s+/, $cmd;

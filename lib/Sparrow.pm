@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.2';
+our $VERSION = '0.2.3';
 
 1;
 
@@ -137,7 +137,7 @@ L<Config::General|https://metacpan.org/pod/Config::General> format - consumed by
 
 =item *
 
-YAML format - consumed by Outthentic plugins
+YAML format - consumed by both Swat and Outthentic plugins
 
 
 =item *
@@ -520,12 +520,22 @@ Sparrow supports two configuration formats:
 
 =item *
 
-Config::General 
+Config::Tiny    ( Swat plugins )
 
 
 =item *
 
-YAML
+Config::General ( Outthentic plugins )
+
+
+=item *
+
+YAML ( Outthentic and Swat plugins )
+
+
+=item *
+
+JSON ( Outthentic plugins )
 
 
 =back

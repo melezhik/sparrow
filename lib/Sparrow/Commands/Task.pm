@@ -200,7 +200,7 @@ sub task_run {
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
     }else{
-      die "unsupported plugin type: $spj->{plugin_type}"
+      confess "unsupported plugin type: $spj->{plugin_type}"
     }
 
 

@@ -1,3 +1,7 @@
+0.2.4 2016-10-10
+
+* fix for `find: The relative path `local/bin' is included in the PATH environment variable, which is insecure in combination with the -execdir action of find.  Please remove that entry from $PATH`
+
 0.2.3 2016-10-06
 
 * run swat plugins via `plg run` command

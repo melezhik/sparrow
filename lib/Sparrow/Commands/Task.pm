@@ -193,7 +193,7 @@ sub task_run {
 
     my $spj = plugin_meta($pdir);
     
-    my $cmd = "cd $pdir && export PATH=\$PATH:local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
+    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
       $cmd.="  strun --root ./ "

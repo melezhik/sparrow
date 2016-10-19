@@ -34,7 +34,7 @@
          "requires" : {
             "Carton" : "0",
             "JSON" : "0",
-            "Outthentic" : "v0.2.10",
+            "Outthentic" : "v0.2.11",
             "Term::ANSIColor" : "4.02",
             "swat" : "v0.1.96",
             "version" : "0"
@@ -42,5 +42,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v0.2.4"
+   "version" : "v0.2.5"
 }

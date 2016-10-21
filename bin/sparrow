@@ -195,7 +195,7 @@ if ($object eq  'plg'){
 
         remote_task_share($name);
 
-    } elsif ( $action eq 'show' ){
+    } elsif ( $action eq 'hide' ){
 
         my $name = shift @ARGV;
 

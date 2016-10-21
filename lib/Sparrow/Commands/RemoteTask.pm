@@ -103,6 +103,45 @@ sub remote_task_list {
     print "\n";
 }
 
+sub remote_task_share {
+  remote_task_change_access(@_,'share');
+}
+
+sub remote_task_hide {
+  remote_task_change_access(@_,'hide');
+}
+
+sub remote_task_change_access {
+
+    my $path = shift or confess "usage: remote_task_change_access(path*,action)";
+    my $action = shift or confess "usage: remote_task_change_access(path,*action)";
+
+    my ($project, $task) = split '/', $path;
+
+    my $cred;
+
+    if ($ENV{sph_user} and $ENV{sph_token}){
+        $cred->{user} = $ENV{sph_user};
+        $cred->{token} = $ENV{sph_token};
+    } else {
+        # or read from $ENV{HOME}/sparrowhub.json
+        open F, "$ENV{HOME}/sparrowhub.json" or confess "can't open $ENV{HOME}/sparrowhub.json to read: $!";
+        my $s = join "", <F>;
+        close F;
+        $cred = decode_json($s);
+    }
+
+
+    execute_shell_command(
+        "curl -f -X POST -H 'sparrow-user: $cred->{user}' " .
+        "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/'.
+        "$action/$project/$task",
+        silent => 1 ,
+    );
+
+    print "\n";
+}
+
 
 1;
 

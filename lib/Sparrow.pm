@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.5';
+our $VERSION = '0.2.6';
 
 1;
 
@@ -1015,6 +1015,59 @@ As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT direct
 For example:
 
     $ export SPARROW_ROOT=/opt/sparrow
+
+
+=head1 Remote Tasks
+
+B<I<WARNING!>> This feature is quite experimental and should be tested.
+
+Remote tasks are sparrow tasks SparrowHub users could I<bind> to theirs accounts:
+
+    $ sparrow project create my-stuff
+    $ sparrow task add my-stuff git-setup git-base
+    $ sparrow task ini my-stuff git-setup 
+    
+    email myemail@gmail.com 
+    name  'Alexey Melezhik'
+     
+    $ sparrow task run my-stuff git-setup
+
+Ok, now we could "wrap" our task and upload to our account:
+
+    $ sparrow remote task upload my-stuff/git-setup
+
+Then ssh-ing to some other server where we want to re-apply our git configuration
+
+    $ ssh some-other-host
+    $ sparrow remote task install my-stuff/git-setup
+
+Now we can:
+
+    $ sparrow task run my-stuff git-setup
+
+Pretty cool, huh? :)))
+
+
+=head2 Share your tasks
+
+By default remote task you uploaded to SparrowHub could be used only by you and can't be shared with others.
+
+What if you want to share your fun stuff with people? - Share your task:
+
+    $ sparrow remote task share utils/perlbrew-ubuntu-install
+
+Now others can use it ( as your task now is at public access):
+
+    $ sparrow remote task install melezhik@utils/perlbrew-ubuntu-install
+    $ sparrow task run utils perlbrew-ubuntu-install
+
+Want to hide your task again? Not a problem:
+
+    $ sparrow remote task hide utils/security-task
+
+To list your remote tasks say this:
+
+    $ sparrow remote task list
 
 
 =head1 AUTHOR

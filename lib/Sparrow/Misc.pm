@@ -68,6 +68,14 @@ sub usage {
     print "\n[task boxes]:\n\n";
     print "\tsparrow box run /path/to/box.json # run task box \n";
 
+    print "\n[remote tasks]:\n\n";
+    print "\tsparrow remote task upload  utils/git-setup        # upload task named `git-setup' to your SparrowHub account\n";
+    print "\tsparrow remote task install utils/git-setup        # install your remote task utils/git-setup\n";
+    print "\tsparrow remote task install john\@utils/git-setup   # install John's remote task utils/git-setup\n";
+    print "\tsparrow remote task share utils/git-setup          # share task named `git-setup' \n";
+    print "\tsparrow remote task share utils/git-setup          # hide task named `git-setup' \n";
+    print "\tsparrow remote task list                           # list your remote tasks\n";
+
     print "\n\n";
 
     print "follow https://github.com/melezhik/sparrow to get full documentation\n";

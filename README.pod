@@ -1025,7 +1025,7 @@ Ok, now we could "wrap" our task and upload to our account:
 
     $ sparrow remote task upload my-stuff/git-setup
 
-Then ssh-ing to some other server where we want to re-apply our git configuration
+Then I ssh-ing to anothe server where I want to re-apply my git configuration:
 
     $ ssh some-other-host
     $ sparrow remote task install my-stuff/git-setup
@@ -1045,7 +1045,7 @@ What if you want to share your fun stuff with people? - Share your task:
 
     $ sparrow remote task share utils/perlbrew-ubuntu-install
 
-Now others can use it ( as your task now is at public access):
+Now others can use it ( as your task now is at public access ):
 
     $ sparrow remote task install melezhik@utils/perlbrew-ubuntu-install
     $ sparrow task run utils perlbrew-ubuntu-install

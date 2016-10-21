@@ -49,6 +49,7 @@ sub remote_task_upload {
     confess 'plugin not installed' unless -d $pdir;
 
     my $plugin_name = $task_set->{plugin};
+    s{.*@}[] for $plugin_name; # FIXME: only public plugins could be uploaded as remote tasks
 
     my $cred;
 
@@ -138,6 +139,52 @@ sub remote_task_change_access {
         "$action/$project/$task",
         silent => 1 ,
     );
+
+    print "\n";
+}
+
+sub remote_task_install {
+
+    my $path = shift or confess "usage: remote_task_install(path*)";
+
+    my ($project, $task) = split '/', $path;
+    
+
+    my $cred;
+
+
+    if ($project =~ s/^(\S+)@//){
+        my $owner = $1;
+        execute_shell_command(
+            "mkdir -p /tmp/$path && ".
+            "curl -f ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
+            "$owner/$project/$task -o /tmp/$path/meta.json",
+            silent => 1 ,
+        );
+    } else {
+      if ($ENV{sph_user} and $ENV{sph_token}){
+          $cred->{user} = $ENV{sph_user};
+          $cred->{token} = $ENV{sph_token};
+      } else {
+          # or read from $ENV{HOME}/sparrowhub.json
+          open F, "$ENV{HOME}/sparrowhub.json" or confess "can't read $ENV{HOME}/sparrowhub.json : $!";
+          my $s = join "", <F>;
+          close F;
+          $cred = decode_json($s);
+      }
+
+      my $owner = $cred->{user};
+
+      execute_shell_command(
+          "mkdir -p /tmp/$path && ".
+          "curl -f -H 'sparrow-user: $cred->{user}' " .
+          "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
+          "$owner/$project/$task -o /tmp/$path/meta.json",
+          silent =>  1,
+      );
+  
+    }
+
 
     print "\n";
 }

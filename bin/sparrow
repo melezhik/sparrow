@@ -10,6 +10,8 @@ use Sparrow::Commands::Task;
 use Sparrow::Commands::TaskBox;
 use Sparrow::Commands::Index;
 
+use Sparrow::Commands::RemoteTask;
+
 use Sparrow::Misc;
 
 use Carp;
@@ -162,6 +164,46 @@ if ($object eq  'plg'){
         my $name = shift @ARGV;
 
         task_remove($name, @ARGV);
+
+    } else  { 
+
+        confess "unknown command: $action @ARGV";
+
+    }
+
+} elsif ($object eq  'remote') {
+
+    shift @ARGV; # this should be 'task' 
+
+    my $action = shift @ARGV;
+
+    if ( $action eq 'upload') {
+
+        my $name = shift @ARGV;
+
+        remote_task_upload($name);
+
+    } elsif ( $action eq 'install' ) {
+
+        my $name = shift @ARGV;
+
+        remote_task_install($name);
+
+    } elsif ( $action eq 'share' ) {
+
+        my $name = shift @ARGV;
+
+        remote_task_share($name);
+
+    } elsif ( $action eq 'show' ){
+
+        my $name = shift @ARGV;
+
+        remote_task_hide($name);
+
+    } elsif( $action  eq 'list'){
+
+        remote_task_list();
 
     } else  { 
 

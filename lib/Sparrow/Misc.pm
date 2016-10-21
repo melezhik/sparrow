@@ -73,7 +73,7 @@ sub usage {
     print "\tsparrow remote task install utils/git-setup        # install your remote task utils/git-setup\n";
     print "\tsparrow remote task install john\@utils/git-setup   # install John's remote task utils/git-setup\n";
     print "\tsparrow remote task share utils/git-setup          # share task named `git-setup' \n";
-    print "\tsparrow remote task share utils/git-setup          # hide task named `git-setup' \n";
+    print "\tsparrow remote task hide utils/git-setup           # hide task named `git-setup' \n";
     print "\tsparrow remote task list                           # list your remote tasks\n";
 
     print "\n\n";

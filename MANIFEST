@@ -14,6 +14,7 @@ lib/Sparrow.pm
 lib/Sparrow/Commands/Index.pm
 lib/Sparrow/Commands/Plugin.pm
 lib/Sparrow/Commands/Project.pm
+lib/Sparrow/Commands/RemoteTask.pm
 lib/Sparrow/Commands/Task.pm
 lib/Sparrow/Commands/TaskBox.pm
 lib/Sparrow/Constants.pm

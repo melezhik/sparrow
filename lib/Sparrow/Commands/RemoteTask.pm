@@ -72,8 +72,16 @@ sub remote_task_upload {
         "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/upload '.
          "-d project_name='$project' ".
          "-d task_name='$task' ".
-         "-d plugin_name='$plugin_name' ".
-         "-d suite_ini=\@$suite_ini_path ",
+         "-d plugin_name='$plugin_name' ",
+        silent => 1 ,
+    );
+    print "\n";
+
+    execute_shell_command(
+        "curl -f -H 'sparrow-user: $cred->{user}' " .
+        "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/load-ini'.
+         "/$project/$task/ ".
+         "-F ini=\@$suite_ini_path ",
         silent => 1 ,
     );
     print "\n";

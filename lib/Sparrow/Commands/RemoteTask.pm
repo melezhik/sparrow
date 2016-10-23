@@ -103,12 +103,23 @@ sub remote_task_list {
         $cred = decode_json($s);
     }
 
+    my $out_path = sparrow_root()."/cache/".($cred->{user}).".remote_tasks.json";
 
     execute_shell_command(
         "curl -f -H 'sparrow-user: $cred->{user}' " .
-        "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/list',
+        "-H 'sparrow-token: $cred->{token}' -o $out_path " .
+        sparrow_hub_api_url().'/api/v1/remote-task/list',
         silent => 1 ,
     );
+
+    open my $fh, $out_path or die "can't $out_path to read: $!";
+    my $json_str = join "", <$fh>;
+    close $fh;
+
+    for my $t (@{decode_json($json_str)}){
+      my $access = $t->{public_access} ? 'public' : 'private';
+      print "$t->{t} $access\t$t->{project_name}/$t->{task_name}\n"
+    }   
     print "\n";
 }
 

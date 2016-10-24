@@ -1,2 +1,2 @@
-sparrow remote task run melezhik@utils/nano-rc
+sparrow remote task run melezhik@utils/git-setup
 

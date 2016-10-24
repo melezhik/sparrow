@@ -106,7 +106,7 @@ sub remote_task_list {
     my $out_path = sparrow_root()."/cache/".($cred->{user}).".remote_tasks.json";
 
     execute_shell_command(
-        "curl -f -H 'sparrow-user: $cred->{user}' " .
+        "curl -f -s -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' -o $out_path " .
         sparrow_hub_api_url().'/api/v1/remote-task/list',
         silent => 1 ,

@@ -201,9 +201,19 @@ if ($object eq  'plg'){
 
         remote_task_hide($name);
 
+    } elsif ( $action eq 'remove' ){
+
+        my $name = shift @ARGV;
+
+        remote_task_remove($name);
+
     } elsif( $action  eq 'list'){
 
         remote_task_list();
+
+    } elsif( $action  eq 'public-list'){
+
+        remote_task_public_list();
 
     } else  { 
 

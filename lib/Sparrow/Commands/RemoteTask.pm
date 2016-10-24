@@ -25,6 +25,8 @@ our @EXPORT = qw{
     remote_task_share
     remote_task_hide
     remote_task_list
+    remote_task_public_list
+    remote_task_remove
 
 };
 
@@ -123,6 +125,27 @@ sub remote_task_list {
     print "\n";
 }
 
+sub remote_task_public_list {
+
+    my $out_path = sparrow_root()."/cache/remote_tasks_public.json";
+
+    execute_shell_command(
+        "curl -f -s -o $out_path " .
+        sparrow_hub_api_url().'/api/v1/remote-task/public-list',
+        silent => 1 ,
+    );
+
+    open my $fh, $out_path or die "can't $out_path to read: $!";
+    my $json_str = join "", <$fh>;
+    close $fh;
+
+    for my $t (@{decode_json($json_str)}){
+      my $access = $t->{public_access} ? 'public' : 'private';
+      print "$t->{t} $t->{project_name}/$t->{task_name}\n"
+    }   
+    print "\n";
+}
+
 sub remote_task_share {
   remote_task_change_access(@_,'share');
 }
@@ -156,6 +179,36 @@ sub remote_task_change_access {
         "curl -f -X POST -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/'.
         "$action/$project/$task",
+        silent => 1 ,
+    );
+
+    print "\n";
+}
+
+sub remote_task_remove {
+
+    my $path = shift or confess "usage: remote_task_remove(path*)";
+
+    my ($project, $task) = split '/', $path;
+
+    my $cred;
+
+    if ($ENV{sph_user} and $ENV{sph_token}){
+        $cred->{user} = $ENV{sph_user};
+        $cred->{token} = $ENV{sph_token};
+    } else {
+        # or read from $ENV{HOME}/sparrowhub.json
+        open F, "$ENV{HOME}/sparrowhub.json" or confess "can't open $ENV{HOME}/sparrowhub.json to read: $!";
+        my $s = join "", <F>;
+        close F;
+        $cred = decode_json($s);
+    }
+
+
+    execute_shell_command(
+        "curl -f -X POST -H 'sparrow-user: $cred->{user}' " .
+        "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/remove/'.
+        "$project/$task",
         silent => 1 ,
     );
 

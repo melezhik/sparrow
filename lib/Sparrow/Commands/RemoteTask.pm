@@ -144,7 +144,7 @@ sub remote_task_public_list {
 
     for my $t (@{decode_json($json_str)}){
       my $access = $t->{public_access} ? 'public' : 'private';
-      print "$t->{t} $t->{project_name}/$t->{task_name}\n"
+      print "$t->{t} $t->{owner}\@$t->{project_name}/$t->{task_name}\n"
     }   
     print "\n";
 }

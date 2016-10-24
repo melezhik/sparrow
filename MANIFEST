@@ -59,10 +59,10 @@ t/project/list/story.bash
 t/project/list/story.check
 t/project/remove/story.check
 t/project/remove/story.pl
-t/remote-public-task-run/git-setup/story.bash
-t/remote-public-task-run/git-setup/story.check
-t/remote-public-task-run/nano-rc/story.bash
-t/remote-public-task-run/nano-rc/story.check
+t/remote-task-run/private/git-setup/story.bash
+t/remote-task-run/private/git-setup/story.check
+t/remote-task-run/public/nano-rc/story.bash
+t/remote-task-run/public/nano-rc/story.check
 t/ruby-plg-run/story.bash
 t/ruby-plg-run/story.check
 t/suite.ini

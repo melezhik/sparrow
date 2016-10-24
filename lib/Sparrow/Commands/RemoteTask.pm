@@ -236,9 +236,9 @@ sub remote_task_install {
 
         execute_shell_command(
             "mkdir -p ".(sparrow_root())."/cache/meta/$owner\@$project && ".
-            "curl -s -f ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
+            "curl -f -s ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
             "$owner/$project/$task -o $out_path",
-            silent => 0 ,
+            silent => 1 ,
         );
 
     } else {

@@ -5,4 +5,4 @@ perl:
 install:
     - cpanm Outthentic
 
-script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install && strun --root ./t --story remote-task-run"
+script: "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install && ./test.sh"

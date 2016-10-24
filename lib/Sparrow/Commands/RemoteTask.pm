@@ -36,7 +36,8 @@ our @EXPORT = qw{
 
 sub remote_task_upload {
 
-    my $path = shift or confess "usage: remote_task_upload(path)";
+    my $path = shift or confess "usage: remote_task_upload(*path,comment)";
+    my $comment = shift;
 
     my ($project, $task) = split '/', $path;
 

@@ -742,6 +742,13 @@ Want to hide your task again? Not a problem:
 
 Now only you can use app/passwords task.
 
+## Add useful comments to task
+
+When doing remote task upload you optionaly can add a comment which will be show 
+when task gets listed with `sparrow remote task list` command:
+
+    $ sparrow remote task upload utils/nano-rc 'makes nano.rc setup'
+
 ## List remote tasks
 
 To list your remote tasks ( both private and public ) say this:

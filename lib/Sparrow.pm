@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.9';
+our $VERSION = '0.2.10';
 
 1;
 
@@ -1083,6 +1083,14 @@ Want to hide your task again? Not a problem:
     $ sparrow remote task hide app/passwords
 
 Now only you can use app/passwords task.
+
+
+=head2 Add useful comments to task
+
+When doing remote task upload you optionaly can add a comment which will be show 
+when task gets listed with C<sparrow remote task list> command:
+
+    $ sparrow remote task upload utils/nano-rc 'makes nano.rc setup'
 
 
 =head2 List remote tasks

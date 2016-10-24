@@ -59,6 +59,8 @@ t/project/list/story.bash
 t/project/list/story.check
 t/project/remove/story.check
 t/project/remove/story.pl
+t/remote-task-run/story.bash
+t/remote-task-run/story.check
 t/ruby-plg-run/story.bash
 t/ruby-plg-run/story.check
 t/suite.ini

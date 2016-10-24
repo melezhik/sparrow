@@ -1056,21 +1056,21 @@ A shortcut for C<sparrow remote task install ... & sparrow task run> is:
     $ sparrow remote task task run utils/git-setup
 
 
-=head2 Share your tasks
+=head2 Share your task
 
-I<By default> remote task you upload to SparrowHub is only accessible by you. This is so called
+I<By default> remote task uploaded to SparrowHub is only accessible by task author. This is so called
 private remote task. What if you want to share some fun stuff with people? - I<Share> your task:
 
-    $ sparrow remote task share utils/nano-setup
+    $ sparrow remote task share utils/nano-rc
 
 Now users can use your remote task:
 
-    $ sparrow remote task install melezhik@utils/nano-setup
-    $ sparrow task run utils utils nano-setup
+    $ sparrow remote task install melezhik@utils/nano-rc
+    $ sparrow task run utils utils nano-rc
 
 or using shortcut in single step:
 
-    $ sparrow remote task run melezhik@utils/nano-setup
+    $ sparrow remote task run melezhik@utils/nano-rc
 
 B<I<NOTE!>> you don't need a SparrowHub account to use public remote tasks, even unregisters users can use
 public remote tasks.
@@ -1085,7 +1085,7 @@ Want to hide your task again? Not a problem:
 Now only you can use app/passwords task.
 
 
-=head2 List remote tasks tasks
+=head2 List remote tasks
 
 To list your remote tasks ( both private and public ) say this:
 
@@ -1097,6 +1097,13 @@ To list your remote tasks ( both private and public ) say this:
 To get a list of available public remote tasks say this:
 
     $ sparrow remote task public-list
+
+
+=head2 Remove remote task
+
+And finaly you can remove remote task:
+
+    $ sparrow remote task remove app/old-stuff
 
 
 =head1 AUTHOR

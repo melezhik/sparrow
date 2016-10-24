@@ -22,7 +22,7 @@ requires:
   Carton: 0
   JSON: 0
   Outthentic: 0.2.11
-  Term::ANSIColor: '4.02'
+  Term::ANSIColor: 4.02
   swat: 0.1.96
   version: 0
 resources:

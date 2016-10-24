@@ -1,8 +1,6 @@
 # NAME
 
 Sparrow
-
-[![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
  
 # SYNOPSIS
 
@@ -13,6 +11,10 @@ Sparrow - multipurpose scenarios manager.
     $ sudo yum install git # only required for installing private plugins
     $ sudo yum install curl
     $ cpanm Sparrow
+
+# Build status
+
+[![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
 
 # Sparrow plugins
 

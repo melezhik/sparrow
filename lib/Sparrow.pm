@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.10';
+our $VERSION = '0.2.11';
 
 1;
 
@@ -16,8 +16,6 @@ __END__
 
 Sparrow
 
-L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.org/melezhik/sparrow>
-
 
 =head1 SYNOPSIS
 
@@ -29,6 +27,11 @@ Sparrow - multipurpose scenarios manager.
     $ sudo yum install git # only required for installing private plugins
     $ sudo yum install curl
     $ cpanm Sparrow
+
+
+=head1 Build status
+
+L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.org/melezhik/sparrow>
 
 
 =head1 Sparrow plugins

@@ -1,3 +1,7 @@
+0.2.7 2016-10-24
+
+* A hot fix for running public remote task
+
 0.2.6 2016-10-24
 
 * A release candidate on `remote tasks` feature

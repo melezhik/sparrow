@@ -232,11 +232,12 @@ sub remote_task_install {
     if ($project =~ s/^(\S+)@//){
 
         my $owner = $1;
+
         execute_shell_command(
-            "mkdir -p ".(sparrow_root())."/cache/meta/$project && ".
+            "mkdir -p ".(sparrow_root())."/cache/meta/$owner\@$project && ".
             "curl -s -f ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
             "$owner/$project/$task -o $out_path",
-            silent => 1 ,
+            silent => 0 ,
         );
 
     } else {

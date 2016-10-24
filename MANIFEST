@@ -59,6 +59,8 @@ t/project/list/story.bash
 t/project/list/story.check
 t/project/remove/story.check
 t/project/remove/story.pl
+t/remote-public-task-run/story.bash
+t/remote-public-task-run/story.check
 t/remote-task-run/story.bash
 t/remote-task-run/story.check
 t/ruby-plg-run/story.bash

@@ -228,6 +228,7 @@ sub remote_task_install {
     my $cred;
 
     my $out_path = sparrow_root()."/cache/meta/$path.json";
+    my $ini_path = sparrow_root()."/cache/meta/$path.ini";
 
     if ($project =~ s/^(\S+)@//){
 
@@ -271,10 +272,14 @@ sub remote_task_install {
     close META;
     my $meta = decode_json($str);
 
+    open INI, "> $ini_path" or confess "can't write to $ini_path : $!";
+    print INI $meta->{suite_ini};
+    close INI;
+
     install_plugin($meta->{plugin_name});
     project_create($meta->{project_name});
     task_add($meta->{project_name},$meta->{task_name},$meta->{plugin_name});
-    task_load_ini($meta->{project_name},$meta->{task_name},$out_path);
+    task_load_ini($meta->{project_name},$meta->{task_name},$ini_path);
     if ($opts{run}){
       task_run($meta->{project_name},$meta->{task_name});
     } else{

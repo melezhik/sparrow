@@ -1023,51 +1023,80 @@ B<I<WARNING!>> This feature is quite experimental and should be tested.
 
 Remote tasks are sparrow tasks SparrowHub users could I<bind> to theirs accounts:
 
-    $ sparrow project create my-stuff
-    $ sparrow task add my-stuff git-setup git-base
-    $ sparrow task ini my-stuff git-setup 
+    $ sparrow project create utils
     
-    email myemail@gmail.com 
-    name  'Alexey Melezhik'
+    $ sparrow task add utils  git-setup git-base
+    
+    $ sparrow task ini utils git-setup 
+    
+      email melezhik@gmail.com 
+      name  'Alexey Melezhik'
      
-    $ sparrow task run my-stuff git-setup
+    $ sparrow task run utils git-setup
 
 Ok, now we could "wrap" our task and upload to our account:
 
-    $ sparrow remote task upload my-stuff/git-setup
+    $ sparrow remote task upload utils/git-setup
 
-Then I ssh-ing to anothe server where I want to re-apply my git configuration:
+B<I<NOTE!>> to upload remote task you need a SparrowHub account.
+
+Then I ssh-ing to another server to re-apply my git configuration:
 
     $ ssh some-other-host
-    $ sparrow remote task install my-stuff/git-setup
+    $ sparrow remote task install utils/git-setup
 
-Now we can:
+Now I can:
 
-    $ sparrow task run my-stuff git-setup
+    $ sparrow task run utils git-setup
 
 Pretty cool, huh? :)))
+
+A shortcut for C<sparrow remote task install ... & sparrow task run> is:
+
+    $ sparrow remote task task run utils/git-setup
 
 
 =head2 Share your tasks
 
-By default remote task you uploaded to SparrowHub could be used only by you and can't be shared with others.
+I<By default> remote task you upload to SparrowHub is only accessible by you. This is so called
+private remote task. What if you want to share some fun stuff with people? - I<Share> your task:
 
-What if you want to share your fun stuff with people? - Share your task:
+    $ sparrow remote task share utils/nano-setup
 
-    $ sparrow remote task share utils/perlbrew-ubuntu-install
+Now users can use your remote task:
 
-Now others can use it ( as your task now is at public access ):
+    $ sparrow remote task install melezhik@utils/nano-setup
+    $ sparrow task run utils utils nano-setup
 
-    $ sparrow remote task install melezhik@utils/perlbrew-ubuntu-install
-    $ sparrow task run utils perlbrew-ubuntu-install
+or using shortcut in single step:
+
+    $ sparrow remote task run melezhik@utils/nano-setup
+
+B<I<NOTE!>> you don't need a SparrowHub account to use public remote tasks, even unregisters users can use
+public remote tasks.
+
+
+=head2 Hide your task
 
 Want to hide your task again? Not a problem:
 
-    $ sparrow remote task hide utils/security-task
+    $ sparrow remote task hide app/passwords
 
-To list your remote tasks say this:
+Now only you can use app/passwords task.
+
+
+=head2 List remote tasks tasks
+
+To list your remote tasks ( both private and public ) say this:
 
     $ sparrow remote task list
+
+
+=head2 List public tasks
+
+To get a list of available public remote tasks say this:
+
+    $ sparrow remote task public-list
 
 
 =head1 AUTHOR

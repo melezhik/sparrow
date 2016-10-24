@@ -235,7 +235,7 @@ sub remote_task_install {
 
         execute_shell_command(
             "mkdir -p ".(sparrow_root())."/cache/meta/$owner\@$project && ".
-            "curl -v -f ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
+            "curl -f -s ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
             "$owner/$project/$task -o $out_path",
             silent => 1 ,
         );
@@ -256,10 +256,10 @@ sub remote_task_install {
 
       execute_shell_command(
           "mkdir -p ".(sparrow_root())."/cache/meta/$project && ".
-          "curl -f -v -H 'sparrow-user: $cred->{user}' " .
+          "curl -f -s -H 'sparrow-user: $cred->{user}' " .
           "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
           "$owner/$project/$task -o $out_path",
-          silent =>  0,
+          silent =>  1,
       );
 
     }

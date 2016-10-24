@@ -189,6 +189,12 @@ if ($object eq  'plg'){
 
         remote_task_install($name);
 
+    } elsif ( $action eq 'run' ) {
+
+        my $name = shift @ARGV;
+
+        remote_task_run($name);
+
     } elsif ( $action eq 'share' ) {
 
         my $name = shift @ARGV;

@@ -7,7 +7,9 @@ use base 'Exporter';
 use Sparrow::Constants;
 use Sparrow::Misc;
 use Sparrow::Commands::Plugin;
+use Sparrow::Commands::Project;
 use Sparrow::Commands::Task;
+
 use Carp;
 use File::Basename;
 use File::Path;
@@ -22,6 +24,7 @@ our @EXPORT = qw{
 
     remote_task_upload
     remote_task_install
+    remote_task_run
     remote_task_share
     remote_task_hide
     remote_task_list
@@ -217,22 +220,25 @@ sub remote_task_remove {
 
 sub remote_task_install {
 
-    my $path = shift or confess "usage: remote_task_install(path*)";
+    my $path = shift or confess "usage: remote_task_install(path*,opts)";
+    my %opts = @_;
 
     my ($project, $task) = split '/', $path;
     
-
     my $cred;
 
+    my $out_path = sparrow_root()."/cache/meta/$path.json";
 
     if ($project =~ s/^(\S+)@//){
+
         my $owner = $1;
         execute_shell_command(
-            "mkdir -p /tmp/$path && ".
+            "mkdir -p ".(sparrow_root())."/cache/meta/$project && ".
             "curl -s -f ". sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
-            "$owner/$project/$task -o /tmp/$path/meta.json",
+            "$owner/$project/$task -o $out_path",
             silent => 1 ,
         );
+
     } else {
       if ($ENV{sph_user} and $ENV{sph_token}){
           $cred->{user} = $ENV{sph_user};
@@ -248,19 +254,36 @@ sub remote_task_install {
       my $owner = $cred->{user};
 
       execute_shell_command(
-          "mkdir -p /tmp/$path && ".
-          "curl -s -f -H 'sparrow-user: $cred->{user}' " .
+          "mkdir -p ".(sparrow_root())."/cache/meta/$project && ".
+          "curl -f -s -H 'sparrow-user: $cred->{user}' " .
           "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/meta/'.
-          "$owner/$project/$task -o /tmp/$path/meta.json",
+          "$owner/$project/$task -o $out_path",
           silent =>  1,
       );
-  
+
     }
 
+    print "task meta data saved to $out_path ...\n";
 
-    print "\n";
+    open META, $out_path or confess "can't read $out_path : $!";
+    my $str = join "", <META>;
+    close META;
+    my $meta = decode_json($str);
+
+    install_plugin($meta->{plugin_name});
+    project_create($meta->{project_name});
+    task_add($meta->{project_name},$meta->{task_name},$meta->{plugin_name});
+    task_load_ini($meta->{project_name},$meta->{task_name},$out_path);
+    if ($opts{run}){
+      task_run($meta->{project_name},$meta->{task_name});
+    } else{
+      print "\n\nnow you can ran task by: \$ sparrow task run $meta->{project_name} $meta->{task_name}\n\n";
+    }
 }
 
+sub remote_task_run {
+    remote_task_install(@_, 'run' => 1);
+}
 
 1;
 

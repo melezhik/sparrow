@@ -78,7 +78,8 @@ sub remote_task_upload {
         "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/upload '.
          "-d project_name='$project' ".
          "-d task_name='$task' ".
-         "-d plugin_name='$plugin_name' ",
+         "-d plugin_name='$plugin_name' ".
+         "-d comment='$comment' ",
         silent => 1 ,
     );
     print "\n";
@@ -124,7 +125,7 @@ sub remote_task_list {
 
     for my $t (@{decode_json($json_str)}){
       my $access = $t->{public_access} ? 'public' : 'private';
-      print "$t->{t} $access\t$t->{project_name}/$t->{task_name}\n"
+      print "$t->{t} $access\t$t->{project_name}/$t->{task_name} | $t->{comment}\n"
     }   
     print "\n";
 }
@@ -145,7 +146,7 @@ sub remote_task_public_list {
 
     for my $t (@{decode_json($json_str)}){
       my $access = $t->{public_access} ? 'public' : 'private';
-      print "$t->{t} $t->{owner}\@$t->{project_name}/$t->{task_name}\n"
+      print "$t->{t} $t->{owner}\@$t->{project_name}/$t->{task_name} | $t->{comment}\n"
     }   
     print "\n";
 }

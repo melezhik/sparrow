@@ -1,8 +1,6 @@
 # NAME
 
 Sparrow
-
-[![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
  
 # SYNOPSIS
 
@@ -13,6 +11,10 @@ Sparrow - multipurpose scenarios manager.
     $ sudo yum install git # only required for installing private plugins
     $ sudo yum install curl
     $ cpanm Sparrow
+
+# Build status
+
+[![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
 
 # Sparrow plugins
 
@@ -741,6 +743,13 @@ Want to hide your task again? Not a problem:
     $ sparrow remote task hide app/passwords
 
 Now only you can use app/passwords task.
+
+## Add useful comments to task
+
+When doing remote task upload you optionaly can add a comment which will be show 
+when task gets listed with `sparrow remote task list` command:
+
+    $ sparrow remote task upload utils/nano-rc 'makes nano.rc setup'
 
 ## List remote tasks
 

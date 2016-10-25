@@ -1,3 +1,16 @@
+0.2.12 2016-10-24
+
+* META.yml re-created after occasionally get lost
+
+0.2.11 2016-10-24
+
+* Update Readme so that metacpan show module name correctly.
+
+
+0.2.10 2016-10-24
+
+* Makes comments to remote tasks
+
 0.2.9 2016-10-24
 
 * Add task owner part to public remote tasks list

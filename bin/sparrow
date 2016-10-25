@@ -181,7 +181,7 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        remote_task_upload($name);
+        remote_task_upload($name,@ARGV);
 
     } elsif ( $action eq 'install' ) {
 

@@ -259,6 +259,12 @@ It's useful when create tasks for swat plugins
 
     $ sparrow task add web nginx-check swat-nginx --host 127.0.0.1:80
 
+### Getting task list
+
+To list all the task with projects use:
+
+**sparrow task list**
+
 ### Run plugins
 
 There are two ways to run sparrow plugins:

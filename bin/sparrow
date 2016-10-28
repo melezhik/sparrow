@@ -127,7 +127,11 @@ if ($object eq  'plg'){
 
     my $action = shift @ARGV;
 
-    if ( $action eq 'add') {
+    if ( $action eq 'list') {
+
+        task_list();
+
+    } elsif ( $action eq 'add') {
 
         my $name = shift @ARGV;
 

@@ -32,7 +32,7 @@ sub projects_list {
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
-    for my $p (sort { -M $root_dir.$a <=> -M $root_dir.$b } grep { ! /^\.{1,2}$/ } readdir($dh)){
+    for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         print basename($p),"\n";
     }
 
@@ -71,7 +71,7 @@ sub project_show {
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
 
-    for my $p ( sort { -M $root_dir.$a <=> -M $root_dir.$b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
+    for my $p ( sort { $a cmp $b }  grep { ! /^\.{1,2}$/ } readdir($dh)){
         print "\t", basename($p),"\n";
     }
 

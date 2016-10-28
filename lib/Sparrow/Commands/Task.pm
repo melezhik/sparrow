@@ -20,6 +20,8 @@ use Term::ANSIColor;
 
 our @EXPORT = qw{
 
+    task_list
+
     task_add
     task_show
     task_remove
@@ -33,6 +35,30 @@ our @EXPORT = qw{
     task_set
 
 };
+
+sub task_list {
+
+    print "[sparrow task list]\n";
+
+    my $root_dir = sparrow_root.'/projects/';
+
+    opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
+
+    for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
+        next unless -d "$root_dir/$p/tasks";
+        my $project = basename($p);
+        print " ",colored(['blue on_yellow'],$project),"\n";
+        opendir(my $th, "$root_dir/$p/tasks") || confess "can't opendir $root_dir/$p: $!";
+        for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
+          my $task = basename($t);
+          print "  $p/$t\n";
+        }
+        closedir $th;
+    }
+    print "\n\n";
+    closedir $dh;
+
+}
 
 sub task_add {
 

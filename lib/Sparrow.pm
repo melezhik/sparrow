@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.13';
+our $VERSION = '0.2.14';
 
 1;
 
@@ -382,6 +382,13 @@ For example:
 It's useful when create tasks for swat plugins
 
     $ sparrow task add web nginx-check swat-nginx --host 127.0.0.1:80
+
+
+=head3 Getting task list
+
+To list all the task with projects use:
+
+B<sparrow task list>
 
 
 =head3 Run plugins

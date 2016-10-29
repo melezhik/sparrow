@@ -47,7 +47,7 @@ sub task_list {
     for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         next unless -d "$root_dir/$p/tasks";
         my $project = basename($p);
-        print " ",colored(['blue on_yellow'],$project),"\n";
+        print " [",colored(['blue on_yellow'],$project),"]\n";
         opendir(my $th, "$root_dir/$p/tasks") || confess "can't opendir $root_dir/$p: $!";
         for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
           my $task = basename($t);

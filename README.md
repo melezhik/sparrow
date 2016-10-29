@@ -433,6 +433,20 @@ Examples:
     # remove task disk-health project system
     $ sparrow task remove system disk-health
 
+### Alternative task names notation
+
+When working with task you may use an alternative task names notation:
+
+    $project_name/$task_name
+
+Examples:
+
+    $ sparrow task run system/disk
+    $ sparrow task show system/disk
+    $ sparrow task remove system/disk
+    $ sparrow task ini system/disk
+    # so on ...
+
 ## Task boxes API
 
 Use this command to run task box

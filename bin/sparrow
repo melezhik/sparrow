@@ -135,25 +135,25 @@ if ($object eq  'plg'){
 
         my $name = shift @ARGV;
 
-        task_add($name,@ARGV);
+        task_add((split '/', $name),@ARGV);
 
     } elsif ( $action eq 'ini' ) {
 
         my $name = shift @ARGV;
 
-        task_ini($name, @ARGV);
+        task_ini((split '/', $name), @ARGV);
 
     } elsif ( $action eq 'load_ini' ) {
 
         my $name = shift @ARGV;
 
-        task_load_ini($name, @ARGV);
+        task_load_ini((split '/', $name), @ARGV);
 
     } elsif ( $action eq 'show' ){
 
         my $name = shift @ARGV;
 
-        task_show($name, @ARGV);
+        task_show((split '/', $name), @ARGV);
 
     } elsif( $action  eq 'run'){
 
@@ -161,13 +161,13 @@ if ($object eq  'plg'){
 
         my $tid = shift @ARGV;
 
-        task_run($name, $tid, @ARGV);
+        task_run((split '/', $name), $tid, @ARGV);
 
     } elsif( $action  eq 'remove'){
 
         my $name = shift @ARGV;
 
-        task_remove($name, @ARGV);
+        task_remove((split '/', $name), @ARGV);
 
     } else  { 
 

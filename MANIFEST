@@ -79,6 +79,9 @@ t/task-load-ini/story.check
 t/task-load-ini/story.pm
 t/task-remove/story.check
 t/task-remove/story.pm
+t/task-run-alternative-notation/story.bash
+t/task-run-alternative-notation/story.check
+t/task-run-alternative-notation/story.pm
 t/task-run/story.bash
 t/task-run/story.check
 t/task-run/story.pm

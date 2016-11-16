@@ -82,7 +82,8 @@ Plugin meta file define essential infomation required for script upload to Sparr
 * description - short plugin desription
 * url - plugin web page url (optioanl)
 
-As sparrow script gets delivered as sparrow plugin these are parameters to be set:
+Sparrow meta file is the way to "convert" existed scrip into sparrow plugin:
+
 ```
 {
     "name" : "bar-script",
@@ -92,4 +93,31 @@ As sparrow script gets delivered as sparrow plugin these are parameters to be se
 }
 ```
 
+## Readme file
 
+You might want to some documentation to script. Simple create a README.md file in markdown format:
+
+```
+$ cat README.md
+
+# SYNOPSIS
+
+print `bar` or `rab`
+
+# INSTALL
+
+    $ sparrow plg install bar-script
+
+# USAGE
+
+    $ sparrow plg run bar-srcipt
+    
+
+# Author
+
+[Alexey Melezhik](melezhik@gmail.com)
+
+# Discloser
+
+An initial script code borrowed from David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/)
+```

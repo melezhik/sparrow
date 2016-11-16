@@ -85,6 +85,7 @@ Plugin meta file define essential infomation required for script upload to Sparr
 Sparrow meta file is the way to "convert" existed scrip into sparrow plugin:
 
 ```
+$ cat sparrow.json
 {
     "name" : "bar-script",
     "version" : "0.0.1",
@@ -120,4 +121,20 @@ print `bar` or `rab`
 # Discloser
 
 An initial script code borrowed from David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/)
+```
+
+So we end up with project structure:
+
+```
+$ tree
+
+.
+├── cpanfile
+├── README.md
+├── sparrow.json
+├── story.check
+└── story.pl
+
+0 directories, 5 files
+
 ```

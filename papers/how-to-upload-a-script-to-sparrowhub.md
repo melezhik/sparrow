@@ -170,6 +170,8 @@ sparrow.json file validated ...
 plugin bar-script version 0.000001 upload OK
 ```
 
+Now you can browse script [information](https://sparrowhub.org/info/bar-script) at SparrowHub.
+
 # Run script
 
 To run script you need to install it and run with sparrow client:
@@ -180,5 +182,10 @@ $ sparrow plg install bar-script
 $ sparrow plg run bar-script
 ```
 
-
 ![sparrow-bar-script.png](https://raw.githubusercontent.com/melezhik/screenshots/master/sparrow-bar-script.png)
+
+
+# Further reading
+
+* [sparrow](https://metacpan.org/pod/Sparrow) documentation
+* [outthentic](https://metacpan.org/pod/Outthentic) documentation

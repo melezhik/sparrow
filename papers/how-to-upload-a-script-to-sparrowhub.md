@@ -138,3 +138,40 @@ $ tree
 0 directories, 5 files
 
 ```
+
+
+# Test script
+
+To see that script does what you want simple run `strun` inside project root directory:
+
+```
+$ carton # install dependencines
+$ carton exec strun
+
+
+/ started
+
+bar
+ok      scenario succeeded
+ok      output match /(bar|rab)/
+STATUS  SUCCEED
+
+```
+
+Strun - is uitility comes with Sparrow to run sparrow scripts, it is used by plugin developres.
+
+# Upload script to Sparrowhub
+
+Provided you have an account on Sparrowhub, just fo this:
+
+
+```
+$ sparrow plg upload
+sparrow.json file validated ...
+plugin bar-script version 0.000001 upload OK
+```
+
+# Run script
+
+To run script you need to install it and run with sparrow client:
+

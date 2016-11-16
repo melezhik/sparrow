@@ -118,7 +118,7 @@ print `bar` or `rab`
 
 [Alexey Melezhik](melezhik@gmail.com)
 
-# Discloser
+# Disclosure
 
 An initial script code borrowed from David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/)
 ```

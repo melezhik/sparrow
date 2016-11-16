@@ -3,7 +3,7 @@
 This is not formal response on David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/).
 
 Preambula: CPAN is great. This post in now ways should treated as Sparrow VS CPAN attempt. Sparrow is just an alternative method
-to destribute your scripts. 
+to destribute your scripts. Ok, let' go.
 
 
 So let’s say I’ve got this Perl script:
@@ -49,6 +49,7 @@ Sparrow scripts should be accompanided a check files. It's just a text files wit
 
 ```
 $ cat story.check  
+regexp: (bar|rab)
 ```
 
 

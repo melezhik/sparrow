@@ -141,7 +141,7 @@ $ tree
 
 # Test script
 
-To see that script does what you want simple run `strun` inside project root directory:
+To see that script does what you want simple run [`strun`](https://metacpan.org/pod/Outthentic#Story-runner) inside project root directory:
 
 ```
 $ carton # install dependencines

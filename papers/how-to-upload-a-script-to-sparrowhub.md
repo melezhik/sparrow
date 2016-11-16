@@ -11,7 +11,6 @@ So let’s say I’ve got this Perl script:
 ```
 $ cat story.pl
 
-#!/usr/bin/env perl
 use strict;
 use warnings;
 use DateTime;
@@ -179,7 +178,6 @@ To run script you need to install it and run with sparrow client:
 $ sparrow index update
 $ sparrow plg install bar-script
 $ sparrow plg run bar-script
-```
 ```
 
 

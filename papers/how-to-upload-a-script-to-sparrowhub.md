@@ -175,3 +175,11 @@ plugin bar-script version 0.000001 upload OK
 
 To run script you need to install it and run with sparrow client:
 
+```
+$ sparrow index update
+$ sparrow plg install bar-script
+$ sparrow plg run bar-script
+```
+```
+
+

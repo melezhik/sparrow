@@ -29,7 +29,7 @@ exit 0;
 
 Notice I have called my script `story.pl`? This is a name convention about sparrow scripts.
 
-Ok, let's further.
+Ok, let's move further.
 
 
 # Setup your distribution directory

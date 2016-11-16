@@ -77,7 +77,19 @@ Sparrow users under the hood a carton to run script with dependencies. That is i
 Plugin meta file define essential infomation required for script upload to SparrowHub. The structure is quite simple, this should be JSON format file with some fields:
 
 
+* name -  a plugin name
+* version - plugin version
+* description - short plugin desription
+* url - plugin web page url (optioanl)
 
-
+As sparrow script gets delivered as sparrow plugin these are parameters to be set:
+```
+{
+    "name" : "bar-script",
+    "version" : "0.0.1",
+     "description" : "print bar or rab",
+     "url" : "https://github.com/melezhik/bar-script"
+}
+```
 
 

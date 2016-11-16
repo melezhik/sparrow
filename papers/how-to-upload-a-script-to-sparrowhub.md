@@ -34,12 +34,12 @@ Ok, let's further.
 
 # Setup your distribution directory
 
-All we need is:
+All we need is to:
 
 * create story check file
-* plugin meta file
-* cpanfile to declare script dependencies
-* and optionally README.md
+* create a cpanfile to declare script dependencies
+* create plugin meta file
+* optionally create README.md
 
 
 ## story check file
@@ -60,6 +60,21 @@ Sometimes we don't need to check script stdout , that's ok just live story.check
 $ touch story.check
 ```
 
+## cpanfile
+
+As we have some external dependencies (DateTime module) let's describe one in cpanfile:
+
+```
+$ cat cpanfile
+requires 'DateTime'
+```
+
+Sparrow users under the hood a carton to run script with dependencies. That is it.
+
+
+## plugin meta file
+
+Plugin meta file define essential infomation required for script upload to SparrowHub. The structure is quite simple, this should be JSON format file with some fields:
 
 
 

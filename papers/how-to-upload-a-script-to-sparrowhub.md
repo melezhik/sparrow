@@ -52,6 +52,15 @@ $ cat story.check
 regexp: (bar|rab)
 ```
 
+Here we just require that script yeilds into stdout one of two lines - `bar` or `rab`. That is it.
+
+Sometimes we don't need to check script stdout , that's ok just live story.check file empty:
+
+```
+$ touch story.check
+```
+
+
 
 
 

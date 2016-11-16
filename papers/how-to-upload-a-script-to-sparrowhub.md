@@ -43,7 +43,7 @@ All we need is to:
 
 ## story check file
 
-Sparrow scripts should be accompanied a check files. It's just a text files with some patterns to match stdout comes from an executed sparrow script. For example:
+Sparrow scripts should be accompanied by a check files. It's just a text files with some patterns to match against stdout comes from an executed script. For example:
 
 
 ```
@@ -56,32 +56,33 @@ Here we just require that script yields into stdout one of two lines - `bar` or 
 Sometimes we don't need to check script stdout , that's ok just live story.check file empty:
 
 ```
-$ touch story.check
+$ echo > story.check
 ```
 
 ## cpanfile
 
-As we have some external dependencies (DateTime module) let's describe one in cpanfile:
+As we have some external dependencies (DateTime module) let's describe ones in a cpanfile:
 
 ```
 $ cat cpanfile
 requires 'DateTime'
 ```
 
-Sparrow users under the hood a carton to run script with dependencies. That is it.
+Sparrow uses carton to run script with dependencies. That is it.
 
 
 ## plugin meta file
 
-Plugin meta file define essential information required for script upload to SparrowHub. The structure is quite simple, this should be JSON format file with some fields:
+In a plugin meta file one defines an essential information required for script upload to SparrowHub. The structure is quite simple, 
+there should be a JSON format file with some fields:
 
 
-* name -  a plugin name
-* version - plugin version
+* name - a plugin name
+* version - a plugin version
 * description - short plugin description
 * url - plugin web page url (optional)
 
-Sparrow meta file is the way to "convert" existed scrip into sparrow plugin:
+In other words sparrow meta file is the way to "convert" existed script into sparrow plugin:
 
 ```
 $ cat sparrow.json
@@ -95,7 +96,7 @@ $ cat sparrow.json
 
 ## Readme file
 
-You might want to some documentation to script. Simple create a README.md file in markdown format:
+You might want to add some documentation to script. Simply create a README.md file with documentation in markdown format:
 
 ```
 $ cat README.md
@@ -122,7 +123,7 @@ print `bar` or `rab`
 An initial script code borrowed from David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/)
 ```
 
-So we end up with project structure:
+Finnaly we have a following project structure:
 
 ```
 $ tree
@@ -141,7 +142,7 @@ $ tree
 
 # Test script
 
-To see that script does what you want simple run [`strun`](https://metacpan.org/pod/Outthentic#Story-runner) inside project root directory:
+To see that script does what you want simply run [`strun`](https://metacpan.org/pod/Outthentic#Story-runner) inside project root directory:
 
 ```
 $ carton # install dependencies
@@ -161,7 +162,7 @@ Strun - is utility comes with Sparrow to run sparrow scripts, it is used by plug
 
 # Upload script to Sparrowhub
 
-Provided you have an account on Sparrowhub, just do this:
+Provided you have an account on SparrowHub, just do this:
 
 
 ```

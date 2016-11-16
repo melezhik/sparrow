@@ -2,8 +2,8 @@
 
 This is informal response on David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/).
 
-Preambula: CPAN is great. This post in no ways should be treated as Sparrow VS CPAN attempt. [Sparrow](https://metacpan.org/pod/Sparrow) is just an alternative method
-to destribute your scripts. Ok, let' go.
+Preamble: CPAN is great. This post in no ways should be treated as Sparrow VS CPAN attempt. [Sparrow](https://metacpan.org/pod/Sparrow) is just an alternative method
+to distribute your scripts. Ok, let' go.
 
 
 So let’s say I’ve got this Perl script:
@@ -43,7 +43,7 @@ All we need is to:
 
 ## story check file
 
-Sparrow scripts should be accompanided a check files. It's just a text files with some patterns to match stdout comes from an executed sparrow script. For example:
+Sparrow scripts should be accompanied a check files. It's just a text files with some patterns to match stdout comes from an executed sparrow script. For example:
 
 
 ```
@@ -51,7 +51,7 @@ $ cat story.check
 regexp: (bar|rab)
 ```
 
-Here we just require that script yeilds into stdout one of two lines - `bar` or `rab`. That is it.
+Here we just require that script yields into stdout one of two lines - `bar` or `rab`. That is it.
 
 Sometimes we don't need to check script stdout , that's ok just live story.check file empty:
 
@@ -73,13 +73,13 @@ Sparrow users under the hood a carton to run script with dependencies. That is i
 
 ## plugin meta file
 
-Plugin meta file define essential infomation required for script upload to SparrowHub. The structure is quite simple, this should be JSON format file with some fields:
+Plugin meta file define essential information required for script upload to SparrowHub. The structure is quite simple, this should be JSON format file with some fields:
 
 
 * name -  a plugin name
 * version - plugin version
-* description - short plugin desription
-* url - plugin web page url (optioanl)
+* description - short plugin description
+* url - plugin web page url (optional)
 
 Sparrow meta file is the way to "convert" existed scrip into sparrow plugin:
 
@@ -110,7 +110,7 @@ print `bar` or `rab`
 
 # USAGE
 
-    $ sparrow plg run bar-srcipt
+    $ sparrow plg run bar-script
     
 
 # Author
@@ -144,7 +144,7 @@ $ tree
 To see that script does what you want simple run [`strun`](https://metacpan.org/pod/Outthentic#Story-runner) inside project root directory:
 
 ```
-$ carton # install dependencines
+$ carton # install dependencies
 $ carton exec strun
 
 
@@ -157,7 +157,7 @@ STATUS  SUCCEED
 
 ```
 
-Strun - is uitility comes with Sparrow to run sparrow scripts, it is used by plugin developres.
+Strun - is utility comes with Sparrow to run sparrow scripts, it is used by plugin developers.
 
 # Upload script to Sparrowhub
 

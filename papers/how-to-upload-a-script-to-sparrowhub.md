@@ -2,7 +2,7 @@
 
 This is informal response on David Farrell article [How to upload a script to CPAN](http://perltricks.com/article/how-to-upload-a-script-to-cpan/).
 
-Preambula: CPAN is great. This post in no ways should be treated as Sparrow VS CPAN attempt. Sparrow is just an alternative method
+Preambula: CPAN is great. This post in no ways should be treated as Sparrow VS CPAN attempt. [Sparrow](https://metacpan.org/pod/Sparrow) is just an alternative method
 to destribute your scripts. Ok, let' go.
 
 

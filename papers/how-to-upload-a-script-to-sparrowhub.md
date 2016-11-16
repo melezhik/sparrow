@@ -181,3 +181,4 @@ $ sparrow plg run bar-script
 ```
 
 
+![sparrow-bar-script.png](https://raw.githubusercontent.com/melezhik/screenshots/master/sparrow-bar-script.png)

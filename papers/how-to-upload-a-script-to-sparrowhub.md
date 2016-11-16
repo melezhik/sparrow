@@ -161,7 +161,7 @@ Strun - is uitility comes with Sparrow to run sparrow scripts, it is used by plu
 
 # Upload script to Sparrowhub
 
-Provided you have an account on Sparrowhub, just fo this:
+Provided you have an account on Sparrowhub, just do this:
 
 
 ```

@@ -697,9 +697,9 @@ For example:
 
     $ export SPARROW_ROOT=/opt/sparrow
 
-## SPARROW\_NO\_COLOR 
+## SPARROW\\_NO\\_COLOR 
 
-Disable color output
+Disable color output.
 
 # Remote Tasks
 

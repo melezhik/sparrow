@@ -47,7 +47,7 @@ sub task_list {
     for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         next unless -d "$root_dir/$p/tasks";
         my $project = basename($p);
-        print " [",colored(['blue on_yellow'],$project),"]\n";
+        print " [", ( nocolor() ? $project : colored(['blue on_yellow'],$project) ) ,"]\n";
         opendir(my $th, "$root_dir/$p/tasks") || confess "can't opendir $root_dir/$p: $!";
         for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
           my $task = basename($t);
@@ -249,7 +249,7 @@ sub task_run {
 
         $cmd.=" $parameters";
 
-        print "\n",colored(['bright_red on_black'],"<$tid>"),"\n";
+        print "\n", ( nocolor() ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
 
         if ($verbose_mode){
           print map {"# $_\n"} split /&&\s+/, $cmd;
@@ -308,6 +308,8 @@ sub task_set {
 
 }
 
+
+sub nocolor { $ENV{SPARROW_NO_COLOR} }
 
 1;
 

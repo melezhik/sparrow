@@ -1042,6 +1042,11 @@ For example:
     $ export SPARROW_ROOT=/opt/sparrow
 
 
+=head2 SPARROWI<NO>COLOR 
+
+Disable color output
+
+
 =head1 Remote Tasks
 
 B<I<WARNING!>> This feature is quite experimental and should be tested.

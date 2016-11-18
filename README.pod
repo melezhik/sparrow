@@ -1031,7 +1031,7 @@ For example:
     $ export SPARROW_ROOT=/opt/sparrow
 
 
-=head2 SPARROWI<NO>COLOR 
+=head2 SPARROW_NO_COLOR 
 
 Disable color output
 

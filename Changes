@@ -1,3 +1,8 @@
+0.2.16 2016-11-18
+
+* fix broken POD
+
+
 0.2.15 2016-11-18
 
 * a formal release to rely on latest version of Outthentic

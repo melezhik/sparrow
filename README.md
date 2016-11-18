@@ -701,6 +701,8 @@ For example:
 
 Disable color output.
 
+    $ export SPARROW_NO_COLOR=1
+
 # Remote Tasks
 
 ***WARNING!*** This feature is quite experimental and should be tested.

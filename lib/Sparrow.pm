@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.15';
+our $VERSION = '0.2.16';
 
 1;
 
@@ -1045,6 +1045,8 @@ For example:
 =head2 SPARROW_NO_COLOR 
 
 Disable color output.
+
+    $ export SPARROW_NO_COLOR=1
 
 
 =head1 Remote Tasks

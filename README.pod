@@ -1035,6 +1035,8 @@ For example:
 
 Disable color output.
 
+    $ export SPARROW_NO_COLOR=1
+
 
 =head1 Remote Tasks
 

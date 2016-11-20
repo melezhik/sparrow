@@ -447,6 +447,21 @@ Examples:
     $ sparrow task ini system/disk
     # so on ...
 
+### Dump task configuration
+
+You may dump task configuration using `--dump-config` flag, no action will be performed,
+just task configuration data will be printed out in JSON format:
+
+    $ sparrow task run system/disk --dump-config
+
+Dump-config could be useful when copy some task configuration into other:
+
+    
+    $ sparrow task run system/disk --dump-config > /tmp/system-disk.json
+    $ nano /tmp/system-disk.json
+    $ sparrow task load ini system/disk2 /tmp/system-disk.json
+
+
 ## Task boxes API
 
 Use this command to run task box
@@ -682,6 +697,12 @@ This is the way how one can declare dependencies for sparrow plugins:
 
 You should place a dependency file into a plugin root directory.
 
+# Disable color output
+
+To every action you may optionally add `--nocolor` flag to disable color output:
+
+    $ sparrow plg run df-check --nocolor
+
 # Environment variables
 
 ## SPARROW_ROOT
@@ -702,6 +723,8 @@ For example:
 Disable color output.
 
     $ export SPARROW_NO_COLOR=1
+
+Also see "Disable color output" section.
 
 # Remote Tasks
 
@@ -771,7 +794,7 @@ Now only you can use app/passwords task.
 
 ## Add useful comments to task
 
-When doing remote task upload you optionaly can add a comment which will be show 
+When doing remote task upload you optionally can add a comment which will be show 
 when task gets listed with `sparrow remote task list` command:
 
     $ sparrow remote task upload utils/nano-rc 'makes nano.rc setup'
@@ -790,7 +813,7 @@ To get a list of available public remote tasks say this:
 
 ## Remove remote task
 
-And finaly you can remove remote task:
+And finally you can remove remote task:
 
     $ sparrow remote task remove app/old-stuff
 

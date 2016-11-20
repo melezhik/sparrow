@@ -38,8 +38,10 @@ our @EXPORT = qw{
 
 sub task_list {
 
-    print "[sparrow task list]\n";
+    my %opts = map { $_ => 1 } @_;
 
+    print "[sparrow task list]\n";
+    
     my $root_dir = sparrow_root.'/projects/';
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
@@ -47,7 +49,7 @@ sub task_list {
     for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         next unless -d "$root_dir/$p/tasks";
         my $project = basename($p);
-        print " [", ( nocolor() ? $project : colored(['blue on_yellow'],$project) ) ,"]\n";
+        print " [", ( ( nocolor() || $opts{'--nocolor'} )  ? $project : colored(['blue on_yellow'],$project) ) ,"]\n";
         opendir(my $th, "$root_dir/$p/tasks") || confess "can't opendir $root_dir/$p: $!";
         for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
           my $task = basename($t);
@@ -197,10 +199,16 @@ sub task_run {
 
     my $cron_mode=0;
 
+    my $nocolor = 0;
+
+    my $dump_config = 0;
+
     for my $i (@args){
       $verbose_mode=1,  next if $i eq '--verbose';
+      $nocolor=1,  next if $i eq '--nocolor';
       $cron_mode=1,     next if $i eq '--cron';
       $no_exec_mode=1,  next if $i eq '--no-exec';
+      $dump_config=1, next if $i eq '--dump-config';
       push @parameters, $i;
     }
 
@@ -248,8 +256,9 @@ sub task_run {
     } else {
 
         $cmd.=" $parameters";
-
-        print "\n", ( nocolor() ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
+        unless ($dump_config){
+          print "\n", ( (nocolor()||$nocolor) ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
+        }
 
         if ($verbose_mode){
           print map {"# $_\n"} split /&&\s+/, $cmd;

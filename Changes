@@ -1,3 +1,9 @@
+0.2.17
+
+* add --nocolor option to actions which might produce color output
+* remote task `public-list` changed to `public list` TODO:
+* documentation - describe `--dump-config` option for tasks
+ 
 0.2.16 2016-11-18
 
 * fix broken POD

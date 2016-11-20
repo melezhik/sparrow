@@ -129,7 +129,7 @@ if ($object eq  'plg'){
 
     if ( $action eq 'list') {
 
-        task_list();
+        task_list(@ARGV);
 
     } elsif ( $action eq 'add') {
 

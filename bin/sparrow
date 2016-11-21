@@ -221,7 +221,7 @@ if ($object eq  'plg'){
 
         remote_task_list();
 
-    } elsif( $action  eq 'public-list'){
+    } elsif( $action  eq 'public' and $ARGV[0] eq 'list'){
 
         remote_task_public_list();
 

@@ -809,7 +809,7 @@ To list your remote tasks ( both private and public ) say this:
 
 To get a list of available public remote tasks say this:
 
-    $ sparrow remote task public-list
+    $ sparrow remote task public list
 
 ## Remove remote task
 

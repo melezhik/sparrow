@@ -208,7 +208,7 @@ sub task_run {
       $nocolor=1,  next if $i eq '--nocolor';
       $cron_mode=1,     next if $i eq '--cron';
       $no_exec_mode=1,  next if $i eq '--no-exec';
-      $dump_config=1, next if $i eq '--dump-config';
+      $dump_config=1 if $i eq '--dump-config';
       push @parameters, $i;
     }
 

@@ -205,7 +205,7 @@ sub task_run {
 
     for my $i (@args){
       $verbose_mode=1,  next if $i eq '--verbose';
-      $nocolor=1,  next if $i eq '--nocolor';
+      $nocolor=1 if $i eq '--nocolor';
       $cron_mode=1,     next if $i eq '--cron';
       $no_exec_mode=1,  next if $i eq '--no-exec';
       $dump_config=1 if $i eq '--dump-config';

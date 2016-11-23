@@ -1,3 +1,7 @@
+0.2.19 2016-11-23
+
+* sparrow task run --nocolor hotfix
+
 0.2.18 2016-11-21
 
 * sparrow task run --dump-config hotfix

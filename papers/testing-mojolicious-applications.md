@@ -337,8 +337,21 @@ dealing with application emitting JSON:
     
     use Mojolicious::Lite;
     
-    get '/' => sub {
+    get '/name' => sub {
       my $c = shift;
-      $c->render( text => 'welcome page')
+      $c->render( json => { name => $c->param('name') } )
     
     };
+
+
+Sparrow does not provide any built in capabilities to parse JSON, but it rather acts as tool where one
+can "embed" any dedicated modules:
+
+
+    $ mkdir -p modules/name
+
+    $ nano modules/name/story.bash
+
+    name=$(story_var name)
+
+    $project_root_dir/app.pl get '/name?name='$name | perl -MJSON -e 'print decode_json(join "", <STDIN>)->{name}'

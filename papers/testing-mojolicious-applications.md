@@ -378,11 +378,10 @@ Now let's run the test:
     
 
 This approach could be generalized to any data processing like YMAL/XML/CSS. Instead of 
-define data parsing at test logic we filter/process data to "map" it to sparrow testing format -
-just some lines of text where we could make regexp/text search.
+defining data parsing _at test logic_ we filter/process output data to "map" it 
+to sparrow testing format - just a lines of text where we could make regexp/text search.
 
 Ok let keep moving. Prepare our test suite for distribution.
-
 
 # Test distribution.
 

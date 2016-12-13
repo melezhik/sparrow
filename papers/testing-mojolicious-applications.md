@@ -96,6 +96,34 @@ another string returned from calling `GET /` route:
     STATUS  FAILED (256)
     
 
+# Debugging test scripts
+
+As our test is just bash script it easy to add some debugging facilities into it:
+
+    $ nano story.bash
+
+    set -x
+
+    $project_root_dir/app.pl get /
+
+
+And run the script:
+
+
+    / started
+    
+    ++ /home/melezhik/projects/mojolicious-app-smoke/app.pl get /
+    [Tue Dec 13 13:16:07 2016] [debug] GET "/"
+    [Tue Dec 13 13:16:07 2016] [debug] Routing to a callback
+    [Tue Dec 13 13:16:07 2016] [debug] 200 OK (0.000328s, 3048.780/s)
+    sparrow
+    ok  scenario succeeded
+    ok  output match 'sparrow'
+    STATUS  SUCCEED
+    
+
+Right now it looks pretty useless but becomes very handy for more complex scripts.
+
 
 # Splitting test suite on many simple tests
 
@@ -383,7 +411,7 @@ to sparrow testing format - just a lines of text where we could make regexp/text
 
 Ok let keep moving. Prepare our test suite for distribution.
 
-# Test distribution.
+# Distributing tests
 
 A one thing should be pay attention to. A _mojolicious_ application we write tests for in practice
 is distributed separately from sparrow test suite. There are some cases:

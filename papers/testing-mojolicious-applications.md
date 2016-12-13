@@ -1,6 +1,6 @@
 # A bits of theory
 
-In this post I am going to show how you can use Sparrow to test mojolicious applications.
+In this post I am going to show how you can use [Sparrow](https://metacpan.org/pod/Sparrow) to test Mojolicious applications.
 
 Sparrow approach to test things differ from convenient unit tests approach, practically this means:
 

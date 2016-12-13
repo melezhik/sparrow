@@ -340,10 +340,16 @@ dealing with application emitting JSON:
     
     };
 
+    app->start;
 
 Sparrow does not provide any built in capabilities to parse JSON, but it rather acts as tool where one
 can add any desired modules into "pipeline":
 
+    $ nano hook.bash
+
+    name=$(config name)
+
+    run_story echo-name name $name
 
     $ mkdir -p modules/name
 
@@ -354,6 +360,166 @@ can add any desired modules into "pipeline":
     $project_root_dir/app.pl get '/echo-name?name='$name | perl -MJSON -e 'print decode_json(join "", <STDIN>)->{name}'
 
 Now let's run the test:
+
+    / started
+    
+    Smoke tests for app.pl
+    
+    /modules/echo-name/ started
+    
+    [Tue Dec 13 12:00:18 2016] [debug] GET "/echo-name"
+    [Tue Dec 13 12:00:18 2016] [debug] Routing to a callback
+    [Tue Dec 13 12:00:18 2016] [debug] 200 OK (0.00054s, 1851.852/s)
+    sparrow
+    ok  scenario succeeded
+    ok  output match 'sparrow'
+    STATUS  SUCCEED
+    
+
+This approach could be generalized to any data processing like YMAL/XML/CSS. Instead of 
+define data parsing at test logic we filter/process data to "map" it to sparrow testing format -
+just some lines of text where we could make regexp/text search.
+
+Ok let keep moving. Prepare our test suite for distribution.
+
+
+# Test distribution.
+
+A one thing should be pay attention to. A _mojolicious_ application we write tests for in practice
+is distributed separately from sparrow test suite. There are some cases:
+
+* an application gets installed and launched as script available at system $PATH
+* an application gets tested via some CI pipelines, for example Travis
+
+What ever case we consider it's not hard to adopt our test suite to new reality. For example
+if there is script called `our_mojolicious_application` we just need to change small bit of code
+to rely on system wide installation instead of local:
+
+
+    $ nano modules/hello/story.bash
+
+    name=$(story_var name)
+
+    app.pl get '/hello?name='$name
+
+
+That is it.
+
+
+## Declaring dependencies 
+
+Sparrow works smoothly with Perl/Ruby well known dependency managers to work out on
+this, Just create a cpanfile with dependencies in case of Perl:
+
+
+    $ nano cpanfile
+
+    requires 'JSON' # indeed not required for some new Perls
+
+
+## Providing test suite meta information
+
+This is important point where we define some data to make it possible upload our test
+suite to [SparrowHub](http://sparrowhub.org) - a sparrow scripts repository
+
+
+    $ nano sparrow.json
+
+    {
+        "name"            : "mojolicious-app-smoke"
+        "description"     : "smoke tests for our Mojolicious application",
+        "version"         : "0.0.1",
+        "url"             : "https://github.com/melezhik/mojolicious-app-smoke"
+    }
+
+
+
+We name our test suite, give it a version, provide short description and 
+provide source code link (github).
+
+
+Also let's provide a small README.md to let other understand what it is:
+
+
+    $ nano README.md
+
+    # SYNOPSIS
+
+    Make some smoke tests against our mojolicious application
+
+    # INSTALL
+
+    $ sparrow plg install mojolicious-app-smoke
+
+    # USAGE
+
+    $ sparrow plg run mojolicious-app-smoke
+
+    # Author
+
+    Alexey Melezhik
+
+
+Now let's commit our changes
+
+
+    $ git init
+    $ git add .
+    $ git commit -a 'first commit'
+    $ git remote add origin https://github.com/melezhik/mojolicious-app-smoke.git
+    $ git push -u origin master
+
+
+Finlay we are ready to upload a test suite to SparrowHub:
+
+
+    $ sparrow plg upload
+
+
+# Get it run
+
+
+Ok. Now having a test suite as sparrow plugin we could easily install and run it somewhere we need:
+
+
+    $ sparrow plg install mojolicious-app-smoke
+    $ sparrow plg run mojolicious-app-smoke
+
+
+We can even override a test suite parameter via command line:
+
+
+    $ sparrow plg run mojolicious-app-smoke --param name.bird=woodpecker
+
+Or create a configuration via sparrow task:
+
+
+    $ sparrow project create webapp
+    $ sparrow task add webapp smoke-test mojolicious-app-smoke
+    $ sparrow task ini webapp/smoke-test
+
+    <name>
+      bird Woodpecker
+      animal Fox
+    </name>
+    
+
+There are a lot of fun things you could do with Sparrow API, please follow Sparrow documentation.
+
+# Summary
+
+What we have just learned:
+
+* How the sparrow approach differs from _classic_ unit tests for Perl
+* How to use sparrow to test a Mojolicious applications
+* How to distribute sparrow tests suites with the notion of so called sparrow plugins.
+
+
+Regards
+
+Alexey Melezhik
+
+
 
 
 

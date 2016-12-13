@@ -8,3 +8,5 @@ get '/echo-name' => sub {
 
 };
 
+app->start;
+

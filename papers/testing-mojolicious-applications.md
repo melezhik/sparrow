@@ -1,8 +1,6 @@
 # A bits of theory
 
-In this post I am going to show how you can use Sparrow to test 
-mojolicious applications.
-
+In this post I am going to show how you can use Sparrow to test mojolicious applications.
 
 Sparrow approach to test things differ from convenient unit tests approach, practically this means:
 
@@ -17,7 +15,6 @@ as third party tests for your application
 
 * sparrow tests suites have it's own life cycle and get released _in parallel_ with tested application
  
-
 Ok, let's go to the practical example.
 
 # Simple test
@@ -337,7 +334,7 @@ dealing with application emitting JSON:
     
     use Mojolicious::Lite;
     
-    get '/name' => sub {
+    get '/echo-name' => sub {
       my $c = shift;
       $c->render( json => { name => $c->param('name') } )
     
@@ -345,13 +342,18 @@ dealing with application emitting JSON:
 
 
 Sparrow does not provide any built in capabilities to parse JSON, but it rather acts as tool where one
-can "embed" any dedicated modules:
+can add any desired modules into "pipeline":
 
 
     $ mkdir -p modules/name
 
-    $ nano modules/name/story.bash
+    $ nano modules/echo-name/story.bash
 
     name=$(story_var name)
 
-    $project_root_dir/app.pl get '/name?name='$name | perl -MJSON -e 'print decode_json(join "", <STDIN>)->{name}'
+    $project_root_dir/app.pl get '/echo-name?name='$name | perl -MJSON -e 'print decode_json(join "", <STDIN>)->{name}'
+
+Now let's run the test:
+
+
+

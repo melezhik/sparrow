@@ -391,7 +391,7 @@ is distributed separately from sparrow test suite. There are some cases:
 * an application gets installed and launched as script available at system $PATH
 * an application gets tested via some CI pipelines, for example Travis
 
-What ever case we consider it's not hard to adopt our test suite to new reality. For example
+Whatever case we consider it's not hard to adopt our test suite to new reality. For example
 if there is script called `our_mojolicious_application` we just need to change small bit of code
 to rely on system wide installation instead of local:
 
@@ -400,11 +400,10 @@ to rely on system wide installation instead of local:
 
     name=$(story_var name)
 
-    app.pl get '/hello?name='$name
+    our_mojolicious_application get '/hello?name='$name
 
 
 That is it.
-
 
 ## Declaring dependencies 
 

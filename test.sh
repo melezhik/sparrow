@@ -14,8 +14,10 @@ sub wanted  {
   return if /modules\//;
 
   (my $dir = $File::Find::dir)=~s{t/}{};
- 
-  (system("strun --root ./t --story $dir") == 0)  or die "strun --root ./t --story $dir failed";
+
+  my $cmd = "strun --purge-cache --root ./t --story $dir";
+
+  (system($cmd) == 0)  or die "$cmd failed";
 
 }
 

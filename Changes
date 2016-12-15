@@ -1,3 +1,8 @@
+0.2.20 2016-12-15
+
+* depends on latest version of Outthentic ( to allow --purge-cache )
+* mention a --purge-cache at Sparrow doc
+
 0.2.19 2016-11-23
 
 * sparrow task run --nocolor hotfix

@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.19';
+our $VERSION = '0.2.20';
 
 1;
 
@@ -492,17 +492,20 @@ SWAT Plugins
 
 =back
 
-Both runners accept specific parameters. For outthentic runner parameters follow L<Outthentic|https://github.com/melezhik/outthentic#options>
-documentation. For swat runner parameters follow L<Swat|https://github.com/melezhik/swat#swat-runner> documentation.
+Both runners accept specific parameters. 
+
+For outthentic runner parameters follow L<Outthentic|https://github.com/melezhik/outthentic#options> documentation. 
+
+For swat runner parameters follow L<Swat|https://github.com/melezhik/swat#swat-runner> documentation.
 
 Here are some examples:
 
     # outthentic plugins:
-    $ sparrow task run system disk-health --silent
-    $ sparrow task run system disk-health --debug 2
+    $ sparrow task run system/disk-health --silent --purge-cache 
+    $ sparrow task run system/disk-health --debug 2
     
     # swat plugins:
-    $ sparrow task run web nginx-check --prove -Q
+    $ sparrow task run web/nginx-check --prove -Q
 
 
 =head3 Running tasks with cron

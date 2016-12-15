@@ -327,17 +327,20 @@ When executing sparrow plugin sparrow relies on underlying runner defined by plu
 
 * SWAT Plugins
 
-Both runners accept specific parameters. For outthentic runner parameters follow [Outthentic](https://github.com/melezhik/outthentic#options)
-documentation. For swat runner parameters follow [Swat](https://github.com/melezhik/swat#swat-runner) documentation.
+Both runners accept specific parameters. 
+
+For outthentic runner parameters follow [Outthentic](https://github.com/melezhik/outthentic#options) documentation. 
+
+For swat runner parameters follow [Swat](https://github.com/melezhik/swat#swat-runner) documentation.
 
 Here are some examples:
 
     # outthentic plugins:
-    $ sparrow task run system disk-health --silent
-    $ sparrow task run system disk-health --debug 2
+    $ sparrow task run system/disk-health --silent --purge-cache 
+    $ sparrow task run system/disk-health --debug 2
 
     # swat plugins:
-    $ sparrow task run web nginx-check --prove -Q
+    $ sparrow task run web/nginx-check --prove -Q
 
 ### Running tasks with cron
 

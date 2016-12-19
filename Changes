@@ -1,3 +1,7 @@
+0.2.21 2016-12-19
+
+* requires latest version of Outthentic
+
 0.2.20 2016-12-15
 
 * depends on latest version of Outthentic ( to allow --purge-cache )

@@ -6,7 +6,7 @@ validator: use test; \
 [ \
     -f sparrow_root."/plugins/public/foo-generic/sparrow.json" ,      \
      sparrow_root."/plugins/public/foo-generic/sparrow.json exists"   \
-]
+] \
 
 begin:
 

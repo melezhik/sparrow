@@ -176,6 +176,7 @@ to overcome this ambiguity";
         print "installing private\@$pid ...\n";
         if ( -d sparrow_root."/plugins/private/$pid" ){
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
             }            

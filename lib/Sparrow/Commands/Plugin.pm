@@ -184,18 +184,18 @@ to overcome this ambiguity";
             }                
         }else{
             execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
             }            
             if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
               execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
-            }                
+            }
         }
 
     }else{
         confess "unknown plugin";
     }
-
 
 }
 

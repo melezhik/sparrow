@@ -1,9 +1,10 @@
-0.2.22
+0.2.22 2017-01-09
 
 * Sets git credential timeout for private plugin install 
 * Improves task reports
+* Passes --task parameter to strun ( to print out task names )
 
-0.2.21 2016-12-19
+0.2.21  2016-12-19
 
 * requires latest version of Outthentic
 

@@ -72,7 +72,7 @@ sub box_run {
 
     $i=0;
 
-    print "running task box from $path ... \n";
+    print "running task box from $path ... \n\n";
 
     for my $task (@{$tasklist}){
 

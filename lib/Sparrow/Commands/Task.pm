@@ -230,7 +230,7 @@ sub task_run {
     my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ "
+      $cmd.="  strun --root ./ --task $tid"
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
     }else{
@@ -256,9 +256,6 @@ sub task_run {
     } else {
 
         $cmd.=" $parameters";
-        unless ($dump_config){
-          print ( (nocolor()||$nocolor) ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
-        }
 
         if ($verbose_mode){
           print map {"# $_\n"} split /&&\s+/, $cmd;

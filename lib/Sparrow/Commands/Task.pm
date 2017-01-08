@@ -257,7 +257,7 @@ sub task_run {
 
         $cmd.=" $parameters";
         unless ($dump_config){
-          print "\n", ( (nocolor()||$nocolor) ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
+          print ( (nocolor()||$nocolor) ? "<$tid>" : colored(['bright_red on_black'],"<$tid>") ),"\n";
         }
 
         if ($verbose_mode){

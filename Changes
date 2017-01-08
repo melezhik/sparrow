@@ -1,6 +1,7 @@
 0.2.22
 
 * Sets git credential timeout for private plugin install 
+* Improves task reports
 
 0.2.21 2016-12-19
 

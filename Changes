@@ -1,4 +1,4 @@
-0.2.23
+0.2.23 2017-01-09
 
 * tasks - now save task description in meta data ( so that to print it out in task report )
 * task boxes - add task descriptions to tasks

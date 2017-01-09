@@ -64,7 +64,7 @@ sub box_run {
 
       $safe_task_name.="_".$i if $task_seen{$safe_task_name}++;
 
-      task_add('taskbox', $safe_task_name,$task->{plugin}, '--quiet', $quiet_mode );
+      task_add('taskbox', $safe_task_name,$task->{plugin}, '--quiet', $quiet_mode, 'task_desc' , $task->{task} );
 
 
     }

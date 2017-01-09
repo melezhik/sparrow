@@ -83,6 +83,7 @@ sub task_add {
 
     my $ptype;
 
+
     if ($pid=~/(public|private)@/){
         $ptype = $1;
         $pid=~s/(public|private)@//;
@@ -94,11 +95,13 @@ sub task_add {
     }elsif( -f sparrow_root."/plugins/public/$pid/sparrow.json"  and $ptype ne 'private' ){
         my @task_args = ($project,$tid,'plugin',"public\@$pid");
         push @task_args, ('host', $opts{'--host'}) if $opts{'--host'};
+        push @task_args, ('task_desc', $opts{task_desc} || $tid);
         task_set(@task_args);
         print "task - set plugin to public\@$pid\n" unless $opts{'--quiet'};
     }elsif( -d sparrow_root."/plugins/private/$pid/" and $ptype ne '--public'  ){
         my @task_args = ($project,$tid,'plugin',"private\@$pid");
         push @task_args, ('host', $opts{'--host'}) if $opts{'--host'};
+        push @task_args, ('task_desc', $opts{task_desc} || $tid);
         task_set(@task_args);
         print "task - set plugin to private\@$pid\n" unless $opts{'--quiet'};
     }else{
@@ -230,7 +233,7 @@ sub task_run {
     my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task $tid"
+      $cmd.="  strun --root ./ --task $task_set->{task_desc}"
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
     }else{

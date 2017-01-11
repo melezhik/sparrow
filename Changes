@@ -1,3 +1,7 @@
+0.0.23
+
+* run_plugin - add `--task $pid`  parameter to strun, so that it print out plugin name at report.
+
 0.2.23 2017-01-09
 
 * tasks - now save task description in meta data ( so that to print it out in task report )

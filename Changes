@@ -1,6 +1,6 @@
-0.0.23
+0.0.23 2017-01-11
 
-* run_plugin - add `--task $pid`  parameter to strun, so that it print out plugin name at report.
+* improved readability of reports - print story footprints as plugins names when running plugins
 
 0.2.23 2017-01-09
 

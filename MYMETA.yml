@@ -24,4 +24,4 @@ requires:
   Term::ANSIColor: '4.02'
   swat: v0.1.96
   version: '0'
-version: v0.2.24
+version: v0.2.25

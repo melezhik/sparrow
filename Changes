@@ -1,4 +1,9 @@
-0.0.24 2017-01-11
+0.2.25 2017-01-11
+
+* support for task get created before version: 0.2.23 - evaluate task description as task name in case of missing task description in task meta data.
+ 
+
+0.2.24 2017-01-11
 
 * improved readability of reports - print story footprints as plugins names when running plugins
 

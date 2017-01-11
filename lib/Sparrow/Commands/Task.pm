@@ -285,6 +285,7 @@ sub task_get {
         my $str = join "", <F>;
         close F;
         $data = decode_json($str);
+        $data->{task_desc} ||= $tid;
         if ($data->{plugin}) {
             my ($t,$name) = split '@' , $data->{plugin};
             $data->{install_dir} =  "$t/$name";

@@ -1,3 +1,7 @@
+0.0.24
+
+* Requires latest version of Outthentic - to add timestamps to sparrow reports (#9)
+
 0.2.23 2017-01-09
 
 * tasks - now save task description in meta data ( so that to print it out in task report )

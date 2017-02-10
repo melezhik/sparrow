@@ -251,7 +251,7 @@ to overcome this ambiguity";
     my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task {$pid}";
+      $cmd.="  strun --root ./ --task '[p] $pid'";
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ";
     }else{

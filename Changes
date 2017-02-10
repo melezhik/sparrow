@@ -1,4 +1,6 @@
-0.0.26
+0.0.26 2017-02-17  
+
+* Reports - changed markers for plugins and tasks 
 
 * Requires latest version of Outthentic - to add timestamps to sparrow reports (#9)
 

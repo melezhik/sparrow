@@ -233,7 +233,7 @@ sub task_run {
     my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task '{".($task_set->{task_desc})."}'"
+      $cmd.="  strun --root ./ --task '[t] ".($task_set->{task_desc})."'"
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
     }else{

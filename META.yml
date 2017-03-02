@@ -8,7 +8,7 @@ configure_requires:
   ExtUtils::MakeMaker: 6.36
 distribution_type: module
 dynamic_config: 1
-generated_by: 'Module::Install version 1.17'
+generated_by: 'Module::Install version 1.16'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -21,11 +21,11 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
-  Outthentic: 0.2.25
+  Outthentic: 0.2.26
   Term::ANSIColor: '4.02'
   swat: 0.1.96
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.2.26
+version: 0.2.27

@@ -82,6 +82,8 @@ sub box_run {
 
       (my $safe_task_name = $task->{task})=~s/[^\w_-]/-/g;
 
+      warn $path;
+
       task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path);
 
     }

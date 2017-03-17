@@ -94,7 +94,7 @@ sub init_sparrow_env {
     make_path(sparrow_root.'/plugins/private');
     make_path(sparrow_root.'/plugins/public');
     make_path(sparrow_root.'/projects');
-    remove_tree(sparrow_root.'/cache');
+    #remove_tree(sparrow_root.'/cache');
     make_path(sparrow_root.'/cache');
 
     execute_shell_command('touch '.spl_file()) unless -f spl_file();

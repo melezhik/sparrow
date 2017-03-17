@@ -24,5 +24,5 @@ requires:
   Term::ANSIColor: '4.02'
   swat: v0.1.96
   version: '0'
-version: v0.2.28
+version: v0.2.29
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

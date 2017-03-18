@@ -1,4 +1,4 @@
-0.0.29
+0.0.29 2017-03-18
 
 * init_sparrow_env - do not remove sparrow cache ( need to fix https://github.com/melezhik/sparrowdo/issues/4 )
 

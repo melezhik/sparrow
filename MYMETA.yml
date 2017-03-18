@@ -20,7 +20,7 @@ no_index:
 requires:
   Carton: '0'
   JSON: '0'
-  Outthentic: v0.2.27
+  Outthentic: v0.2.28
   Term::ANSIColor: '4.02'
   swat: v0.1.96
   version: '0'

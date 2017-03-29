@@ -20,9 +20,9 @@ no_index:
 requires:
   Carton: '0'
   JSON: '0'
-  Outthentic: v0.2.28
+  Outthentic: v0.2.29
   Term::ANSIColor: '4.02'
   swat: v0.1.96
   version: '0'
-version: v0.2.30
+version: v0.2.31
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

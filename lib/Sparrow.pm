@@ -336,6 +336,11 @@ For example:
 
     $ sparrow plg man df-check
 
+Aliase. C<info> and C<help> are just aliases for C<plg man> command:
+
+    $ sparrow plg info df-check
+    $ sparrow plg help df-check
+
 
 =head2 Tasks API
 

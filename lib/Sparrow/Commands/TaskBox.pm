@@ -25,6 +25,8 @@ sub box_run {
 
     my $quiet_mode = ( $opts{'--mode'} && $opts{'--mode'} eq 'quiet' ) ? 1 : 0;
 
+    delete $opts{'--mode'};
+
     open JSON, $path or confess "can't open file $path to read: $!";
 
     my $json_str = join "", <JSON>;
@@ -84,7 +86,7 @@ sub box_run {
 
       #print "task_run $safe_task_name, $path\n";
 
-      task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path);
+      task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path, %opts );
 
     }
 

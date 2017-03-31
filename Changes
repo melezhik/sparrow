@@ -1,3 +1,9 @@
+0.2.32
+
+* TaskBox run - now transparently passes all plugin related options
+
+* Add `help`, `info` aliases for `plg man` command
+
 0.2.31 2017-03-29
 
 * Requires latest version of Outthentic

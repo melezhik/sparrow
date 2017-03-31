@@ -1,0 +1,2 @@
+regexp: (test sparrow plugin)
+generator:  my $st = (scalar @{captures()}) == 3 ; "assert: $st 3 results"

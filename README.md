@@ -226,6 +226,10 @@ For example:
 
     $ sparrow plg man df-check
 
+Aliase. `info` and `help` are just aliases for `plg man` command:
+
+    $ sparrow plg info df-check
+    $ sparrow plg help df-check
 
 ## Tasks API
 
@@ -336,7 +340,7 @@ For swat runner parameters follow [Swat](https://github.com/melezhik/swat#swat-r
 Here are some examples:
 
     # outthentic plugins:
-    $ sparrow task run system/disk-health --silent --purge-cache 
+    $ sparrow task run system/disk-health --format concise --purge-cache 
     $ sparrow task run system/disk-health --debug 2
 
     # swat plugins:

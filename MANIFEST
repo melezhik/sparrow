@@ -53,6 +53,8 @@ t/modules/project/task/remove/story.bash
 t/modules/project/task/remove/story.check
 t/plg/list/story.bash
 t/plg/list/story.check
+t/plg/man/story.bash
+t/plg/man/story.check
 t/plg/run/hook.bash
 t/plg/run/story.bash
 t/plg/run/story.check

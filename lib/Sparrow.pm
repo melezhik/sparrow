@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.31';
+our $VERSION = '0.2.32';
 
 1;
 
@@ -501,7 +501,7 @@ For swat runner parameters follow L<Swat|https://github.com/melezhik/swat#swat-r
 Here are some examples:
 
     # outthentic plugins:
-    $ sparrow task run system/disk-health --silent --purge-cache 
+    $ sparrow task run system/disk-health --format concise --purge-cache 
     $ sparrow task run system/disk-health --debug 2
     
     # swat plugins:

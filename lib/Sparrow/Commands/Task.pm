@@ -129,15 +129,21 @@ sub task_show {
     local $Data::Dumper::Terse=1;
     print Dumper(task_get($project,$tid)), "\n\n";    
 
-    my $ini_file = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+    my $ini_file = sparrow_root."/projects/$project/tasks/$tid/suite.cfg";
+    my $ini_file_old = sparrow_root."/projects/$project/tasks/$tid/suite.ini"; 
 
     if (-f $ini_file){
-       print "[test suite ini file - $ini_file]\n\n";
-        open F, $ini_file or confess "can't open $ini_file to read: $!";
-        print join "", <F>;
-        close F;  
-    }else{
-       print "test suite ini file: not found\n"
+       print "[configuration file - $ini_file]\n\n";
+       open F, $ini_file or confess "can't open $ini_file to read: $!";
+       print join "", <F>;
+       close F;  
+    }elsif ( -f $ini_file_old ) {
+       print "[configuration file - $ini_file_old]\n\n";
+       open F, $ini_file_old or confess "can't open $ini_file_old to read: $!";
+       print join "", <F>;
+       close F;  
+    } else{
+       print "configuration file does not exist\n"
     }
 
 

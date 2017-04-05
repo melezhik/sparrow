@@ -558,7 +558,7 @@ JSON ( Outthentic plugins )
 
 =back
 
-Config::General format is I<default> format for task configuration.  Use C<task ini> command to set task configuration:
+Use C<task ini> command to set task configuration:
 
 B<sparrow task ini $project_name $task_name>
 
@@ -566,10 +566,22 @@ For example:
 
     $ export EDITOR=nano
     
-    $ sparrow task ini system disk-health
+    # Config::General format
     
+    $ sparrow task ini system disk-health
     # disk used threshold in %
     threshold = 80
+    
+    # JSON format
+    $ sparrow task ini system disk-health
+    {
+      "threshold": 80
+    }
+    
+    # YAML format
+    $ sparrow task ini system disk-health
+    # disk used threshold in %
+    threshold: 80
 
 Having this sparrow will save plugin configuration in the file related to task and will use it during task run:
 
@@ -581,7 +593,9 @@ B<sparrow task load_ini $project_name $task_name /path/to/ini/file>
 
 For example:
 
-    $ sparrow task load_ini system disk-health /etc/plugins/disk.ini
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.yaml # load from YAML file
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.json # load from JSON file
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.conf # load from Config::General file
 
 To get task configuration use C<sparrow task show> command:
 

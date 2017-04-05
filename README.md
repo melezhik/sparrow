@@ -371,7 +371,7 @@ Sparrow supports two configuration formats:
 * YAML ( Outthentic and Swat plugins )
 * JSON ( Outthentic plugins )
 
-Config::General format is _default_ format for task configuration.  Use `task ini` command to set task configuration:
+Use `task ini` command to set task configuration:
 
 **sparrow task ini $project\_name $task\_name**
 
@@ -379,10 +379,22 @@ For example:
 
     $ export EDITOR=nano
 
-    $ sparrow task ini system disk-health
+    # Config::General format
 
+    $ sparrow task ini system disk-health
     # disk used threshold in %
     threshold = 80
+
+    # JSON format
+    $ sparrow task ini system disk-health
+    {
+      "threshold": 80
+    }
+
+    # YAML format
+    $ sparrow task ini system disk-health
+    # disk used threshold in %
+    threshold: 80
 
 Having this sparrow will save plugin configuration in the file related to task and will use it during task run:
 
@@ -394,7 +406,9 @@ User could copy existed configuration from file using `task load_ini` command:
 
 For example:
 
-    $ sparrow task load_ini system disk-health /etc/plugins/disk.ini
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.yaml # load from YAML file
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.json # load from JSON file
+    $ sparrow task load_ini system disk-health /etc/plugins/disk.conf # load from Config::General file
 
 To get task configuration use `sparrow task show` command:
 

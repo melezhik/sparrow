@@ -23,6 +23,7 @@ requires:
   JSON: 0
   Outthentic: 0.2.30
   Term::ANSIColor: '4.02'
+  YAML: 0
   swat: 0.1.96
   version: 0
 resources:

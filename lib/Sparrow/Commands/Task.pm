@@ -13,6 +13,9 @@ use File::Basename;
 use File::Path;
 
 use JSON;
+use YAML;
+use Config::General ;
+
 use Data::Dumper;
 use File::Copy;
 
@@ -166,7 +169,14 @@ sub task_ini {
     confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
     confess "please setup your preferable editor via EDITOR environment variable\n" unless editor;
 
-    exec editor.' '.sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+    my $cfg_file_path = sparrow_root."/projects/$project/tasks/$tid/suite.cfg";
+    my $cfg_ini_file_path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+
+    if ( ! -f $cfg_file_path and -f  $cfg_ini_file_path ){
+      copy($cfg_ini_file_path,$cfg_file_path) or confess "Copy failed: $!";
+    }
+
+    exec editor.' '.$cfg_file_path;
 
 }
 
@@ -179,7 +189,7 @@ sub task_load_ini {
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
 
-    my $dest_path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+    my $dest_path = sparrow_root."/projects/$project/tasks/$tid/suite.cfg";
     copy($ini_file_path,$dest_path) or confess "Copy failed: $!";
 
     print "loaded test suite ini from $ini_file_path OK \n";
@@ -234,24 +244,54 @@ sub task_run {
 
     if ($spj->{plugin_type} eq 'outthentic'){
       $cmd.="  strun --root ./ --task '[t] ".($task_set->{task_desc})."'"
-    }elsif ( $spj->{plugin_type} eq 'swat' ) {
+    } elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
-    }else{
+    } else {
       confess "unsupported plugin type: $spj->{plugin_type}"
     }
-
 
     if ($parameters=~/--yaml\s+(\S+)/){
       my $path = $1;
       $cmd.=" --yaml $path";
-    }elsif ($parameters=~/--json\s+(\S+)/){
+    } elsif ($parameters=~/--json\s+(\S+)/){
       my $path = $1;
       $cmd.=" --json $path";
-    }else{
-      my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
-      $cmd.=" --ini $path" if -f $path;
-    }
+    } else {
+      my $path = sparrow_root."/projects/$project/tasks/$tid/suite.cfg";
+      if (-f $path and -s $path){
+        OK: {
 
+         open CFG, $path or die "cannot open file $path to read: $!";
+         my $str = join "", <CFG>;
+         close CFG;
+
+         eval { decode_json($str) };
+          $cmd.=" --json $path", last OK unless $@;
+  
+          eval { Load($str) };
+          $cmd.=" --yaml $path", last OK unless $@;
+
+          eval {
+
+            Config::General->new(
+              -InterPolateVars => 1 ,
+              -InterPolateEnv  => 1 ,
+              -ConfigFile      => $path 
+            )->getall or confess "file $path is not valid config file";
+  
+          };
+
+          $cmd.=" --ini $path", last OK unless $@;
+
+          confess "bad configuration found at $path";
+
+        }
+
+      }else {
+        my $path = sparrow_root."/projects/$project/tasks/$tid/suite.ini";
+        $cmd.=" --ini $path" if -f $path and -s $path;
+      }
+    }
     if ($cron_mode) {
         $cmd.=" $parameters";
         my $repo_file = sparrow_root.'/cache/report-'.$project.'-'.$tid.'-'.$$.'.txt';

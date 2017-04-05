@@ -63,7 +63,7 @@ sub usage {
     print "\tsparrow task show        system disk             # get `disk' task info \n";
     print "\tsparrow task run         system disk             # run `disk' task \n";
     print "\tsparrow task ini         system disk             # populate task plugin configuration \n";
-    print "\tsparrow task load_ini    system disk /path/to/ini/file # load plugin configuration from ini file \n";
+    print "\tsparrow task load_ini    system disk /path/to/ini/file # load plugin configuration from file \n";
     print "\tsparrow task list                                # get tasks and projects list \n";
 
     print "\n[task boxes]:\n\n";

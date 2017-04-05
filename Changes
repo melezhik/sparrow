@@ -1,5 +1,7 @@
 0.2.32
 
+* task_run now guessing configuration format!
+
 * TaskBox run - now transparently passes all plugin related options
 
 * Add `help`, `info` aliases for `plg man` command

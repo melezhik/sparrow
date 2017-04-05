@@ -13,6 +13,7 @@ requires    'Term::ANSIColor' => '4.02';
 requires    'Carton';
 requires    'version';
 requires    'JSON';
+requires    'YAML';
 requires    'swat' => '0.1.96';
 license     'perl';
 

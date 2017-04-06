@@ -70,8 +70,10 @@ sub remote_task_upload {
         $cred = decode_json($s);
     }
 
+    my $suite_cfg_old_path = sparrow_root."/projects/$project/tasks/$task/suite.ini";
+    my $suite_cfg_path = sparrow_root."/projects/$project/tasks/$task/suite.cfg";
 
-    my $suite_ini_path = sparrow_root."/projects/$project/tasks/$task/suite.ini";
+    $suite_cfg_path = $suite_cfg_old_path unless -f $suite_cfg_path;
 
     execute_shell_command(
         "curl -f -H 'sparrow-user: $cred->{user}' " .
@@ -88,7 +90,7 @@ sub remote_task_upload {
         "curl -f -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .sparrow_hub_api_url().'/api/v1/remote-task/load-ini'.
          "/$project/$task/ ".
-         "-F ini=\@$suite_ini_path ",
+         "-F ini=\@$suite_cfg_path ",
         silent => 1 ,
     );
     print "\n";
@@ -230,7 +232,7 @@ sub remote_task_install {
     my $cred;
 
     my $out_path = sparrow_root()."/cache/meta/$path.json";
-    my $ini_path = sparrow_root()."/cache/meta/$path.ini";
+    my $cfg_path = sparrow_root()."/cache/meta/$path.cfg";
 
     if ($project =~ s/^(\S+)@//){
 
@@ -274,14 +276,14 @@ sub remote_task_install {
     close META;
     my $meta = decode_json($str);
 
-    open INI, "> $ini_path" or confess "can't write to $ini_path : $!";
+    open INI, "> $cfg_path" or confess "can't write to $cfg_path : $!";
     print INI $meta->{suite_ini};
     close INI;
 
     install_plugin($meta->{plugin_name});
     project_create($meta->{project_name});
     task_add($meta->{project_name},$meta->{task_name},$meta->{plugin_name});
-    task_load_ini($meta->{project_name},$meta->{task_name},$ini_path);
+    task_load_ini($meta->{project_name},$meta->{task_name},$cfg_path);
     if ($opts{run}){
       task_run($meta->{project_name},$meta->{task_name});
     } else{

@@ -25,5 +25,5 @@ requires:
   YAML: '0'
   swat: v0.1.96
   version: '0'
-version: v0.2.32
+version: v0.2.33
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

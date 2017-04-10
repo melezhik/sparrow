@@ -1,10 +1,14 @@
-0.2.32
+0.2.33 2017-04-10
 
-* plg run, task run - changed [p],[t] to [plg],[task]
+* Modified changes log ( occasionally missed at previos version )
 
-* task_run now guessing configuration format!
+0.2.32 2017-04-10
 
-* TaskBox run - now transparently passes all plugin related options
+* run tasks and plugins - change titles in reports 
+
+* automatic guessing of configuration format support
+
+* task box run - transparently passes all plugin related options
 
 * Add `help`, `info` aliases for `plg man` command
 

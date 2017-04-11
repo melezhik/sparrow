@@ -21,7 +21,7 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
-  Outthentic: 0.2.30
+  Outthentic: 0.2.31
   Term::ANSIColor: '4.02'
   YAML: 0
   swat: 0.1.96
@@ -29,4 +29,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.2.33
+version: 0.2.34

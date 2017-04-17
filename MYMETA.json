@@ -34,7 +34,7 @@
          "requires" : {
             "Carton" : "0",
             "JSON" : "0",
-            "Outthentic" : "v0.2.31",
+            "Outthentic" : "v0.2.32",
             "Term::ANSIColor" : "4.02",
             "YAML" : "0",
             "swat" : "v0.1.96",
@@ -43,6 +43,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v0.2.34",
+   "version" : "v0.2.35",
    "x_serialization_backend" : "JSON::PP version 2.27400_01"
 }

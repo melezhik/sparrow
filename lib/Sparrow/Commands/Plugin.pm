@@ -137,6 +137,10 @@ to overcome this ambiguity";
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
                 }                
 
+                if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+                }            
+
             }else{
                 print "public\@$pid is uptodate ($inst_v)\n";
                 if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
@@ -145,6 +149,11 @@ to overcome this ambiguity";
                 if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
                 }                
+
+                if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+                }            
+
             }
 
         } else {
@@ -170,6 +179,11 @@ to overcome this ambiguity";
             if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
               execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
             }                
+
+            if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+            }            
+
         }
         
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
@@ -183,6 +197,11 @@ to overcome this ambiguity";
             if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
               execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
             }                
+
+            if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && pip install -t ./python-lib -r requirements.txt");
+            }            
+
         }else{
             execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
@@ -192,6 +211,11 @@ to overcome this ambiguity";
             if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
               execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
             }
+
+            if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ){
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && pip install -t ./python-lib -r requirements.txt");
+            }            
+
         }
 
     }else{
@@ -248,7 +272,7 @@ to overcome this ambiguity";
 
     my $spj = plugin_meta($pdir);
 
-    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
+    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && export PYTHONPATH=python-lib:\$PYTHONPATH && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
       $cmd.="  strun --root ./ --task '[plg] $pid'";

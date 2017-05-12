@@ -784,7 +784,7 @@ Pretty cool, huh? :)))
 
 A shortcut for `sparrow remote task install ... & sparrow task run` is:
 
-    $ sparrow remote task task run utils/git-setup
+    $ sparrow remote task run utils/git-setup
 
 ## Share your task
 

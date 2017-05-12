@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.36';
+our $VERSION = '0.2.37';
 
 1;
 
@@ -1130,7 +1130,7 @@ Pretty cool, huh? :)))
 
 A shortcut for C<sparrow remote task install ... & sparrow task run> is:
 
-    $ sparrow remote task task run utils/git-setup
+    $ sparrow remote task run utils/git-setup
 
 
 =head2 Share your task

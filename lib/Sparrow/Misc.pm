@@ -4,6 +4,7 @@ use strict;
 
 use base 'Exporter';
 use Carp;
+use YAML qw{LoadFile};
 
 use File::Path qw(make_path remove_tree);
 
@@ -13,8 +14,10 @@ our @EXPORT = qw {
     execute_shell_command 
     usage
     init_sparrow_env
+    sparrow_config
 };
 
+my $sparrow_config;
 
 sub execute_shell_command {
 
@@ -95,9 +98,20 @@ sub init_sparrow_env {
     make_path(sparrow_root.'/plugins/public');
     make_path(sparrow_root.'/projects');
     #remove_tree(sparrow_root.'/cache');
+
     make_path(sparrow_root.'/cache');
 
     execute_shell_command('touch '.spl_file()) unless -f spl_file();
+
+    execute_shell_command('touch '.spci_file()) unless -f spci_file();
+
+    if (-f sparrow_conf_file()){
+      ($sparrow_config) = LoadFile(sparrow_conf_file());
+    }
+}
+
+sub sparrow_config {
+    $sparrow_config||{};
 }
 
 1;

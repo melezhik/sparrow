@@ -27,10 +27,6 @@ my $object = shift @ARGV;
 
 init_sparrow_env();
 
-unless (-f spi_file()){
-    update_index();
-}
-
 if ($object eq  'plg'){
 
     my $action = shift @ARGV;
@@ -80,6 +76,7 @@ if ($object eq  'plg'){
     if ( $action eq 'update') {
 
         update_index();
+        update_custom_index();
 
     }elsif ( $action eq 'summary') {
 

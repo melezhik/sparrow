@@ -1,7 +1,7 @@
-0.2.37
+0.2.37 2017-05-15
 
 * Documentation fix for #15
-* Start working on pip/requirements.txt install from #12
+* Support for pip/requirements.txt install from #12
 
 0.2.36 2017-04-18
 

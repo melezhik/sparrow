@@ -615,7 +615,7 @@ To use existed custom repository add this to sparrow configuration file:
 
     repo: 192.168.0.1:4441
 
-This entries defines a custom repository accessible at remote host 192.168.0.1 port 4441
+This entry defines a custom repository accessible at remote host 192.168.0.1 port 4441
 
 Once custom repository is set up you search and install custom repository plugins the same
 way as with private plugins defined at SPL file.

@@ -40,6 +40,7 @@ sub index_summary {
 
     print "[sparrow index summary]\n\n";
     execute_shell_command("ls -l ".spi_file);
+    execute_shell_command("ls -l ".spci_file);
     execute_shell_command("ls -l ".spl_file);
 
 };

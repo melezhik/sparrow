@@ -410,8 +410,22 @@ sub read_plugin_list {
 
     close F;
 
+    # read custome plugins list then
 
-    # read private plugins list then
+    open F, spci_file() or confess "can't open ".spci_file()." to read";
+
+    while ( my $i = <F> ){
+        chomp $i;
+        next unless $i=~/\S+/;
+        next if $i=~/^\s*#/;
+        my @foo = split /\s+/, $i;
+        push @list, { name => $foo[0], url => $foo[1], type => 'private' } ;
+        $list{'private@'.$foo[0]} = { name => $foo[0], url => $foo[1], type => 'private' };
+    }
+
+    close F;
+
+    # read private plugins list at the end
 
     open F, spl_file() or confess "can't open ".spl_file()." to read";
 

@@ -1,1 +1,0 @@
-generator: [ "hello ".(story_var('name')) ]

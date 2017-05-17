@@ -857,7 +857,7 @@ To use existed custom repository add this to sparrow configuration file:
     
     repo: 192.168.0.1:4441
 
-This entries defines a custom repository accessible at remote host 192.168.0.1 port 4441
+This entry defines a custom repository accessible at remote host 192.168.0.1 port 4441
 
 Once custom repository is set up you search and install custom repository plugins the same
 way as with private plugins defined at SPL file.
@@ -1094,10 +1094,13 @@ To every action you may optionally add C<--nocolor> flag to disable color output
 
 =head2 SPARROW_ROOT
 
-Sets sparrow root directory. If set than sparrow will be looking sparrow index and SPL files at following locations:
+Sets sparrow root directory. 
+
+If set than sparrow will be looking sparrow index, SPL and configuration files at following locations:
 
     $SPARROW_ROOT/sparrow.index 
     $SPARROW_ROOT/sparrow.list 
+    $SPARROW_ROOT/sparrow.yaml 
 
 As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT directory.
 
@@ -1113,6 +1116,11 @@ Disable color output.
     $ export SPARROW_NO_COLOR=1
 
 Also see "Disable color output" section.
+
+
+=head2 SPARROWI<CONF>PATH
+
+If set defines an alternative location for sparrow configuration file.
 
 
 =head1 Remote Tasks

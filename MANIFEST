@@ -22,22 +22,6 @@ lib/Sparrow/Misc.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
-papers/CI/README.md
-papers/how-to-upload-a-script-to-sparrowhub.md
-papers/rex.md
-papers/ssh.png
-papers/testing-mojolicious-applications.md
-papers/testing-mojolicious-applications/app.pl
-papers/testing-mojolicious-applications/hook.bash
-papers/testing-mojolicious-applications/meta.txt
-papers/testing-mojolicious-applications/modules/bye/story.bash
-papers/testing-mojolicious-applications/modules/bye/story.check
-papers/testing-mojolicious-applications/modules/echo-name/story.bash
-papers/testing-mojolicious-applications/modules/echo-name/story.check
-papers/testing-mojolicious-applications/modules/hello/story.bash
-papers/testing-mojolicious-applications/modules/hello/story.check
-papers/testing-mojolicious-applications/modules/welcome-page/story.bash
-papers/testing-mojolicious-applications/modules/welcome-page/story.check
 README.md
 README.pod
 t/00.t

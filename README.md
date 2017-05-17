@@ -748,10 +748,13 @@ To every action you may optionally add `--nocolor` flag to disable color output:
 
 ## SPARROW_ROOT
 
-Sets sparrow root directory. If set than sparrow will be looking sparrow index and SPL files at following locations:
+Sets sparrow root directory. 
+
+If set than sparrow will be looking sparrow index, SPL and configuration files at following locations:
 
     $SPARROW_ROOT/sparrow.index 
     $SPARROW_ROOT/sparrow.list 
+    $SPARROW_ROOT/sparrow.yaml 
  
 As well as projects, tasks and plugins data will be kept at $SPARROW_ROOT directory.
 
@@ -766,6 +769,10 @@ Disable color output.
     $ export SPARROW_NO_COLOR=1
 
 Also see "Disable color output" section.
+
+## SPARROW_CONF_PATH
+
+If set defines an alternative location for sparrow configuration file.
 
 # Remote Tasks
 

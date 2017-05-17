@@ -16,7 +16,9 @@ our @EXPORT = qw {
 
 
 # sparrow configuration file
-sub sparrow_conf_file () {  $ENV{SPARROW_ROOT}  ? "$ENV{SPARROW_ROOT}/sparrow.yaml" : "$ENV{HOME}/sparrow.yaml" };
+sub sparrow_conf_file () {  
+  $ENV{SPARROW_CONF_PATH} || do { $ENV{SPARROW_ROOT} ? "$ENV{SPARROW_ROOT}/sparrow.yaml" : "$ENV{HOME}/sparrow.yaml" }
+};
 
 # sparrow index - for public plugins comes from SparrowHub
 sub spi_file () {  $ENV{SPARROW_ROOT}  ? "$ENV{SPARROW_ROOT}/sparrow.index" : "$ENV{HOME}/sparrow.index" };

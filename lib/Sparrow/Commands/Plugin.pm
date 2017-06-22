@@ -244,6 +244,7 @@ sub run_plugin {
     my $yaml_arg;
     my $json_arg;
     my $nocolor_arg;
+    my $args_file_arg;
 
     my @runtime_params;
 
@@ -252,6 +253,7 @@ sub run_plugin {
         "verbose"     => \$verbose_mode,
         "param=s"     => \@runtime_params,
         "dump-config" => \$dump_config_arg,
+        "args-file=s" => \$args_file_arg,
         "purge-cache" => \$purge_cache_arg,
         "format=s"    => \$format_arg,
         "debug=i"     => \$debug_arg,
@@ -323,6 +325,7 @@ to overcome this ambiguity";
     $cmd.= " --json $json_arg" if $json_arg;
 
     $cmd.= " --story $story_arg" if $story_arg;
+    $cmd.= " --args-file $story_arg" if $args_file_arg;
 
     if ($verbose_mode){
       print map {"# $_\n"} split /&&\s+/, $cmd;

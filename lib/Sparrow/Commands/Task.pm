@@ -226,6 +226,7 @@ sub task_run {
     my $yaml_arg;
     my $json_arg;
     my $nocolor_arg;
+    my $args_file_arg;
 
     my @runtime_params;
 
@@ -236,7 +237,7 @@ sub task_run {
         "verbose"     => \$verbose_mode,
         "no-exec"     => \$noexec_mode,
         "cron"        => \$cron_mode,
-
+        "args-file=s" => \$args_file_arg,
         "param=s"     => \@runtime_params,
         "dump-config" => \$dump_config_arg,
         "purge-cache" => \$purge_cache_arg,
@@ -331,6 +332,7 @@ sub task_run {
     $cmd.= " --match_l $match_l_arg" if $match_l_arg;
 
     $cmd.= " --story $story_arg" if $story_arg;
+    $cmd.= " --args-file $story_arg" if $args_file_arg;
 
     if ($cron_mode) {
         my $repo_file = sparrow_root.'/cache/report-'.$project.'-'.$tid.'-'.$$.'.txt';

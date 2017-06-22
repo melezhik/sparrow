@@ -11,6 +11,7 @@ use Carp;
 use File::Basename;
 use JSON;
 use version;
+use Getopt::Long qw(GetOptionsFromArray);
 
 our @EXPORT = qw{
 
@@ -228,19 +229,38 @@ sub run_plugin {
 
     my $pid = shift or confess "usage: run_plugin(*plugin_name,parameters)";
 
+
     my @args = @_;
 
-    my @parameters;
+    my $verbose_mode  = 0; 
 
-    my $verbose_mode = 0;
+    my $dump_config_arg;
+    my $format_arg;
+    my $debug_arg;
+    my $purge_cache_arg;
+    my $match_l_arg;
+    my $story_arg;
+    my $ini_arg;
+    my $yaml_arg;
+    my $json_arg;
+    my $nocolor_arg;
 
+    my @runtime_params;
 
-    for my $i (@args){
-      $verbose_mode=1, next if $i eq '--verbose';
-      push @parameters, $i;
-    }
-  
-    my $parameters  = join ' ', @parameters;
+    my $args_st = GetOptionsFromArray(
+        \@args,
+        "verbose"     => \$verbose_mode,
+        "param=s"     => \@runtime_params,
+        "dump-config" => \$dump_config_arg,
+        "format=s"    => \$format_arg,
+        "debug=i"     => \$debug_arg,
+        "match_l=i"   => \$match_l_arg,
+        "story=s"     => \$story_arg,
+        "ini=s"       => \$ini_arg,
+        "yaml=s"      => \$yaml_arg,
+        "json=s"      => \$json_arg,
+        "nocolor"     => \$nocolor_arg,
+    );
 
     my $ptype; 
 
@@ -282,8 +302,26 @@ to overcome this ambiguity";
       confess "unsupported plugin type: $spj->{plugin_type}"
     }
 
+    for my $rp (@runtime_params){
+      $rp=~/(\S+?)=(.*)/;
+      #warn $1; warn $2;
+      $cmd.= " --param $1='$2'";
+    }
 
-    $cmd.= " $parameters";
+
+    $cmd.= " --nocolor" if $nocolor_arg;
+    $cmd.= " --dump-config" if $dump_config_arg;
+    $cmd.= " --purge-cache" if $purge_cache_arg;
+
+    $cmd.= " --format $format_arg" if $format_arg;
+    $cmd.= " --debug $debug_arg" if $debug_arg;
+    $cmd.= " --match_l $match_l_arg" if $match_l_arg;
+
+    $cmd.= " --ini $ini_arg" if $ini_arg;
+    $cmd.= " --yaml $yaml_arg" if $yaml_arg;
+    $cmd.= " --json $json_arg" if $json_arg;
+
+    $cmd.= " --story $story_arg" if $story_arg;
 
     if ($verbose_mode){
       print map {"# $_\n"} split /&&\s+/, $cmd;

@@ -1,6 +1,7 @@
-0.2.38 2017-05-25
+0.2.38
 
 * Support for custom repositories
+* Fix - #16 . Now sparrow correctly parses run time parameter when `plg run` or `task run`
 
 0.2.37 2017-05-15
 

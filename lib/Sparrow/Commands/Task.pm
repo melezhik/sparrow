@@ -21,6 +21,8 @@ use File::Copy;
 
 use Term::ANSIColor;
 
+use Getopt::Long qw(GetOptionsFromArray);
+
 our @EXPORT = qw{
 
     task_list
@@ -210,28 +212,43 @@ sub task_run {
     my @args     = @_; 
 
 
-    my @parameters;
+    my $verbose_mode     = 0; 
+    my $noexec_mode      = 0;
+    my $cron_mode        = 0;
 
-    my $verbose_mode=0;
+    my $dump_config_arg;
+    my $format_arg;
+    my $debug_arg;
+    my $purge_cache_arg;
+    my $match_l_arg;
+    my $story_arg;
+    my $ini_arg;
+    my $yaml_arg;
+    my $json_arg;
+    my $nocolor_arg;
 
-    my $no_exec_mode=0;
+    my @runtime_params;
 
-    my $cron_mode=0;
+    my $args_st = GetOptionsFromArray(
 
-    my $nocolor = 0;
+        \@args,
 
-    my $dump_config = 0;
+        "verbose"     => \$verbose_mode,
+        "no-exec"     => \$noexec_mode,
+        "cron"        => \$cron_mode,
 
-    for my $i (@args){
-      $verbose_mode=1,  next if $i eq '--verbose';
-      $nocolor=1 if $i eq '--nocolor';
-      $cron_mode=1,     next if $i eq '--cron';
-      $no_exec_mode=1,  next if $i eq '--no-exec';
-      $dump_config=1 if $i eq '--dump-config';
-      push @parameters, $i;
-    }
+        "param=s"     => \@runtime_params,
+        "dump-config" => \$dump_config_arg,
+        "format=s"    => \$format_arg,
+        "debug=i"     => \$debug_arg,
+        "match_l=i"   => \$match_l_arg,
+        "story=s"     => \$story_arg,
+        "ini=s"       => \$ini_arg,
+        "yaml=s"      => \$yaml_arg,
+        "json=s"      => \$json_arg,
+        "nocolor"     => \$nocolor_arg,
 
-    my $parameters = join ' ', @parameters;
+    );
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
     confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
@@ -256,12 +273,10 @@ sub task_run {
       confess "unsupported plugin type: $spj->{plugin_type}"
     }
 
-    if ($parameters=~/--yaml\s+(\S+)/){
-      my $path = $1;
-      $cmd.=" --yaml $path";
-    } elsif ($parameters=~/--json\s+(\S+)/){
-      my $path = $1;
-      $cmd.=" --json $path";
+    if ($yaml_arg){
+      $cmd.=" --yaml $yaml_arg";
+    } elsif ($json_arg){
+      $cmd.=" --json $json_arg";
     } else {
       my $path = sparrow_root."/projects/$project/tasks/$tid/suite.cfg";
       if (-f $path and -s $path){
@@ -298,19 +313,34 @@ sub task_run {
         $cmd.=" --ini $path" if -f $path and -s $path;
       }
     }
+
+    for my $rp (@runtime_params){
+      $rp=~/(\S+?)=(.*)/;
+      #warn $1; warn $2;
+      $cmd.= " --param $1='$2'";
+    }
+
+
+    $cmd.= " --nocolor" if $nocolor_arg;
+    $cmd.= " --dump-config" if $dump_config_arg;
+    $cmd.= " --purge-cache" if $purge_cache_arg;
+
+    $cmd.= " --format $format_arg" if $format_arg;
+    $cmd.= " --debug $debug_arg" if $debug_arg;
+    $cmd.= " --match_l $match_l_arg" if $match_l_arg;
+
+    $cmd.= " --story $story_arg" if $story_arg;
+
     if ($cron_mode) {
-        $cmd.=" $parameters";
         my $repo_file = sparrow_root.'/cache/report-'.$project.'-'.$tid.'-'.$$.'.txt';
         exec "( $cmd 1>$repo_file 2>\&1 && rm $repo_file  )  || ( cat $repo_file ; rm -v $repo_file; exit 1; )";
     } else {
-
-        $cmd.=" $parameters";
 
         if ($verbose_mode){
           print map {"# $_\n"} split /&&\s+/, $cmd;
           print "\n";
         }
-        if ($no_exec_mode){
+        if ($noexec_mode){
           execute_shell_command($cmd);
         } else {
           exec $cmd

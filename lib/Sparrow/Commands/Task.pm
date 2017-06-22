@@ -332,7 +332,7 @@ sub task_run {
     $cmd.= " --match_l $match_l_arg" if $match_l_arg;
 
     $cmd.= " --story $story_arg" if $story_arg;
-    $cmd.= " --args-file $story_arg" if $args_file_arg;
+    $cmd.= " --args-file $args_file_arg" if $args_file_arg;
 
     if ($cron_mode) {
         my $repo_file = sparrow_root.'/cache/report-'.$project.'-'.$tid.'-'.$$.'.txt';

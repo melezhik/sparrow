@@ -325,7 +325,7 @@ to overcome this ambiguity";
     $cmd.= " --json $json_arg" if $json_arg;
 
     $cmd.= " --story $story_arg" if $story_arg;
-    $cmd.= " --args-file $story_arg" if $args_file_arg;
+    $cmd.= " --args-file $args_file_arg" if $args_file_arg;
 
     if ($verbose_mode){
       print map {"# $_\n"} split /&&\s+/, $cmd;

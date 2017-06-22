@@ -252,6 +252,7 @@ sub run_plugin {
         "verbose"     => \$verbose_mode,
         "param=s"     => \@runtime_params,
         "dump-config" => \$dump_config_arg,
+        "purge-cache" => \$purge_cache_arg,
         "format=s"    => \$format_arg,
         "debug=i"     => \$debug_arg,
         "match_l=i"   => \$match_l_arg,

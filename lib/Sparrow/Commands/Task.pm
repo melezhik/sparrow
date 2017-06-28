@@ -83,8 +83,7 @@ sub task_add {
     if  (-d sparrow_root."/projects/$project/tasks/$tid") {
       print "task $project/$tid already exists, update task parameters\n" unless $opts{'--quiet'};
     } else {
-      mkdir sparrow_root."/projects/$project" or confess "can't create task directory: $!";
-      mkdir sparrow_root."/projects/$project/tasks" or confess "can't create task directory: $!";
+      mkdir sparrow_root."/projects/$project/tasks";
       mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
     }
 

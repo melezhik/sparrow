@@ -239,6 +239,7 @@ sub run_plugin {
     my $debug_arg;
     my $purge_cache_arg;
     my $match_l_arg;
+    my $cwd_arg;
     my $story_arg;
     my $ini_arg;
     my $yaml_arg;
@@ -258,6 +259,7 @@ sub run_plugin {
         "format=s"    => \$format_arg,
         "debug=i"     => \$debug_arg,
         "match_l=i"   => \$match_l_arg,
+        "cwd=s"       => \$cwd_arg,
         "story=s"     => \$story_arg,
         "ini=s"       => \$ini_arg,
         "yaml=s"      => \$yaml_arg,
@@ -324,6 +326,7 @@ to overcome this ambiguity";
     $cmd.= " --yaml $yaml_arg" if $yaml_arg;
     $cmd.= " --json $json_arg" if $json_arg;
 
+    $cmd.= " --cwd $cwd_arg" if $cwd_arg;
     $cmd.= " --story $story_arg" if $story_arg;
     $cmd.= " --args-file $args_file_arg" if $args_file_arg;
 

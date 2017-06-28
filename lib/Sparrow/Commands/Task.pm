@@ -227,6 +227,7 @@ sub task_run {
     my $json_arg;
     my $nocolor_arg;
     my $args_file_arg;
+    my $cwd_arg;
 
     my @runtime_params;
 
@@ -244,6 +245,7 @@ sub task_run {
         "format=s"    => \$format_arg,
         "debug=i"     => \$debug_arg,
         "match_l=i"   => \$match_l_arg,
+        "cwd=s"       => \$cwd_arg,
         "story=s"     => \$story_arg,
         "ini=s"       => \$ini_arg,
         "yaml=s"      => \$yaml_arg,
@@ -331,6 +333,7 @@ sub task_run {
     $cmd.= " --debug $debug_arg" if $debug_arg;
     $cmd.= " --match_l $match_l_arg" if $match_l_arg;
 
+    $cmd.= " --cwd $cwd_arg" if $cwd_arg;
     $cmd.= " --story $story_arg" if $story_arg;
     $cmd.= " --args-file $args_file_arg" if $args_file_arg;
 

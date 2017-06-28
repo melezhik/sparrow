@@ -101,6 +101,8 @@ sub init_sparrow_env {
 
     make_path(sparrow_root.'/cache');
 
+    execute_shell_command('touch '.spi_file()) unless -f spi_file();
+
     execute_shell_command('touch '.spl_file()) unless -f spl_file();
 
     execute_shell_command('touch '.spci_file()) unless -f spci_file();

@@ -1,6 +1,7 @@
 0.2.39
 
 * Support for --cwd `parameter` for `strun`
+* fix for #17
 
 0.2.38 2017-06-23
 

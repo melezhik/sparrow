@@ -51,6 +51,6 @@
          "url" : "https://github.com/melezhik/sparrow"
       }
    },
-   "version" : "0.2.38",
-   "x_serialization_backend" : "JSON::PP version 2.27300"
+   "version" : "0.2.39",
+   "x_serialization_backend" : "JSON::PP version 2.27300_01"
 }

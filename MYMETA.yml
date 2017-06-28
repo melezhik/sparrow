@@ -28,5 +28,5 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.2.38
+version: 0.2.39
 x_serialization_backend: 'CPAN::Meta::YAML version 0.018'

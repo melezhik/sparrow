@@ -255,7 +255,8 @@ sub task_run {
     );
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
-    confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
+    confess "unknown task: ".(sparrow_root."/projects/$project/tasks/$tid") 
+    unless  -d sparrow_root."/projects/$project/tasks/$tid";
 
     my $task_set = task_get($project,$tid);
 

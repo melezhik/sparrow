@@ -443,7 +443,7 @@ sub read_plugin_list {
     my $mode = shift || 'as_array';
 
     # read public plugins list first
-    open F, spi_file() or confess "can't open ".spl_file()." to read - $!";
+    open F, spi_file() or confess "can't open ".spi_file()." to read - $!";
 
     while ( my $i = <F> ){
         chomp $i;

@@ -83,6 +83,7 @@ sub task_add {
     if  (-d sparrow_root."/projects/$project/tasks/$tid") {
       print "task $project/$tid already exists, update task parameters\n" unless $opts{'--quiet'};
     } else {
+      mkdir sparrow_root."/projects/$project/tasks";
       mkdir sparrow_root."/projects/$project/tasks/$tid" or confess "can't create task directory: $!";
     }
 
@@ -255,7 +256,8 @@ sub task_run {
     );
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
-    confess "unknown task" unless  -d sparrow_root."/projects/$project/tasks/$tid";
+    confess "unknown task: ".(sparrow_root."/projects/$project/tasks/$tid") 
+    unless  -d sparrow_root."/projects/$project/tasks/$tid";
 
     my $task_set = task_get($project,$tid);
 

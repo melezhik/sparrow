@@ -1,3 +1,7 @@
+0.2.40 2017-07-07
+
+* `sparrow plg install`  - Install pythin scripts into local/bin
+
 0.2.39 2017-06-29
 
 * Support for --cwd `parameter` for `strun`

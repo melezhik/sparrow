@@ -139,7 +139,7 @@ to overcome this ambiguity";
                 }                
 
                 if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
                 }            
 
             }else{
@@ -152,7 +152,7 @@ to overcome this ambiguity";
                 }                
 
                 if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
                 }            
 
             }
@@ -182,7 +182,7 @@ to overcome this ambiguity";
             }                
 
             if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt");
+              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
             }            
 
         }

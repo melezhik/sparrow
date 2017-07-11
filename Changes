@@ -1,6 +1,6 @@
-0.2.42
+0.2.42 2017-07-11
 
-* Support for running CLI tools with free style parameters ( -- args args args )
+* Support for experimental feature - pass command line arguments in free style by ` -- args args args ` in `plg run` and `task run` commands
 
 0.2.41 2017-07-10
 

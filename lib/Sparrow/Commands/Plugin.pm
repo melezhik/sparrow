@@ -91,6 +91,8 @@ sub install_plugin {
 
     my $ptype;
 
+    my $pip_command = 'pip';
+
     if ($pid=~/(public|private)@/){
         $ptype = $1;
         $pid=~s/(public|private)@//;
@@ -112,6 +114,10 @@ to overcome this ambiguity";
             my $sp = join "", <F>;
             my $spj = decode_json($sp);
             close F;
+
+            if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
+              $pip_command = 'pip3'
+            }
 
             my $plg_v  = version->parse($list->{'public@'.$pid}->{version});
             my $inst_v = version->parse($spj->{version});
@@ -139,7 +145,7 @@ to overcome this ambiguity";
                 }                
 
                 if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
                 }            
 
             }else{
@@ -152,7 +158,7 @@ to overcome this ambiguity";
                 }                
 
                 if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
+                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
                 }            
 
             }
@@ -182,16 +188,33 @@ to overcome this ambiguity";
             }                
 
             if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && pip install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
+              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
             }            
 
         }
         
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
+
         print "installing private\@$pid ...\n";
+
         if ( -d sparrow_root."/plugins/private/$pid" ){
+
+
+            if ( -f sparrow_root."/plugins/private/$pid/sparrow.json" ){
+              open F, sparrow_root."/plugins/private/$pid/sparrow.json" or confess "can't open file to read: $!";
+              my $sp = join "", <F>;
+              my $spj = decode_json($sp);
+              close F;
+
+              if ( $spj->{python_version} && $spj->{python_version} eq  '3' ) {
+                $pip_command = 'pip3'
+              }
+
+            }
+
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
+
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
             }            
@@ -200,7 +223,7 @@ to overcome this ambiguity";
             }                
 
             if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && pip install -t ./python-lib -r requirements.txt");
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && $pip_command install -t ./python-lib -r requirements.txt");
             }            
 
         }else{
@@ -214,7 +237,7 @@ to overcome this ambiguity";
             }
 
             if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && pip install -t ./python-lib -r requirements.txt");
+              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && $pip_command install -t ./python-lib -r requirements.txt");
             }            
 
         }

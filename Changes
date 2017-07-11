@@ -1,3 +1,7 @@
+0.2.43 2017-07-11
+
+* Support for experimental feature - now you can set python version in sparrow.json to make `plg install` command use proper pip (pip or pip3) when install dependencies
+
 0.2.42 2017-07-11
 
 * Support for experimental feature - pass command line arguments in free style by ` -- args args args ` in `plg run` and `task run` commands

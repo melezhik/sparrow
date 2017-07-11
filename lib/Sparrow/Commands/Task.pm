@@ -280,7 +280,7 @@ sub task_run {
 
     my $spj = plugin_meta($pdir);
     
-    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && ";
+    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && export PYTHONPATH=python-lib:\$PYTHONPATH && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){
       $cmd.="  strun --root ./ --task '[task] ".($task_set->{task_desc})."'"

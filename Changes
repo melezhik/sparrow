@@ -1,3 +1,7 @@
+0.2.44 2017-07-11
+
+* Hotfix: PYTHONPATH set for `task run`
+
 0.2.43 2017-07-11
 
 * Support for experimental feature - now you can set python version in sparrow.json to make `plg install` command use proper pip (pip or pip3) when install dependencies

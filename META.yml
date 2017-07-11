@@ -29,4 +29,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: https://github.com/melezhik/sparrow
-version: 0.2.43
+version: 0.2.44

@@ -249,6 +249,19 @@ sub run_plugin {
 
     my @runtime_params;
 
+    my $cli_args;
+    
+    my $i=0;  
+    for my $a (@args) {
+      if ($a eq '--') {
+        delete $args[$i];
+        $cli_args = join ' ', delete @args[$i .. $#args];
+        last;
+      }
+      $i++;
+    }  
+  
+    
     my $args_st = GetOptionsFromArray(
         \@args,
         "verbose"     => \$verbose_mode,
@@ -329,6 +342,8 @@ to overcome this ambiguity";
     $cmd.= " --cwd $cwd_arg" if $cwd_arg;
     $cmd.= " --story $story_arg" if $story_arg;
     $cmd.= " --args-file $args_file_arg" if $args_file_arg;
+
+    $cmd.= " -- $cli_args" if $cli_args;
 
     if ($verbose_mode){
       print map {"# $_\n"} split /&&\s+/, $cmd;

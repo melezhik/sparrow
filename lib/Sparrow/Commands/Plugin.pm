@@ -169,6 +169,7 @@ to overcome this ambiguity";
                   if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
                     $pip_command = 'pip3'
                   }
+                  print "cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"\n";
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
                 }            
 
@@ -361,6 +362,17 @@ to overcome this ambiguity";
 
     my $spj = plugin_meta($pdir);
 
+    if ($spj->{sparrow_version}){
+      # check sparrow version if it's defined at sparrow.json
+
+      my $curr_sp_v  = version->parse($Sparrow::VERSION);
+      my $req_sp_v   = version->parse($spj->{sparrow_version});
+
+      if ($req_sp_v > $curr_sp_v){
+        die "plugin require sparrow version: $req_sp_v, but you have: $curr_sp_v";
+      };
+
+    }
     my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=local/lib/perl5:\$PERL5LIB && export PYTHONPATH=python-lib:\$PYTHONPATH && ";
 
     if ($spj->{plugin_type} eq 'outthentic'){

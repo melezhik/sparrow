@@ -1,6 +1,7 @@
 0.2.45
 
 * Fix some pip install issues 
+* Declare sparrow version at sparrow.json to require Sparrow of certain version
 
 0.2.44 2017-07-11
 

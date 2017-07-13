@@ -2,6 +2,8 @@
 
 use strict;
 
+use Sparrow;
+
 use Sparrow::Constants;
 
 use Sparrow::Commands::Project;

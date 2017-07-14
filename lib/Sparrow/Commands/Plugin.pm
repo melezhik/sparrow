@@ -476,12 +476,17 @@ sub man_plugin {
 
     my $pid = shift or confess 'usage: man_plugin(plugin_name)';
 
+    my $pdir = sparrow_root."/plugins/public/$pid";
+
+    my $spj = plugin_meta($pdir);
+
     # this should be changed in the future
     # as this trivial code
     # only dump a public plugin doc
 
-    exec("cat ".sparrow_root."/plugins/public/$pid/README.md");
+    my $readme_file = $spj->{doc}  || 'README.md';
 
+    exec("cat ".sparrow_root."/plugins/public/$pid/$readme_file");
 
 }
 

@@ -1,7 +1,9 @@
-0.2.46
+0.2.46 2017-07-13
 
 * Alternative name for README file set by `doc` field in sparrow.json
 * Use the latest version of outthentic 
+* Add documentation about sparrow_version, python_version
+
 
 0.2.45 2017-07-13
 

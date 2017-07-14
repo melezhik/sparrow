@@ -709,10 +709,10 @@ If you install pip modules targeted for Python3 you may set python_version in sp
 
 That makes `sparrow plg install` command use `pip3` ( not `pip` ) to install dependencies by requirements.txt file
 
-* sparrow_version - sets minimal version of Sparrow required by plugins.
+* sparrow_version - sets minimal version of Sparrow required by plugin.
 
-This is mostly useful for Sparrow developers. Some plugins may relies on the latest version of Sparrow and
-couldn't run correctly on the older version, to avoid any confusion plugins developers may declare
+This is mostly useful for Sparrow developers. Some plugins may rely on the latest versions of Sparrow and
+couldn't run correctly on the older versions, to avoid any confusion plugins developers may declare
 a minimum version of Sparrow so that if the target machine does have it an exception will be raised
 instead of plugin execution when `sparrow plg run` command is invoked.
 

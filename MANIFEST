@@ -24,6 +24,7 @@ MANIFEST			This list of files
 META.yml
 README.md
 README.pod
+report.csv
 t/00.t
 t/lib/test.pm
 t/modules/plg-generic/install/story.check

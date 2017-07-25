@@ -21,7 +21,7 @@ no_index:
 requires:
   Carton: 0
   JSON: 0
-  Outthentic: 0.3.4
+  Outthentic: 0.3.5
   Term::ANSIColor: '4.02'
   YAML: 0
   swat: 0.1.96

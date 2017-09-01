@@ -15,7 +15,7 @@ sub wanted  {
 
   (my $dir = $File::Find::dir)=~s{t/}{};
 
-  my $cmd = "strun --purge-cache --root ./t --story $dir";
+  my $cmd = "strun --purge-cache --root ./t --story $dir --format production";
 
   (system($cmd) == 0)  or die "$cmd failed";
 

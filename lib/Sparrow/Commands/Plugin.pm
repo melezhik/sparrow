@@ -474,19 +474,29 @@ sub show_plugin {
 
 sub man_plugin {
 
-    my $pid = shift or confess 'usage: man_plugin(plugin_name)';
 
-    my $pdir = sparrow_root."/plugins/public/$pid";
+    my $pid = shift or confess('usage: man_plugin(*plugin_name)');
 
-    my $spj = plugin_meta($pdir);
+    my $ptype;
 
-    # this should be changed in the future
-    # as this trivial code
-    # only dump a public plugin doc
+    if ($pid=~/(public|private)@/){
+        $ptype = $1;
+        $pid=~s/(public|private)@//;
+    }
 
-    my $readme_file = $spj->{doc}  || 'README.md';
-
-    exec("cat ".sparrow_root."/plugins/public/$pid/$readme_file");
+    if (-d sparrow_root."/plugins/public/$pid" and $ptype ne 'private' ){
+      my $pdir = sparrow_root."/plugins/public/$pid";
+      my $spj = plugin_meta($pdir);
+      my $readme_file = $spj->{doc}  || 'README.md';
+      exec("cat ".sparrow_root."/plugins/public/$pid/$readme_file");
+    } elsif (-d sparrow_root."/plugins/private/$pid" and $ptype ne 'public' ){
+      my $pdir = sparrow_root."/plugins/private/$pid";
+      my $spj = plugin_meta($pdir);
+      my $readme_file = $spj->{doc}  || 'README.md';
+      exec("cat ".sparrow_root."/plugins/private/$pid/$readme_file");
+    } else {
+      warn "plugin not found";
+    }
 
 }
 

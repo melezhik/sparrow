@@ -6,6 +6,6 @@ install:
     - cpanm https://github.com/melezhik/outthentic.git
 
 script:
-    - "sparrow index update"
     - "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install"
+    - "sparrow index update"
     - "./test.sh"

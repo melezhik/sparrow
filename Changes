@@ -1,3 +1,7 @@
+0.2.50  2017-09-30
+
+* sparrow plg run, sparrow task run - PERL5LIB uses absolute paths
+
 0.2.49  2017-09-27
 
 Fix for #10 - `plg man for private plugins`

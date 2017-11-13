@@ -127,7 +127,7 @@ to overcome this ambiguity";
 
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-                execute_shell_command("curl -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
+                execute_shell_command("curl -H 'Agent: sparrow' -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
                 sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
                 sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz && echo");
 
@@ -186,7 +186,7 @@ to overcome this ambiguity";
 
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-            execute_shell_command("curl -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
+            execute_shell_command("curl -H 'Agent: sparrow' -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
             sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
             sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz && echo");
 
@@ -287,7 +287,7 @@ sub run_plugin {
     my $verbose_mode  = 0; 
 
     my $dump_config_arg;
-    my $format_arg;
+    my $format_arg = sparrow_config->{'format'} || 'default';
     my $debug_arg;
     my $purge_cache_arg;
     my $match_l_arg;

@@ -1,3 +1,8 @@
+0.2.51 2017-11-13
+
+* Install plugin - add Agent header as `sparrow` to count statistics ( TBD )
+* Add sparrow.yaml to documentation file and support `--format` parameter
+
 0.2.50  2017-09-30
 
 * sparrow plg run, sparrow task run - PERL5LIB uses absolute paths

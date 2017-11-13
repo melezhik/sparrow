@@ -1,2 +1,2 @@
-sparrow plg run foo-generic
+sparrow plg run foo-generic --format default
 

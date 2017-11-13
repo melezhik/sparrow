@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.2.50';
+our $VERSION = '0.2.51';
 
 1;
 
@@ -1116,6 +1116,35 @@ You should place a dependency file into a plugin root directory.
 To every action you may optionally add C<--nocolor> flag to disable color output:
 
     $ sparrow plg run df-check --nocolor
+
+
+=head1 Sparrow client configuration file
+
+This file should be placed at $SPARROW_ROOT/sparrow.yaml path ( see next section on SPARROW_ROOT ).
+
+Configuration options:
+
+=over
+
+=item *
+
+repo
+
+
+=back
+
+Custom sparrow repository
+
+=over
+
+=item *
+
+format 
+
+
+=back
+
+Defines format for outthentic reports, possible values are: C<default|concise|production>
 
 
 =head1 Environment variables

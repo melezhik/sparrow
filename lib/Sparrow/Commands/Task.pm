@@ -229,7 +229,7 @@ sub task_run {
     my $cron_mode        = 0;
 
     my $dump_config_arg;
-    my $format_arg;
+    my $format_arg = sparrow_config->{'format'} || 'default';
     my $debug_arg;
     my $purge_cache_arg;
     my $match_l_arg;

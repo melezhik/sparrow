@@ -760,6 +760,20 @@ To every action you may optionally add `--nocolor` flag to disable color output:
 
     $ sparrow plg run df-check --nocolor
 
+# Sparrow client configuration file
+
+This file should be placed at $SPARROW_ROOT/sparrow.yaml path ( see next section on SPARROW\_ROOT ).
+
+Configuration options:
+
+* repo
+
+Custom sparrow repository
+
+* format 
+
+Defines format for outthentic reports, possible values are: `default|concise|production`
+
 # Environment variables
 
 ## SPARROW_ROOT

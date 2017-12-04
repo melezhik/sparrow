@@ -1,10 +1,8 @@
 # NAME
 
-Sparrow
+Sparrow - multipurpose scenarios manager.
  
 # SYNOPSIS
-
-Sparrow - multipurpose scenarios manager.
 
 # Install
 

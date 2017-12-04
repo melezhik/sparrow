@@ -287,7 +287,7 @@ sub run_plugin {
     my $verbose_mode  = 0; 
 
     my $dump_config_arg;
-    my $format_arg = sparrow_config->{'format'} || 'default';
+    my $format_arg = $ENV{OUTTHENTIC_FORMAT} || sparrow_config->{'format'} || 'default';
     my $debug_arg;
     my $purge_cache_arg;
     my $match_l_arg;

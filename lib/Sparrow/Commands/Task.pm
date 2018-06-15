@@ -285,6 +285,7 @@ sub task_run {
     if ($spj->{plugin_type} eq 'outthentic'){
       $cmd.="  strun --root ./ --task '[task] ".($task_set->{task_desc})."'"
     } elsif ( $spj->{plugin_type} eq 'swat' ) {
+      #warn $task_set->{host};
       $cmd.="  swat ./ ". ($task_set->{host}).' ';
     } else {
       confess "unsupported plugin type: $spj->{plugin_type}"
@@ -341,8 +342,9 @@ sub task_run {
     $cmd.= " --nocolor" if $nocolor_arg;
     $cmd.= " --dump-config" if $dump_config_arg;
     $cmd.= " --purge-cache" if $purge_cache_arg;
-
-    $cmd.= " --format $format_arg" if $format_arg;
+    unless ( $spj->{plugin_type} eq 'swat' ){
+      $cmd.= " --format $format_arg" if $format_arg;
+    }
     $cmd.= " --debug $debug_arg" if $debug_arg;
     $cmd.= " --match_l $match_l_arg" if $match_l_arg;
 

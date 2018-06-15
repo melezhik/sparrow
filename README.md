@@ -509,7 +509,7 @@ Where $path sets the file path to task box json file.
     ]
 
 
-Command example:
+Command example
 
     $ sparrow box run /var/sparrow/boxes/nginx.json
 

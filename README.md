@@ -487,7 +487,9 @@ Use this command to run task box
 
 **sparrow box run $path [opts]**
 
-Where $path sets the file path to task box json file. A structure of the file:
+Where $path sets the file path to task box json file. 
+
+## The structure of the file for outthentic plugins:
 
     [
 
@@ -535,6 +537,29 @@ Thus task box files should hold a list of sparrow tasks. Here is example:
 
     ]
 
+
+## The structure of the file for swat plugins:
+
+
+    [
+
+      {
+        "task" : "task_name",
+        "plugin" : "plugin_name",
+        "type" : "swat",
+        "host" : "http host"
+      },
+      {
+        // another task
+      },
+
+      ...
+
+    ]
+
+
+
+## Sparrow box run parameters
 
 To suppress some extra message from this command use `--mode quiet`:
 

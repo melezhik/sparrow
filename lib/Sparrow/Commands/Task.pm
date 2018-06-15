@@ -76,8 +76,8 @@ sub task_add {
 
     confess "unknown project" unless  -d sparrow_root."/projects/$project";
 
-
     $project=~/^[\w\d-\._]+$/ or confess 'project parameter does not meet naming requirements - /^[\w\d-\._]+$/';
+
     $tid=~/^[\w\d-\._]+$/ or confess 'task parameter does not meet naming requirements - /^[\w\d-\._]+$/';
 
     if  (-d sparrow_root."/projects/$project/tasks/$tid") {

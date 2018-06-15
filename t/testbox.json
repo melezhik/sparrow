@@ -27,6 +27,15 @@
     "data" : {
 
     }
+  },
+  {
+    "task" : "test swat plugin",
+    "plugin" : "swat-test",
+    "type" : "swat",
+    "host" : "yandex.ru",
+    "data" : {
+
+    }
   }
 
 ]

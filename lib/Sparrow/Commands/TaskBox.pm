@@ -58,7 +58,7 @@ sub box_run {
 
       open JSON, ">", $path or confess "can't open file $path to read: $!";
 
-      print JSON encode_json($task->{data});
+      print JSON encode_json($task->{data}||{});
 
       close JSON;
 
@@ -66,7 +66,11 @@ sub box_run {
 
       $safe_task_name.="_".$i if $task_seen{$safe_task_name}++;
 
-      task_add('taskbox', $safe_task_name,$task->{plugin}, '--quiet', $quiet_mode, 'task_desc' , $task->{task} );
+      if ($task->{type} eq 'swat'){
+        task_add('taskbox', $safe_task_name,$task->{plugin}, '--quiet', $quiet_mode, 'task_desc' , $task->{task}, '--host', $task->{host} );
+      } else {
+        task_add('taskbox', $safe_task_name,$task->{plugin}, '--quiet', $quiet_mode, 'task_desc' , $task->{task} );
+      }
 
 
     }
@@ -86,8 +90,11 @@ sub box_run {
 
       #print "task_run $safe_task_name, $path\n";
 
-      task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path, %opts );
-
+      if ($task->{type} eq 'swat'){
+        task_run('taskbox',$safe_task_name,'--no-exec');
+      } else {
+        task_run('taskbox',$safe_task_name,'--no-exec', '--json', $path, %opts );
+      }
     }
 
 

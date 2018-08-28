@@ -17,7 +17,7 @@ requires    'YAML';
 requires    'swat' => '0.1.96';
 requires    'File::Touch';
 requires    'HTTP::Tiny';
-
+requires    'IO::Socket::SSL';
 license     'perl';
 
 repository  'https://github.com/melezhik/sparrow';

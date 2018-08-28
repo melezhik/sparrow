@@ -16,6 +16,8 @@ requires    'JSON';
 requires    'YAML';
 requires    'swat' => '0.1.96';
 requires    'File::Touch';
+requires    'HTTP::Tiny';
+
 license     'perl';
 
 repository  'https://github.com/melezhik/sparrow';

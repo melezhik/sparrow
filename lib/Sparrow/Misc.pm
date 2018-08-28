@@ -7,6 +7,7 @@ use Carp;
 use YAML qw{LoadFile};
 
 use File::Path qw(make_path remove_tree);
+use File::Touch;
 
 use Sparrow::Constants;
 
@@ -101,11 +102,7 @@ sub init_sparrow_env {
 
     make_path(sparrow_root.'/cache');
 
-    execute_shell_command('touch '.spi_file()) unless -f spi_file();
-
-    execute_shell_command('touch '.spl_file()) unless -f spl_file();
-
-    execute_shell_command('touch '.spci_file()) unless -f spci_file();
+    touch( spi_file(), spl_file(), spci_file() );
 
     if (-f sparrow_conf_file()){
       ($sparrow_config) = LoadFile(sparrow_conf_file());

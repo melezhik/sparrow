@@ -14,7 +14,7 @@ requires    'Carton';
 requires    'version';
 requires    'JSON';
 requires    'YAML';
-requires    'swat' => '0.1.96';
+requires    'swat' => '0.2.0';
 requires    'File::Touch';
 requires    'HTTP::Tiny';
 requires    'IO::Socket::SSL';

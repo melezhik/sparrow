@@ -10,8 +10,12 @@ use Sparrow::Misc;
 use Carp;
 use File::Basename;
 use JSON;
+
 use version;
+
 use Getopt::Long qw(GetOptionsFromArray);
+
+use Archive::Extract;
 
 our @EXPORT = qw{
 
@@ -127,11 +131,16 @@ to overcome this ambiguity";
 
                 execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-                execute_shell_command("curl -H 'Agent: sparrow' -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o ".
-                sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz ".
-                sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz && echo");
+                my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz", agent => 'sparrow' );
+                my $plg_file = sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz";
 
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$plg_v.tar.gz");
+                open my $fh, ">:raw", $plg_file or die "can't open $plg_file to write";
+                print $fh $data;
+                close $fh;
+
+                print "\n";
+          
+                Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" );
 
                 if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
@@ -186,11 +195,16 @@ to overcome this ambiguity";
 
             execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
 
-            execute_shell_command("curl -H 'Agent: sparrow' -k -s -w 'Download %{url_effective} --- %{http_code}' -f -o".
-            sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz ".
-            sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz && echo");
+            my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz", agent => 'sparrow' );
+            my $plg_file = sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz";
 
-            execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && tar -xzf $pid-v$vn.tar.gz");
+            open my $fh, ">:raw", $plg_file or die "can't open $plg_file to write";
+            print $fh $data;
+            close $fh;
+
+            print "\n";
+
+            Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" );
 
             if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
@@ -221,7 +235,7 @@ to overcome this ambiguity";
         if ( -d sparrow_root."/plugins/private/$pid" ){
 
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
+            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
 
             if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");

@@ -118,9 +118,12 @@ sub sparrow_config {
 sub get_http_resource {
 
   my $url = shift;
+  my %opts = @_;
 
-  my $response = HTTP::Tiny->new()->get($url);
+  my $agent = $opts{agent} || 'http-tiny';
 
+  my $response = HTTP::Tiny->new( agent => $agent )->get($url);
+  
   die "Failed to fetch $url: $response->{status} $response->{reason}\n" unless $response->{success};
 
   return  $response->{content};

@@ -18,6 +18,8 @@ requires    'swat' => '0.2.0';
 requires    'File::Touch';
 requires    'HTTP::Tiny';
 requires    'IO::Socket::SSL';
+requires    'Archive::Extract';
+requires    'Archive::Tar';
 license     'perl';
 
 repository  'https://github.com/melezhik/sparrow';

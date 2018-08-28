@@ -16,6 +16,7 @@ use version;
 use Getopt::Long qw(GetOptionsFromArray);
 
 use Archive::Extract;
+use File::Path qw(rmtree);
 
 our @EXPORT = qw{
 
@@ -126,10 +127,10 @@ to overcome this ambiguity";
             if ($plg_v > $inst_v){
 
                 print "upgrading public\@$pid from version $inst_v to version $plg_v ...\n";
-
-                execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
-
-                execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
+                if ( -d sparrow_root()."/plugins/public/$pid" ){
+                  rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
+                }
+                mkdir(sparrow_root()."/plugins/public/$pid") or die "can't create dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
 
                 my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz", agent => 'sparrow' );
                 my $plg_file = sparrow_root."/plugins/public/$pid/$pid-v$plg_v.tar.gz";
@@ -140,7 +141,8 @@ to overcome this ambiguity";
 
                 print "\n";
           
-                Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" );
+                Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" ) 
+                or die "can't extract file $plg_file to ".sparrow_root()."/plugins/public/$pid, error: $!";
 
                 if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
                   execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
@@ -191,9 +193,10 @@ to overcome this ambiguity";
             
             print "installing public\@$pid version $v ...\n";
 
-            execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid");
-
-            execute_shell_command("mkdir ".sparrow_root."/plugins/public/$pid");
+            if ( -d sparrow_root()."/plugins/public/$pid" ){
+              rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
+            }
+            mkdir(sparrow_root()."/plugins/public/$pid") or die "can't create dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
 
             my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz", agent => 'sparrow' );
             my $plg_file = sparrow_root."/plugins/public/$pid/$pid-v$vn.tar.gz";
@@ -204,7 +207,8 @@ to overcome this ambiguity";
 
             print "\n";
 
-            Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" );
+            Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" )
+            or die "can't extract file $plg_file to ".sparrow_root()."/plugins/public/$pid, error: $!";
 
             if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
                 execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
@@ -528,13 +532,13 @@ sub remove_plugin {
 
     if (-d sparrow_root."/plugins/public/$pid" and $ptype ne 'private' ){
         print "removing public\@$pid ...\n";
-        execute_shell_command("rm -rf ".sparrow_root."/plugins/public/$pid/");
+        rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
         $rm_cnt++;
     }
 
     if (-d sparrow_root."/plugins/private/$pid" and $ptype ne 'public' ){
         print "removing private\@$pid ...\n";
-        execute_shell_command("rm -rf ".sparrow_root."/plugins/private/$pid/");
+        rmtree(sparrow_root()."/plugins/private/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/private/$pid, error: $!";
         $rm_cnt++;
     }
 

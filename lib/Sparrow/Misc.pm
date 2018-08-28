@@ -8,6 +8,7 @@ use YAML qw{LoadFile};
 
 use File::Path qw(make_path remove_tree);
 use File::Touch;
+use HTTP::Tiny;
 
 use Sparrow::Constants;
 
@@ -16,6 +17,7 @@ our @EXPORT = qw {
     usage
     init_sparrow_env
     sparrow_config
+    get_http_resource    
 };
 
 my $sparrow_config;
@@ -111,6 +113,18 @@ sub init_sparrow_env {
 
 sub sparrow_config {
     $sparrow_config||{};
+}
+
+sub get_http_resource {
+
+  my $url = shift;
+
+  my $response = HTTP::Tiny->new()->get($url);
+
+  die "Failed to fetch $url: $response->{status} $response->{reason}\n" unless $response->{success};
+
+  return  $response->{content};
+
 }
 
 1;

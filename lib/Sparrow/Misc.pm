@@ -96,10 +96,12 @@ sub usage {
 
 sub init_sparrow_env {
 
-    make_path(sparrow_root);
-    make_path(sparrow_root.'/plugins/private');
-    make_path(sparrow_root.'/plugins/public');
-    make_path(sparrow_root.'/projects');
+    make_path(sparrow_root());
+	print "sparrow root: [", sparrow_root(),"]\n\n";
+	make_path(sparrow_root().'/plugins', { verbose => 1 } ); #
+    make_path(sparrow_root().'/plugins/private');
+    make_path(sparrow_root().'/plugins/public');
+    make_path(sparrow_root().'/projects');
     #remove_tree(sparrow_root.'/cache');
 
     make_path(sparrow_root.'/cache');

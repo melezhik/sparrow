@@ -392,10 +392,16 @@ to overcome this ambiguity";
 
     }
 
-    my $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=\$PWD/local/lib/perl5:\$PERL5LIB && export PYTHONPATH=\$PWD/python-lib:\$PYTHONPATH && ";
+    my $cmd;
+
+	if ($^O  =~ 'MSWin') {
+      $cmd = "cd $pdir && set PATH=%PATH%;%cd%/local/bin && set PERL5LIB=%cd%/local/lib/perl5;\%PERL5LIB% && set PYTHONPATH=%cw%/python-lib;%PYTHONPATH% && ";
+    } else {
+      $cmd = "cd $pdir && export PATH=\$PATH:\$PWD/local/bin && export PERL5LIB=\$PWD/local/lib/perl5:\$PERL5LIB && export PYTHONPATH=\$PWD/python-lib:\$PYTHONPATH && ";
+    }
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task '[plg] $pid'";
+      $cmd.="  strun --root ./ --task \"[plg] $pid\"";
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ";
     }else{
@@ -432,7 +438,12 @@ to overcome this ambiguity";
       print "\n";
     }
 
-    exec $cmd;
+	if ($^O  =~ 'MSWin') {
+		system($cmd) == 0 or "die $!";
+	} else {
+		exec $cmd;
+	}	
+    
 }
 
 sub show_plugin {

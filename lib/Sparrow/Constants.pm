@@ -24,7 +24,7 @@ sub safe_env {
 }
 
 sub sparrow_conf_file () {  
-  $ENV{SPARROW_CONF_PATH} || do { $ENV{SPARROW_ROOT} ? safe_env("$ENV{SPARROW_ROOT}/sparrow.yaml") : save_env("$ENV{HOME}/sparrow.yaml") }
+  $ENV{SPARROW_CONF_PATH} || do { $ENV{SPARROW_ROOT} ? safe_env("$ENV{SPARROW_ROOT}/sparrow.yaml") : safe_env("$ENV{HOME}/sparrow.yaml") }
 };
 
 # sparrow index - for public plugins comes from SparrowHub

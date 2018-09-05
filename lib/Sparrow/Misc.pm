@@ -123,13 +123,18 @@ sub get_http_resource {
   my %opts = @_;
 
   my $agent = $opts{agent} || 'http-tiny';
+  my $res;	
 
-  my $response = HTTP::Tiny->new( agent => $agent )->get($url);
-  
-  die "Failed to fetch $url: $response->{status} $response->{reason}\n" unless $response->{success};
-
-  return  $response->{content};
-
+  if ( -f $url ) {
+		open my $fh1, $url or die "can't open $url to read: $!";
+		$res = join "", <$fh1>;
+		close $fh1;	
+  } else {
+		my $response = HTTP::Tiny->new( agent => $agent )->get($url);
+		die "Failed to fetch $url: $response->{status} $response->{reason}\n" unless $response->{success};
+		$res = $response->{content};		
+  }
+  return $res;
 }
 
 1;

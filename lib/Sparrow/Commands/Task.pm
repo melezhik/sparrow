@@ -289,7 +289,7 @@ sub task_run {
     }
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task '[task] ".($task_set->{task_desc})."'"
+      $cmd.="  strun --root ./ --task \"[task] ".($task_set->{task_desc})."\""
     } elsif ( $spj->{plugin_type} eq 'swat' ) {
       #warn $task_set->{host};
       $cmd.="  swat ./ ". ($task_set->{host}).' ';

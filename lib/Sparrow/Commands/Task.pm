@@ -280,6 +280,8 @@ sub task_run {
 
     my $spj = plugin_meta($pdir);
     
+    my $cmd;
+
     if ($^O  =~ 'MSWin') {
       $cmd = "cd $pdir && set PATH=%PATH%;%cd%/local/bin && set PERL5LIB=%cd%/local/lib/perl5;\%PERL5LIB% && set PYTHONPATH=%cd%/python-lib;%PYTHONPATH% && ";
     } else {

@@ -8,7 +8,7 @@ all_from       'lib/Sparrow.pm';
 
 # Specific dependencies
 
-requires    'Outthentic'      => '0.3.9';
+requires    'Outthentic'      => '0.4.0';
 requires    'Term::ANSIColor' => '4.02';
 requires    'Carton';
 requires    'version';

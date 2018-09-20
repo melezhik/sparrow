@@ -827,6 +827,14 @@ Also see "Disable color output" section.
 
 If set defines an alternative location for sparrow configuration file.
 
+## sparrow_hub_api_url
+
+
+Sets alternative location of SparrowHub API. If not set Sparrow client uses https://sparrowhub.org as API URL.
+
+Primarily used  for internal testing and development. But also see [offline mode support](#offline-mode-support) section.
+
+
 # Remote Tasks
 
 ***WARNING!*** This feature is quite experimental and should be tested.
@@ -917,6 +925,31 @@ To get a list of available public remote tasks say this:
 And finally you can remove remote task:
 
     $ sparrow remote task remove app/old-stuff
+
+# Offline mode support
+
+
+For servers with limited or no access to internet, there is offline mode support.
+
+## Create local repository of Sparrow plugins
+
+
+    $ mkdir -p sparrow-local-repo/api/v1
+    $ mkidr -p sparrow-local-repo/plugins
+
+
+## Copy index file and plugins
+
+    $ curl https://sparrowhub.org/api/v1/index -o sparrow-local-repo/api/v1/index
+    $ curl https://sparrowhub.org/plugins/python-echo-script-v0.001000.tar.gz -o sparrow-local-repo/plugins/python-echo-script-v0.001000.tar.gz
+    $ # so on
+
+## Set sparrow_hub_api_url
+
+    $ export sparrow_hub_api_url=$PWD/sparrow-local-repo
+
+Now Sparrow client will be looking for local repository instead of making requests to internet.
+
 
 # AUTHOR
 

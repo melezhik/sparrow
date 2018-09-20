@@ -1,5 +1,7 @@
 0.3.0
 
+* Offline mode support
+
 * Windows support
 
 * Rewrite platform dependable code to pure Perl

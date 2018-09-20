@@ -8,4 +8,4 @@ install:
 script:
     - "cpanm --installdeps . && perl Makefile.PL && make test && sudo make install"
     - "sparrow index update"
-    - "./test.sh"
+    - "perl run-test.pl"

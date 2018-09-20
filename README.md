@@ -10,9 +10,10 @@ Sparrow - multipurpose scenarios manager.
     $ sudo yum install curl
     $ cpanm Sparrow
 
-# Build status
+# Build statuses
 
 [![Build Status](https://travis-ci.org/melezhik/sparrow.svg)](https://travis-ci.org/melezhik/sparrow)
+[![Build status](https://ci.appveyor.com/api/projects/status/hdowsd2jvmy0x3ae?svg=true)](https://ci.appveyor.com/project/melezhik/sparrow)
 
 # Sparrow plugins
 

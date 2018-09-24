@@ -18,4 +18,4 @@ build_script:
   - gmake install
 
 test_script:
-  - gmake test
+  - perl run-test.pl

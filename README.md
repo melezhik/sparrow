@@ -837,7 +837,7 @@ Primarily used  for internal testing and development. But also see [offline mode
 
 ## SPARROW_UNSECURE
 
-Disable ssl verification during `sparrow plg upload` command. Use this option on your risk.
+Disable ssl verification during `sparrow plg upload, sparrow remote task run` commands. Use this option on your risk.
 
 # Remote Tasks
 

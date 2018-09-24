@@ -657,8 +657,9 @@ sub upload_plugin {
     print "sparrow.json file validated ... \n";
 
     execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    my $unsecure_flag = $ENV{SPARROW_UNSECURE} ? "-k" : "";
     execute_shell_command(
-        "curl -H 'sparrow-user: $cred->{user}' " .
+        "curl $unsecure_flag -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .
         '-f -X POST '.sparrow_hub_api_url().'/api/v1/upload -F archive=@/tmp/archive.tar.gz',
         silent => 1,

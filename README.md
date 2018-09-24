@@ -835,6 +835,9 @@ Sets alternative location of SparrowHub API. If not set Sparrow client uses http
 
 Primarily used  for internal testing and development. But also see [offline mode support](#offline-mode-support) section.
 
+## SPARROW_UNSECURE
+
+Disable ssl verification during `sparrow plg upload` command. Use this option on your risk.
 
 # Remote Tasks
 

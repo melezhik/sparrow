@@ -401,7 +401,13 @@ to overcome this ambiguity";
     }
 
     if ($spj->{plugin_type} eq 'outthentic'){
-      $cmd.="  strun --root ./ --task \"[plg] $pid\"";
+
+  	  if ($^O  =~ 'MSWin') {
+        $cmd.="  strun --root ./ --task \"[plg] $pid\"";
+      } else {
+        $cmd.="  strun --root ./ --task '[plg] $pid'";
+      }
+
     }elsif ( $spj->{plugin_type} eq 'swat' ) {
       $cmd.="  swat ./ ";
     }else{

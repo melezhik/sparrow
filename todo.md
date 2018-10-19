@@ -1,0 +1,2 @@
+- document offline mode
+- sparrow project / task copy action

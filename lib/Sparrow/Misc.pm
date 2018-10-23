@@ -130,9 +130,22 @@ sub get_http_resource {
 		$res = join "", <$fh1>;
 		close $fh1;	
   } else {
-		my $response = HTTP::Tiny->new( agent => $agent )->get($url);
-		die "Failed to fetch $url: $response->{status} $response->{reason}\n" unless $response->{success};
-		$res = $response->{content};		
+    my $a = 1;
+    my $s = 1;
+		while (1){
+      my $response = HTTP::Tiny->new( agent => $agent )->get($url);
+      if ($response->{success}){
+  		  $res = $response->{content};
+        last;
+      } elsif( $response->{code} == 599 ) { # retry N=3 times in case of "Network Connect Timeout" Error
+        $a++;
+        next if $a > 3; # N=3
+        $s = $s*2;
+        print "retrying to fetch the url ... attempt number $a, sleep $s seconds before\n";
+        sleep($s);
+      }
+	  	die "Failed to fetch $url: $response->{status} $response->{reason}\n";
+    }
   }
   return $res;
 }

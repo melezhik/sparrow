@@ -1,3 +1,7 @@
+0.3.3
+
+* Index update - retry to fetch in case of "Network Connect Timeout Error"
+
 0.3.2 2018-10-18
 
 * Changes file dates fixed

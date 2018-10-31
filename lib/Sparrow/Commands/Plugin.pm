@@ -261,6 +261,10 @@ sub install_plugin {
 
       }
 
+    } elsif ( -d sparrow_root()."/plugins/public/$pid/" ) {
+
+      print "plugin ".sparrow_root()."/plugins/public/$pid/ installed locally, nothing to do here ...\n";
+
     } else {
         confess "unknown plugin";
     }

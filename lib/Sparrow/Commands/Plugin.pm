@@ -88,6 +88,35 @@ sub show_installed_plugins {
 
 }
 
+sub install_plugin_deps {
+
+    my $plg_src = shift;
+    my %opts = @_;
+
+    print "install deps for $plg_src ...\n";
+
+    my $pip_command = 'pip';
+
+    if ( -f "$plg_src/cpanfile" ){
+      execute_shell_command("cd $plg_src && carton install");
+    }
+
+    if ( -f "$plg_src/Gemfile" ){
+      execute_shell_command("cd $plg_src && bundle --path local");
+    }
+
+    if ( -f "$plg_src/requirements.txt" and ! $opts{skip_pip_requirements}){
+      open F, "$plg_src/sparrow.json" or confess "can't open file $plg_src/sparrow.json to read: $!";
+      my $sp = join "", <F>;
+      my $spj = decode_json($sp);
+      close F;
+      if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
+        $pip_command = 'pip3'
+      }
+      execute_shell_command("cd $plg_src && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
+    }
+
+}
 
 sub install_plugin {
 
@@ -106,16 +135,16 @@ sub install_plugin {
 
     my $list = read_plugin_list('as_hash');
 
-    if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype){
-        warn "both public and private $pid plugin exists; 
-choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid`
-to overcome this ambiguity";
+    if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype ){
+
+        warn "both public and private $pid plugin exists; choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid` to overcome this ambiguity";
+
         return;
 
-    } elsif($list->{'public@'.$pid} and $ptype ne 'private' ) {
+    } elsif ( $list->{'public@'.$pid} and $ptype ne 'private' ) {
 
-    if (! $opts{'--version'}  and  -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
-
+        if (! $opts{'--version'}  and  -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+  
             open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
             my $sp = join "", <F>;
             my $spj = decode_json($sp);
@@ -127,9 +156,11 @@ to overcome this ambiguity";
             if ($plg_v > $inst_v){
 
                 print "upgrading public\@$pid from version $inst_v to version $plg_v ...\n";
+
                 if ( -d sparrow_root()."/plugins/public/$pid" ){
                   rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
                 }
+
                 mkdir(sparrow_root()."/plugins/public/$pid") or die "can't create dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
 
                 my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$plg_v.tar.gz", agent => 'sparrow' );
@@ -139,50 +170,16 @@ to overcome this ambiguity";
                 print $fh $data;
                 close $fh;
 
-                print "\n";
-          
                 Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" ) 
                 or die "can't extract file $plg_file to ".sparrow_root()."/plugins/public/$pid, error: $!";
 
-                if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
-                }            
-
-                if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
-                }                
-
-                if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
-                  my $sp = join "", <F>;
-                  my $spj = decode_json($sp);
-                  close F;
-                  if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
-                    $pip_command = 'pip3'
-                  }
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
-                }            
+                install_plugin_deps(sparrow_root."/plugins/public/$pid");
 
             } else {
-                print "public\@$pid is uptodate ($inst_v)\n";
-                if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
-                }            
-                if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
-                  execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
-                }                
 
-                if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-                  open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
-                  my $sp = join "", <F>;
-                  my $spj = decode_json($sp);
-                  close F;
-                  if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
-                    $pip_command = 'pip3'
-                  }
-                  #print "cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"\n";
-                  #execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"");
-                }            
+                print "public\@$pid is uptodate ($inst_v)\n";
+
+                install_plugin_deps(sparrow_root."/plugins/public/$pid", skip_pip_requirements => 1);
 
             }
 
@@ -196,6 +193,7 @@ to overcome this ambiguity";
             if ( -d sparrow_root()."/plugins/public/$pid" ){
               rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
             }
+
             mkdir(sparrow_root()."/plugins/public/$pid") or die "can't create dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
 
             my $data = get_http_resource( sparrow_hub_api_url()."/plugins/$pid-v$vn.tar.gz", agent => 'sparrow' );
@@ -205,90 +203,33 @@ to overcome this ambiguity";
             print $fh $data;
             close $fh;
 
-            print "\n";
-
             Archive::Extract->new( archive => $plg_file )->extract( to => sparrow_root()."/plugins/public/$pid" )
             or die "can't extract file $plg_file to ".sparrow_root()."/plugins/public/$pid, error: $!";
 
-            if ( -f sparrow_root."/plugins/public/$pid/cpanfile" ){
-                execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && carton install");
-            }            
-            if ( -f sparrow_root."/plugins/public/$pid/Gemfile" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/public/$pid && bundle --path local");
-            }                
-
-            if ( -f sparrow_root."/plugins/public/$pid/requirements.txt" ){
-              open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
-              my $sp = join "", <F>;
-              my $spj = decode_json($sp);
-              close F;
-              if ( $spj->{python_version} && $spj->{python_version} eq '3' ) {
-                $pip_command = 'pip3'
-              }
-              my $install_cmd="cd ".sparrow_root."/plugins/public/$pid && $pip_command install -t ./python-lib -r requirements.txt --install-option \"--install-scripts=\$PWD/local/bin\"";
-              print "$install_cmd\n";
-              execute_shell_command($install_cmd);
-            }            
+            install_plugin_deps(sparrow_root."/plugins/public/$pid");
 
         }
-        
+          
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
 
         print "installing private\@$pid ...\n";
 
-        if ( -d sparrow_root."/plugins/private/$pid" ){
+        if ( -d sparrow_root."/plugins/private/$pid" ) {
 
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
 
-            if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
-                execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
-            }            
-            if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
-            }                
-
-            if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ){
-              if ( -f sparrow_root."/plugins/private/$pid/sparrow.json" ){
-                open F, sparrow_root."/plugins/private/$pid/sparrow.json" or confess "can't open file to read: $!";
-                my $sp = join "", <F>;
-                my $spj = decode_json($sp);
-                close F;
-  
-                if ( $spj->{python_version} && $spj->{python_version} eq  '3' ) {
-                  $pip_command = 'pip3'
-                }
-              }
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && $pip_command install -t ./python-lib -r requirements.txt");
-            }            
+            install_plugin_deps(sparrow_root."/plugins/private/$pid");
 
         } else {
 
             execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
             execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
 
-            if ( -f sparrow_root."/plugins/private/$pid/cpanfile" ){
-                execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && carton install");
-            }            
+            install_plugin_deps(sparrow_root."/plugins/private/$pid");
 
-            if ( -f sparrow_root."/plugins/private/$pid/Gemfile" ){
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && bundle --path local");
-            }
-
-            if ( -f sparrow_root."/plugins/private/$pid/requirements.txt" ) {
-              if ( -f sparrow_root."/plugins/private/$pid/sparrow.json" ){
-                open F, sparrow_root."/plugins/private/$pid/sparrow.json" or confess "can't open file to read: $!";
-                my $sp = join "", <F>;
-                my $spj = decode_json($sp);
-                close F;
-  
-                if ( $spj->{python_version} && $spj->{python_version} eq  '3' ) {
-                  $pip_command = 'pip3'
-                }
-              }            
-              execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && $pip_command install -t ./python-lib -r requirements.txt");
-            }
       }
+
     } else {
         confess "unknown plugin";
     }
@@ -362,11 +303,8 @@ sub run_plugin {
     my $list = read_plugin_list('as_hash');
 
     if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype){
-        warn "both public and private $pid plugin exists; 
-choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid`
-to overcome this ambiguity";
+        warn "both public and private $pid plugin exists; choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid` to overcome this ambiguity";
         return;
-
     } elsif($list->{'public@'.$pid} and $ptype ne 'private' ) {
       $pdir = sparrow_root."/plugins/public/$pid";
       confess 'plugin not installed' unless -d $pdir;

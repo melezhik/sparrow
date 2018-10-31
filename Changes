@@ -1,5 +1,7 @@
 0.3.3
 
+* Installing plugins from local source
+
 * Index update - retry to fetch in case of "Network Connect Timeout Error"
 
 0.3.2 2018-10-18

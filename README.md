@@ -198,6 +198,10 @@ For example:
     $ sparrow plg install nginx-check  # to download and install a chosen plugin
     $ sparrow plg install nginx-check --version 0.1.1 # install specific version
 
+Installing plugin from local source:
+
+    $ cd /plg/src/ && sparrow plg install .
+
 To see installed plugin list say this:
 
     $ sparrow plg list

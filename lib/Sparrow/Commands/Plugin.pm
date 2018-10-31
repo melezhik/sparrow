@@ -18,6 +18,10 @@ use Getopt::Long qw(GetOptionsFromArray);
 use Archive::Extract;
 use File::Path qw(rmtree);
 
+use Cwd;
+
+use File::Copy::Recursive qw(dircopy);
+
 our @EXPORT = qw{
 
     search_plugins
@@ -126,8 +130,6 @@ sub install_plugin {
 
     my $ptype;
 
-    my $pip_command = 'pip';
-
     if ($pid=~/(public|private)@/){
         $ptype = $1;
         $pid=~s/(public|private)@//;
@@ -135,7 +137,36 @@ sub install_plugin {
 
     my $list = read_plugin_list('as_hash');
 
-    if (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype ){
+    if ($pid eq '.'){ # install plugin from local source as public plugin
+
+      my $dir = getcwd;
+
+      open F, "$dir/sparrow.json" or confess "can't open file $dir/sparrow.json to read: $!";
+      my $sp = join "", <F>;
+      my $spj = decode_json($sp);
+      close F;
+
+      my $v = version->parse($spj->{version});
+      $pid = $spj->{name};
+
+      print "install public\@$pid version $v from local source\n";
+
+
+      if ( -d sparrow_root()."/plugins/public/$pid" ){
+        rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
+      }
+
+      mkdir(sparrow_root()."/plugins/public/$pid") or die "can't create dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
+
+      dircopy($dir,sparrow_root()."/plugins/public/$pid/");
+
+      if ( -d sparrow_root()."/plugins/public/$pid/.git" ){
+        rmtree(sparrow_root()."/plugins/public/$pid/.git") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid/.git, error: $!";
+      }
+
+      install_plugin_deps(sparrow_root."/plugins/public/$pid");
+
+    } elsif (! $ptype && $list->{'public@'.$pid} && $list->{'private@'.$pid} && ! $ptype ){
 
         warn "both public and private $pid plugin exists; choose `sparrow plg install public\@$pid` or `sparrow plg install private\@$pid` to overcome this ambiguity";
 

@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.3.2';
+our $VERSION = '0.3.3';
 
 1;
 
@@ -674,37 +674,64 @@ Dump-config could be useful when copy some task configuration into other:
 
 =head2 Task boxes API
 
-Use this command to run task box
+Run task box - collection of sparrow tasks.
 
 B<sparrow box run $path [opts]>
 
-Where $path sets the file path to task box json file. 
+Where $path is the path to task box specification file ( json or yaml format). 
 
 
-=head2 The structure of the file for outthentic plugins:
+=head2 The structure of task box specification file ( outthentic plugins ):
+
+JSON:
 
     [
     
-      {
-        "task" : "task_name",
+      { // task1
+        "task" : "task1_name",
         "plugin" : "plugin_name",
-        "data" : {
-            : plugin parameters 
+        "data" : { // plugin parameters
+            "param1" : "value1",
+            "param2" : "value2"
         }
       },
-      {
-        // another task
-      },
-    
-      ...
-    
+      { // task2
+        "task" : "task2_name",
+        "plugin" : "plugin_name",
+        "data" : { // plugin parameters
+            "param1" : "value1",
+            "param2" : "value2"
+        }
+      }
+      // so on
     ]
 
-Command example
+YAML:
+
+    ---
+    # task1
+    - task: task1_name
+      plugin: plugin name
+      data:
+        param1: value1
+        param2: value2
+    # task2
+    - task: task2_name
+      plugin: plugin_name
+      data:
+        param1: value1
+        param2: value2
+      # so on
+
+Command example:
 
     $ sparrow box run /var/sparrow/boxes/nginx.json
+    
+    $ sparrow box run /var/sparrow/boxes/nginx.yaml
 
-Thus task box files should hold a list of sparrow tasks. Here is example:
+Task box specification file example:
+
+JSON:
 
     [
     
@@ -726,29 +753,65 @@ Thus task box files should hold a list of sparrow tasks. Here is example:
     
     ]
 
+YAML:
 
-=head2 The structure of the file for swat plugins:
+    ---
+    - task: disk check
+      plugin: df-check
+      data:
+        threshold: 95
+    - task: disk check
+      plugin: df-check
+      data:
+        threshold: 95
+    - task: test plugin
+      plugin: foo-generic
+      data: {}
+    - task: test ruby plugin
+      plugin: ruby-test
+      data: {}
+
+
+=head2 The structure of tasks box specification file ( swat plugins ):
+
+JSON
 
     [
-    
+      // task1
       {
-        "task" : "task_name",
+        "task" : "task1_name",
         "plugin" : "plugin_name",
         "type" : "swat",
         "host" : "http host"
       },
+      // task2
       {
-        // another task
-      },
-    
-      ...
-    
+        "task" : "task2_name",
+        "plugin" : "plugin_name",
+        "type" : "swat",
+        "host" : "http host"
+      }
+      // so on
     ]
+    
+    
+    ---
+    # task1
+    - task: task1_name
+      plugin: plugin_name
+      type: swat
+      host: http host
+    # task2
+    - task: task2_name
+      plugin: plugin_name
+      type: swat
+      host: http host
+    # so on
 
 
 =head2 Sparrow box run parameters
 
-To suppress some extra message from this command use C<--mode quiet>:
+To make command output less verbose ( suppress some details ) use C<--mode quiet> option:
 
     $ sparrow box run /path/to/my/box/ --mode quiet
 

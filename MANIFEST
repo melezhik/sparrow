@@ -43,8 +43,10 @@ examples/remote-task-run/public/nano-rc/story.check
 examples/ruby-plg-run/story.bash
 examples/ruby-plg-run/story.check
 examples/suite.ini
-examples/task-box-run/story.bash
-examples/task-box-run/story.check
+examples/task-box-run/json/story.bash
+examples/task-box-run/json/story.check
+examples/task-box-run/yaml/story.bash
+examples/task-box-run/yaml/story.check
 examples/task-create-existed/story.check
 examples/task-create-existed/story.pm
 examples/task-create/story.check
@@ -63,6 +65,7 @@ examples/task-run/story.bash
 examples/task-run/story.check
 examples/task-run/story.pm
 examples/testbox.json
+examples/testbox.yaml
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
@@ -88,5 +91,7 @@ README.md
 run-test.pl
 sparrowfile
 t/00.t
+todo.md
 utils/install.pl6
 utils/make-dist.pl6
+utils/make-doc.pl6

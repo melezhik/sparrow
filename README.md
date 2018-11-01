@@ -488,39 +488,64 @@ Dump-config could be useful when copy some task configuration into other:
 
 ## Task boxes API
 
-Use this command to run task box
+Run task box - collection of sparrow tasks.
 
 **sparrow box run $path [opts]**
 
-Where $path sets the file path to task box json file. 
+Where $path is the path to task box specification file ( json or yaml format). 
 
-## The structure of the file for outthentic plugins:
+## The structure of task box specification file ( outthentic plugins ):
+
+JSON:
 
     [
 
-      {
-        "task" : "task_name",
+      { // task1
+        "task" : "task1_name",
         "plugin" : "plugin_name",
-        "data" : {
-            : plugin parameters 
+        "data" : { // plugin parameters
+            "param1" : "value1",
+            "param2" : "value2"
         }
       },
-      {
-        // another task
-      },
-
-      ...
-
+      { // task2
+        "task" : "task2_name",
+        "plugin" : "plugin_name",
+        "data" : { // plugin parameters
+            "param1" : "value1",
+            "param2" : "value2"
+        }
+      }
+      // so on
     ]
 
+YAML:
 
-Command example
+    -
+      # task1
+      - task: task1_name
+      - plugin : plugin_name
+      - data:
+        param1 : value 
+        param2 : value2 
+  
+      # task2
+      - task: task2_name
+      - plugin : plugin2_name
+      - data:
+        param1 : value 
+        param2 : value2 
+  
+      # so on
+  
+Command example:
 
     $ sparrow box run /var/sparrow/boxes/nginx.json
 
+    $ sparrow box run /var/sparrow/boxes/nginx.yaml
 
-Thus task box files should hold a list of sparrow tasks. Here is example:
 
+Task box specification file example:
 
     [
 
@@ -542,31 +567,31 @@ Thus task box files should hold a list of sparrow tasks. Here is example:
 
     ]
 
-
-## The structure of the file for swat plugins:
+## The structure of tasks box specification file ( swat plugins ):
 
 
     [
-
+      // task1
       {
-        "task" : "task_name",
+        "task" : "task1_name",
         "plugin" : "plugin_name",
         "type" : "swat",
         "host" : "http host"
       },
+      // task2
       {
-        // another task
-      },
-
-      ...
-
+        "task" : "task2_name",
+        "plugin" : "plugin_name",
+        "type" : "swat",
+        "host" : "http host"
+      }
+      // so on
     ]
-
 
 
 ## Sparrow box run parameters
 
-To suppress some extra message from this command use `--mode quiet`:
+To make command output less verbose ( suppress some details ) use `--mode quiet` option:
 
     $ sparrow box run /path/to/my/box/ --mode quiet
 

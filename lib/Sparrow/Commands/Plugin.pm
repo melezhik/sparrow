@@ -468,7 +468,7 @@ sub show_plugin {
 
     if (! $listed ) {
         if ( -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
-            print "public\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";
+            print "public\@$pid plugin installed, but not found at sparrow index. is it locally installed plugin?\n";
         }
         if ( -d sparrow_root."/plugins/private/$pid" ){
             print "private\@$pid plugin installed, but not found at sparrow index. is it obsolete plugin?\n";

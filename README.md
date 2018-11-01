@@ -523,13 +523,13 @@ YAML:
 
     ---
     # task1
-    - task: task1
+    - task: task1_name
       plugin: plugin name
       data:
         param1: value1
         param2: value2
     # task2
-    - task: task2
+    - task: task2_name
       plugin: plugin_name
       data:
         param1: value1
@@ -588,6 +588,8 @@ YAML:
 ## The structure of tasks box specification file ( swat plugins ):
 
 
+JSON
+
     [
       // task1
       {
@@ -607,6 +609,19 @@ YAML:
     ]
 
 
+    ---
+    # task1
+    - task: task1_name
+      plugin: plugin_name
+      type: swat
+      host: http host
+    # task2
+    - task: task2_name
+      plugin: plugin_name
+      type: swat
+      host: http host
+    # so on
+    
 ## Sparrow box run parameters
 
 To make command output less verbose ( suppress some details ) use `--mode quiet` option:

@@ -521,21 +521,19 @@ JSON:
 
 YAML:
 
-    -
-      # task1
-      - task: task1_name
-      - plugin : plugin_name
-      - data:
-        param1 : value 
-        param2 : value2 
-  
-      # task2
-      - task: task2_name
-      - plugin : plugin2_name
-      - data:
-        param1 : value 
-        param2 : value2 
-  
+    ---
+    # task1
+    - task: task1
+      plugin: plugin name
+      data:
+        param1: value1
+        param2: value2
+    # task2
+    - task: task2
+      plugin: plugin_name
+      data:
+        param1: value1
+        param2: value2
       # so on
   
 Command example:
@@ -546,6 +544,8 @@ Command example:
 
 
 Task box specification file example:
+
+JSON:
 
     [
 
@@ -567,6 +567,24 @@ Task box specification file example:
 
     ]
 
+YAML:
+
+    ---
+    - task: disk check
+      plugin: df-check
+      data:
+        threshold: 95
+    - task: disk check
+      plugin: df-check
+      data:
+        threshold: 95
+    - task: test plugin
+      plugin: foo-generic
+      data: {}
+    - task: test ruby plugin
+      plugin: ruby-test
+      data: {}
+    
 ## The structure of tasks box specification file ( swat plugins ):
 
 

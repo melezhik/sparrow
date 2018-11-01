@@ -6,6 +6,7 @@ use base 'Exporter';
 
 use Carp;
 use JSON;
+use YAML;
 use Sparrow::Commands::Project;
 use Sparrow::Commands::Task;
 use Sparrow::Commands::Plugin;
@@ -27,13 +28,21 @@ sub box_run {
 
     delete $opts{'--mode'};
 
-    open JSON, $path or confess "can't open file $path to read: $!";
+    open TXBSPEC, $path or confess "can't open file $path to read: $!";
 
-    my $json_str = join "", <JSON>;
+    my $spec_str = join "", <TXBSPEC>;
 
-    close  JSON;
+    close TXBSPEC;
 
-    my $tasklist = decode_json $json_str;
+    my $tasklist = [];
+
+    if ($path=~/\.(yaml|yaml)$/){
+      $tasklist =  Load($spec_str);
+    } elsif ($path=~/\.(json|js)$/) {
+      $tasklist =  decode_json($spec_str);
+    } else {
+      die "unsupported task box spec format: $path";
+    }
 
     my %plg_seen;
 

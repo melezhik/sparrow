@@ -36,7 +36,7 @@ sub box_run {
 
     my $tasklist = [];
 
-    if ($path=~/\.(yaml|yaml)$/){
+    if ($path=~/\.(yaml|yml)$/){
       $tasklist =  Load($spec_str);
     } elsif ($path=~/\.(json|js)$/) {
       $tasklist =  decode_json($spec_str);

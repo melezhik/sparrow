@@ -1,5 +1,7 @@
 0.3.3
 
+* Fix for "Can't build after perl version 5.26 or higher" - #26
+
 * Installing plugins from local source
 
 * Index update - retry to fetch in case of "Network Connect Timeout Error"

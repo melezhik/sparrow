@@ -588,7 +588,7 @@ YAML:
 ## The structure of tasks box specification file ( swat plugins ):
 
 
-JSON
+JSON:
 
     [
       // task1
@@ -608,6 +608,8 @@ JSON
       // so on
     ]
 
+
+YAML:
 
     ---
     # task1

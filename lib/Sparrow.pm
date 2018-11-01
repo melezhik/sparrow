@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.3.3';
+our $VERSION = '0.3.4';
 
 1;
 
@@ -774,7 +774,7 @@ YAML:
 
 =head2 The structure of tasks box specification file ( swat plugins ):
 
-JSON
+JSON:
 
     [
       // task1
@@ -793,8 +793,9 @@ JSON
       }
       // so on
     ]
-    
-    
+
+YAML:
+
     ---
     # task1
     - task: task1_name

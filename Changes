@@ -1,3 +1,8 @@
+0.3.4 2018-11-01
+
+* Hot fix to run locally installed plugins
+* Minor documentation fixes
+
 0.3.3 2018-11-01
 
 * Task box spec files in YAML format - #25

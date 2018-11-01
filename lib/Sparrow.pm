@@ -6,8 +6,6 @@ our $VERSION = '0.3.2';
 
 __END__
 
-=pod
-
 
 =encoding utf8
 
@@ -16,7 +14,9 @@ __END__
 
 Sparrow - multipurpose scenarios manager.
 
+
 =head1 SYNOPSIS
+
 
 =head1 Install
 
@@ -25,9 +25,10 @@ Sparrow - multipurpose scenarios manager.
     $ cpanm Sparrow
 
 
-=head1 Build status
+=head1 Build statuses
 
 L<![Build Status](https://travis-ci.org/melezhik/sparrow.svg)|https://travis-ci.org/melezhik/sparrow>
+L<![Build status](https://ci.appveyor.com/api/projects/status/hdowsd2jvmy0x3ae?svg=true)|https://ci.appveyor.com/project/melezhik/sparrow>
 
 
 =head1 Sparrow plugins
@@ -304,6 +305,10 @@ For example:
     $ sparrow plg search  nginx        # to get know available nginx* plugins
     $ sparrow plg install nginx-check  # to download and install a chosen plugin
     $ sparrow plg install nginx-check --version 0.1.1 # install specific version
+
+Installing plugin from local source:
+
+    $ cd /plg/src/ && sparrow plg install .
 
 To see installed plugin list say this:
 
@@ -673,7 +678,10 @@ Use this command to run task box
 
 B<sparrow box run $path [opts]>
 
-Where $path sets the file path to task box json file. A structure of the file:
+Where $path sets the file path to task box json file. 
+
+
+=head2 The structure of the file for outthentic plugins:
 
     [
     
@@ -692,7 +700,7 @@ Where $path sets the file path to task box json file. A structure of the file:
     
     ]
 
-Command example:
+Command example
 
     $ sparrow box run /var/sparrow/boxes/nginx.json
 
@@ -717,6 +725,28 @@ Thus task box files should hold a list of sparrow tasks. Here is example:
       }
     
     ]
+
+
+=head2 The structure of the file for swat plugins:
+
+    [
+    
+      {
+        "task" : "task_name",
+        "plugin" : "plugin_name",
+        "type" : "swat",
+        "host" : "http host"
+      },
+      {
+        // another task
+      },
+    
+      ...
+    
+    ]
+
+
+=head2 Sparrow box run parameters
 
 To suppress some extra message from this command use C<--mode quiet>:
 
@@ -1177,6 +1207,18 @@ Also see "Disable color output" section.
 If set defines an alternative location for sparrow configuration file.
 
 
+=head2 sparrowI<hub>api_url
+
+Sets alternative location of SparrowHub API. If not set Sparrow client uses https://sparrowhub.org as API URL.
+
+Primarily used  for internal testing and development. But also see L<offline mode support|#offline-mode-support> section.
+
+
+=head2 SPARROW_UNSECURE
+
+Disable ssl verification during C<sparrow plg upload, sparrow remote task run> commands. Use this option on your risk.
+
+
 =head1 Remote Tasks
 
 B<I<WARNING!>> This feature is quite experimental and should be tested.
@@ -1272,6 +1314,31 @@ To get a list of available public remote tasks say this:
 And finally you can remove remote task:
 
     $ sparrow remote task remove app/old-stuff
+
+
+=head1 Offline mode support
+
+For servers with limited or no access to internet, there is offline mode support.
+
+
+=head2 Create local repository of Sparrow plugins
+
+    $ mkdir -p sparrow-local-repo/api/v1
+    $ mkidr -p sparrow-local-repo/plugins
+
+
+=head2 Copy index file and plugins
+
+    $ curl https://sparrowhub.org/api/v1/index -o sparrow-local-repo/api/v1/index
+    $ curl https://sparrowhub.org/plugins/python-echo-script-v0.001000.tar.gz -o sparrow-local-repo/plugins/python-echo-script-v0.001000.tar.gz
+    $ # so on
+
+
+=head2 Set sparrowI<hub>api_url
+
+    $ export sparrow_hub_api_url=$PWD/sparrow-local-repo
+
+Now Sparrow client will be looking for local repository instead of making requests to internet.
 
 
 =head1 AUTHOR

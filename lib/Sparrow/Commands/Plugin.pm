@@ -346,8 +346,11 @@ sub run_plugin {
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
       $pdir = sparrow_root."/plugins/private/$pid";
       confess 'plugin not installed' unless -d $pdir;
-    }else{
-        confess "unknown plugin";
+    } elsif  ( -d sparrow_root."/plugins/public/$pid" ) {
+      warn "plugin is not listed in the index, locally installed one?";
+      $pdir = sparrow_root."/plugins/public/$pid";
+    } else{
+      confess "unknown plugin";
     }
 
 

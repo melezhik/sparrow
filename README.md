@@ -494,11 +494,11 @@ To port tasks from one server to another use `save|restore` command:
 
     $ sparrow task restore /var/data/tasks
 
-**sparrow task save /path/to/tasks/dir
+**sparrow task save /path/to/tasks/dir**
 
 Sparrow `task save` command accept path to directory where existing tasks get dumped and saved to.
 
-**sparrow task restore /path/to/tasks/dir
+**sparrow task restore /path/to/tasks/dir**
 
 Likewise sparrow `task restore` command accept path to directory with tasks to restore.
 

@@ -23,6 +23,10 @@ use Term::ANSIColor;
 
 use Getopt::Long qw(GetOptionsFromArray);
 
+use File::Copy::Recursive qw(dircopy);
+
+use File::Path qw(rmtree);
+
 our @EXPORT = qw{
 
     task_list
@@ -38,6 +42,9 @@ our @EXPORT = qw{
 
     task_get
     task_set
+
+    task_save
+    task_restore
 
 };
 
@@ -429,6 +436,32 @@ sub task_set {
 
 }
 
+sub task_save {
+
+    my $dir = shift or confess "usage: task_save(*/path/to/dir)";
+
+    die "directory $dir does not exist" unless -d $dir;
+
+    if ( -d "$dir/projects" ){
+      rmtree("$dir/projects") or die "can't remove dir: $dir/projects, error: $!";
+    }
+
+    if ( -d "$dir/plugins" ){
+      rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
+    }
+
+    print "copy projects ...\n";
+
+    dircopy(sparrow_root()."/projects",$dir);
+}
+
+sub task_restore {
+
+    my $dir = shift or confess "usage: task_restore(*/path/to/dir)";
+
+    die "directory $dir does not exist" unless -d $dir;
+
+}
 
 sub nocolor { $ENV{SPARROW_NO_COLOR} }
 

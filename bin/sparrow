@@ -168,6 +168,14 @@ if ($object eq  'plg'){
 
         task_remove((split '/', $name), @ARGV);
 
+    } elsif( $action  eq 'save'){
+
+        task_save(@ARGV);
+
+    } elsif( $action  eq 'restore'){
+
+        task_restore(@ARGV);
+
     } else  { 
 
         confess "unknown command: $action @ARGV";

@@ -486,6 +486,22 @@ Dump-config could be useful when copy some task configuration into other:
     $ sparrow task load ini system/disk2 /tmp/system-disk.json
 
 
+### Save/Restore tasks
+
+To port tasks from one server to another use `save|restore` command:
+
+    $ sparrow task save /var/data/tasks
+
+    $ sparrow task restore /var/data/tasks
+
+**sparrow task save /path/to/tasks/dir
+
+Sparrow `task save` command accept path to directory where existing tasks get dumped and saved to.
+
+**sparrow task restore /path/to/tasks/dir
+
+Likewise sparrow `task restore` command accept path to directory with tasks to restore.
+
 ## Task boxes API
 
 Run task box - collection of sparrow tasks.

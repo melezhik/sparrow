@@ -471,7 +471,7 @@ sub task_save {
       @ignore = ();
     }
 
-    print "save current tasks to [$dir]...\n=========================\n";
+    print "save current tasks to [$dir] ...\n=========================\n";
 
     my $spr = sparrow_root()."/projects";
     opendir(my $dh, $spr) || confess "can't opendir $spr: $!";

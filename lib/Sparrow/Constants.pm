@@ -12,6 +12,7 @@ our @EXPORT = qw {
     sparrow_root
     sparrow_hub_api_url
     editor
+    default_task_ignore_file
 };
 
 
@@ -47,5 +48,8 @@ sub sparrow_root () { safe_env($ENV{SPARROW_ROOT} || home_dir()."/sparrow") };
 sub sparrow_hub_api_url () { $ENV{sparrow_hub_api_url} || 'https://sparrowhub.org' };
 
 sub editor () { $ENV{'EDITOR'} };
+
+# default task ignore file
+sub default_task_ignore_file () { safe_env(home_dir()."/task.ignore") };
 
 1;

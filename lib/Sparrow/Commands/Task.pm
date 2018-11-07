@@ -451,6 +451,15 @@ sub task_save {
       rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
     }
 
+    my @ignore;
+    if ($opts{ignore}){
+      @ignore = parse_task_ignore_file($opts{ignore});
+    } elsif ( -f default_task_ignore_file() ) {
+      @ignore = parse_task_ignore_file(default_task_ignore_file());
+    } else {
+      @ignore = ();
+    }
+
     print "copy projects ...\n";
 
     dircopy(sparrow_root()."/projects",$dir);
@@ -462,6 +471,22 @@ sub task_restore {
 
     die "directory $dir does not exist" unless -d $dir;
 
+}
+
+sub parse_task_ignore_file {
+
+  my $path = shift;
+  my @ignore;
+
+  open my $fh, $path or die "can't open file [$path] to read: $!";
+  while( my $l = <$fh>){
+    chomp $l;
+    $l=~s/(.*)#.*/$1/;
+    my ($project, $task) = split /\//, $l;
+    push @ignore, [ $project, $task ]
+  }
+  close $fh;
+  return @ignore;
 }
 
 sub nocolor { $ENV{SPARROW_NO_COLOR} }

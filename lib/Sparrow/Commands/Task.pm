@@ -451,15 +451,15 @@ sub task_save {
       rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
     }
 
-    my %ignore;
+    my @ignore;
     if ($opts{ignore}){
       print "read task ignore file from $opts{ignore} ...\n";
-      %ignore = parse_task_ignore_file($opts{ignore});
+      @ignore = parse_task_ignore_file($opts{ignore});
     } elsif ( -f default_task_ignore_file() ) {
       print "read task ignore file from ".(default_task_ignore_file())." ...\n";
-      %ignore = parse_task_ignore_file(default_task_ignore_file());
+      @ignore = parse_task_ignore_file(default_task_ignore_file());
     } else {
-      %ignore = ();
+      @ignore = ();
     }
 
     print "copy current tasks ...\n=========================\n";
@@ -473,7 +473,11 @@ sub task_save {
         opendir(my $th, "$spr/$p/tasks") || confess "can't opendir $spr/$p: $!";
         for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
           my $task = basename($t);
-          if ($ignore{"$project/$task"}){
+          my $skip = 0;
+          for my $i (@ignore){
+            $skip=1 if "$project:$task" =~ /^$i$/;
+          };
+          if ($skip){
             print "SKIP $project/$task ...\n";
           } else {
             print "$project/$task ...\n";
@@ -497,17 +501,18 @@ sub task_restore {
 sub parse_task_ignore_file {
 
   my $path = shift;
-  my %ignore;
+  my @ignore;
 
   open my $fh, $path or die "can't open file [$path] to read: $!";
   while( my $l = <$fh>){
     chomp $l;
     $l=~s/(.*)#.*/$1/;
     $l=~s/\s+//g;
-    $ignore{$l}=1;
+    $l=~s{/}[:];
+    push @ignore, $l;
   }
   close $fh;
-  return %ignore;
+  return @ignore;
 }
 
 sub nocolor { $ENV{SPARROW_NO_COLOR} }

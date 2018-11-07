@@ -451,18 +451,39 @@ sub task_save {
       rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
     }
 
-    my @ignore;
+    my %ignore;
     if ($opts{ignore}){
-      @ignore = parse_task_ignore_file($opts{ignore});
+      print "read task ignore file from $opts{ignore} ...\n";
+      %ignore = parse_task_ignore_file($opts{ignore});
     } elsif ( -f default_task_ignore_file() ) {
-      @ignore = parse_task_ignore_file(default_task_ignore_file());
+      print "read task ignore file from ".(default_task_ignore_file())." ...\n";
+      %ignore = parse_task_ignore_file(default_task_ignore_file());
     } else {
-      @ignore = ();
+      %ignore = ();
     }
 
-    print "copy projects ...\n";
+    print "copy current tasks ...\n=========================\n";
 
-    dircopy(sparrow_root()."/projects",$dir);
+    my $spr = sparrow_root()."/projects";
+    opendir(my $dh, $spr) || confess "can't opendir $spr: $!";
+
+    for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
+        next unless -d "$spr/$p/tasks";
+        my $project = basename($p);
+        opendir(my $th, "$spr/$p/tasks") || confess "can't opendir $spr/$p: $!";
+        for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
+          my $task = basename($t);
+          if ($ignore{"$project/$task"}){
+            print "SKIP $project/$task ...\n";
+          } else {
+            print "$project/$task ...\n";
+            dircopy("$spr/$project/$task",$dir);
+          }
+        }
+        closedir $th;
+    }
+    closedir $dh;
+
 }
 
 sub task_restore {
@@ -476,17 +497,17 @@ sub task_restore {
 sub parse_task_ignore_file {
 
   my $path = shift;
-  my @ignore;
+  my %ignore;
 
   open my $fh, $path or die "can't open file [$path] to read: $!";
   while( my $l = <$fh>){
     chomp $l;
     $l=~s/(.*)#.*/$1/;
-    my ($project, $task) = split /\//, $l;
-    push @ignore, [ $project, $task ]
+    $l=~s/\s+//g;
+    $ignore{$l}=1;
   }
   close $fh;
-  return @ignore;
+  return %ignore;
 }
 
 sub nocolor { $ENV{SPARROW_NO_COLOR} }

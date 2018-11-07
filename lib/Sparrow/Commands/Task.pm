@@ -513,6 +513,53 @@ sub task_restore {
 
     die "directory $dir does not exist" unless -d $dir;
 
+    my @opts = @_;
+
+    my $quiet_mode;
+
+    my $args_st = GetOptionsFromArray( 
+      \@opts,
+      "quiet"     => \$quiet_mode,
+    );
+
+
+    print "restore tasks from [$dir] ...\n=========================\n";
+
+    my $spr = sparrow_root()."/projects";
+
+    opendir(my $dh, "$dir/projects") || confess "can't opendir $dir/projects: $!";
+
+    for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
+
+        my $project = basename($p);
+
+        make_path("$spr/$project");
+
+        next unless -d "$dir/projects/$p/tasks";
+
+        opendir(my $th, "$dir/projects/$p/tasks") || confess "can't opendir $dir/projects/$p/tasks : $!";
+
+        for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
+          my $task = basename($t);
+          print "restore $project/$task ...\n" unless $quiet_mode;
+          make_path("$spr/$project/tasks/$task/");
+
+          if (-f "$dir/projects/$project/tasks/$task/settings.json" ){
+              copy("$dir/projects/$project/tasks/$task/settings.json", "$spr/$project/tasks/$task/");
+              my $task_set = task_get($project,$task);
+              my $plg = $task_set->{plugin};
+              install_plugin($plg);
+          } else {
+            warn "broken task $dir/projects/$project/tasks/$task/ , settings.json file not found";
+          }
+          if (-f "$dir/projects/$project/tasks/$task/suite.cfg" ){
+              copy("$dir/projects/$project/tasks/$task/suite.cfg", "$spr/$project/tasks/$task/");
+          };
+       }
+       closedir $th;
+    }
+    closedir $dh;
+
 }
 
 sub parse_task_ignore_file {

@@ -502,6 +502,46 @@ Sparrow `task save` command accept path to directory where existing tasks get du
 
 Likewise sparrow `task restore` command accept path to directory with tasks to restore.
 
+`Merge` option.
+
+By default `sparrow task save` remove existing data ( if found ) from target directory. You disable this
+behavior by passing `--merge` option:
+
+    $ sparrow task save /var/data/tasks --merge # add currents tasks to existed in  /var/data/tasks
+
+Ignore tasks.
+
+You can omit some project/tasks from resulted save using `task.ignore` file:
+
+
+    $ nano ~/task.ignore
+
+    project1/task1
+    project2/task2
+
+This will exclude the project1/task2 and project2/task2 tasks from resulted save. You can use regexp here:
+
+    $ nano ~/task.ignore
+
+    project1/.* # any tasks from project1
+    project2/task[2-9] # tasks 2 .. 9 from project2
+
+The format of task ignore file:
+
+    project_name/task_name
+
+Where `project_name` and `task_name` could be full names or regexps.
+
+
+You may specify alternative location for task ignore file using `--ignore` option:
+
+
+    $ sparrow task save /var/data/tasks --ignore /etc/task.ignore
+
+
+The default location for task ignore file is `~/task.ignore`
+
+
 ## Task boxes API
 
 Run task box - collection of sparrow tasks.

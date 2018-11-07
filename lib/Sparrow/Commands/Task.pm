@@ -439,14 +439,15 @@ sub task_set {
 sub task_save {
 
     my $dir = shift or confess "usage: task_save(*/path/to/dir)";
+    my %opts = @_;
 
     die "directory $dir does not exist" unless -d $dir;
 
-    if ( -d "$dir/projects" ){
+    if ( -d "$dir/projects" and ! $opts{merge}){
       rmtree("$dir/projects") or die "can't remove dir: $dir/projects, error: $!";
     }
 
-    if ( -d "$dir/plugins" ){
+    if ( -d "$dir/plugins" and ! $opts{merge} ){
       rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
     }
 

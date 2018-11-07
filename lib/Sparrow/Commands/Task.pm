@@ -23,9 +23,9 @@ use Term::ANSIColor;
 
 use Getopt::Long qw(GetOptionsFromArray);
 
-use File::Copy::Recursive qw(dircopy);
+use File::Copy;
 
-use File::Path qw(rmtree);
+use File::Path qw(rmtree make_path);
 
 our @EXPORT = qw{
 
@@ -439,22 +439,31 @@ sub task_set {
 sub task_save {
 
     my $dir = shift or confess "usage: task_save(*/path/to/dir)";
-    my %opts = @_;
+    my @opts = @_;
+
+    my $quiet_mode;
+    my $ignore_path;
+    my $merge_mode;
+
+    my $args_st = GetOptionsFromArray( 
+      \@opts,
+      "quiet"     => \$quiet_mode,
+      "merge"     => \$merge_mode,
+      "ignore=s"  => \$ignore_path,
+    );
+
 
     die "directory $dir does not exist" unless -d $dir;
 
-    if ( -d "$dir/projects" and ! $opts{merge}){
+    if ( -d "$dir/projects" and ! $merge_mode ) {
       rmtree("$dir/projects") or die "can't remove dir: $dir/projects, error: $!";
     }
 
-    if ( -d "$dir/plugins" and ! $opts{merge} ){
-      rmtree("$dir/plugins") or die "can't remove dir: $dir/plugins, error: $!";
-    }
-
     my @ignore;
-    if ($opts{ignore}){
-      print "read task ignore file from $opts{ignore} ...\n";
-      @ignore = parse_task_ignore_file($opts{ignore});
+
+    if ($ignore_path){
+      print "read task ignore file from $ignore_path ...\n";
+      @ignore = parse_task_ignore_file($ignore_path);
     } elsif ( -f default_task_ignore_file() ) {
       print "read task ignore file from ".(default_task_ignore_file())." ...\n";
       @ignore = parse_task_ignore_file(default_task_ignore_file());
@@ -462,7 +471,7 @@ sub task_save {
       @ignore = ();
     }
 
-    print "copy current tasks ...\n=========================\n";
+    print "save current tasks to [$dir]...\n=========================\n";
 
     my $spr = sparrow_root()."/projects";
     opendir(my $dh, $spr) || confess "can't opendir $spr: $!";
@@ -478,10 +487,18 @@ sub task_save {
             $skip=1 if "$project:$task" =~ /^$i$/;
           };
           if ($skip){
-            print "SKIP $project/$task ...\n";
+            print "SKIP $project/$task ...\n" unless $quiet_mode;
           } else {
-            print "$project/$task ...\n";
-            dircopy("$spr/$project/$task",$dir);
+            print "$project/$task ...\n" unless $quiet_mode;
+            make_path("$dir/projects/$project/tasks/$task/");
+            if (-f "$spr/$project/tasks/$task/settings.json" ){
+                copy("$spr/$project/tasks/$task/settings.json", "$dir/projects/$project/tasks/$task/");
+            } else {
+              warn "broken task $spr/$project/tasks/$task/ , settings.json file not found";
+            }
+            if (-f "$spr/$project/tasks/$task/suite.cfg" ){
+                copy("$spr/$project/tasks/$task/suite.cfg", "$dir/projects/$project/tasks/$task/");
+            };
           }
         }
         closedir $th;

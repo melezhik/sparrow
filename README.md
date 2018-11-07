@@ -542,6 +542,11 @@ You may specify alternative location for task ignore file using `--ignore` optio
 The default location for task ignore file is `~/task.ignore`
 
 
+Other options:
+
+- `--quiet` - makes output less verbose
+
+
 ## Task boxes API
 
 Run task box - collection of sparrow tasks.

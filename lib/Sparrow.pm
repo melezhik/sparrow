@@ -672,6 +672,69 @@ Dump-config could be useful when copy some task configuration into other:
     $ sparrow task load ini system/disk2 /tmp/system-disk.json
 
 
+=head3 Save/Restore tasks
+
+To port tasks from one server to another use C<save|restore> command:
+
+    $ sparrow task save /var/data/tasks
+    
+    $ sparrow task restore /var/data/tasks
+
+B<sparrow task save /path/to/tasks/dir>
+
+Sparrow C<task save> command accept path to directory where existing tasks get dumped and saved to.
+
+B<sparrow task restore /path/to/tasks/dir>
+
+Likewise sparrow C<task restore> command accept path to directory with tasks to restore.
+
+C<Merge> option.
+
+By default C<sparrow task save> remove existing data ( if found ) from target directory. You disable this
+behavior by passing C<--merge> option:
+
+    $ sparrow task save /var/data/tasks --merge # add currents tasks to existed in  /var/data/tasks
+
+Ignore tasks.
+
+You can omit some project/tasks from resulted save using C<task.ignore> file:
+
+    $ nano ~/task.ignore
+    
+    project1/task1
+    project2/task2
+
+This will exclude the project1/task2 and project2/task2 tasks from resulted save. You can use regexp here:
+
+    $ nano ~/task.ignore
+    
+    project1/.* # any tasks from project1
+    project2/task[2-9] # tasks 2 .. 9 from project2
+
+The format of task ignore file:
+
+    project_name/task_name
+
+Where C<project_name> and C<task_name> could be full names or regexps.
+
+You may specify alternative location for task ignore file using C<--ignore> option:
+
+    $ sparrow task save /var/data/tasks --ignore /etc/task.ignore
+
+The default location for task ignore file is C<~/task.ignore>
+
+Other options:
+
+=over
+
+=item -
+
+C<--quiet> - makes output less verbose
+
+
+=back
+
+
 =head2 Task boxes API
 
 Run task box - collection of sparrow tasks.

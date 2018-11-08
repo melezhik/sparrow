@@ -42,6 +42,12 @@ examples/remote-task-run/public/nano-rc/story.bash
 examples/remote-task-run/public/nano-rc/story.check
 examples/ruby-plg-run/story.bash
 examples/ruby-plg-run/story.check
+examples/sparrow-task-save/exceptions/dir-exists/hook.bash
+examples/sparrow-task-save/exceptions/dir-exists/story.bash
+examples/sparrow-task-save/exceptions/dir-exists/story.check
+examples/sparrow-task-save/exceptions/params/hook.bash
+examples/sparrow-task-save/exceptions/params/story.bash
+examples/sparrow-task-save/exceptions/params/story.check
 examples/suite.ini
 examples/task-box-run/json/story.bash
 examples/task-box-run/json/story.check

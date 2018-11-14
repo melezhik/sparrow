@@ -272,6 +272,17 @@ To list all the task with projects use:
 
 **sparrow task list**
 
+You can filter tasks out by using `--search` options:
+
+    # list tasks with project name or task name matching `database` and `production` strings
+
+    $ sparrow task list --search database --search production
+
+    # you can use Perl5 regexps in --search filters:
+
+    $ sparrow task list --search database --search '(test|dev)'
+
+
 ### Run plugins
 
 There are two ways to run sparrow plugins:

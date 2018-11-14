@@ -1,6 +1,7 @@
 0.3.6
 
 * Requires the latest version of Outthentic (0.4.2 ) to ensure Powershell support
+* Task list now accept `--search` filters
 
 0.3.5 2018-11-08
 

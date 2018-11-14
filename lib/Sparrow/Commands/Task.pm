@@ -50,10 +50,24 @@ our @EXPORT = qw{
 
 sub task_list {
 
-    my %opts = map { $_ => 1 } @_;
 
-    print "[sparrow task list]\n";
-    
+    my @args = @_;
+    my $nocolor;
+    my @search_pattern;
+
+    my $args_st = GetOptionsFromArray(
+        \@args,
+        "nocolor"     => \$nocolor,
+        "search=s"    => \@search_pattern,
+    );
+
+
+    if (nocolor() || $nocolor){
+      print "[sparrow task list]\n";
+    } else {
+      print "[",colored(['bold green on_black'],'sparrow task list'), "]\n";
+    }
+
     my $root_dir = sparrow_root.'/projects/';
 
     opendir(my $dh, $root_dir) || confess "can't opendir $root_dir: $!";
@@ -61,11 +75,19 @@ sub task_list {
     for my $p (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($dh)){
         next unless -d "$root_dir/$p/tasks";
         my $project = basename($p);
-        print " [", ( ( nocolor() || $opts{'--nocolor'} )  ? $project : colored(['blue on_yellow'],$project) ) ,"]\n";
         opendir(my $th, "$root_dir/$p/tasks") || confess "can't opendir $root_dir/$p: $!";
-        for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)){
+        TASK: for my $t (sort { $a cmp $b } grep { ! /^\.{1,2}$/ } readdir($th)) {
           my $task = basename($t);
-          print "  $p/$t\n";
+          if (scalar @search_pattern){ # filter tasks by --search patterns
+            for my $pt (@search_pattern){
+              $project=~/$pt/ or $task=~/$pt/ or next TASK;
+            }
+          }
+          if (nocolor() || $nocolor){
+            print "$project/$task\n";
+          } else {
+            print colored(['bold yellow'],$project), colored(['white'],"/"), colored(['bold cyan'],$task), "\n";
+          }
         }
         closedir $th;
     }

@@ -404,10 +404,11 @@ sub task_run {
           print map {"# $_\n"} split /&&\s+/, $cmd;
           print "\n";
         }
-        if ($noexec_mode){
+
+        if ($noexec_mode or $^O  =~ 'MSWin'){
           execute_shell_command($cmd);
         } else {
-          exec $cmd
+          exec $cmd;
         }
     }
 

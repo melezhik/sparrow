@@ -376,7 +376,12 @@ sub task_run {
     for my $rp (@runtime_params){
       $rp=~/(\S+?)=(.*)/;
       #warn $1; warn $2;
-      $cmd.= " --param $1='$2'";
+      my $k = $1; my $v = $2;
+      if ($^O  =~ 'MSWin') {
+        $cmd.= " --param $k=$v";
+      } else {
+        $cmd.= " --param $k='$v'";
+      }
     }
 
 

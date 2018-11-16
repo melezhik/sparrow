@@ -1084,7 +1084,7 @@ For servers with limited or no access to internet, there is offline mode support
     $ curl https://sparrowhub.org/plugins/python-echo-script-v0.001000.tar.gz -o sparrow-local-repo/plugins/python-echo-script-v0.001000.tar.gz
     $ # so on
 
-## Set sparrow_hub_api_url
+## Set sparrow\_hub\_api\_url
 
     $ export sparrow_hub_api_url=$PWD/sparrow-local-repo
 

@@ -396,6 +396,16 @@ To list all the task with projects use:
 
 B<sparrow task list>
 
+You can filter tasks out by using C<--search> options:
+
+    # list tasks with project name or task name matching `database` and `production` strings
+    
+    $ sparrow task list --search database --search production
+    
+    # you can use Perl5 regexps in --search filters:
+    
+    $ sparrow task list --search database --search '(test|dev)'
+
 
 =head3 Run plugins
 
@@ -1461,7 +1471,7 @@ For servers with limited or no access to internet, there is offline mode support
     $ # so on
 
 
-=head2 Set sparrowI<hub>api_url
+=head2 Set sparrow_hub_api_url
 
     $ export sparrow_hub_api_url=$PWD/sparrow-local-repo
 

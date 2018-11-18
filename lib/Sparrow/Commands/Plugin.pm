@@ -22,6 +22,8 @@ use Cwd;
 
 use File::Copy::Recursive qw(dircopy);
 
+use File::Find;
+
 our @EXPORT = qw{
 
     search_plugins
@@ -122,11 +124,42 @@ sub install_plugin_deps {
 
 }
 
+sub install_plugin_recursive {
+
+  my $path = shift or die "usage: install_plugin_recursive(\$path)";
+
+  die "directory [$path] does not exit" unless -d $path;
+
+  find(\&wanted, $path);  
+
+
+}
+
+sub wanted {
+
+  my $file = shift;
+
+  return unless $file eq 'sparrow.json';
+
+  install_plugin(".");
+
+}
+
+
 sub install_plugin {
 
     my $pid  = shift or confess 'usage: install_plugin(name,opts)';
 
-    my %opts = @_;
+    my @args = @_;
+
+    my $version;
+    my $recursive;
+
+    my $args_st = GetOptionsFromArray(
+        \@args,
+        "recursive"     => \$recursive,
+        "version=s"     => \$version,
+    );
 
     my $ptype;
 
@@ -137,7 +170,11 @@ sub install_plugin {
 
     my $list = read_plugin_list('as_hash');
 
-    if ($pid eq '.'){ # install plugin from local source as public plugin
+    if ($recursive){ # install plugin from local source recursively 
+
+      install_plugin_recursive($pid);
+
+    } elsif ( $pid eq '.') {  # install plugin from local source as public plugin
 
       my $dir = getcwd;
 
@@ -174,7 +211,7 @@ sub install_plugin {
 
     } elsif ( $list->{'public@'.$pid} and $ptype ne 'private' ) {
 
-        if (! $opts{'--version'}  and  -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+        if (! $version  and  -f sparrow_root."/plugins/public/$pid/sparrow.json" ){
   
             open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
             my $sp = join "", <F>;
@@ -216,7 +253,7 @@ sub install_plugin {
 
         } else {
 
-            my $v = $opts{'--version'} ||  $list->{'public@'.$pid}->{version};
+            my $v = $version ||  $list->{'public@'.$pid}->{version};
             my $vn = version->parse($v)->numify; 
             
             print "installing public\@$pid version $v ...\n";

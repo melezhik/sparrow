@@ -202,6 +202,13 @@ Installing plugin from local source:
 
     $ cd /plg/src/ && sparrow plg install .
 
+Install plugin from local sources recursively:
+
+    $ sparrow plg install /path/to/plugins --recursive
+
+This command will recursively go through /path/to/plugins directory and for every directory containing 
+`sparrow.json` file runs `sparrow plg install .` command.
+
 To see installed plugin list say this:
 
     $ sparrow plg list

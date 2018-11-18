@@ -1,3 +1,8 @@
+0.3.7
+
+Recursively installs plugins from directory.
+
+
 0.3.6 2018-11-16
 
 * Requires the latest version of Outthentic (0.4.2 ) to ensure Powershell support

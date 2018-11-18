@@ -137,7 +137,7 @@ sub install_plugin_recursive {
 
 sub wanted {
 
-  my $file = shift;
+  my $file = $_;
 
   return unless $file eq 'sparrow.json';
 

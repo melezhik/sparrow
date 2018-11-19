@@ -161,6 +161,7 @@ sub install_plugin {
     my $version;
     my $recursive;
     my $local_install;
+    my $install_deps;
     my $force;
 
     my $args_st = GetOptionsFromArray(
@@ -313,6 +314,10 @@ sub install_plugin {
 
         install_plugin_deps(sparrow_root."/plugins/private/$pid");
 
+    } elsif ( -d sparrow_root()."/plugins/public/$pid/" ) {
+
+      print "plugin ".sparrow_root()."/plugins/public/$pid/ installed locally, nothing to do here ...\n";
+
     } else {
 
         execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
@@ -320,15 +325,7 @@ sub install_plugin {
         execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
     
         install_plugin_deps(sparrow_root."/plugins/private/$pid");
-    
-    } elsif ( -d sparrow_root()."/plugins/public/$pid/" ) {
-
-      print "plugin ".sparrow_root()."/plugins/public/$pid/ installed locally, nothing to do here ...\n";
-
-    } else {
-        confess "unknown plugin";
-    }
-
+   }    
 }
 
 sub run_plugin {

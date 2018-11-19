@@ -211,7 +211,19 @@ This command will recursively go through /path/to/plugins directory and for ever
 
 Forcefully reinstall plugin
 
+Use `force` flag to reinstall local plugins:
+
+    $ sparrow plg install /path/to/source --local --recursive --force 
+
     $ sparrow plg install /path/to/plugins --local --force 
+
+Reinstall plugins dependencies
+
+Use `install_deps`.. It only works with public plugins:
+
+
+    $ sparrow plg install cpan-upload --install_deps
+
 
 To see installed plugin list say this:
 

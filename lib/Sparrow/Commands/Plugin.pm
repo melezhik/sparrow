@@ -130,27 +130,26 @@ sub install_plugin_recursive {
 
   die "directory [$path] does not exit" unless -d $path;
 
-  find(\&wanted($force), $path);  
+  find(
+    { 
+      wanted => sub {
+
+        my $file = $_;
+      
+        return unless $file eq 'sparrow.json';
+      
+        my @args = (".","--local");
+      
+        push @args, "--force" if $force;
+      
+        install_plugin(@args);
+
+      }
+    }, $path
+  );  
 
 
 }
-
-sub wanted {
-
-  my $force = shift;
-
-  my $file = $_;
-
-  return unless $file eq 'sparrow.json';
-
-  my @args = (".","--local");
-
-  push @args, "--force" if $force;
-
-  install_plugin(@args);
-
-}
-
 
 sub install_plugin {
 
@@ -306,26 +305,34 @@ sub install_plugin {
           
     } elsif ($list->{'private@'.$pid} and $ptype ne 'public' ) {
 
-        print "installing private\@$pid ...\n";
+        if ( -d sparrow_root()."/plugins/private/$pid/" ) {
 
-        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
+          print "installing private\@$pid ...\n";
+  
+          execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
+  
+          execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
+  
+          install_plugin_deps(sparrow_root."/plugins/private/$pid");
+  
+        } else {
 
-        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
-
-        install_plugin_deps(sparrow_root."/plugins/private/$pid");
-
+          execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
+    
+          execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
+    
+          install_plugin_deps(sparrow_root."/plugins/private/$pid");
+        }
     } elsif ( -d sparrow_root()."/plugins/public/$pid/" ) {
 
       print "plugin ".sparrow_root()."/plugins/public/$pid/ installed locally, nothing to do here ...\n";
 
     } else {
 
-        execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
-    
-        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
-    
-        install_plugin_deps(sparrow_root."/plugins/private/$pid");
-   }    
+      confess "unknown plugin";
+
+    }
+
 }
 
 sub run_plugin {

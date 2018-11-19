@@ -97,7 +97,6 @@ sub show_installed_plugins {
 sub install_plugin_deps {
 
     my $plg_src = shift;
-    my %opts = @_;
 
     print "install deps for $plg_src ...\n";
 
@@ -111,7 +110,7 @@ sub install_plugin_deps {
       execute_shell_command("cd $plg_src && bundle --path local");
     }
 
-    if ( -f "$plg_src/requirements.txt" and ! $opts{skip_pip_requirements}){
+    if ( -f "$plg_src/requirements.txt"){
       open F, "$plg_src/sparrow.json" or confess "can't open file $plg_src/sparrow.json to read: $!";
       my $sp = join "", <F>;
       my $spj = decode_json($sp);
@@ -127,21 +126,28 @@ sub install_plugin_deps {
 sub install_plugin_recursive {
 
   my $path = shift or die "usage: install_plugin_recursive(\$path)";
+  my $force = shift;
 
   die "directory [$path] does not exit" unless -d $path;
 
-  find(\&wanted, $path);  
+  find(\&wanted($force), $path);  
 
 
 }
 
 sub wanted {
 
+  my $force = shift;
+
   my $file = $_;
 
   return unless $file eq 'sparrow.json';
 
-  install_plugin(".");
+  my @args = (".","--local");
+
+  push @args, "--force" if $force;
+
+  install_plugin(@args);
 
 }
 
@@ -154,11 +160,16 @@ sub install_plugin {
 
     my $version;
     my $recursive;
+    my $local_install;
+    my $force;
 
     my $args_st = GetOptionsFromArray(
         \@args,
-        "recursive"     => \$recursive,
-        "version=s"     => \$version,
+        "local"             => \$local_install,
+        "force"             => \$force,
+        "install_deps"      => \$install_deps,
+        "recursive"         => \$recursive,
+        "version=s"         => \$version,
     );
 
     my $ptype;
@@ -170,13 +181,13 @@ sub install_plugin {
 
     my $list = read_plugin_list('as_hash');
 
-    if ($recursive){ # install plugin from local source recursively 
+    if ($recursive and $local_install){ # install plugin from local source recursively 
 
-      install_plugin_recursive($pid);
+      install_plugin_recursive($pid, $force);
 
-    } elsif ( $pid eq '.') {  # install plugin from local source as public plugin
+    } elsif ( $local_install ) {  # install plugin from local source as a public plugin
 
-      my $dir = getcwd;
+      my $dir = $pid eq '.'  ? getcwd : $pid;
 
       open F, "$dir/sparrow.json" or confess "can't open file $dir/sparrow.json to read: $!";
       my $sp = join "", <F>;
@@ -188,6 +199,21 @@ sub install_plugin {
 
       print "install public\@$pid version $v from local source\n";
 
+      if (-f sparrow_root."/plugins/public/$pid/sparrow.json" ){
+  
+        open F, sparrow_root."/plugins/public/$pid/sparrow.json" or confess "can't open file to read: $!";
+        my $sp = join "", <F>;
+        my $spj = decode_json($sp);
+        close F;
+  
+        my $inst_v  = version->parse($spj->{version}||'0.0.0');
+  
+        if ($inst_v >= $v and ! $force ){
+            print "plugin is already istalled and has higher version: $inst_v\n";
+            return;
+        }
+  
+      }
 
       if ( -d sparrow_root()."/plugins/public/$pid" ){
         rmtree(sparrow_root()."/plugins/public/$pid") or die "can't remove dir: ".sparrow_root()."/plugins/public/$pid, error: $!";
@@ -247,8 +273,7 @@ sub install_plugin {
 
                 print "public\@$pid is uptodate ($inst_v)\n";
 
-                install_plugin_deps(sparrow_root."/plugins/public/$pid", skip_pip_requirements => 1);
-
+                install_plugin_deps(sparrow_root."/plugins/public/$pid") if $install_deps;
             }
 
         } else {
@@ -282,22 +307,20 @@ sub install_plugin {
 
         print "installing private\@$pid ...\n";
 
-        if ( -d sparrow_root."/plugins/private/$pid" ) {
+        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
 
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git pull");
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
+        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");
 
-            install_plugin_deps(sparrow_root."/plugins/private/$pid");
+        install_plugin_deps(sparrow_root."/plugins/private/$pid");
 
-        } else {
+    } else {
 
-            execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
-            execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
-
-            install_plugin_deps(sparrow_root."/plugins/private/$pid");
-
-      }
-
+        execute_shell_command("git clone  ".($list->{'private@'.$pid}->{url}).' '.sparrow_root."/plugins/private/$pid");
+    
+        execute_shell_command("cd ".sparrow_root."/plugins/private/$pid && git config credential.helper 'cache --timeout=3000000'");                
+    
+        install_plugin_deps(sparrow_root."/plugins/private/$pid");
+    
     } elsif ( -d sparrow_root()."/plugins/public/$pid/" ) {
 
       print "plugin ".sparrow_root()."/plugins/public/$pid/ installed locally, nothing to do here ...\n";

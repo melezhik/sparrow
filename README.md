@@ -219,10 +219,10 @@ Use `force` flag to reinstall local plugins:
 
 Reinstall plugins dependencies
 
-Use `install_deps`.. It only works with public plugins:
+Use `install-deps`.. It only works with public plugins:
 
 
-    $ sparrow plg install cpan-upload --install_deps
+    $ sparrow plg install cpan-upload --install-deps
 
 
 To see installed plugin list say this:

@@ -167,7 +167,7 @@ sub install_plugin {
         \@args,
         "local"             => \$local_install,
         "force"             => \$force,
-        "install_deps"      => \$install_deps,
+        "install-deps"      => \$install_deps,
         "recursive"         => \$recursive,
         "version=s"         => \$version,
     );
@@ -189,6 +189,7 @@ sub install_plugin {
 
       my $dir = $pid eq '.'  ? getcwd : $pid;
 
+      print "install from source: $dir ... \n";	
       open F, "$dir/sparrow.json" or confess "can't open file $dir/sparrow.json to read: $!";
       my $sp = join "", <F>;
       my $spj = decode_json($sp);

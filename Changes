@@ -1,4 +1,4 @@
-0.3.7
+0.3.7 2018-11-26
 
 * Recursively installs plugins from directory.
 * Install local plugin from directory, not only `.`

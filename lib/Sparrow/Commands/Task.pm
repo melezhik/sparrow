@@ -43,6 +43,8 @@ our @EXPORT = qw{
     task_get
     task_set
 
+    task_copy
+
     task_save
     task_restore
 
@@ -605,6 +607,29 @@ sub parse_task_ignore_file {
   }
   close $fh;
   return @ignore;
+}
+
+sub task_copy {
+
+    my $project_from 	= shift or confess "usage: task_copy(*project_from,task_from,project_to,task_to)";
+    my $task_from 		= shift or confess "usage: task_copy(project_from,*task_from,project_to,task_to)";
+    my $project_to 		= shift or confess "usage: task_copy(project_from,task_from,*project_to,task_to)";
+    my $task_to 			= shift or confess "usage: task_copy(project_from,task_from,project_to,*task_to)";
+
+    print "copy task $project_from/$task_from] to $project_to/$task_to ...\n=========================\n";
+
+    my $spr = sparrow_root()."/projects";
+
+    make_path("$spr/$project_to/tasks/$task_to/");
+
+    if (-f "$spr/$project_from/tasks/$task_from/settings.json" ){
+      copy("$spr/$project_from/tasks/$task_from/settings.json", "$spr/$project_to/tasks/$task_to/");
+    } else {
+      warn "broken task $spr/$project_from/tasks/$task_from, settings.json file not found";
+    }
+    if (-f "$spr/$project_from/tasks/$task_from/suite.cfg" ){
+      copy("$spr/$project_from/tasks/$task_from/suite.cfg", "$spr/$project_to/tasks/$task_to/");
+    }
 }
 
 sub nocolor { $ENV{SPARROW_NO_COLOR} }

@@ -520,6 +520,19 @@ Dump-config could be useful when copy some task configuration into other:
     $ sparrow task load ini system/disk2 /tmp/system-disk.json
 
 
+### Copy task
+
+If you need to copy existed task to another project use `task copy` command:
+
+*** sparrow task copy project1 task project2 task2 ***
+
+This command copies task `task1` from project `project1` to project named `project2`
+and give it a name `task2`
+
+You can use alternative task notation here:
+
+    $ sparrow task copy project1/task1 project2/task2
+
 ### Save/Restore tasks
 
 To port tasks from one server to another use `save|restore` command:

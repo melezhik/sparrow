@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!perl
 
 use strict;
 
@@ -161,6 +161,10 @@ if ($object eq  'plg'){
         my $tid = shift @ARGV;
 
         task_run((split '/', $name), $tid, @ARGV);
+
+    } elsif( $action  eq 'copy'){
+
+        task_copy( map { split '/' } @ARGV);
 
     } elsif( $action  eq 'remove'){
 

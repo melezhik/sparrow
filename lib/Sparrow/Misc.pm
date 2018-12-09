@@ -73,6 +73,7 @@ sub usage {
     print "\tsparrow task list                                # get tasks and projects list \n";
     print "\tsparrow task save        /var/data/tasks         # save current tasks to directory \n";
     print "\tsparrow task restore     /var/data/tasks         # restore tasks from directory \n";
+    print "\tsparrow task copy        p1/t1 p2/t2             # copy task between projects \n";
 
     print "\n[task boxes]:\n\n";
     print "\tsparrow box run /path/to/box.json # run task box \n";

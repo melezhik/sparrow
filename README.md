@@ -524,7 +524,7 @@ Dump-config could be useful when copy some task configuration into other:
 
 If you need to copy existed task to another project use `task copy` command:
 
-*** sparrow task copy project1 task project2 task2 ***
+***sparrow task copy project1 task project2 task2***
 
 This command copies task `task1` from project `project1` to project named `project2`
 and give it a name `task2`

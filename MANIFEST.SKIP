@@ -1,1 +1,14 @@
-.tom/.cache
+.git
+blib
+\.old
+\.tar
+\.bak
+\.SKIP
+\.html
+\.tmp
+sparrow-.*\.gz
+sparrow\.my
+^MYMETA\.
+^Makefile$
+sparrow-
+.cache

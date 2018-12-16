@@ -1,6 +1,6 @@
 package Sparrow;
 
-our $VERSION = '0.3.7';
+our $VERSION = '0.3.8';
 
 1;
 
@@ -701,6 +701,20 @@ Dump-config could be useful when copy some task configuration into other:
     $ sparrow task run system/disk --dump-config > /tmp/system-disk.json
     $ nano /tmp/system-disk.json
     $ sparrow task load ini system/disk2 /tmp/system-disk.json
+
+
+=head3 Copy task
+
+If you need to copy existed task to another project use C<task copy> command:
+
+B<I<sparrow task copy project1 task project2 task2>>
+
+This command copies task C<task1> from project C<project1> to project named C<project2>
+and give it a name C<task2>
+
+You can use alternative task notation here:
+
+    $ sparrow task copy project1/task1 project2/task2
 
 
 =head3 Save/Restore tasks

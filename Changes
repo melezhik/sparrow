@@ -1,4 +1,4 @@
-0.3.8
+0.3.8 2018-12-15
 
 * Use tomtit as internal task runner
 * Copy task command

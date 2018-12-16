@@ -1,6 +1,7 @@
 0.3.8
 
-Copy task command
+* Use tomtit as internal task runner
+* Copy task command
 
 0.3.7 2018-11-26
 

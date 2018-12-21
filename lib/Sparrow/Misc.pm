@@ -29,6 +29,8 @@ sub execute_shell_command {
 
     my $st = ( system($cmd) == 0 );
 
+    print "run cmd: $cmd ...\n" if $opts{debug};
+
     if ($opts{silent}){
         die "failed to execute shell command" unless $st;
     } else {
@@ -100,8 +102,10 @@ sub usage {
 sub init_sparrow_env {
 
     make_path(sparrow_root());
-	print "sparrow root: [", sparrow_root(),"]\n";
-	make_path(sparrow_root().'/plugins', { verbose => 1 } ); #
+
+	  print "sparrow root: [", sparrow_root(),"]\n";
+
+	  make_path(sparrow_root().'/plugins', { verbose => 1 } ); #
     make_path(sparrow_root().'/plugins/private');
     make_path(sparrow_root().'/plugins/public');
     make_path(sparrow_root().'/projects');

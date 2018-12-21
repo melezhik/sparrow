@@ -674,6 +674,15 @@ sub read_plugin_list {
 
 sub upload_plugin {
 
+    my @args = @_;
+
+    my $verbose_mode;
+
+    my $args_st = GetOptionsFromArray(
+      \@args,
+      "verbose" => \$verbose_mode,
+    );
+
     # get user/token by environment variables
     # usefull when making tests
 
@@ -708,13 +717,15 @@ sub upload_plugin {
 
     print "sparrow.json file validated ... \n";
 
-    execute_shell_command('tar --exclude=.cache/ --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    execute_shell_command('tar --exclude=.tom --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .', debug => $verbose_mode );
+
     my $unsecure_flag = $ENV{SPARROW_UNSECURE} ? "-k" : "";
     execute_shell_command(
-        "curl $unsecure_flag -H 'sparrow-user: $cred->{user}' " .
+        "curl -s -k $unsecure_flag -H 'sparrow-user: $cred->{user}' " .
         "-H 'sparrow-token: $cred->{token}' " .
         '-f -X POST '.sparrow_hub_api_url().'/api/v1/upload -F archive=@/tmp/archive.tar.gz',
-        silent => 1,
+        silent => ($verbose_mode ? 0 : 1),
+        debug  => ($verbose_mode ? 1 : 0)
     );
 
 }

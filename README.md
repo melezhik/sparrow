@@ -49,6 +49,12 @@ See [sparrow command line API](#api) below.
 
 Think about it as of `cpan client` for CPAN modules or `gem client` for Ruby gems.
 
+You run Sparrow client by using `sparrow` command.
+
+To print out Sparrow currently installed version, run this:
+
+    $ sparrow --version
+
 # Sparrow basic entities
 
 Sparrow architecture comprises of 4 basic parts:
@@ -924,6 +930,8 @@ instead of plugin execution when `sparrow plg run` command is invoked.
     $ sparrow plg upload
     
 That's it!
+
+If you want to troubleshoot upload plugin errors use `--verbose` flag, when upload plugin.
 
 # Publishing private sparrow plugins
 

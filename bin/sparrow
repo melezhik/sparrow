@@ -29,7 +29,11 @@ my $object = shift @ARGV;
 
 init_sparrow_env();
 
-if ($object eq  'plg'){
+    if ($object eq '--version' ){
+
+      print "$Sparrow::VERSION\n";
+
+    }elsif  ($object eq  'plg'){
 
     my $action = shift @ARGV;
 
@@ -51,7 +55,7 @@ if ($object eq  'plg'){
 
     } elsif( $action  eq 'upload'){
 
-        upload_plugin();        
+        upload_plugin(@ARGV);        
 
     } elsif ( $action  eq 'show'){
 

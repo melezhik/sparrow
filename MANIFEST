@@ -3,6 +3,8 @@
 .tom/install.pl6
 .tom/make-dist.pl6
 .tom/make-doc.pl6
+.tom/push.pl6
+.tom/version.pl6
 .travis.yml
 bin/sparrow
 Changes

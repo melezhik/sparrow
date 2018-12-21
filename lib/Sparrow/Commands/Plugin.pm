@@ -708,7 +708,7 @@ sub upload_plugin {
 
     print "sparrow.json file validated ... \n";
 
-    execute_shell_command('tar --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
+    execute_shell_command('tar --exclude=.cache/ --exclude=local --exclude=*.log  --exclude=log --exclude Gemfile.lock --exclude local/  --exclude-vcs -zcf /tmp/archive.tar.gz .' );
     my $unsecure_flag = $ENV{SPARROW_UNSECURE} ? "-k" : "";
     execute_shell_command(
         "curl $unsecure_flag -H 'sparrow-user: $cred->{user}' " .

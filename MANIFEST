@@ -1,4 +1,5 @@
 .appveyor.yml
+.tom/changes.pl6
 .tom/install.pl6
 .tom/make-dist.pl6
 .tom/make-doc.pl6

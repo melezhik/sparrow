@@ -77,6 +77,12 @@ C<Sparrow> is a console client to search, install, setup and run various sparrow
 
 Think about it as of C<cpan client> for CPAN modules or C<gem client> for Ruby gems.
 
+You run Sparrow client by using C<sparrow> command.
+
+To print out Sparrow currently installed version, run this:
+
+    $ sparrow --version
+
 
 =head1 Sparrow basic entities
 
@@ -1265,6 +1271,8 @@ $ sparrow plg upload
 =back
 
 That's it!
+
+If you want to troubleshoot upload plugin errors use C<--verbose> flag, when upload plugin.
 
 
 =head1 Publishing private sparrow plugins

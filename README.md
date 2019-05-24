@@ -1,7 +1,21 @@
 # NAME
 
 Sparrow - multipurpose scenarios manager.
- 
+
+# ATTENTION
+
+**This is Sparrow for Perl5 and it is no longer supported and deprecated. 
+
+If you're looking for Sparrow6 - Perl6 based version of Sparrow, go here - [https://github.com/melezhik/Sparrow6](Sparrow6)
+
+If you still want to use this version follow [https://metacpan.org/pod/Sparrow](https://metacpan.org/pod/Sparrow)
+for the latest CPAN release. However, pay attention that:
+
+* All [Sparrow plugins](https://github.com/melezhik/sparrow-plugins) are only compatible with Sparrow6 version. 
+* SparrowHub repository is abolished and no longer exists 
+
+***
+
 # SYNOPSIS
 
 # Install
